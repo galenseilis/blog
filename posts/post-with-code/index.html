@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.54">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Harlow Malloc">
+<meta name="dcterms.date" content="2024-07-08">
+
+<title>Post With Code – Galen Seilis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Galen Seilis</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Galen Seilis</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../presentations.html"> 
+<span class="menu-text">Presentations</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/galenseilis"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/GSeilis"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Post With Code</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">news</div>
+                <div class="quarto-category">code</div>
+                <div class="quarto-category">analysis</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Harlow Malloc </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 8, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 1214.46 577.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 573)">
+<title>g</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-573 1210.46,-573 1210.46,4 -4,4"></polygon>
+<!-- state0 -->
+<g id="node1" class="node">
+<title>state0</title>
+<path fill="white" stroke="black" stroke-width="5" d="M12,-75.5C12,-75.5 184,-75.5 184,-75.5 190,-75.5 196,-81.5 196,-87.5 196,-87.5 196,-241.5 196,-241.5 196,-247.5 190,-253.5 184,-253.5 184,-253.5 12,-253.5 12,-253.5 6,-253.5 0,-247.5 0,-241.5 0,-241.5 0,-87.5 0,-87.5 0,-81.5 6,-75.5 12,-75.5"></path>
+<polygon fill="white" stroke="transparent" points="8,-79.5 8,-249.5 188,-249.5 188,-79.5 8,-79.5"></polygon>
+<polygon fill="black" stroke="transparent" points="10,-225.5 10,-247.5 186,-247.5 186,-225.5 10,-225.5"></polygon>
+<text text-anchor="start" x="64.39" y="-231.9" font-family="Courier New" font-size="14.00" fill="white">State #0</text>
+<text text-anchor="start" x="13" y="-207.9" font-family="Courier New" font-size="14.00">(0) s -&gt; •e $ </text>
+<text text-anchor="start" x="12.99" y="-183.9" font-family="Courier New" font-size="14.00">(1) e -&gt; •l '=' r </text>
+<text text-anchor="start" x="13" y="-159.9" font-family="Courier New" font-size="14.00">(2) e -&gt; •r </text>
+<text text-anchor="start" x="13" y="-135.9" font-family="Courier New" font-size="14.00">(3) l -&gt; •'*' r </text>
+<text text-anchor="start" x="13" y="-111.9" font-family="Courier New" font-size="14.00">(4) l -&gt; •'n' </text>
+<text text-anchor="start" x="13" y="-87.9" font-family="Courier New" font-size="14.00">(5) r -&gt; •l </text>
+</g>
+<!-- state1 -->
+<g id="node2" class="node">
+<title>state1</title>
+<path fill="white" stroke="black" d="M774.91,-257.5C774.91,-257.5 929.91,-257.5 929.91,-257.5 935.91,-257.5 941.91,-263.5 941.91,-269.5 941.91,-269.5 941.91,-375.5 941.91,-375.5 941.91,-381.5 935.91,-387.5 929.91,-387.5 929.91,-387.5 774.91,-387.5 774.91,-387.5 768.91,-387.5 762.91,-381.5 762.91,-375.5 762.91,-375.5 762.91,-269.5 762.91,-269.5 762.91,-263.5 768.91,-257.5 774.91,-257.5"></path>
+<polygon fill="white" stroke="transparent" points="770.91,-261.5 770.91,-383.5 933.91,-383.5 933.91,-261.5 770.91,-261.5"></polygon>
+<polygon fill="black" stroke="transparent" points="773.41,-359.5 773.41,-381.5 932.41,-381.5 932.41,-359.5 773.41,-359.5"></polygon>
+<text text-anchor="start" x="819.31" y="-365.9" font-family="Courier New" font-size="14.00" fill="white">State #1</text>
+<text text-anchor="start" x="776.3" y="-341.9" font-family="Courier New" font-size="14.00">(3) l -&gt; •'*' r </text>
+<text text-anchor="start" x="776.3" y="-317.9" font-family="Courier New" font-size="14.00">(3) l -&gt; '*' •r </text>
+<text text-anchor="start" x="776.41" y="-293.9" font-family="Courier New" font-size="14.00">(4) l -&gt; •'n' </text>
+<text text-anchor="start" x="776.41" y="-269.9" font-family="Courier New" font-size="14.00">(5) r -&gt; •l </text>
+</g>
+<!-- state0&#45;&gt;state1 -->
+<g id="edge4" class="edge">
+<title>state0-&gt;state1</title>
+<path fill="none" stroke="black" d="M196.08,-176.39C353.65,-195.94 652.31,-234.15 699.37,-248.5 717.42,-254.01 736,-261.41 753.69,-269.42"></path>
+<polygon fill="black" stroke="black" points="752.31,-272.64 762.86,-273.65 755.25,-266.28 752.31,-272.64"></polygon>
+<text text-anchor="middle" x="478.9" y="-216.7" font-family="Helvetica,Arial,sans-serif" font-size="14.00" fill="#474747">'*'</text>
+</g>
+<!-- state2 -->
+<g id="node3" class="node">
+<title>state2</title>
+<path fill="white" stroke="black" d="M1025.96,-193.5C1025.96,-193.5 1185.96,-193.5 1185.96,-193.5 1191.96,-193.5 1197.96,-199.5 1197.96,-205.5 1197.96,-205.5 1197.96,-239.5 1197.96,-239.5 1197.96,-245.5 1191.96,-251.5 1185.96,-251.5 1185.96,-251.5 1025.96,-251.5 1025.96,-251.5 1019.96,-251.5 1013.96,-245.5 1013.96,-239.5 1013.96,-239.5 1013.96,-205.5 1013.96,-205.5 1013.96,-199.5 1019.96,-193.5 1025.96,-193.5"></path>
+<polygon fill="white" stroke="transparent" points="1021.96,-197.5 1021.96,-247.5 1189.96,-247.5 1189.96,-197.5 1021.96,-197.5"></polygon>
+<polygon fill="black" stroke="transparent" points="1023.96,-223.5 1023.96,-245.5 1187.96,-245.5 1187.96,-223.5 1023.96,-223.5"></polygon>
+<text text-anchor="start" x="1072.35" y="-229.9" font-family="Courier New" font-size="14.00" fill="white">State #2</text>
+<text text-anchor="start" x="1026.75" y="-205.9" font-family="Courier New" font-size="14.00">(4) l -&gt; 'n' •</text>
+<polygon fill="grey" stroke="transparent" points="1165.96,-199.5 1165.96,-221.5 1187.96,-221.5 1187.96,-199.5 1165.96,-199.5"></polygon>
+<text text-anchor="start" x="1168.56" y="-205.9" font-family="Courier New" font-size="14.00">=$</text>
+</g>
+<!-- state0&#45;&gt;state2 -->
+<g id="edge5" class="edge">
+<title>state0-&gt;state2</title>
+<path fill="none" stroke="black" d="M196.13,-164.5C242.27,-164.5 298.2,-164.5 348.43,-164.5 348.43,-164.5 348.43,-164.5 853.41,-164.5 906.86,-164.5 965.11,-177.09 1012.08,-190.54"></path>
+<polygon fill="black" stroke="black" points="1011.34,-193.97 1021.93,-193.42 1013.31,-187.25 1011.34,-193.97"></polygon>
+<text text-anchor="middle" x="601.37" y="-168.7" font-family="Helvetica,Arial,sans-serif" font-size="14.00" fill="#474747">'n'</text>
+</g>
+<!-- state5 -->
+<g id="node6" class="node">
+<title>state5</title>
+<path fill="black" stroke="black" d="M280.43,-77.5C280.43,-77.5 418.43,-77.5 418.43,-77.5 424.43,-77.5 430.43,-83.5 430.43,-89.5 430.43,-89.5 430.43,-123.5 430.43,-123.5 430.43,-129.5 424.43,-135.5 418.43,-135.5 418.43,-135.5 280.43,-135.5 280.43,-135.5 274.43,-135.5 268.43,-129.5 268.43,-123.5 268.43,-123.5 268.43,-89.5 268.43,-89.5 268.43,-83.5 274.43,-77.5 280.43,-77.5"></path>
+<polygon fill="black" stroke="transparent" points="276.43,-81.5 276.43,-131.5 422.43,-131.5 422.43,-81.5 276.43,-81.5"></polygon>
+<polygon fill="black" stroke="transparent" points="278.43,-107.5 278.43,-129.5 420.43,-129.5 420.43,-107.5 278.43,-107.5"></polygon>
+<text text-anchor="start" x="315.82" y="-113.9" font-family="Courier New" font-size="14.00" fill="white">State #5</text>
+<text text-anchor="start" x="281.22" y="-89.9" font-family="Courier New" font-size="14.00" fill="white">(0) s -&gt; e •$ </text>
+</g>
+<!-- state0&#45;&gt;state5 -->
+<g id="edge1" class="edge">
+<title>state0-&gt;state5</title>
+<path fill="none" stroke="black" stroke-width="5" d="M196.17,-121.83C202.14,-119.98 208.12,-118.31 214,-116.9 228.06,-113.54 243.15,-111.19 257.97,-109.57"></path>
+<polygon fill="black" stroke="black" stroke-width="5" points="258.65,-113.9 268.17,-108.56 257.79,-105.19 258.65,-113.9"></polygon>
+<text text-anchor="middle" x="220.21" y="-124.9" font-family="Helvetica,Arial,sans-serif" font-size="28.00">e</text>
+</g>
+<!-- state6 -->
+<g id="node7" class="node">
+<title>state6</title>
+<path fill="white" stroke="black" d="M256.43,-253.5C256.43,-253.5 442.43,-253.5 442.43,-253.5 448.43,-253.5 454.43,-259.5 454.43,-265.5 454.43,-265.5 454.43,-323.5 454.43,-323.5 454.43,-329.5 448.43,-335.5 442.43,-335.5 442.43,-335.5 256.43,-335.5 256.43,-335.5 250.43,-335.5 244.43,-329.5 244.43,-323.5 244.43,-323.5 244.43,-265.5 244.43,-265.5 244.43,-259.5 250.43,-253.5 256.43,-253.5"></path>
+<polygon fill="white" stroke="transparent" points="252.43,-257.5 252.43,-331.5 446.43,-331.5 446.43,-257.5 252.43,-257.5"></polygon>
+<polygon fill="black" stroke="transparent" points="254.43,-307.5 254.43,-329.5 444.43,-329.5 444.43,-307.5 254.43,-307.5"></polygon>
+<text text-anchor="start" x="315.82" y="-313.9" font-family="Courier New" font-size="14.00" fill="white">State #6</text>
+<text text-anchor="start" x="257.41" y="-289.9" font-family="Courier New" font-size="14.00">(1) e -&gt; l •'=' r </text>
+<text text-anchor="start" x="257.43" y="-265.9" font-family="Courier New" font-size="14.00">(5) r -&gt; l •</text>
+<polygon fill="grey" stroke="transparent" points="430.43,-259.5 430.43,-281.5 444.43,-281.5 444.43,-259.5 430.43,-259.5"></polygon>
+<text text-anchor="start" x="433.23" y="-265.9" font-family="Courier New" font-size="14.00">$</text>
+</g>
+<!-- state0&#45;&gt;state6 -->
+<g id="edge2" class="edge">
+<title>state0-&gt;state6</title>
+<path fill="none" stroke="black" stroke-width="5" d="M196.15,-215.13C217.36,-226.19 239.69,-237.83 260.51,-248.68"></path>
+<polygon fill="black" stroke="black" stroke-width="5" points="258.76,-252.7 269.65,-253.44 262.81,-244.94 258.76,-252.7"></polygon>
+<text text-anchor="middle" x="220.21" y="-237.9" font-family="Helvetica,Arial,sans-serif" font-size="28.00">l</text>
+</g>
+<!-- state9 -->
+<g id="node10" class="node">
+<title>state9</title>
+<path fill="white" stroke="black" d="M281.93,-0.5C281.93,-0.5 416.93,-0.5 416.93,-0.5 422.93,-0.5 428.93,-6.5 428.93,-12.5 428.93,-12.5 428.93,-46.5 428.93,-46.5 428.93,-52.5 422.93,-58.5 416.93,-58.5 416.93,-58.5 281.93,-58.5 281.93,-58.5 275.93,-58.5 269.93,-52.5 269.93,-46.5 269.93,-46.5 269.93,-12.5 269.93,-12.5 269.93,-6.5 275.93,-0.5 281.93,-0.5"></path>
+<polygon fill="white" stroke="transparent" points="277.93,-4.5 277.93,-54.5 420.93,-54.5 420.93,-4.5 277.93,-4.5"></polygon>
+<polygon fill="black" stroke="transparent" points="280.43,-30.5 280.43,-52.5 419.43,-52.5 419.43,-30.5 280.43,-30.5"></polygon>
+<text text-anchor="start" x="316.32" y="-36.9" font-family="Courier New" font-size="14.00" fill="white">State #9</text>
+<text text-anchor="start" x="283.12" y="-12.9" font-family="Courier New" font-size="14.00">(2) e -&gt; r •</text>
+<polygon fill="grey" stroke="transparent" points="405.43,-6.5 405.43,-28.5 419.43,-28.5 419.43,-6.5 405.43,-6.5"></polygon>
+<text text-anchor="start" x="408.23" y="-12.9" font-family="Courier New" font-size="14.00">$</text>
+</g>
+<!-- state0&#45;&gt;state9 -->
+<g id="edge3" class="edge">
+<title>state0-&gt;state9</title>
+<path fill="none" stroke="black" stroke-width="5" d="M196.12,-87.34C202.05,-83.63 208.04,-80.12 214,-76.9 228.43,-69.11 244.39,-62.18 260.13,-56.18"></path>
+<polygon fill="black" stroke="black" stroke-width="5" points="262.02,-60.15 269.88,-52.57 258.98,-51.94 262.02,-60.15"></polygon>
+<text text-anchor="middle" x="220.21" y="-85.9" font-family="Helvetica,Arial,sans-serif" font-size="28.00">r</text>
+</g>
+<!-- state1&#45;&gt;state1 -->
+<g id="edge6" class="edge">
+<title>state1-&gt;state1</title>
+<path fill="none" stroke="black" d="M830.11,-387.62C833.23,-398.49 840.66,-406 852.41,-406 860.49,-406 866.53,-402.45 870.53,-396.7"></path>
+<polygon fill="black" stroke="black" points="873.71,-398.16 874.72,-387.62 867.35,-395.23 873.71,-398.16"></polygon>
+<text text-anchor="middle" x="852.41" y="-410.2" font-family="Helvetica,Arial,sans-serif" font-size="14.00" fill="#474747">'*'</text>
+</g>
+<!-- state1&#45;&gt;state2 -->
+<g id="edge8" class="edge">
+<title>state1-&gt;state2</title>
+<path fill="none" stroke="black" d="M942.1,-287.24C968.18,-276.88 996.59,-265.58 1022.27,-255.37"></path>
+<polygon fill="black" stroke="black" points="1023.61,-258.61 1031.61,-251.66 1021.02,-252.1 1023.61,-258.61"></polygon>
+<text text-anchor="middle" x="981.44" y="-276.7" font-family="Helvetica,Arial,sans-serif" font-size="14.00" fill="#474747">'n'</text>
+</g>
+<!-- state3 -->
+<g id="node4" class="node">
+<title>state3</title>
+<path fill="white" stroke="black" d="M1034.46,-375.5C1034.46,-375.5 1177.46,-375.5 1177.46,-375.5 1183.46,-375.5 1189.46,-381.5 1189.46,-387.5 1189.46,-387.5 1189.46,-421.5 1189.46,-421.5 1189.46,-427.5 1183.46,-433.5 1177.46,-433.5 1177.46,-433.5 1034.46,-433.5 1034.46,-433.5 1028.46,-433.5 1022.46,-427.5 1022.46,-421.5 1022.46,-421.5 1022.46,-387.5 1022.46,-387.5 1022.46,-381.5 1028.46,-375.5 1034.46,-375.5"></path>
+<polygon fill="white" stroke="transparent" points="1030.46,-379.5 1030.46,-429.5 1181.46,-429.5 1181.46,-379.5 1030.46,-379.5"></polygon>
+<polygon fill="black" stroke="transparent" points="1032.96,-405.5 1032.96,-427.5 1179.96,-427.5 1179.96,-405.5 1032.96,-405.5"></polygon>
+<text text-anchor="start" x="1072.85" y="-411.9" font-family="Courier New" font-size="14.00" fill="white">State #3</text>
+<text text-anchor="start" x="1035.65" y="-387.9" font-family="Courier New" font-size="14.00">(5) r -&gt; l •</text>
+<polygon fill="grey" stroke="transparent" points="1157.96,-381.5 1157.96,-403.5 1179.96,-403.5 1179.96,-381.5 1157.96,-381.5"></polygon>
+<text text-anchor="start" x="1160.56" y="-387.9" font-family="Courier New" font-size="14.00">=$</text>
+</g>
+<!-- state1&#45;&gt;state3 -->
+<g id="edge9" class="edge">
+<title>state1-&gt;state3</title>
+<path fill="none" stroke="black" stroke-width="5" d="M942.1,-351.41C964.87,-358.83 989.43,-366.84 1012.39,-374.32"></path>
+<polygon fill="black" stroke="black" stroke-width="5" points="1011.26,-378.56 1022.12,-377.5 1013.97,-370.24 1011.26,-378.56"></polygon>
+<text text-anchor="middle" x="981.44" y="-373.9" font-family="Helvetica,Arial,sans-serif" font-size="28.00">l</text>
+</g>
+<!-- state4 -->
+<g id="node5" class="node">
+<title>state4</title>
+<path fill="white" stroke="black" d="M1017.46,-293.5C1017.46,-293.5 1194.46,-293.5 1194.46,-293.5 1200.46,-293.5 1206.46,-299.5 1206.46,-305.5 1206.46,-305.5 1206.46,-339.5 1206.46,-339.5 1206.46,-345.5 1200.46,-351.5 1194.46,-351.5 1194.46,-351.5 1017.46,-351.5 1017.46,-351.5 1011.46,-351.5 1005.46,-345.5 1005.46,-339.5 1005.46,-339.5 1005.46,-305.5 1005.46,-305.5 1005.46,-299.5 1011.46,-293.5 1017.46,-293.5"></path>
+<polygon fill="white" stroke="transparent" points="1013.46,-297.5 1013.46,-347.5 1198.46,-347.5 1198.46,-297.5 1013.46,-297.5"></polygon>
+<polygon fill="black" stroke="transparent" points="1015.96,-323.5 1015.96,-345.5 1196.96,-345.5 1196.96,-323.5 1015.96,-323.5"></polygon>
+<text text-anchor="start" x="1072.85" y="-329.9" font-family="Courier New" font-size="14.00" fill="white">State #4</text>
+<text text-anchor="start" x="1018.85" y="-305.9" font-family="Courier New" font-size="14.00">(3) l -&gt; '*' r •</text>
+<polygon fill="grey" stroke="transparent" points="1174.96,-299.5 1174.96,-321.5 1196.96,-321.5 1196.96,-299.5 1174.96,-299.5"></polygon>
+<text text-anchor="start" x="1177.56" y="-305.9" font-family="Courier New" font-size="14.00">=$</text>
+</g>
+<!-- state1&#45;&gt;state4 -->
+<g id="edge7" class="edge">
+<title>state1-&gt;state4</title>
+<path fill="none" stroke="black" stroke-width="5" d="M942.1,-322.5C959.13,-322.5 977.15,-322.5 994.76,-322.5"></path>
+<polygon fill="black" stroke="black" stroke-width="5" points="995.07,-326.88 1005.07,-322.5 995.07,-318.13 995.07,-326.88"></polygon>
+<text text-anchor="middle" x="981.44" y="-330.9" font-family="Helvetica,Arial,sans-serif" font-size="28.00">r</text>
+</g>
+<!-- state7 -->
+<g id="node8" class="node">
+<title>state7</title>
+<path fill="white" stroke="black" d="M515.37,-257.5C515.37,-257.5 687.37,-257.5 687.37,-257.5 693.37,-257.5 699.37,-263.5 699.37,-269.5 699.37,-269.5 699.37,-375.5 699.37,-375.5 699.37,-381.5 693.37,-387.5 687.37,-387.5 687.37,-387.5 515.37,-387.5 515.37,-387.5 509.37,-387.5 503.37,-381.5 503.37,-375.5 503.37,-375.5 503.37,-269.5 503.37,-269.5 503.37,-263.5 509.37,-257.5 515.37,-257.5"></path>
+<polygon fill="white" stroke="transparent" points="511.37,-261.5 511.37,-383.5 691.37,-383.5 691.37,-261.5 511.37,-261.5"></polygon>
+<polygon fill="black" stroke="transparent" points="513.37,-359.5 513.37,-381.5 689.37,-381.5 689.37,-359.5 513.37,-359.5"></polygon>
+<text text-anchor="start" x="567.76" y="-365.9" font-family="Courier New" font-size="14.00" fill="white">State #7</text>
+<text text-anchor="start" x="516.35" y="-341.9" font-family="Courier New" font-size="14.00">(1) e -&gt; l '=' •r </text>
+<text text-anchor="start" x="516.37" y="-317.9" font-family="Courier New" font-size="14.00">(3) l -&gt; •'*' r </text>
+<text text-anchor="start" x="516.37" y="-293.9" font-family="Courier New" font-size="14.00">(4) l -&gt; •'n' </text>
+<text text-anchor="start" x="516.37" y="-269.9" font-family="Courier New" font-size="14.00">(5) r -&gt; •l </text>
+</g>
+<!-- state6&#45;&gt;state7 -->
+<g id="edge10" class="edge">
+<title>state6-&gt;state7</title>
+<path fill="none" stroke="black" d="M454.62,-306.17C467.3,-307.59 480.28,-309.05 493,-310.47"></path>
+<polygon fill="black" stroke="black" points="492.82,-313.97 503.15,-311.61 493.6,-307.02 492.82,-313.97"></polygon>
+<text text-anchor="middle" x="478.9" y="-312.7" font-family="Helvetica,Arial,sans-serif" font-size="14.00" fill="#474747">'='</text>
+</g>
+<!-- state7&#45;&gt;state1 -->
+<g id="edge12" class="edge">
+<title>state7-&gt;state1</title>
+<path fill="none" stroke="black" d="M699.37,-322.5C716.84,-322.5 735.07,-322.5 752.58,-322.5"></path>
+<polygon fill="black" stroke="black" points="752.81,-326 762.81,-322.5 752.81,-319 752.81,-326"></polygon>
+<text text-anchor="middle" x="723.39" y="-326.7" font-family="Helvetica,Arial,sans-serif" font-size="14.00" fill="#474747">'*'</text>
+</g>
+<!-- state7&#45;&gt;state2 -->
+<g id="edge13" class="edge">
+<title>state7-&gt;state2</title>
+<path fill="none" stroke="black" d="M690.06,-257.4C708.2,-246.93 727.78,-237.61 747.41,-231.7 831.03,-206.52 930.68,-206.23 1003.51,-211.08"></path>
+<polygon fill="black" stroke="black" points="1003.38,-214.58 1013.61,-211.8 1003.88,-207.6 1003.38,-214.58"></polygon>
+<text text-anchor="middle" x="852.41" y="-235.7" font-family="Helvetica,Arial,sans-serif" font-size="14.00" fill="#474747">'n'</text>
+</g>
+<!-- state7&#45;&gt;state3 -->
+<g id="edge14" class="edge">
+<title>state7-&gt;state3</title>
+<path fill="none" stroke="black" stroke-width="5" d="M670.1,-387.51C692.89,-405.3 719.63,-422.22 747.41,-431.5 833.84,-460.35 938.31,-447.39 1011.95,-430.99"></path>
+<polygon fill="black" stroke="black" stroke-width="5" points="1013.36,-435.16 1022.13,-428.66 1011.41,-426.63 1013.36,-435.16"></polygon>
+<text text-anchor="middle" x="852.41" y="-456.9" font-family="Helvetica,Arial,sans-serif" font-size="28.00">l</text>
+</g>
+<!-- state8 -->
+<g id="node9" class="node">
+<title>state8</title>
+<path fill="white" stroke="black" d="M759.41,-510.5C759.41,-510.5 945.41,-510.5 945.41,-510.5 951.41,-510.5 957.41,-516.5 957.41,-522.5 957.41,-522.5 957.41,-556.5 957.41,-556.5 957.41,-562.5 951.41,-568.5 945.41,-568.5 945.41,-568.5 759.41,-568.5 759.41,-568.5 753.41,-568.5 747.41,-562.5 747.41,-556.5 747.41,-556.5 747.41,-522.5 747.41,-522.5 747.41,-516.5 753.41,-510.5 759.41,-510.5"></path>
+<polygon fill="white" stroke="transparent" points="755.41,-514.5 755.41,-564.5 949.41,-564.5 949.41,-514.5 755.41,-514.5"></polygon>
+<polygon fill="black" stroke="transparent" points="757.41,-540.5 757.41,-562.5 947.41,-562.5 947.41,-540.5 757.41,-540.5"></polygon>
+<text text-anchor="start" x="818.81" y="-546.9" font-family="Courier New" font-size="14.00" fill="white">State #8</text>
+<text text-anchor="start" x="760.4" y="-522.9" font-family="Courier New" font-size="14.00">(1) e -&gt; l '=' r •</text>
+<polygon fill="grey" stroke="transparent" points="933.41,-516.5 933.41,-538.5 947.41,-538.5 947.41,-516.5 933.41,-516.5"></polygon>
+<text text-anchor="start" x="936.21" y="-522.9" font-family="Courier New" font-size="14.00">$</text>
+</g>
+<!-- state7&#45;&gt;state8 -->
+<g id="edge11" class="edge">
+<title>state7-&gt;state8</title>
+<path fill="none" stroke="black" stroke-width="5" d="M640.6,-387.72C666.1,-425.37 703.04,-470.32 747.41,-496.5 752.93,-499.76 758.75,-502.89 764.69,-505.87"></path>
+<polygon fill="black" stroke="black" stroke-width="5" points="763.2,-510.01 774.11,-510.42 767.01,-502.13 763.2,-510.01"></polygon>
+<text text-anchor="middle" x="723.39" y="-490.9" font-family="Helvetica,Arial,sans-serif" font-size="28.00">r</text>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
