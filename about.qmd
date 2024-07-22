@@ -1,0 +1,18 @@
+---
+title: "Galen Seilis"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/GSeilis
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/galen-s-4208349b/
+    - icon: github
+      text: Github
+      href: https://github.com/galenseilis
+---
+
+Galen is a science and technology enthusiast dedicated to life-long learning. Through the application of ethics, reason, and observation, he believes we can tackle problems in medicine, the environment, economics, and exploration.

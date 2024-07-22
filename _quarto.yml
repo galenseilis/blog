@@ -1,0 +1,21 @@
+project:
+  type: website
+
+website:
+  title: "Galen Seilis"
+  navbar:
+    right:
+      - about.qmd
+      - presentations.qmd
+      - publications.qmd
+      - icon: github
+        href: https://github.com/galenseilis
+      - icon: twitter
+        href: https://twitter.com/GSeilis
+format:
+  html:
+    theme: darkly
+    css: styles.css
+
+
+

@@ -1,0 +1,21 @@
+---
+title: "Publications"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/GSeilis
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/galen-s-4208349b/
+    - icon: github
+      text: Github
+      href: https://github.com/galenseilis
+---
+
+
+- (2023) Seilis, Galen. *The Importance of Partial Pooling with Northern Health Data*. Research and Knowledge Translation Newsletter
+- (2023) Seilis, Galen. [Project: Advanced Analytics](https://www.northernhealth.ca/sites/northern_health/files/health-professionals/research/documents/knowledge-translation-newsletter-seven.pdf). Research and Knowledge Translation Newsletter.
+- (2022)
