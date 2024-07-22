@@ -7,18 +7,11 @@
     "text": "Galen is a science and technology enthusiast dedicated to life-long learning. Through the application of ethics, reason, and observation, he believes we can tackle problems in medicine, the environment, economics, and exploration."
   },
   {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Welcome To My Blog",
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "My Quarto Blog",
     "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Posts",
-    "section": "",
-    "text": "Post With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nJul 8, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nJul 5, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "I am switching to Quarto for my blog. My Jekyll blog is available here, and I might move some of the posts over to the new blog over time.\nCreating this blog was really easy. Was my Jekyll blog really complicated to setup? There were some technical hurdles around getting extra behaviour on my original blog, but overall it wasn’t extremely hard. Why am I switching to Quarto?\nWhat Quarto provides (that I want) is code execution followed by rendering the output of the code. I can put my code examples right into the blog post, and if something like a plot is produced then that plot will show on my blog.\nIn constrast, with Jekyll, I needed to\n\nmake the plot\nmove the plot to an images folder\nreference to the plot’s path in the blog post.\n\nIt wasn’t terrible, and it is possible that I just didn’t figure out how to make this easier with Jekyll, but it was quickly apparent to me that Quarto makes this easy.\nThis includes mermaid diagrams:\n\n---\ntitle: Example Git diagram\n---\ngitGraph\n   commit\n   commit\n   branch develop\n   checkout develop\n   commit\n   commit\n   checkout main\n   merge develop\n   commit\n   commit\n\n\n\n\n---\ntitle: Example Git diagram\n---\ngitGraph\n   commit\n   commit\n   branch develop\n   checkout develop\n   commit\n   commit\n   checkout main\n   merge develop\n   commit\n   commit\n\n\n\n\n\n\nI can also easily prepare Graphiz diagrams provided that I supply some valid dot notation:\n\ndigraph finite_state_machine {\n    fontname=\"Helvetica,Arial,sans-serif\"\n    node [fontname=\"Helvetica,Arial,sans-serif\"]\n    edge [fontname=\"Helvetica,Arial,sans-serif\"]\n    rankdir=LR;\n    node [shape = doublecircle]; 0 3 4 8;\n    node [shape = circle];\n    0 -&gt; 2 [label = \"SS(B)\"];\n    0 -&gt; 1 [label = \"SS(S)\"];\n    1 -&gt; 3 [label = \"S($end)\"];\n    2 -&gt; 6 [label = \"SS(b)\"];\n    2 -&gt; 5 [label = \"SS(a)\"];\n    2 -&gt; 4 [label = \"S(A)\"];\n    5 -&gt; 7 [label = \"S(b)\"];\n    5 -&gt; 5 [label = \"S(a)\"];\n    6 -&gt; 6 [label = \"S(b)\"];\n    6 -&gt; 5 [label = \"S(a)\"];\n    7 -&gt; 8 [label = \"S(b)\"];\n    7 -&gt; 5 [label = \"S(a)\"];\n    8 -&gt; 6 [label = \"S(b)\"];\n    8 -&gt; 5 [label = \"S(a)\"];\n}\n\n\n\n\n\n\nfinite_state_machine\n\n\n\n0\n\n\n0\n\n\n\n2\n\n2\n\n\n\n0-&gt;2\n\n\nSS(B)\n\n\n\n1\n\n1\n\n\n\n0-&gt;1\n\n\nSS(S)\n\n\n\n3\n\n\n3\n\n\n\n4\n\n\n4\n\n\n\n8\n\n\n8\n\n\n\n6\n\n6\n\n\n\n8-&gt;6\n\n\nS(b)\n\n\n\n5\n\n5\n\n\n\n8-&gt;5\n\n\nS(a)\n\n\n\n2-&gt;4\n\n\nS(A)\n\n\n\n2-&gt;6\n\n\nSS(b)\n\n\n\n2-&gt;5\n\n\nSS(a)\n\n\n\n1-&gt;3\n\n\nS($end)\n\n\n\n6-&gt;6\n\n\nS(b)\n\n\n\n6-&gt;5\n\n\nS(a)\n\n\n\n5-&gt;5\n\n\nS(a)\n\n\n\n7\n\n7\n\n\n\n5-&gt;7\n\n\nS(b)\n\n\n\n7-&gt;8\n\n\nS(b)\n\n\n\n7-&gt;5\n\n\nS(a)"
   },
   {
     "objectID": "publications.html",
@@ -28,11 +21,11 @@
     "text": "Seilis, Galen. The Importance of Partial Pooling with Northern Health Data. Research and Knowledge Translation Newsletter\n\n\nSeilis, Galen. Project: Advanced Analytics. Research and Knowledge Translation Newsletter."
   },
   {
-    "objectID": "posts/post-with-code/index.html",
-    "href": "posts/post-with-code/index.html",
-    "title": "Post With Code",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Posts",
     "section": "",
-    "text": "g\n\n\n\nstate0\n\n\n\nState #0\n(0) s -&gt; •e $ \n(1) e -&gt; •l '=' r \n(2) e -&gt; •r \n(3) l -&gt; •'*' r \n(4) l -&gt; •'n' \n(5) r -&gt; •l \n\n\n\nstate1\n\n\n\nState #1\n(3) l -&gt; •'*' r \n(3) l -&gt; '*' •r \n(4) l -&gt; •'n' \n(5) r -&gt; •l \n\n\n\nstate0-&gt;state1\n\n\n'*'\n\n\n\nstate2\n\n\n\nState #2\n(4) l -&gt; 'n' •\n\n=$\n\n\n\nstate0-&gt;state2\n\n\n'n'\n\n\n\nstate5\n\n\n\nState #5\n(0) s -&gt; e •$ \n\n\n\nstate0-&gt;state5\n\n\ne\n\n\n\nstate6\n\n\n\nState #6\n(1) e -&gt; l •'=' r \n(5) r -&gt; l •\n\n$\n\n\n\nstate0-&gt;state6\n\n\nl\n\n\n\nstate9\n\n\n\nState #9\n(2) e -&gt; r •\n\n$\n\n\n\nstate0-&gt;state9\n\n\nr\n\n\n\nstate1-&gt;state1\n\n\n'*'\n\n\n\nstate1-&gt;state2\n\n\n'n'\n\n\n\nstate3\n\n\n\nState #3\n(5) r -&gt; l •\n\n=$\n\n\n\nstate1-&gt;state3\n\n\nl\n\n\n\nstate4\n\n\n\nState #4\n(3) l -&gt; '*' r •\n\n=$\n\n\n\nstate1-&gt;state4\n\n\nr\n\n\n\nstate7\n\n\n\nState #7\n(1) e -&gt; l '=' •r \n(3) l -&gt; •'*' r \n(4) l -&gt; •'n' \n(5) r -&gt; •l \n\n\n\nstate6-&gt;state7\n\n\n'='\n\n\n\nstate7-&gt;state1\n\n\n'*'\n\n\n\nstate7-&gt;state2\n\n\n'n'\n\n\n\nstate7-&gt;state3\n\n\nl\n\n\n\nstate8\n\n\n\nState #8\n(1) e -&gt; l '=' r •\n\n$\n\n\n\nstate7-&gt;state8\n\n\nr"
+    "text": "My Quarto Blog\n\n\n\n\n\n\nquarto\n\n\nblog\n\n\njekyll\n\n\n\n\n\n\n\n\n\nJul 21, 2024\n\n\nGalen Seilis\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "presentations.html",
