@@ -3,7 +3,9 @@
     "listing": "/index.html",
     "items": [
       "/posts/my-quarto-blog/index.html",
-      "/posts/combining-kedro-with-rye/index.html"
+      "/posts/combining-kedro-with-rye/index.html",
+      "/posts/quantecon-1-scipy-submodules/index.html",
+      "/posts/starting-data-science/index.html"
     ]
   }
 ]

@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Galen Seilis">
+<meta name="dcterms.date" content="2019-03-23">
 
-<title>Posts – Galen Seilis</title>
+<title>Starting Data Science – Galen Seilis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +25,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,77 +68,19 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Galen Seilis</span>
     </a>
   </div>
@@ -149,15 +91,15 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">Galen Seilis</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./presentations.html"> 
+    <a class="nav-link" href="../../presentations.html"> 
 <span class="menu-text">Presentations</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./publications.html"> 
+    <a class="nav-link" href="../../publications.html"> 
 <span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item compact">
@@ -180,218 +122,52 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Posts</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">Starting Data Science</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Data Science</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Galen Seilis </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 23, 2019</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Brents method">Brents method <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Data Science">Data Science <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Graphviz">Graphviz <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Jekyll">Jekyll <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Kedro">Kedro <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Mermaid">Mermaid <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Newton Raphson method">Newton Raphson method <span class="quarto-category-count">(1)</span></div><div class="category" data-category="NumPy">NumPy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Python">Python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Quarto">Quarto <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Rye">Rye <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Scipy">Scipy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bisect method">bisect method <span class="quarto-category-count">(1)</span></div><div class="category" data-category="blog">blog <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dot">dot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="optimization">optimization <span class="quarto-category-count">(1)</span></div><div class="category" data-category="scipy.optimize">scipy.optimize <span class="quarto-category-count">(1)</span></div><div class="category" data-category="timeit">timeit <span class="quarto-category-count">(1)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
+<p>I’ve been thinking about <a href="https://en.wikipedia.org/wiki/Data_science">Data Science</a> lately, and I recently watched a <a href="https://www.youtube.com/watch?v=eTxyviU0Ddo">YouTube video</a> describing how to get started learning prerequisite knowledge for this field. While I am skeptical of the use of buzzwords, I think <em>data science</em> does reflect a loose collection of ideas and tools that are interesting and useful. Some of these subtopics include <a href="https://en.wikipedia.org/wiki/Statistics">statistics</a>, <a href="https://en.wikipedia.org/wiki/Algorithm">algorithms</a>, <a href="https://en.wikipedia.org/wiki/Database">databases</a>, <a href="https://en.wikipedia.org/wiki/Machine_learning">machine learning</a>, and other miscellaneous topics within <a href="https://en.wikipedia.org/wiki/Computer_science">computer science</a> and <a href="https://en.wikipedia.org/wiki/Mathematics">mathematics</a>. I’m not partial to the term, but I am to the associated skillset.</p>
+<p>In the interest of learning this subject in a structured way, I am going to go through the curricula suggested by <a href="http://www.dtc.ox.ac.uk/people/15/mcmullenkleing/">Giles McMullen-Klein</a>. I’ll modify it as it suites my needs or interests, but it serves as a simple template to get started with.</p>
 
 
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="blog,Quarto,Jekyll,Mermaid,Graphviz,dot" data-listing-date-sort="1721545200000" data-listing-file-modified-sort="1721611689126" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="390">
-<div class="thumbnail">
-<p><a href="./posts/my-quarto-blog/index.html" class="no-external"></a></p><a href="./posts/my-quarto-blog/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/my-quarto-blog/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/my-quarto-blog/index.html" class="no-external">My Quarto Blog</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/my-quarto-blog/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('blog'); return false;">
-blog
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Quarto'); return false;">
-Quarto
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Jekyll'); return false;">
-Jekyll
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Mermaid'); return false;">
-Mermaid
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Graphviz'); return false;">
-Graphviz
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('dot'); return false;">
-dot
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/my-quarto-blog/index.html" class="no-external">I am switching to Quarto for my blog. My Jekyll blog is available here, and I might move some of the posts over to the new blog over time.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/my-quarto-blog/index.html" class="no-external">
-<div class="listing-date">
-Jul 21, 2024
-</div>
-<div class="listing-author">
-Galen Seilis
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="Kedro,Rye" data-listing-date-sort="1719817200000" data-listing-file-modified-sort="1721611358724" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2744">
-<div class="thumbnail">
-<p><a href="./posts/combining-kedro-with-rye/index.html" class="no-external"></a></p><a href="./posts/combining-kedro-with-rye/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/combining-kedro-with-rye/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/combining-kedro-with-rye/index.html" class="no-external">Combining Kedro with Rye</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/combining-kedro-with-rye/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Kedro'); return false;">
-Kedro
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Rye'); return false;">
-Rye
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/combining-kedro-with-rye/index.html" class="no-external">I recently asked on the Kedro Slack channel about what experience people have had with combining Kedro with package management tools in Python such as PDM, Poetry, Hatch or…<code></code><code></code></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/combining-kedro-with-rye/index.html" class="no-external">
-<div class="listing-date">
-Jul 1, 2024
-</div>
-<div class="listing-author">
-Galen Seilis
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="Python,Scipy,NumPy,scipy.optimize,Newton Raphson method,Brents method,timeit,bisect method,optimization" data-listing-date-sort="1553756400000" data-listing-file-modified-sort="1721612759793" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="941">
-<div class="thumbnail">
-<p><a href="./posts/quantecon-1-scipy-submodules/index.html" class="no-external"></a></p><a href="./posts/quantecon-1-scipy-submodules/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/quantecon-1-scipy-submodules/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/quantecon-1-scipy-submodules/index.html" class="no-external">QuantEcon 1 Scipy Submodules</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/quantecon-1-scipy-submodules/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Scipy'); return false;">
-Scipy
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('NumPy'); return false;">
-NumPy
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('scipy.optimize'); return false;">
-scipy.optimize
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Newton Raphson method'); return false;">
-Newton Raphson method
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Brents method'); return false;">
-Brents method
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('timeit'); return false;">
-timeit
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('bisect method'); return false;">
-bisect method
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('optimization'); return false;">
-optimization
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/quantecon-1-scipy-submodules/index.html" class="no-external">As someone with previous background in Python, I’ve been blasting my way through the basics of the Quantecon curricula. One of the joys of self-directed learning is that…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/quantecon-1-scipy-submodules/index.html" class="no-external">
-<div class="listing-date">
-Mar 28, 2019
-</div>
-<div class="listing-author">
-Galen Seilis
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="Data Science" data-listing-date-sort="1553324400000" data-listing-file-modified-sort="1721612030344" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="127">
-<div class="thumbnail">
-<p><a href="./posts/starting-data-science/index.html" class="no-external"></a></p><a href="./posts/starting-data-science/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/starting-data-science/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/starting-data-science/index.html" class="no-external">Starting Data Science</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/starting-data-science/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Data Science'); return false;">
-Data Science
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/starting-data-science/index.html" class="no-external">I’ve been thinking about Data Science lately, and I recently watched a YouTube video describing how to get started learning prerequisite knowledge for this field. While I am…<em></em></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/starting-data-science/index.html" class="no-external">
-<div class="listing-date">
-Mar 23, 2019
-</div>
-<div class="listing-author">
-Galen Seilis
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

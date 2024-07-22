@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Galen Seilis">
+<meta name="dcterms.date" content="2019-03-28">
 
-<title>Posts – Galen Seilis</title>
+<title>QuantEcon 1 Scipy Submodules – Galen Seilis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +22,59 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,35 +102,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -128,17 +133,17 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Galen Seilis</span>
     </a>
   </div>
@@ -149,15 +154,15 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">Galen Seilis</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./presentations.html"> 
+    <a class="nav-link" href="../../presentations.html"> 
 <span class="menu-text">Presentations</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./publications.html"> 
+    <a class="nav-link" href="../../publications.html"> 
 <span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item compact">
@@ -180,218 +185,140 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Posts</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">QuantEcon 1 Scipy Submodules</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">Scipy</div>
+                <div class="quarto-category">NumPy</div>
+                <div class="quarto-category">scipy.optimize</div>
+                <div class="quarto-category">Newton Raphson method</div>
+                <div class="quarto-category">Brents method</div>
+                <div class="quarto-category">timeit</div>
+                <div class="quarto-category">bisect method</div>
+                <div class="quarto-category">optimization</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Galen Seilis </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 28, 2019</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Brents method">Brents method <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Data Science">Data Science <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Graphviz">Graphviz <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Jekyll">Jekyll <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Kedro">Kedro <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Mermaid">Mermaid <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Newton Raphson method">Newton Raphson method <span class="quarto-category-count">(1)</span></div><div class="category" data-category="NumPy">NumPy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Python">Python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Quarto">Quarto <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Rye">Rye <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Scipy">Scipy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bisect method">bisect method <span class="quarto-category-count">(1)</span></div><div class="category" data-category="blog">blog <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dot">dot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="optimization">optimization <span class="quarto-category-count">(1)</span></div><div class="category" data-category="scipy.optimize">scipy.optimize <span class="quarto-category-count">(1)</span></div><div class="category" data-category="timeit">timeit <span class="quarto-category-count">(1)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
+<p>As someone with previous background in Python, I’ve been blasting my way through the basics of the <a href="https://lectures.quantecon.org/py/">Quantecon curricula</a>. One of the joys of self-directed learning is that, with discipline, you can speed through familar material and really camp out with the new material. With that in mind, I’ve decided to further play with finding solutions (x-intercepts) of some single variable functions.</p>
+<p>First of all, let’s find ourselves an interesting function. I’ve chosen <span class="math inline">\(f(x) = \sin(x) \exp(-x)\)</span> because I’ve always enjoyed its degradating oscillations, but also because I expect this equation to have solutions. Since any integer multiple <span class="math inline">\(k\)</span> of <span class="math inline">\(\pi\)</span> will result in <span class="math inline">\(\sin(x) = 0\)</span> when <span class="math inline">\(x = k \pi\)</span>, we know that <span class="math inline">\(f(k \pi) = 0\)</span> as well. While I’m quite late (or too early, depending on how you see it) for calculating <span class="math inline">\(\pi\)</span> on <span class="math inline">\(\pi\)</span> Day, let’s take <span class="math inline">\(k = 1\)</span> to find <span class="math inline">\(\pi\)</span> anyway!</p>
+<section id="bisection-method" class="level1">
+<h1>Bisection Method</h1>
+<p>The first method mentioned on QuantEcon is the bisection algorithm, which essentially treats finding solutions to a function as a binary search problem. There are two parameters that are needed to get started with the bisection algorithm, an initial lower bound and an initial upper bound on the search space. Not only do we need two such parameters, but our choice of these two numbers can change what solution is found. Let’s consider the following example where we look on the interval <span class="math inline">\([-10, 10]\)</span>.</p>
+<div id="67928119" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> bisect</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a single-variable function to find solutions in</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="kw">lambda</span> x: np.sin(x) <span class="op">*</span> np.exp(<span class="op">-</span>x)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># try out the bisection algorithm</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(bisect(f, <span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.0</code></pre>
+</div>
+</div>
+<p>We were looking for <span class="math inline">\(x = \pi\)</span>, but we got <span class="math inline">\(x = 0\)</span> instead. If there are multiple solutions within your search interval, the algorithm won’t necessarily converge on the one that you wanted, nor will it report to you there were multiple solutions. Knowing ahead of time that we’d like to calculate <span class="math inline">\(\pi\)</span>, and that <span class="math inline">\(3 &lt; \pi &lt; 4\)</span>, let’s rerun the bisection algorithm on <span class="math inline">\([3, 4]\)</span>.</p>
+<div id="b4cfba4a" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(bisect(f, <span class="dv">3</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>3.1415926535901235</code></pre>
+</div>
+</div>
+<p>That gives us a value pretty close to <span class="math inline">\(\pi\)</span>, correct to the <span class="math inline">\(11\)</span>th digit anyway.</p>
+</section>
+<section id="newton-raphson-method" class="level1">
+<h1>Newton-Raphson method</h1>
+<p>The Newton-Raphson method is a calculus-based method that iteratively steps towards a solution. Like the bisection method, it requires a number decided ahead of time but this time this chosen number is an initial guess or starting point. Unlike the bisection method, the Newton-Raphson method does not have bounds set on the search so a continuous function over the real numbers can be searched indefinitely. To prevent the algorithm searching for too long, a hyperparameter limiting the number of iterations (steps) is included if a stable solution is not converged upon (default is <span class="math inline">\(50\)</span> steps).</p>
+<div id="3ce6e0f2" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> newton</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a single-variable function to find solutions in</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># try out the Newton-Raphson algorithm</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(newton(f, <span class="fl">0.2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>3.6499361606787994e-14</code></pre>
+</div>
+</div>
+<p>While <span class="math inline">\(x = 0.2\)</span> is not that far off from Pi, the local derivatives are going to point the steps to descend toward zero. Notice that the solution we got was not exactly zero, but rather the first solution found within a predefined tolerance of <span class="math inline">\(1.48 \times 10^{-8}\)</span>. What you don’t see from the code is the that shape of the curve, which if you plot our function you’ll see there is a local maxima between <span class="math inline">\(x = 0\)</span> and <span class="math inline">\(x = \pi\)</span> at <span class="math inline">\(x = \frac{\pi}{4}\)</span>. Relative to this <em>hill</em>, our estimate is analogous to a ball rolling in the direction of steepest descent. This analogy breaks down for solutions separated by a local minima as the method is not equivalent to steepest descent even though it is based on the local derivative. Another issue that can come about is picking an initial value close to an extrema because the results can be unstable, allowing incredibly large jumps across the domain. Therefore, we should be cautious about our choice of initial guess by doing some exploration of function’s properties before attempting to estimate the solution. Let’s retry with a more suitable initial value.</p>
+<div id="3d0e5681" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># try out the Newton-Raphson algorithm</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(newton(f, np.pi <span class="op">/</span> <span class="dv">4</span> <span class="op">+</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>3.1415926535897936</code></pre>
+</div>
+</div>
+<p>That is clearly closer to <span class="math inline">\(\pi\)</span> than <span class="math inline">\(3.6499361606787994 \times 10^{-14}\)</span>, and being accurate for the first <span class="math inline">\(16\)</span> digits suggests that it was more precise than the bisection algorithm under these parameters.</p>
+</section>
+<section id="brents-method" class="level1">
+<h1>Brent’s method</h1>
+<p>The QuantEcon course points out that Bisection is more robust (stable) than Newton-Raphson’s method, but it is also slower. An alternative approach that balances this tradeoff is Brent’s method which includes bounds and garantees solutions for computable functions. Let’s give this approach a try on our function on <span class="math inline">\([3, 4]\)</span>.</p>
+<div id="fd03e7c4" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> brentq</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># try out the Brent's algorithm</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(brentq(f, <span class="dv">3</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>3.141592653589788</code></pre>
+</div>
+</div>
+<p>Looks like this estimation of <span class="math inline">\(\pi\)</span> was correct for the first <span class="math inline">\(13\)</span> digits, which was better than Bisection but worse than Newton-Raphson.</p>
+</section>
+<section id="performance-comparison-with-timeit" class="level1">
+<h1>Performance comparison with timeit</h1>
+<p>Last of all, it would be interesting to compare the time performance of each of these solution-finding approaches. Let’s do that with timeit.</p>
+<div id="3017ee5a" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timeit <span class="im">import</span> timeit</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(timeit(stmt<span class="op">=</span><span class="st">'bisect(f, 3, 4)'</span>,<span class="op">\</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">globals</span><span class="op">=</span>{<span class="st">'bisect'</span>:bisect, <span class="st">'f'</span>:f},<span class="op">\</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    number<span class="op">=</span><span class="dv">100000</span>) <span class="op">/</span> <span class="dv">100000</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(timeit(stmt<span class="op">=</span><span class="st">'newton(f, np.pi / 4 + 1)'</span>,<span class="op">\</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">globals</span><span class="op">=</span>{<span class="st">'newton'</span>:newton, <span class="st">'f'</span>:f, <span class="st">'np'</span>:np},<span class="op">\</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    number<span class="op">=</span><span class="dv">100000</span>) <span class="op">/</span> <span class="dv">100000</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(timeit(stmt<span class="op">=</span><span class="st">'brentq(f, 3, 4)'</span>,<span class="op">\</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">globals</span><span class="op">=</span>{<span class="st">'brentq'</span>:brentq, <span class="st">'f'</span>:f},<span class="op">\</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    number<span class="op">=</span><span class="dv">100000</span>) <span class="op">/</span> <span class="dv">100000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.00010017173054002341
+0.0001319278220400156
+2.3580086980000487e-05</code></pre>
+</div>
+</div>
+<p>We find under this setup that the slowest algorithm was the Newton-Raphson’s method, followed by the bisection method by a factor of <span class="math inline">\(\frac{1}{5}\)</span>, and final Brent’s method being about an order of magnitude faster! So Brent’s method gave us more accurate digits in the solution, at least for <span class="math inline">\(x = \pi\)</span>, and also performed faster than the other two methods. Does this mean that Brent’s method is always the best method? Not necessarily. We should be open to the possibility of tradeoffs not discussed on QuantEcon, as well as there being a panoply of algorithms out available in code repositories.</p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="blog,Quarto,Jekyll,Mermaid,Graphviz,dot" data-listing-date-sort="1721545200000" data-listing-file-modified-sort="1721611689126" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="390">
-<div class="thumbnail">
-<p><a href="./posts/my-quarto-blog/index.html" class="no-external"></a></p><a href="./posts/my-quarto-blog/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/my-quarto-blog/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/my-quarto-blog/index.html" class="no-external">My Quarto Blog</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/my-quarto-blog/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('blog'); return false;">
-blog
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Quarto'); return false;">
-Quarto
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Jekyll'); return false;">
-Jekyll
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Mermaid'); return false;">
-Mermaid
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Graphviz'); return false;">
-Graphviz
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('dot'); return false;">
-dot
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/my-quarto-blog/index.html" class="no-external">I am switching to Quarto for my blog. My Jekyll blog is available here, and I might move some of the posts over to the new blog over time.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/my-quarto-blog/index.html" class="no-external">
-<div class="listing-date">
-Jul 21, 2024
-</div>
-<div class="listing-author">
-Galen Seilis
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="Kedro,Rye" data-listing-date-sort="1719817200000" data-listing-file-modified-sort="1721611358724" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2744">
-<div class="thumbnail">
-<p><a href="./posts/combining-kedro-with-rye/index.html" class="no-external"></a></p><a href="./posts/combining-kedro-with-rye/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/combining-kedro-with-rye/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/combining-kedro-with-rye/index.html" class="no-external">Combining Kedro with Rye</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/combining-kedro-with-rye/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Kedro'); return false;">
-Kedro
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Rye'); return false;">
-Rye
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/combining-kedro-with-rye/index.html" class="no-external">I recently asked on the Kedro Slack channel about what experience people have had with combining Kedro with package management tools in Python such as PDM, Poetry, Hatch or…<code></code><code></code></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/combining-kedro-with-rye/index.html" class="no-external">
-<div class="listing-date">
-Jul 1, 2024
-</div>
-<div class="listing-author">
-Galen Seilis
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="Python,Scipy,NumPy,scipy.optimize,Newton Raphson method,Brents method,timeit,bisect method,optimization" data-listing-date-sort="1553756400000" data-listing-file-modified-sort="1721612759793" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="941">
-<div class="thumbnail">
-<p><a href="./posts/quantecon-1-scipy-submodules/index.html" class="no-external"></a></p><a href="./posts/quantecon-1-scipy-submodules/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/quantecon-1-scipy-submodules/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/quantecon-1-scipy-submodules/index.html" class="no-external">QuantEcon 1 Scipy Submodules</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/quantecon-1-scipy-submodules/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Scipy'); return false;">
-Scipy
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('NumPy'); return false;">
-NumPy
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('scipy.optimize'); return false;">
-scipy.optimize
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Newton Raphson method'); return false;">
-Newton Raphson method
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Brents method'); return false;">
-Brents method
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('timeit'); return false;">
-timeit
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('bisect method'); return false;">
-bisect method
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('optimization'); return false;">
-optimization
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/quantecon-1-scipy-submodules/index.html" class="no-external">As someone with previous background in Python, I’ve been blasting my way through the basics of the Quantecon curricula. One of the joys of self-directed learning is that…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/quantecon-1-scipy-submodules/index.html" class="no-external">
-<div class="listing-date">
-Mar 28, 2019
-</div>
-<div class="listing-author">
-Galen Seilis
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="Data Science" data-listing-date-sort="1553324400000" data-listing-file-modified-sort="1721612030344" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="127">
-<div class="thumbnail">
-<p><a href="./posts/starting-data-science/index.html" class="no-external"></a></p><a href="./posts/starting-data-science/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/starting-data-science/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/starting-data-science/index.html" class="no-external">Starting Data Science</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/starting-data-science/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Data Science'); return false;">
-Data Science
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/starting-data-science/index.html" class="no-external">I’ve been thinking about Data Science lately, and I recently watched a YouTube video describing how to get started learning prerequisite knowledge for this field. While I am…<em></em></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/starting-data-science/index.html" class="no-external">
-<div class="listing-date">
-Mar 23, 2019
-</div>
-<div class="listing-author">
-Galen Seilis
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
