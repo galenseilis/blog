@@ -2,7 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/post-with-code/index.html"
+      "/posts/my-quarto-blog/index.html",
+      "/posts/combining-kedro-with-rye/index.html"
     ]
   }
 ]
