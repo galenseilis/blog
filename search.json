@@ -9,7 +9,7 @@
   {
     "objectID": "posts/how-to-compile-python-on-linux/index.html",
     "href": "posts/how-to-compile-python-on-linux/index.html",
-    "title": "How to Compile Python on Debian-Based Linux",
+    "title": "How to Compile CPython on Debian-Based Linux",
     "section": "",
     "text": "This is a short blog post to remind myself how to compile CPython from its source.\nYou need to get the source files for Python as you need to give the C compiler (and other tools) the needed instructions for producing machine code. These CPython source is available on Github. Using git, you can download with\n$ git clone https://github.com/python/cpython.git\nYou should install build-essential which provides tooling for building Debian packages. This can be done with apt:\n$ sudo apt install build-essential\nNext install these assorted packages:\n$ sudo apt install libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev liblzma-dev libffi-dev\nNow run the configuration tool that the Python dev’s have kindly prepared. It will prepare a makefile for everything you need to build CPython.\n$ ./configure --with-pydebug\nFinally, you can just run make.\n$ make\nThat’s pretty much it. If you want to silence the large standard output, you can add an -s. By default make will compile the first target specified in the make file, which for this project is actually the entirety of CPython itself. You can specify special build targets related to building, testing, installation, and other topics."
   },
@@ -60,7 +60,7 @@
     "href": "index.html",
     "title": "Posts",
     "section": "",
-    "text": "How to Compile Python on Debian-Based Linux\n\n\n\n\n\n\nPython\n\n\nCPython\n\n\nC\n\n\ncompilation\n\n\nmake\n\n\nDebian\n\n\nLinux\n\n\n\n\n\n\n\n\n\nJul 25, 2024\n\n\nGalen Seilis\n\n\n\n\n\n\n\n\n\n\n\n\nMy Quarto Blog\n\n\n\n\n\n\nblog\n\n\nQuarto\n\n\nJekyll\n\n\nMermaid\n\n\nGraphviz\n\n\ndot\n\n\n\n\n\n\n\n\n\nJul 21, 2024\n\n\nGalen Seilis\n\n\n\n\n\n\n\n\n\n\n\n\nCombining Kedro with Rye\n\n\n\n\n\n\nKedro\n\n\nRye\n\n\n\n\n\n\n\n\n\nJul 1, 2024\n\n\nGalen Seilis\n\n\n\n\n\n\n\n\n\n\n\n\nQuantEcon 1 Scipy Submodules\n\n\n\n\n\n\nPython\n\n\nScipy\n\n\nNumPy\n\n\nscipy.optimize\n\n\nNewton Raphson method\n\n\nBrents method\n\n\ntimeit\n\n\nbisect method\n\n\noptimization\n\n\n\n\n\n\n\n\n\nMar 28, 2019\n\n\nGalen Seilis\n\n\n\n\n\n\n\n\n\n\n\n\nStarting Data Science\n\n\n\n\n\n\nData Science\n\n\n\n\n\n\n\n\n\nMar 23, 2019\n\n\nGalen Seilis\n\n\n\n\n\n\nNo matching items"
+    "text": "How to Compile CPython on Debian-Based Linux\n\n\n\n\n\n\nPython\n\n\nCPython\n\n\nC\n\n\ncompilation\n\n\nmake\n\n\nDebian\n\n\nLinux\n\n\n\n\n\n\n\n\n\nJul 25, 2024\n\n\nGalen Seilis\n\n\n\n\n\n\n\n\n\n\n\n\nMy Quarto Blog\n\n\n\n\n\n\nblog\n\n\nQuarto\n\n\nJekyll\n\n\nMermaid\n\n\nGraphviz\n\n\ndot\n\n\n\n\n\n\n\n\n\nJul 21, 2024\n\n\nGalen Seilis\n\n\n\n\n\n\n\n\n\n\n\n\nCombining Kedro with Rye\n\n\n\n\n\n\nKedro\n\n\nRye\n\n\n\n\n\n\n\n\n\nJul 1, 2024\n\n\nGalen Seilis\n\n\n\n\n\n\n\n\n\n\n\n\nQuantEcon 1 Scipy Submodules\n\n\n\n\n\n\nPython\n\n\nScipy\n\n\nNumPy\n\n\nscipy.optimize\n\n\nNewton Raphson method\n\n\nBrents method\n\n\ntimeit\n\n\nbisect method\n\n\noptimization\n\n\n\n\n\n\n\n\n\nMar 28, 2019\n\n\nGalen Seilis\n\n\n\n\n\n\n\n\n\n\n\n\nStarting Data Science\n\n\n\n\n\n\nData Science\n\n\n\n\n\n\n\n\n\nMar 23, 2019\n\n\nGalen Seilis\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/my-quarto-blog/index.html",
