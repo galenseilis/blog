@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/how-to-compile-python-on-linux/index.html",
       "/posts/my-quarto-blog/index.html",
       "/posts/combining-kedro-with-rye/index.html",
       "/posts/quantecon-1-scipy-submodules/index.html",
