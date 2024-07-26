@@ -209,6 +209,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt install build-essential</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Next install these assorted packages:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt install libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev liblzma-dev libffi-dev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here is a brief description of each package:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Install</th>
+<th>Package</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>libssl-dev</code></td>
+<td>Secure Sockets Layer toolkit - development files</td>
+<td><a href="https://packages.debian.org/buster/libssl-dev">This package is part of the OpenSSL project’s implementation of the SSL and TLS crypographic protocols for secure communication over the internet.</a></td>
+</tr>
+</tbody>
+</table>
 <p>Now run the configuration tool that the Python dev’s have kindly prepared. It will prepare a makefile for everything you need to build CPython.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./configure <span class="at">--with-pydebug</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The <code>--with-pydebug</code> tells <code>configure</code> to use a debugging hook.</p>
