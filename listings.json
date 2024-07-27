@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/rust-execution-for-quarto/index.html",
       "/posts/how-to-compile-python-on-linux/index.html",
       "/posts/my-quarto-blog/index.html",
       "/posts/combining-kedro-with-rye/index.html",
