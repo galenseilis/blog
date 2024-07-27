@@ -1,0 +1,58 @@
+---
+title: "How to Compile CPython on Debian-Based Linux"
+author: "Galen Seilis"
+date: "2024-07-25"
+categories: [Python, CPython, C, compilation, make, Debian, Linux]
+---
+
+This is a short blog post to remind myself how to compile CPython from its source.
+
+You need to get the source files for Python as you need to give the C compiler (and other tools) the needed instructions for producing machine code. These CPython source is available on [Github](https://github.com/python/cpython/tree/main). Using git, you can download with
+
+```bash
+$ git clone https://github.com/python/cpython.git
+```
+
+You should install [`build-essential`](https://packages.debian.org/sid/build-essential) which provides tooling for building Debian packages. This can be done with `apt`:
+
+```bash
+$ sudo apt install build-essential
+```
+
+Next install these assorted packages:
+
+```bash
+$ sudo apt install libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev liblzma-dev libffi-dev
+```
+
+Here is a brief description of each package:
+
+| Install | Package | Description |
+| --- | --- | --- |
+| `libssl-dev` | Secure Sockets Layer toolkit - development files | [This package is part of the OpenSSL project's implementation of the SSL and TLS crypographic protocols for secure communication over the internet.](https://packages.debian.org/buster/libssl-dev) |
+| `zlib1g-dev` | | |
+| `libncurses5-dev` | | |
+| `libncursesw5-dev` | | |
+| `libreadline-dev` | | | 
+| `libsqlite3-dev` | | | 
+| `libgdbm-dev` | | | 
+| `libdb5.3-dev` | | |
+| `libbz2-dev` | | |
+| `liblzma-dev` | | | 
+| `libffi-dev` | | |
+
+Now run the configuration tool that the Python dev's have kindly prepared. It will prepare a makefile for everything you need to build CPython. 
+
+```bash
+$ ./configure --with-pydebug
+```
+
+The `--with-pydebug` tells `configure` to use a debugging hook.
+
+Finally, you can just run `make`.
+
+```bash
+$ make
+```
+
+That's pretty much it. If you want to silence the large standard output, you can add an `-s`. By default `make` will compile the first target specified in the make file, which for this project is actually the entirety of CPython itself. You can specify special build targets related to building, testing, installation, and other topics.

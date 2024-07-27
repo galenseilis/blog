@@ -1,0 +1,12 @@
+{
+  "hash": "bc92009b2ec99c0f9a94430fb5d80c14",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"Executing Rust in Quarto\"\nauthor: \"Galen Seilis\"\ndate: \"2024-07-26\"\ncategories: [Quarto, Rust, Lua, Pandoc]\necho: true\n---\n\n\n::: {.callout-warning}\n## WIP\n\nThis post is a work in progress. I am experimenting with rendering Rust code. It still needs some work.\n:::\n\n\nHere is some Rust code that will be executed and rendered.\n\n\n```{rust}\nfn main() {\n    // Statements here are executed when the compiled binary is called.\n    // Print text to the console.\n        println!(\"Galen Seilis is learning Rust!\");\n}\n```\n\n\n\n\nNow let us try some Rust code that will not be executed.\n\n\n```rust\nfn main() {\n    // Statements here are executed when the compiled binary is called.\n    // Print text to the console.\n    println!(\"Meow\");\n}\n```\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

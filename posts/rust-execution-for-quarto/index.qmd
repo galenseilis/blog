@@ -1,0 +1,37 @@
+---
+title: "Executing Rust in Quarto"
+author: "Galen Seilis"
+date: "2024-07-26"
+categories: [Quarto, Rust, Lua, Pandoc]
+echo: true
+---
+
+::: {.callout-warning}
+## WIP
+
+This post is a work in progress. I am experimenting with rendering Rust code. It still needs some work.
+:::
+
+
+Here is some Rust code that will be executed and rendered.
+
+```{rust}
+fn main() {
+    // Statements here are executed when the compiled binary is called.
+    // Print text to the console.
+        println!("Galen Seilis is learning Rust!");
+}
+```
+
+
+
+Now let us try some Rust code that will not be executed.
+
+
+```rust
+fn main() {
+    // Statements here are executed when the compiled binary is called.
+    // Print text to the console.
+    println!("Meow");
+}
+```

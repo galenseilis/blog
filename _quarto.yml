@@ -18,4 +18,5 @@ format:
     css: styles.css
 
 
-
+filters:
+    - rust-executor.lua

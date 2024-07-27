@@ -1,6 +1,6 @@
 ---
 title: "Galen Seilis"
-image: profile.jpg
+image: "./assets/android-chrome-512x512.png"
 about:
   template: jolla
   links:
