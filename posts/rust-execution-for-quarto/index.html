@@ -9,7 +9,7 @@
 <meta name="author" content="Galen Seilis">
 <meta name="dcterms.date" content="2024-07-26">
 
-<title>Executing Rust in Quarto – Galen Seilis</title>
+<title>Executable Rust Code in Quarto – Galen Seilis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -157,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Executing Rust in Quarto</h1>
+      <h1 class="title">Executable Rust Code in Quarto</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Quarto</div>
                 <div class="quarto-category">Rust</div>
@@ -225,6 +225,48 @@ WIP
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Print text to the console.</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">"Meow"</span>)<span class="op">;</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now let us run a longer example from <a href="https://doc.rust-lang.org/rust-by-example/primitives/literals.html">Rust by Example</a>.</p>
+<pre class="{rust}"><code>fn main() {
+    // Integer addition
+    println!("1 + 2 = {}", 1u32 + 2);
+
+    // Integer subtraction
+    println!("1 - 2 = {}", 1i32 - 2);
+    // TODO ^ Try changing `1i32` to `1u32` to see why the type is important
+
+    // Scientific notation
+    println!("1e4 is {}, -2.5e-3 is {}", 1e4, -2.5e-3);
+
+    // Short-circuiting boolean logic
+    println!("true AND false is {}", true &amp;&amp; false);
+    println!("true OR false is {}", true || false);
+    println!("NOT true is {}", !true);
+
+    // Bitwise operations
+    println!("0011 AND 0101 is {:04b}", 0b0011u32 &amp; 0b0101);
+    println!("0011 OR 0101 is {:04b}", 0b0011u32 | 0b0101);
+    println!("0011 XOR 0101 is {:04b}\n\n\n", 0b0011u32 ^ 0b0101);
+    println!("1 &lt;&lt; 5 is {}", 1u32 &lt;&lt; 5);
+    println!("0x80 &gt;&gt; 2 is 0x{:x}", 0x80u32 &gt;&gt; 2);
+
+    // Use underscores to improve readability!
+    println!("One million is written as {}", 1_000_000u32);
+}</code></pre>
+<p>1 + 2 = 3
+1 - 2 = -1
+1e4 is 10000, -2.5e-3 is -0.0025
+true AND false is false
+true OR false is true
+NOT true is false
+0011 AND 0101 is 0001
+0011 OR 0101 is 0111
+0011 XOR 0101 is 0110
+
+
+
+1 &lt;&lt; 5 is 32
+0x80 &gt;&gt; 2 is 0x20
+One million is written as 1000000</p>
 
 
 
