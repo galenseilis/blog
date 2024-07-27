@@ -30,16 +30,16 @@ Here is a brief description of each package:
 | Install | Package | Description |
 | --- | --- | --- |
 | `libssl-dev` | Secure Sockets Layer toolkit - development files | [This package is part of the OpenSSL project's implementation of the SSL and TLS crypographic protocols for secure communication over the internet.](https://packages.debian.org/buster/libssl-dev) |
-| `zlib1g-dev` | | |
-| `libncurses5-dev` | | |
-| `libncursesw5-dev` | | |
-| `libreadline-dev` | | | 
-| `libsqlite3-dev` | | | 
-| `libgdbm-dev` | | | 
-| `libdb5.3-dev` | | |
-| `libbz2-dev` | | |
-| `liblzma-dev` | | | 
-| `libffi-dev` | | |
+| `zlib1g-dev` | Compression library - development | [`zlib` is a library implementing the deflate compression method found in `gzip` and PKZIP.](https://packages.debian.org/bullseye/zlib1g-dev) |
+| `libncurses5-dev` | Transitional pacakge for `libncurses-dev` | [Package prociding `libncurses5-dev`.](https://packages.ubuntu.com/focal/libncurses5-dev) |
+| `libncursesw5-dev` | Transitional package for `libncurses-dev` | [Package providing `libncursesw5-dev`.](libncursesw5-dev) |
+| `libreadline-dev` | GNU readline and history libraries, development files | [The GNU readline library aids in the consistency of user interface across discrete programs that need to provide a command line interace](libreadline-dev) | 
+| `libsqlite3-dev` | `libsqlite3-dev` | [SQLite is a C library that implements an SQL database engine.](https://packages.debian.org/sid/libsqlite3-dev) | 
+| `libgdbm-dev` | GNU dbm database routines (development files)  | [GNU dbm ('gdbm') is a library of database functions that use extensible hashing and works similarly to the standard UNIX 'dbm' functions.](https://packages.debian.org/buster/libgdbm-dev) | 
+| `libdb5.3-dev` | Berkeley v5.3 Database Libraries [development] | [This is the development package which contains headers and static libraries for the Berkely v5.3 database library](https://packages.debian.org/sid/libdb5.3-dev) |
+| `libbz2-dev` | High-quality block-sorting file compressor library - development | [Static libraries and include files for the bzip2 compressor library](https://packages.debian.org/buster/libbz2-dev) |
+| `liblzma-dev` | XZ-format compression library - development files | [XZ is the successor to the Lempel-Ziv/Markov-chain Algorithm compression format, which provides memory-hungry but powerful compressoin (often better than bzip2) and fast, easy decompression.](https://packages.debian.org/unstable/liblzma-dev) | 
+| `libffi-dev` | Foreign Fucntion Interface library (development files) | [This package contains the headers and static library files necessary for building programs which use libffi](https://packages.debian.org/buster/libffi-dev) |
 
 Now run the configuration tool that the Python dev's have kindly prepared. It will prepare a makefile for everything you need to build CPython. 
 
