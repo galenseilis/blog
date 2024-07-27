@@ -17,9 +17,8 @@ Here is some Rust code that will be executed and rendered.
 
 ```{rust}
 fn main() {
-    // Statements here are executed when the compiled binary is called.
-    // Print text to the console.
         println!("Galen Seilis is learning Rust!");
+        println!("Time to get Rusty!");
 }
 ```
 
@@ -30,8 +29,6 @@ Now let us try some Rust code that will not be executed.
 
 ```rust
 fn main() {
-    // Statements here are executed when the compiled binary is called.
-    // Print text to the console.
     println!("Meow");
 }
 ```

@@ -2,7 +2,7 @@ local io = require("io")
 local os = require("os")
 local tempfile = require("os").tmpname
 local log_file
-local echo_option = true  -- Default value if echo is not set
+local echo_option = true
 
 -- Function to initialize the log file
 local function init_log()
@@ -72,16 +72,12 @@ local function execute_rust_code(code)
 end
 
 -- Lua filter function
-function CodeBlock(elem, meta)
+function CodeBlock(elem)
   if not log_file then
     init_log()
   end
 
   local is_rust_code = elem.attr.classes:includes("{rust}")
-  -- Check for echo setting from metadata
-  if meta and meta.echo ~= nil then
-    echo_option = meta.echo
-  end
 
   if is_rust_code then
     log("Processing Rust code block")
@@ -105,9 +101,19 @@ end
 
 -- Ensure log file is closed properly at the end
 function Pandoc(doc)
+  if not log_file then
+    init_log()
+  end
+
+  -- Read the echo setting from metadata
+  if doc.meta and doc.meta.echo ~= nil then
+    echo_option = pandoc.utils.stringify(doc.meta.echo) == "true"
+  end
+
   if log_file then
     log_file:close()
   end
+
   return doc
 end
 
