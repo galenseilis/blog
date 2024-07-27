@@ -7,7 +7,7 @@ categories: [Python, CPython, C, compilation, make, Debian, Linux]
 
 This is a short blog post to remind myself how to compile CPython from its source.
 
-You need to get the source files for Python as you need to give the C compiler (and other tools) the needed instructions for producing machine code. These CPython source is available on [Github](https://github.com/python/cpython/tree/main). Using git, you can download with
+You need to get the source files for Python as you need to give the C compiler (and other tools) the needed instructions for producing machine code. The CPython source is available on [Github](https://github.com/python/cpython/tree/main). Using git, you can download with
 
 ```bash
 $ git clone https://github.com/python/cpython.git
