@@ -89,10 +89,10 @@ function CodeBlock(elem, meta)
     output = output:gsub("%s+$", "")
 
     if echo_option then
-      -- Return code block with formatting and output
+      -- Return formatted code block and output
       return {
-        pandoc.CodeBlock(elem.text, elem.attr), -- Show the Rust code with formatting
-        pandoc.Para(pandoc.Str(output))         -- Show the output
+        pandoc.CodeBlock(elem.text, {class="rust"}), -- Render Rust code as a formatted block
+        pandoc.Para(pandoc.Str(output))              -- Show the output
       }
     else
       -- Only return the output
