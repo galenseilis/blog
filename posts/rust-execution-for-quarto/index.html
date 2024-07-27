@@ -213,45 +213,43 @@ WIP
 </div>
 </div>
 <p>Here is some Rust code that will be executed and rendered.</p>
-<pre class="{rust}"><code>fn main() {
-    // Statements here are executed when the compiled binary is called.
-    // Print text to the console.
-        println!("Galen Seilis is learning Rust!");
-}</code></pre>
-<p>Galen Seilis is learning Rust!</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>        <span class="pp">println!</span>(<span class="st">"Galen Seilis is learning Rust!"</span>)<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="pp">println!</span>(<span class="st">"Time to get Rusty!"</span>)<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Galen Seilis is learning Rust!
+Time to get Rusty!</p>
 <p>Now let us try some Rust code that will not be executed.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Statements here are executed when the compiled binary is called.</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Print text to the console.</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">"Meow"</span>)<span class="op">;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">"Meow"</span>)<span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now let us run a longer example from <a href="https://doc.rust-lang.org/rust-by-example/primitives/literals.html">Rust by Example</a>.</p>
-<pre class="{rust}"><code>fn main() {
-    // Integer addition
-    println!("1 + 2 = {}", 1u32 + 2);
-
-    // Integer subtraction
-    println!("1 - 2 = {}", 1i32 - 2);
-    // TODO ^ Try changing `1i32` to `1u32` to see why the type is important
-
-    // Scientific notation
-    println!("1e4 is {}, -2.5e-3 is {}", 1e4, -2.5e-3);
-
-    // Short-circuiting boolean logic
-    println!("true AND false is {}", true &amp;&amp; false);
-    println!("true OR false is {}", true || false);
-    println!("NOT true is {}", !true);
-
-    // Bitwise operations
-    println!("0011 AND 0101 is {:04b}", 0b0011u32 &amp; 0b0101);
-    println!("0011 OR 0101 is {:04b}", 0b0011u32 | 0b0101);
-    println!("0011 XOR 0101 is {:04b}\n\n\n", 0b0011u32 ^ 0b0101);
-    println!("1 &lt;&lt; 5 is {}", 1u32 &lt;&lt; 5);
-    println!("0x80 &gt;&gt; 2 is 0x{:x}", 0x80u32 &gt;&gt; 2);
-
-    // Use underscores to improve readability!
-    println!("One million is written as {}", 1_000_000u32);
-}</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Integer addition</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">"1 + 2 = {}"</span><span class="op">,</span> <span class="dv">1u32</span> <span class="op">+</span> <span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Integer subtraction</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">"1 - 2 = {}"</span><span class="op">,</span> <span class="dv">1i32</span> <span class="op">-</span> <span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// </span><span class="al">TODO</span><span class="co"> ^ Try changing `1i32` to `1u32` to see why the type is important</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Scientific notation</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">"1e4 is {}, -2.5e-3 is {}"</span><span class="op">,</span> <span class="dv">1e4</span><span class="op">,</span> <span class="op">-</span><span class="dv">2.5e-3</span>)<span class="op">;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Short-circuiting boolean logic</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">"true AND false is {}"</span><span class="op">,</span> <span class="cn">true</span> <span class="op">&amp;&amp;</span> <span class="cn">false</span>)<span class="op">;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">"true OR false is {}"</span><span class="op">,</span> <span class="cn">true</span> <span class="op">||</span> <span class="cn">false</span>)<span class="op">;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">"NOT true is {}"</span><span class="op">,</span> <span class="op">!</span><span class="cn">true</span>)<span class="op">;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Bitwise operations</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">"0011 AND 0101 is {:04b}"</span><span class="op">,</span> <span class="dv">0b0011u32</span> <span class="op">&amp;</span> <span class="dv">0b0101</span>)<span class="op">;</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">"0011 OR 0101 is {:04b}"</span><span class="op">,</span> <span class="dv">0b0011u32</span> <span class="op">|</span> <span class="dv">0b0101</span>)<span class="op">;</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">"0011 XOR 0101 is {:04b}</span><span class="sc">\n\n\n</span><span class="st">"</span><span class="op">,</span> <span class="dv">0b0011u32</span> <span class="op">^</span> <span class="dv">0b0101</span>)<span class="op">;</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">"1 &lt;&lt; 5 is {}"</span><span class="op">,</span> <span class="dv">1u32</span> <span class="op">&lt;&lt;</span> <span class="dv">5</span>)<span class="op">;</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">"0x80 &gt;&gt; 2 is 0x{:x}"</span><span class="op">,</span> <span class="dv">0x80u32</span> <span class="op">&gt;&gt;</span> <span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Use underscores to improve readability!</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">"One million is written as {}"</span><span class="op">,</span> <span class="dv">1_000_000u32</span>)<span class="op">;</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>1 + 2 = 3
 1 - 2 = -1
 1e4 is 10000, -2.5e-3 is -0.0025
