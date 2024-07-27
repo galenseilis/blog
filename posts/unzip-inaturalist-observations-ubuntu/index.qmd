@@ -2,7 +2,7 @@
 title: "Unzip Your iNaturalist Observations On A Ubuntu System"
 author: "Galen Seilis"
 date: "2022-03-16"
-categories: [Volunteer, iNaturalist, Data, Citizen Science, Linux, Ubuntu]
+categories: [BASH, Volunteer, iNaturalist, Data, Citizen Science, Linux, Ubuntu]
 ---
 
 

@@ -3,7 +3,7 @@ title: "Executable Rust Code in Quarto"
 author: "Galen Seilis"
 date: "2024-07-26"
 categories: [Quarto, Rust, Lua, Pandoc]
-echo: true
+echo: false
 ---
 
 ::: {.callout-warning}
@@ -21,8 +21,6 @@ fn main() {
         println!("Time to get Rusty!");
 }
 ```
-
-
 
 Now let us try some Rust code that will not be executed.
 
