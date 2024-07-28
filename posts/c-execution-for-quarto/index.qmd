@@ -20,3 +20,5 @@ int main() {
     return 0;
 }
 ```
+
+Similar to the lessons learned from the Rust implementation, there is plausibly a better implementation with an entirely different starting point.
