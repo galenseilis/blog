@@ -2,7 +2,6 @@ local io = require("io")
 local os = require("os")
 local tempfile = require("os").tmpname
 local log_file
-local echo_option = true
 
 -- Function to initialize the log file
 local function init_log()
@@ -71,6 +70,14 @@ local function execute_rust_code(code)
   return output
 end
 
+local echo_global = true
+
+function Meta(meta)
+  if meta.echo ~= nil then
+    echo_global = pandoc.utils.stringify(meta.echo) == "true"
+  end
+end
+
 -- Lua filter function
 function CodeBlock(elem)
   if not log_file then
@@ -78,22 +85,21 @@ function CodeBlock(elem)
   end
 
   local is_rust_code = elem.attr.classes:includes("{rust}")
-
   if is_rust_code then
     log("Processing Rust code block")
     local output = execute_rust_code(elem.text)
     output = output:gsub("%s+$", "")
+    local blocks = {}
 
-    if echo_option then
-      -- Return formatted code block and output
-      return {
-        pandoc.CodeBlock(elem.text, {class="rust"}), -- Render Rust code as a formatted block
-        pandoc.Para(pandoc.Str(output))              -- Show the output
-      }
-    else
-      -- Only return the output
-      return pandoc.Para(pandoc.Str(output))
+    if echo_global then
+      -- Render Rust code as a formatted block
+      table.insert(blocks, pandoc.CodeBlock(elem.text, {class="rust"}))
     end
+
+    -- Always return the output
+    table.insert(blocks, pandoc.Para(pandoc.Str(output)))
+
+    return blocks
   else
     log("Skipping non-Rust code block")
   end
@@ -101,19 +107,9 @@ end
 
 -- Ensure log file is closed properly at the end
 function Pandoc(doc)
-  if not log_file then
-    init_log()
-  end
-
-  -- Read the echo setting from metadata
-  if doc.meta and doc.meta.echo ~= nil then
-    echo_option = pandoc.utils.stringify(doc.meta.echo) == "true"
-  end
-
   if log_file then
     log_file:close()
   end
-
   return doc
 end
 
