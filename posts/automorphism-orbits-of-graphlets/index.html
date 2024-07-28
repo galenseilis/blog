@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Galen Seilis">
-<meta name="dcterms.date" content="2022-03-16">
+<meta name="dcterms.date" content="2023-03-03">
 
-<title>Unzip Your iNaturalist Observations On A Ubuntu System – Galen Seilis</title>
+<title>Automorphism Orbits of Graphlets – Galen Seilis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -157,15 +123,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Unzip Your iNaturalist Observations On A Ubuntu System</h1>
+      <h1 class="title">Automorphism Orbits of Graphlets</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">BASH</div>
-                <div class="quarto-category">Volunteer</div>
-                <div class="quarto-category">iNaturalist</div>
-                <div class="quarto-category">Data</div>
-                <div class="quarto-category">Citizen Science</div>
-                <div class="quarto-category">Linux</div>
-                <div class="quarto-category">Ubuntu</div>
+                <div class="quarto-category">Math</div>
+                <div class="quarto-category">Graph Theory</div>
+                <div class="quarto-category">Graphlets</div>
+                <div class="quarto-category">Automorphisms</div>
+                <div class="quarto-category">Automorphism Orbits</div>
+                <div class="quarto-category">Automorphism Orbits of Graphlets</div>
+                <div class="quarto-category">Isomorphisms</div>
+                <div class="quarto-category">Gaphs</div>
+                <div class="quarto-category">Relations</div>
+                <div class="quarto-category">Binary Relations</div>
+                <div class="quarto-category">Sets</div>
+                <div class="quarto-category">Vertices</div>
+                <div class="quarto-category">Edges</div>
+                <div class="quarto-category">Subsets</div>
+                <div class="quarto-category">Cartesian Products</div>
+                <div class="quarto-category">Networks</div>
+                <div class="quarto-category">directed Graphs</div>
+                <div class="quarto-category">Digraphs</div>
+                <div class="quarto-category">Signed Graphs</div>
+                <div class="quarto-category">Weighted Graphs</div>
+                <div class="quarto-category">Simple Graphs</div>
+                <div class="quarto-category">Functions</div>
+                <div class="quarto-category">Injective Functions</div>
+                <div class="quarto-category">Surjective Functions</div>
+                <div class="quarto-category">Bijective Functions</div>
+                <div class="quarto-category">Graph Isomorphism</div>
+                <div class="quarto-category">Graph Automorphisms</div>
+                <div class="quarto-category">Equivalence Relations</div>
+                <div class="quarto-category">Reflexive Relations</div>
+                <div class="quarto-category">Symmetric Relations</div>
+                <div class="quarto-category">Transitive Relations</div>
+                <div class="quarto-category">Equivalence Classes</div>
+                <div class="quarto-category">Vertex Orbit Automorphisms</div>
+                <div class="quarto-category">Permutation Groups</div>
               </div>
                   </div>
   </div>
@@ -183,7 +176,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 16, 2022</p>
+        <p class="date">March 3, 2023</p>
       </div>
     </div>
     
@@ -202,27 +195,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<p>Back in May 2020 I released a video on YouTube for the HackSeq event:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vY1UkCPSKH8?si=5wooO7lIT8DMe32f" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+<p>But I figure I could give some written description as well, which is what the rest of this blog post covers.</p>
+<p>A <a href="https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)">graph</a> is a <a href="https://en.wikipedia.org/wiki/Tuple">2-tuple</a> containing a <a href="https://en.wikipedia.org/wiki/Set_(mathematics)">set</a> of <a href="https://mathworld.wolfram.com/GraphEdge.html">edges</a> and a set of <a href="https://en.wikipedia.org/wiki/Vertex_(graph_theory)">vertices</a>, and the <a href="https://mathworld.wolfram.com/Set.html">set</a> of <a href="https://en.wikipedia.org/wiki/Glossary_of_graph_theory_terms#edge">edges</a> is a <a href="https://en.wikipedia.org/wiki/Subset">subset</a> of the <a href="https://en.wikipedia.org/wiki/Cartesian_product">cartesian product</a> of the set of <a href="https://mathworld.wolfram.com/GraphVertex.html">vertices</a> with itself. We can think the <a href="https://en.wikipedia.org/wiki/Glossary_of_graph_theory_terms#vertex">vertices</a> as ‘things’ and the set of edges as a <a href="https://en.wikipedia.org/wiki/Binary_relation">binary relation</a> between them.</p>
+<p>Sometimes graphs are called “<a href="https://en.wikipedia.org/wiki/Network_theory">networks</a>” when either the vertices (often called “nodes” when discussing networks) or edges have additional attributes, however this usage is not universally accepted. Three common properties of graph edges are whether they are directed, signed, or weighted. In the case of directed edges, some sort of ‘directionality’ is associated with the edges, and we’d say that <em>(u,v)</em> and <em>(v,u)</em> are considered distinct for two vertices <em>u</em> and <em>v</em> from the graph. A graph with directed edges is called a <a href="https://en.wikipedia.org/wiki/Directed_graph">directed graph</a> or a <a href="https://mathworld.wolfram.com/DirectedGraph.html">digraph</a>. In the case of signed edges, each edge is assigned a ‘positive’ or ‘negative’ value, and we call such a graph a <a href="https://en.wikipedia.org/wiki/Signed_graph">signed graph</a>. In the case of weighted edges, each edge is assigned a numerical value, and we call such a graph a <a href="https://mathworld.wolfram.com/WeightedGraph.html">weighted graph</a>. If a graph doesn’t have directed, signed, or weighted edges and doesn’t have multiple edges for any given pair of vertices, then it is called a <a href="https://mathworld.wolfram.com/SimpleGraph.html">simple graph</a>.</p>
+<p>A <a href="https://en.wikipedia.org/wiki/Graphlets">graphlet</a> is a specific type of graph, inheriting all the properties of graphs but also being a <a href="https://mathworld.wolfram.com/ConnectedGraph.html">weakly-connected</a> <a href="https://en.wikipedia.org/wiki/Induced_subgraph">induced subgraph</a>. For a graph to be <a href="https://mathworld.wolfram.com/Subgraph.html">subgraph</a>, there exists another graph such that the subgraph’s vertex set is a subset of the other graph’s vertex set and the subgraph’s edge set is a subset of the other graph’s edge set. A subgraph being induced can be thought of procedurally, by first selecting any subset of the vertices and then also selecting all edges that connect those selected vertices. The property of weakly-connected can be considered for any graph, and means that there exists a path between any pair of vertices in the graph.</p>
+<p>A function is <a href="https://mathworld.wolfram.com/Injection.html">injective</a> if it satisfies that <em>f(x)=f(y)</em> implies that <em>x=y</em>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://mathworld.wolfram.com/images/eps-gif/Injection_1000.gif" class="img-fluid figure-img"></p>
+<figcaption>https://mathworld.wolfram.com/images/eps-gif/Injection_1000.gif</figcaption>
+</figure>
 </div>
-<div class="callout-title-container flex-fill">
-Note
+<p>A function is <a href="https://mathworld.wolfram.com/Surjection.html">surjective</a> if it satisfies for any element <em>b</em> in the image that there exists an element <em>a</em> of the domain for which <em>b=f(a)</em>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://mathworld.wolfram.com/images/eps-gif/Surjection_1000.gif" class="img-fluid figure-img"></p>
+<figcaption>https://mathworld.wolfram.com/images/eps-gif/Surjection_1000.gif</figcaption>
+</figure>
 </div>
+<p>A <a href="https://en.wikipedia.org/wiki/Bijection">bijection</a> is a <a href="https://en.wikipedia.org/wiki/Function_(mathematics)">function</a> that is both <a href="https://en.wikipedia.org/wiki/Injective_function">injective (one-to-one)</a> and <a href="https://en.wikipedia.org/wiki/Surjective_function">surjective (onto)</a> from one set to another (these two sets can be the same set).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://mathworld.wolfram.com/images/eps-gif/Bijection_1000.gif" class="img-fluid figure-img"></p>
+<figcaption>https://mathworld.wolfram.com/images/eps-gif/Bijection_1000.gif</figcaption>
+</figure>
 </div>
-<div class="callout-body-container callout-body">
-<p>This post was migrated from my iNaturalist journal to my Jekyll blog on 2023-02-26. It was then migrated to my Quarto blog on 2024-07-27.</p>
+<p>A <a href="https://en.wikipedia.org/wiki/Graph_isomorphism">graph isomorphism</a> is a <a href="https://mathworld.wolfram.com/Bijection.html">bijection</a> <em>f</em> between two graphs (which can be the same graph in the case of graph automorphisms) such that any two vertices <em>u</em> and <em>v</em> in the first graph are adjacent <em>if-and-only-if</em> <em>f(u)</em> and <em>f(v)</em> are adjacent.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Graph_isomorphism_a.svg" class="img-fluid figure-img"></p>
+<figcaption>https://upload.wikimedia.org/wikipedia/commons/9/9a/Graph_isomorphism_a.svg</figcaption>
+</figure>
 </div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Graph_isomorphism_b.svg" class="img-fluid figure-img"></p>
+<figcaption>https://upload.wikimedia.org/wikipedia/commons/8/84/Graph_isomorphism_b.svg</figcaption>
+</figure>
 </div>
-<p>Suppose - you have just downloaded an export of iNaturalist data, - the data file is a <a href="https://en.wikipedia.org/wiki/ZIP_(file_format)">zipped</a> <a href="https://en.wikipedia.org/wiki/Comma-separated_values">comma-separated value</a>(CSV) text file, - and you are running a <a href="https://en.wikipedia.org/wiki/Ubuntu">Ubuntu system</a>.</p>
-<p>Begin by opening up a <a href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)">BASH</a> environment.</p>
-<p>Go to the <a href="https://en.wikipedia.org/wiki/Path_(computing)">path</a> where the file was downloaded to:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /path/to/folder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Then run the unzip command:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> observations-<span class="op">&lt;</span>ID<span class="op">&gt;</span>.csv.zip</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You should find that you now have the uncompressed CSV file. You can check with:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ls observations<span class="op">-&lt;</span>ID<span class="op">&gt;</span>.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A <a href="https://mathworld.wolfram.com/GraphAutomorphism.html">graph automorphism</a> is a <a href="https://en.wikipedia.org/wiki/Graph_isomorphism">graph isomorphism</a> where the domain graph and the image graph are the same graph.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://mathworld.wolfram.com/images/eps-gif/GraphAutomorphismGridGraph_1000.gif" class="img-fluid figure-img"></p>
+<figcaption>https://mathworld.wolfram.com/images/eps-gif/GraphAutomorphismGridGraph_1000.gif</figcaption>
+</figure>
+</div>
+<p>An <a href="https://mathworld.wolfram.com/EquivalenceRelation.html">equivalence relation</a> is a <a href="https://mathworld.wolfram.com/BinaryRelation.html">binary relation</a> that is <a href="https://en.wikipedia.org/wiki/Reflexive_relation">reflexive</a>, <a href="https://en.wikipedia.org/wiki/Symmetric_relation">symmetric</a>, and <a href="https://en.wikipedia.org/wiki/Transitive_relation">transitive</a>. An <a href="https://mathworld.wolfram.com/EquivalenceClass.html">equivalence class</a> is a subset of a set such that all members of the subset adhere to an <a href="https://en.wikipedia.org/wiki/Equivalence_relation">equivalence relation</a>. A <a href="http://www.cs.columbia.edu/~cs4203/files/GT-Lec2.pdf">(vertex) orbit automorphism</a> is an <a href="https://en.wikipedia.org/wiki/Equivalence_class">equivalence class</a> from the vertex set of a graph under the action of a <a href="https://en.wikipedia.org/wiki/Graph_automorphism">graph automorphism</a>. Multiple graph automorphisms are possible, and the set of all automorphisms with composition of permutations of the vertex set is called a <a href="http://vlsicad.eecs.umich.edu/BK/SAUCY/papers/Cameron2001.pdf">permutation group</a>.</p>
+<p>Since graphlets are graphs, and orbit automorphisms can be found within graphs, we can find orbit automorphisms within graphlets. The idea behind enumeration of orbit automorphisms of graphlets is to count the number of times each vertex of a graph participates in each orbit automorphism of each graphlet from a set of graphlets. While each finite graph has a finite number of distinct (i.e.&nbsp;mutually non-isomorphic) graphlets, considering every conceivable graphlet would be computationally infeasible. Instead of considering all graphlets of a graph, a constraint is often imposed where graphlets containing only 2-3 vertices are considered.</p>
+<p>Enumeration of orbit automorphisms of graphlets has been used to <a href="https://asonamdata.com/ASONAM2019_Proceedings/pdf/papers/105_0613_135.pdf">characterize correlation networks of coexpression of genes</a>, and <a href="https://www.nature.com/articles/srep35098">characterize the role of traders in the world trade network</a>.</p>
 
 
 

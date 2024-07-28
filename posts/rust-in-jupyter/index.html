@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Galen Seilis">
-<meta name="dcterms.date" content="2022-03-16">
+<meta name="dcterms.date" content="2024-07-28">
 
-<title>Unzip Your iNaturalist Observations On A Ubuntu System – Galen Seilis</title>
+<title>Trying Rust in Jupyter Notebook – Galen Seilis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -157,15 +157,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Unzip Your iNaturalist Observations On A Ubuntu System</h1>
+      <h1 class="title">Trying Rust in Jupyter Notebook</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">BASH</div>
-                <div class="quarto-category">Volunteer</div>
-                <div class="quarto-category">iNaturalist</div>
-                <div class="quarto-category">Data</div>
-                <div class="quarto-category">Citizen Science</div>
-                <div class="quarto-category">Linux</div>
-                <div class="quarto-category">Ubuntu</div>
+                <div class="quarto-category">Rust</div>
+                <div class="quarto-category">Jupyter Notebook</div>
               </div>
                   </div>
   </div>
@@ -183,7 +178,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 16, 2022</p>
+        <p class="date">July 28, 2024</p>
       </div>
     </div>
     
@@ -202,27 +197,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This post was migrated from my iNaturalist journal to my Jekyll blog on 2023-02-26. It was then migrated to my Quarto blog on 2024-07-27.</p>
+<p>In a recent post I tried to write my own Lua filter for running Rust code.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="pp">eprintln!</span>(<span class="st">"Hello error"</span>)<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Hello error</p>
+<div id="1813f446" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-stdout">
+<pre><code>Python lol</code></pre>
 </div>
 </div>
-<p>Suppose - you have just downloaded an export of iNaturalist data, - the data file is a <a href="https://en.wikipedia.org/wiki/ZIP_(file_format)">zipped</a> <a href="https://en.wikipedia.org/wiki/Comma-separated_values">comma-separated value</a>(CSV) text file, - and you are running a <a href="https://en.wikipedia.org/wiki/Ubuntu">Ubuntu system</a>.</p>
-<p>Begin by opening up a <a href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)">BASH</a> environment.</p>
-<p>Go to the <a href="https://en.wikipedia.org/wiki/Path_(computing)">path</a> where the file was downloaded to:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /path/to/folder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Then run the unzip command:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> observations-<span class="op">&lt;</span>ID<span class="op">&gt;</span>.csv.zip</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You should find that you now have the uncompressed CSV file. You can check with:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ls observations<span class="op">-&lt;</span>ID<span class="op">&gt;</span>.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 
@@ -319,7 +303,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/galenseilis\.github\.io\/blog\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
