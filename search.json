@@ -60,7 +60,7 @@
     "href": "posts/c-execution-for-quarto/index.html",
     "title": "Executable C Code in Quarto",
     "section": "",
-    "text": "In Executable Rust Code in Quarto I made a rough implementation of having Rust code compiled and its output rendered.\nWith some small adjustments we can do the same for other languages, including C. Here is a “Hello, World” example.\n#include &lt;stdio.h&gt;\n\nint main() {\n    printf(\"Hello, World!\\n\");\n    return 0;\n}\nHello, World!"
+    "text": "In Executable Rust Code in Quarto I made a rough implementation of having Rust code compiled and its output rendered.\nWith some small adjustments we can do the same for other languages, including C. Here is a “Hello, World” example.\n#include &lt;stdio.h&gt;\n\nint main() {\n    printf(\"Hello, World!\\n\");\n    return 0;\n}\nHello, World!\nSimilar to the lessons learned from the Rust implementation, there is plausibly a better implementation with an entirely different starting point."
   },
   {
     "objectID": "posts/starting-data-science/index.html",
