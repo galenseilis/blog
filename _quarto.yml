@@ -17,6 +17,3 @@ format:
     theme: darkly
     css: styles.css
 
-
-filters:
-    - rust-executor.lua
