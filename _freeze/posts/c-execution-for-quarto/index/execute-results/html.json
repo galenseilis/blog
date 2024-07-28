@@ -1,0 +1,12 @@
+{
+  "hash": "2e17867b2755c63ca9b24dc5ae384e76",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"Executable C Code in Quarto\"\nauthor: \"Galen Seilis\"\ndate: \"2024-07-28\"\ncategories: [Quarto, C, Lua, Pandoc]\necho: false\nfilters:\n    - \"../../filters/c-executor.lua\"\n---\n\n\nIn [*Executable Rust Code in Quarto*](https://galenseilis.github.io/blog/posts/rust-execution-for-quarto/) I made a rough implementation of having Rust code compiled and its output rendered.\n\nWith some small adjustments we can do the same for other languages, including C. Here is a \"Hello, World\" example.\n\n\n```{c}\n#include <stdio.h>\n\nint main() {\n    printf(\"Hello, World!\\n\");\n    return 0;\n}\n```\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

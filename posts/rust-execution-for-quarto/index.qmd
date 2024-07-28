@@ -5,7 +5,7 @@ date: "2024-07-26"
 categories: [Quarto, Rust, Lua, Pandoc]
 echo: false
 filters:
-    - rust-executor.lua
+    - "../../filters/rust-executor.lua"
 ---
 
 The following is a Lua filter which looks through a `qmd` file for Rust code associated with `{rust}`, compiles that code using `rustc`, runs the compiled Rust program and collects its output, and inserts the output to be rendered by pandoc.

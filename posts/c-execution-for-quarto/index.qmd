@@ -1,0 +1,22 @@
+---
+title: "Executable C Code in Quarto"
+author: "Galen Seilis"
+date: "2024-07-28"
+categories: [Quarto, C, Lua, Pandoc]
+echo: false
+filters:
+    - "../../filters/c-executor.lua"
+---
+
+In [*Executable Rust Code in Quarto*](https://galenseilis.github.io/blog/posts/rust-execution-for-quarto/) I made a rough implementation of having Rust code compiled and its output rendered.
+
+With some small adjustments we can do the same for other languages, including C. Here is a "Hello, World" example.
+
+```{c}
+#include <stdio.h>
+
+int main() {
+    printf("Hello, World!\n");
+    return 0;
+}
+```
