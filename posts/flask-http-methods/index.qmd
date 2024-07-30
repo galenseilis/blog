@@ -1,0 +1,41 @@
+---
+title: "HTTP Methods in Flask"
+author: "Galen Seilis"
+date: "2024-07-29"
+categories: [Python, Flask, Web Applications, URL, HTTP, HTTP Methods]
+---
+
+The hypertext transfer protocol (HTTP) is a way for a web application to respond to requests.
+
+There are four HTTP methods that you'll typically find in introductory material:
+- `GET`
+- `POST`
+- `PUT`
+- `DELETE`
+
+In this post we'll provide a simple example. We will embed the following video 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vY1UkCPSKH8?si=mRB5eM30UmTUVfhv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+when `GET` is used. If the method is `POST`, then the page will render `"POST"`. Otheriwse the function implicitly returns `None`, which offhand I don't think does much of anything.
+
+```python
+import getpass
+
+from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route('/automorphisms', methods=['GET', 'POST'])
+def http_methods_example():
+    if request.method == 'GET':
+        return '<iframe width="560" height="315" src="https://www.youtube.com/embed/vY1UkCPSKH8?si=mRB5eM30UmTUVfhv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+    if request.method == 'POST':
+        return 'POST'
+    # We don't need to bother with PUT and DELETE
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+Other than taking the parameter `methods` in `app.route`, there isn't much to this application. We're showing a tag for an embedded video, which for us to render only involves returning a string of the tag.
