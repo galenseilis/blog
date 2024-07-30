@@ -1,0 +1,31 @@
+---
+title: "Hello World, In Flask"
+author: "Galen Seilis"
+date: "2024-07-29"
+categories: [Python, Flask, Web Applications]
+---
+
+Ths post shows a relatively minimal example of using Flask to develop of web application. This application will only run locally, but it is otherwise a bona fide web application.
+
+```python
+from flask import Flask # 1
+
+app = Flask(__name__) # 2
+
+@app.route('/') # 3
+def hello_world(): # 4
+    return 'Hello, World' # 5
+
+if __name__ == '__main__': # 6
+    app.run(debug=True) # 7
+```
+
+1. Import the `Flask` class which is the central data structure for defining a Flask application.
+2. We pass in `__name__`, which is the name of the current module, which helps Flask determine the root path for the application. The Flask application knowing what is defined as the root path will allow the application to find resources such as templates and static files.
+3. This decorator will bind a URL, which in this case is simply `/`, root, to a function. When a user visits this URL, the function will be executed.
+4. Declare the function we want to have run when a user visits the given URL.
+5. Return `'Hello, World'`.
+6. Conditional to run the application when the module script is run directly.
+7. Run the FLask web server. The `debug=True` parameter assignment enables a debugging mode which provides information about any error messages and automatic restarts. The automatic restarts may occur when changes in the source code of the application are detected.
+
+When you run the application you'll find that it is locally hosted at some port (`http://127.0.0.1/<SOME_PORT>`).

@@ -2,7 +2,7 @@
 title: "Automorphism Orbits of Graphlets"
 author: "Galen Seilis"
 date: "2023-03-03"
-categories: [Math, Graph Theory, Graphlets, Automorphisms, Automorphism Orbits, Automorphism Orbits of Graphlets, Isomorphisms, Gaphs, Relations, Binary Relations, Sets, Vertices, Edges, Subsets, Cartesian Products, Networks, directed Graphs, Digraphs, Signed Graphs, Weighted Graphs, Simple Graphs, Functions, Injective Functions, Surjective Functions, Bijective Functions, Graph Isomorphism, Graph Automorphisms, Equivalence Relations, Reflexive Relations, Symmetric Relations, Transitive Relations, Equivalence Classes, Vertex Orbit Automorphisms, Permutation Groups]
+categories: [Math, Graph Theory, Graphlets, Automorphisms, Automorphism Orbits, Automorphism Orbits of Graphlets, Isomorphisms, Graphs, Relations, Binary Relations, Sets, Vertices, Edges, Subsets, Cartesian Products, Networks, directed Graphs, Digraphs, Signed Graphs, Weighted Graphs, Simple Graphs, Functions, Injective Functions, Surjective Functions, Bijective Functions, Graph Isomorphism, Graph Automorphisms, Equivalence Relations, Reflexive Relations, Symmetric Relations, Transitive Relations, Equivalence Classes, Vertex Orbit Automorphisms, Permutation Groups]
 ---
 
 Back in May 2020 I released a video on YouTube for the HackSeq event:
