@@ -1,0 +1,25 @@
+---
+title: "Basic Error Handling In Flask"
+author: "Galen Seilis"
+date: "2024-07-29"
+categories: [Python, Flask, Web Applications, Error Handling]
+---
+
+Flask provides support for error handling, including defining custom errors. When an error occurs which is not otherwise defined, the default error code is 500 (internal server error).
+
+In this post I will show a minimal example of using a predefined code for error handling in a Flask application.
+
+```python
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return 'This page does not exist (DNE)', 404
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+In the above code we picked the classic 404 error, which is reserved for when the page cannot be reached. [XKCD](https://www.xkcd.com/404/) has an appropriate entry on this topic.
