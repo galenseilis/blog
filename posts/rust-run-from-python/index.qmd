@@ -136,4 +136,4 @@ import run_rust
 print(run_rust.compile_and_run_rust('./hello/'))
 ```
 
-In conclusion, this approach using Python itself and Python Jupyter notebooks to compile, run, and display the printed output from a Rust program. It succeeds in preserving newline characters, and echo works locally. It also works globally for the whole file.
+In conclusion, this approach using Python itself and Python Jupyter notebooks to compile, run, and display the printed output from a Rust program. It succeeds in preserving newline characters, and echo works locally. It also works globally for the whole file. The only remaining thing to watch out for in particular if Quarto's automatic freezing of posts will not detect if you have changed the Rust code; you may need to change your `qmd` file in some way.
