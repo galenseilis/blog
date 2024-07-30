@@ -1,17 +1,3 @@
----
-title: "Build and Run a C Project from Quarto Using Python"
-author: "Galen Seilis"
-date: "2024-07-30"
-categories: [C, Quarto, Python, subprocess]
----
-
-In this post I share a way to compile and run a C file using Python, which in turn can be used to render the output of the C program in Quarto.
-
-## Python Script
-
-The Python script I developed is similar to the one I made for Rust, except that it does two phases. First `gcc -c file.c` is run on each file in a target path. Then `gcc -o program main.o file1.o ...` is run to put together the final program with appropriate linking.
-
-```python
 import subprocess
 import os
 import glob
@@ -24,7 +10,7 @@ def log_permissions(path):
 
 def compile_and_run_c(project_dir):
     project_dir = os.path.abspath(project_dir)
-
+    
     # Find all .c files in the project directory
     c_files = glob.glob(os.path.join(project_dir, '*.c'))
     if not c_files:
@@ -53,7 +39,7 @@ def compile_and_run_c(project_dir):
     main_file = os.path.join(project_dir, 'main.c')
     if os.path.exists(main_file):
         exe_name = os.path.splitext(os.path.basename(main_file))[0]
-
+    
     # Link all object files into a single executable
     try:
         link_process = subprocess.run(
@@ -98,95 +84,4 @@ def compile_and_run_c(project_dir):
 if __name__ == "__main__":
     output = compile_and_run_c('../posts/c-run-from-python/hello')
     print(output)
-```
 
-Let's see it in action.
-
-## Single File Example
-
-```{python}
-import sys
-sys.path.insert(1, '../../scripts')
-
-import run_c
-
-print(run_c.compile_and_run_c('./hello/'))
-```
-
-In the above example I am only compiling and running a single C file, but it is certainly possible to compile multiple files with a further change. For each `.c` file in the project path, I could run `gcc -c file.c` on each file. Then I could run `gcc -o program main.o file1.o file2.o`. This way I can link the object files together.
-
-## Linked Files Example
-
-In this example I define a `main.c` source file, and a couple of `helper<#>.c` source files along with their header files.
-
-```c
-// main.c
-#include <stdio.h>
-#include "helper1.h"
-#include "helper2.h"
-
-int main() {
-    printf("Starting program...\n");
-    helper1();
-    helper2();
-    printf("Program finished.\n");
-    return 0;
-}
-```
-
-```c
-// helper1.c
-#include <stdio.h>
-#include "helper1.h"
-
-void helper1() {
-    printf("Hello from helper1!\n");
-}
-```
-
-```c
-// helper1.h
-#ifndef HELPER1_H
-#define HELPER1_H
-
-void helper1();
-
-#endif
-```
-
-```c
-// helper2.c
-#include <stdio.h>
-#include "helper2.h"
-
-void helper2() {
-    printf("Hello from helper2!\n");
-}
-```
-
-```c
-// helper2.h
-#ifndef HELPER2_H
-#define HELPER2_H
-
-void helper2();
-
-#endif
-```
-
-Now we can similarly point `run_c.compile_and_rune_c` pointed at the path where these files exist.
-
-```{python}
-import sys
-sys.path.insert(1, '../../scripts')
-
-import run_c
-
-print(run_c.compile_and_run_c('./hello2/'))
-```
-
-## Conclusions
-
-As long as the linking and compiled options are kept simple, this script allows you to compile simple C langauge programs. This may be suitable for ensuring that C code examples for blogging actually work. Expanding into autotools and make files is the way to go for more complicated builds.
-
-The same limitation as the corresponding script to run Rust code applies: if your `qmd` file does not change while Quarto's setting is `freeze: auto`, the page will not be rerendered if the C code changes even if the Quarto document is not changed.
