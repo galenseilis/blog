@@ -4,9 +4,13 @@ author: "Galen Seilis"
 date: "2024-07-26"
 categories: [Quarto, Rust, Lua, Pandoc]
 echo: false
-filters:
-    - "../../filters/rust-executor.lua"
 ---
+
+::: {.callout-caution}
+## Deprecated Output
+
+I have turned off the Lua filter discussed in this post. It was running everytime I rendered/published the blog. I have copy-pasted the original output for reference.
+:::
 
 The following is a Lua filter which looks through a `qmd` file for Rust code associated with `{rust}`, compiles that code using `rustc`, runs the compiled Rust program and collects its output, and inserts the output to be rendered by pandoc.
 
@@ -131,12 +135,14 @@ Let's try some examples.
 
 Here is some Rust code that will be executed and rendered.
 
-```{rust}
+```rust
 fn main() {
         println!("Galen Seilis is learning Rust!");
         println!("Time to get Rusty!");
 }
 ```
+Galen Seilis is learning Rust! Time to get Rusty!
+
 
 Now let us try some Rust code that will not be executed.
 
@@ -149,7 +155,7 @@ fn main() {
 
 Now let us run a longer example from [Rust by Example](https://doc.rust-lang.org/rust-by-example/primitives/literals.html).
 
-```{rust}
+```rust
 fn main() {
     // Integer addition
     println!("1 + 2 = {}", 1u32 + 2);
@@ -177,6 +183,7 @@ fn main() {
     println!("One million is written as {}", 1_000_000u32);
 }
 ```
+1 + 2 = 3 1 - 2 = -1 1e4 is 10000, -2.5e-3 is -0.0025 true AND false is false true OR false is true NOT true is false 0011 AND 0101 is 0001 0011 OR 0101 is 0111 0011 XOR 0101 is 0110 1 << 5 is 32 0x80 >> 2 is 0x20 One million is written as 1000000
 
 In the current state there are a couple of glaring issues I have with this implementation. The first is that Rust code blocks will be run regardless of whether `echo: false` is used. The second is that all the outputs are being rendered on a single, notwithstanding Quarto's line wrapping. 
 

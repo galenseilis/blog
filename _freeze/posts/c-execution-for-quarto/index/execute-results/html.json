@@ -1,8 +1,8 @@
 {
-  "hash": "6101425ed9e4370f191e141d126bb391",
+  "hash": "7885bac3f09cd32a1163f31efe258009",
   "result": {
     "engine": "jupyter",
-    "markdown": "---\ntitle: \"Executable C Code in Quarto\"\nauthor: \"Galen Seilis\"\ndate: \"2024-07-28\"\ncategories: [Quarto, C, Lua, Pandoc]\necho: false\nfilters:\n    - \"../../filters/c-executor.lua\"\n---\n\n\nIn [*Executable Rust Code in Quarto*](https://galenseilis.github.io/blog/posts/rust-execution-for-quarto/) I made a rough implementation of having Rust code compiled and its output rendered.\n\nWith some small adjustments we can do the same for other languages, including C. Here is a \"Hello, World\" example.\n\n\n```{c}\n#include <stdio.h>\n\nint main() {\n    printf(\"Hello, World!\\n\");\n    return 0;\n}\n```\n\n\nSimilar to the lessons learned from the Rust implementation, there is plausibly a better implementation with an entirely different starting point.\n\n",
+    "markdown": "---\ntitle: \"Executable C Code in Quarto\"\nauthor: \"Galen Seilis\"\ndate: \"2024-07-28\"\ncategories: [Quarto, C, Lua, Pandoc]\necho: false\n---\n\n\n::: {.callout-caution}\n## Deprecated Output\n\nI have turned off the Lua filter discussed in this post. It was running everytime I rendered/published the blog. I have copy-pasted the original output for reference.\n:::\n\nIn [*Executable Rust Code in Quarto*](https://galenseilis.github.io/blog/posts/rust-execution-for-quarto/) I made a rough implementation of having Rust code compiled and its output rendered.\n\nWith some small adjustments we can do the same for other languages, including C. Here is a \"Hello, World\" example.\n\n\n```{c}\n#include <stdio.h>\n\nint main() {\n    printf(\"Hello, World!\\n\");\n    return 0;\n}\n```\n\nHello, World!\n\nSimilar to the lessons learned from the Rust implementation, there is plausibly a better implementation with an entirely different starting point.\n\n",
     "supporting": [
       "index_files"
     ],
