@@ -38,3 +38,5 @@ def display_image(card_id):
 if __name__ == '__main__':
     app.run(debug=True)
 ```
+
+This app should allow you to input different numbers into the URL which then will render an Magic the Gathering card image, or will give an error.
