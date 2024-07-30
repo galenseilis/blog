@@ -9,7 +9,7 @@
 <meta name="author" content="Galen Seilis">
 <meta name="dcterms.date" content="2024-07-30">
 
-<title>Build and Run a C File from Quarto Using Python – Galen Seilis</title>
+<title>Build and Run a C Project from Quarto Using Python – Galen Seilis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -157,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Build and Run a C File from Quarto Using Python</h1>
+      <h1 class="title">Build and Run a C Project from Quarto Using Python</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">C</div>
                 <div class="quarto-category">Quarto</div>
@@ -292,7 +292,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="single-file-example" class="level2">
 <h2 class="anchored" data-anchor-id="single-file-example">Single File Example</h2>
-<div id="a96d9f39" class="cell" data-execution_count="1">
+<div id="c2e4a3de" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">1</span>, <span class="st">'../../scripts'</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -361,7 +361,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now we can similarly point <code>run_c.compile_and_rune_c</code> pointed at the path where these files exist.</p>
-<div id="2fb2e38a" class="cell" data-execution_count="2">
+<div id="516724ec" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">1</span>, <span class="st">'../../scripts'</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -379,7 +379,7 @@ Program finished.
 </section>
 <section id="conclusions" class="level2">
 <h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
-<p>As long as the linking and compiled options are kept simple, this script allows you to compile simple C langauge programs. This may be suitable for ensuring that C code examples for blogging actually work.</p>
+<p>As long as the linking and compiled options are kept simple, this script allows you to compile simple C langauge programs. This may be suitable for ensuring that C code examples for blogging actually work. Expanding into autotools and make files is the way to go for more complicated builds.</p>
 <p>The same limitation as the corresponding script to run Rust code applies: if your <code>qmd</code> file does not change while Quarto’s setting is <code>freeze: auto</code>, the page will not be rerendered if the C code changes even if the Quarto document is not changed.</p>
 
 
