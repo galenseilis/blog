@@ -8,6 +8,7 @@ categories: [Python, Flask, Web Applications, URL, HTTP, HTTP Methods]
 The hypertext transfer protocol (HTTP) is a way for a web application to respond to requests.
 
 There are four HTTP methods that you'll typically find in introductory material:
+
 - `GET`
 - `POST`
 - `PUT`
