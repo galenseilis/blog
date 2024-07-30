@@ -1,0 +1,82 @@
+---
+title: "A Mermaid Diagram of Bayesian Workflow"
+author: "Galen Seilis"
+date: "2024-07-30"
+categories: [Mermaid, Bayesian Workflow, Bayesian Statistics, Bayesian Inference, Bayesian Probability, Bayesian Modelling, Prior Probability, Posterior Probability, Modelling, Model Development]
+bibliography: references.bib
+---
+
+In this post I visualize the Bayesian workflow introduced by @2011.01808.
+
+I am setting Quato's `echo: true` so that you can see the Mermaid instructions for the diagram.
+
+```{mermaid}
+%%| echo: true
+
+flowchart TD
+1["Pick an initial model"]
+2{"Prior predictive check"}
+3["Fit the model"]
+4{"Validate computation"}
+5["Address computational issues"]
+6["Evaluate and use model"]
+7["Modify the Model"]
+8["Compare Models"]
+
+1 --> 2
+2 --> |Accept Priors| 3
+2 --> |Reject Priors| 7
+3 --> 4
+4 -->|Invalid| 5
+4 -->|Valid| 6
+5 --> 3
+6 --> |Reject Model| 7
+6 --> |Accept Model| 8
+6 --> |Accept Model| 7
+5 --> |Give Up| 7
+7 --> 2
+```
+
+In the previous diagram I left out details of what to consider in some of the steps. The following diagram expands on some of the steps by showing there are a variety of different approaches depending on the current state of a workflow.
+
+```{mermaid}
+%%| echo: true
+mindmap
+  root((Bayesian Workflow))
+    Validate Computation
+      Convergence Diagnostics
+      Fake data simulation
+      Simulation based calibration
+    Evaluate and use model
+      Posterior predictive check
+      Cross validation
+      Influence of individual data points
+      Influence of prior
+      Prediction
+      Post stratification
+    Modify the model
+      Pick a new starting model
+      Replace model component
+      Enrich/Expand model
+      Use an approximation
+      Add more data
+      Modify priors
+    Compare models
+      Comparing inferences
+      Multiverse analysis
+      Model averaging/stacking
+    Addressing computational issues
+      Simplify the model
+      Implement model components separately
+      Run small number of iterations
+      Run on a subset of the data
+      Stacking individual chains
+      Check for multimodality
+      Reparametrize
+      Plot intermediate quantities
+      Add prior information
+      Add more data
+      Give up
+```
+
+Happy modelling.
