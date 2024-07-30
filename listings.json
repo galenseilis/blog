@@ -3,6 +3,7 @@
     "listing": "/index.html",
     "items": [
       "/posts/hello-world-flask/index.html",
+      "/posts/flask-http-methods/index.html",
       "/posts/flask-html-templates/index.html",
       "/posts/flask-dynamic-url/index.html",
       "/posts/cpp-execution-for-quarto/index.html",
