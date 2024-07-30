@@ -1,0 +1,139 @@
+---
+title: "Build and Run a Rust Project from Quarto Using Python"
+author: "Galen Seilis"
+date: "2024-07-21"
+categories: [Rust, Quarto, Python]
+---
+
+In a previous post I used a Lua extension to compile a Rust file using the `rustc` compiler. I ran into multiple problems. 
+
+Using `rustc` rather than Cargo means that I miss out on a lot of the build tools, and it is also less conventional for Rust projects. 
+
+There were also issues with my plugin. It did not correctly turn off echo either locally to a code block, or to the global setting in the preamble of the Quarto file. It also did not put code on a new line. Further, I got feedback that this might not be supported. I also learned from a [discussion answer](https://github.com/quarto-dev/quarto-cli/discussions/10399#discussioncomment-10178340) on the Quarto Github discussion board that there are tools that might be better.
+
+While other tools like [`evcxr`](https://github.com/evcxr/evcxr/) look appealing, I have not looked into how to exactly integrate it with Quarto yet. 
+
+But there is a low-hanging fruit we can take advantage of here. We can certainly use Python subprocess library to indirectly orchestrate building and running a rust project. It also allows us to capture the output as text and return that into a Jupyter notebook. So that's exaxtly what I made:
+
+```python
+import subprocess
+import os
+import stat
+
+def log_permissions(path):
+    st = os.stat(path)
+    permissions = stat.filemode(st.st_mode)
+    print(f"Permissions for {path}: {permissions}")
+
+def compile_and_run_rust(target_file):
+    # Get the directory and the file name
+    target_dir = os.path.dirname(target_file)
+    target_name = os.path.basename(target_dir)  # Adjusted to get the correct target name
+
+    # Ensure Cargo.toml exists in the target directory
+    cargo_toml_path = os.path.join(target_dir, 'Cargo.toml')
+    if not os.path.exists(cargo_toml_path):
+        raise FileNotFoundError("Cargo.toml not found in the target directory.")
+
+    # Compile the Rust project
+    try:
+        build_process = subprocess.run(
+            ['cargo', 'build', '--release'],
+            cwd=target_dir,
+            check=True,
+            capture_output=True,
+            text=True
+        )
+    except subprocess.CalledProcessError as e:
+        print(f"Compilation Error: {e.stderr}")
+        return
+
+    # Find the compiled executable
+    target_exe = os.path.join(target_dir, 'target', 'release', target_name)
+    if os.name == 'nt':
+        target_exe += '.exe'
+
+    if not os.path.exists(target_exe):
+        raise FileNotFoundError("Compiled executable not found.")
+
+    if os.name != 'nt':
+        try:
+            os.chmod(target_exe, stat.S_IRWXU | stat.S_IRGRP | stat.S_IXGRP | stat.S_IROTH | stat.S_IXOTH)
+            os.chmod(os.path.dirname(target_exe), stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
+        except PermissionError as e:
+            print(f"Error setting permissions: {e}")
+            return
+
+    # Run the compiled executable and capture its output
+    try:
+        run_process = subprocess.run(
+            [target_exe],
+            check=True,
+            capture_output=True,
+            text=True
+        )
+        output = run_process.stdout
+        return output
+    except subprocess.CalledProcessError as e:
+        print(f"Execution Error: {e.stderr}")
+        return
+
+# Example usage
+if __name__ == "__main__":
+    output = compile_and_run_rust('../posts/rust-run-from-python/hello/main.rs')
+    print(output)
+```
+
+Python Jupyter notebooks run Python in interactive mode, so it is slightly less convenient for importing Python files. Nonetheless this can be done by inserting our script into the path using the `sys` library. Once we have imported the `run_rust` file, we can call the `compile_and_run_rust` pointing to a Rust project path that is locally stored
+
+
+Let us start a Rust project called "hello".
+
+```bash
+cargo init hello
+```
+
+I also added a loop with a `println` macro just so we can see how this approach handles keeping newline characters. Here is the Rust code in `hello/src/main.rs`.
+
+```rust
+fn main() {
+
+    let mut count = 0;
+
+    loop {
+        count = count + 1;
+        println!("{} Hello, world!", count);
+        if count > 11 {
+            break
+        }
+    }
+}
+```
+
+The above Rust code should print a series of lines each starting with a number, with the numbers ranging from 1 to 12.
+
+With all that setup, we can now try using the `run_rust.compile_and_run_rust` process caller.
+
+```{python}
+import sys
+sys.path.insert(1, '../../scripts')
+
+import run_rust
+
+print(run_rust.compile_and_run_rust('./hello/'))
+```
+
+And there we have it! We can further try again, but with `#| echo: false` in the Python code block to turn off echo:
+
+
+```{python}
+#| echo: false
+import sys
+sys.path.insert(1, '../../scripts')
+
+import run_rust
+
+print(run_rust.compile_and_run_rust('./hello/'))
+```
+
+In conclusion, this approach using Python itself and Python Jupyter notebooks to compile, run, and display the printed output from a Rust program. It succeeds in preserving newline characters, and echo works locally. It also works globally for the whole file.
