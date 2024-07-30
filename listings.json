@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/flask-basic-error-handling/index.html",
       "/posts/hello-world-flask/index.html",
       "/posts/flask-http-methods/index.html",
       "/posts/flask-html-templates/index.html",
