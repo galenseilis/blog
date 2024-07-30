@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/hello-world-flask/index.html",
       "/posts/cpp-execution-for-quarto/index.html",
       "/posts/c-execution-for-quarto/index.html",
       "/posts/rust-execution-for-quarto/index.html",
