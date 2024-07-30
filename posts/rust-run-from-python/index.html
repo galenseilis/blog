@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Galen Seilis">
-<meta name="dcterms.date" content="2024-07-21">
+<meta name="dcterms.date" content="2024-07-29">
 
 <title>Build and Run a Rust Project from Quarto Using Python – Galen Seilis</title>
 <style>
@@ -162,6 +162,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
                 <div class="quarto-category">Rust</div>
                 <div class="quarto-category">Quarto</div>
                 <div class="quarto-category">Python</div>
+                <div class="quarto-category">Cargo</div>
+                <div class="quarto-category">rustc</div>
               </div>
                   </div>
   </div>
@@ -179,7 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 21, 2024</p>
+        <p class="date">July 29, 2024</p>
       </div>
     </div>
     
@@ -287,7 +289,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The above Rust code should print a series of lines each starting with a number, with the numbers ranging from 1 to 12.</p>
 <p>With all that setup, we can now try using the <code>run_rust.compile_and_run_rust</code> process caller.</p>
-<div id="a24612b8" class="cell" data-execution_count="1">
+<div id="19922288" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">1</span>, <span class="st">'../../scripts'</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -311,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>And there we have it! We can further try again, but with <code>#| echo: false</code> in the Python code block to turn off echo:</p>
-<div id="2f649e3e" class="cell" data-execution_count="2">
+<div id="5b837b85" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-stdout">
 <pre><code>1 Hello, world!
 2 Hello, world!
