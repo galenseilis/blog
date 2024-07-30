@@ -1,8 +1,8 @@
 ---
 title: "Build and Run a Rust Project from Quarto Using Python"
 author: "Galen Seilis"
-date: "2024-07-21"
-categories: [Rust, Quarto, Python]
+date: "2024-07-29"
+categories: [Rust, Quarto, Python, Cargo, rustc]
 ---
 
 In a previous post I used a Lua extension to compile a Rust file using the `rustc` compiler. I ran into multiple problems. 

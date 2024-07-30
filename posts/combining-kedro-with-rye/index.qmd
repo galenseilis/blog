@@ -2,7 +2,7 @@
 title: "Combining Kedro with Rye"
 author: "Galen Seilis"
 date: "2024-07-01"
-categories: [Kedro, Rye, Python, CPython, Project Management, Package Management]
+categories: [Kedro, Rye, Python, Project Management, Package Management]
 ---
 
 ## Introduction
