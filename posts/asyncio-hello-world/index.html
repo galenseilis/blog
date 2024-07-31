@@ -9,7 +9,7 @@
 <meta name="author" content="Galen Seilis">
 <meta name="dcterms.date" content="2024-07-30">
 
-<title>A Mermaid Diagram of Bayesian Workflow – Galen Seilis</title>
+<title>Hello World, in Asyncio – Galen Seilis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -56,27 +56,7 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -122,9 +102,6 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
-<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -180,18 +157,13 @@ div.csl-indent {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">A Mermaid Diagram of Bayesian Workflow</h1>
+      <h1 class="title">Hello World, in Asyncio</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Mermaid</div>
-                <div class="quarto-category">Bayesian Workflow</div>
-                <div class="quarto-category">Bayesian Statistics</div>
-                <div class="quarto-category">Bayesian Inference</div>
-                <div class="quarto-category">Bayesian Probability</div>
-                <div class="quarto-category">Bayesian Modelling</div>
-                <div class="quarto-category">Prior Probability</div>
-                <div class="quarto-category">Posterior Probability</div>
-                <div class="quarto-category">Modelling</div>
-                <div class="quarto-category">Model Development</div>
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">Asyncio</div>
+                <div class="quarto-category">subprocess</div>
+                <div class="quarto-category">Asynchronous Programming</div>
+                <div class="quarto-category">Concurrent Programming</div>
               </div>
                   </div>
   </div>
@@ -228,157 +200,51 @@ div.csl-indent {
 
 
 
-<p>In this post I visualize the Bayesian workflow introduced by <span class="citation" data-cites="2011.01808">Gelman et al. (<a href="#ref-2011.01808" role="doc-biblioref">2020</a>)</span>.</p>
-<p>I am setting Quato’s <code>echo: true</code> so that you can see the Mermaid instructions for the diagram.</p>
-<div class="cell" data-layout-align="default">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>flowchart TD</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>1["Pick an initial model"]</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>2{"Prior predictive check"}</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>3["Fit the model"]</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>4{"Validate computation"}</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>5["Address computational issues"]</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>6["Evaluate and use model"]</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>7["Modify the Model"]</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>8["Compare Models"]</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>1 --&gt; 2</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>2 --&gt; |Accept Priors| 3</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>2 --&gt; |Reject Priors| 7</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>3 --&gt; 4</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>4 --&gt; |Invalid| 5</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>4 --&gt; |Valid| 6</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>5 --&gt; 3</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>6 --&gt; |Reject Model| 7</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>6 --&gt; |Accept Model| 8</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>6 --&gt; |Accept Model| 7</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>5 --&gt; |Give Up| 7</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>7 --&gt; 2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-1["Pick an initial model"]
-2{"Prior predictive check"}
-3["Fit the model"]
-4{"Validate computation"}
-5["Address computational issues"]
-6["Evaluate and use model"]
-7["Modify the Model"]
-8["Compare Models"]
-
-1 --&gt; 2
-2 --&gt; |Accept Priors| 3
-2 --&gt; |Reject Priors| 7
-3 --&gt; 4
-4 --&gt; |Invalid| 5
-4 --&gt; |Valid| 6
-5 --&gt; 3
-6 --&gt; |Reject Model| 7
-6 --&gt; |Accept Model| 8
-6 --&gt; |Accept Model| 7
-5 --&gt; |Give Up| 7
-7 --&gt; 2
-</pre>
-</div>
-<p></p></figure><p></p>
+<p>We can define a “Hello, World” type of example using Asyncio as follows:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> asyncio, time</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">async</span> <span class="kw">def</span> main():</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Hello,'</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">await</span> asyncio.sleep(<span class="fl">0.2018</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'World!'</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>asyncio.run(main())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you try to run the above Python code directly in a Quarto code block, it will give an error:</p>
+<p><code>RuntimeError: asyncio.run() cannot be called from a running event loop</code></p>
+<p>This error occurs because <code>run</code> expects that it will have control over the main process, but that is not the case if you are running a Jupyter notebook. That is the case if you are running Python in a Quarto block.</p>
+<p>So similar to what I have done with other languages, we can define a script which we can import into a given blog post in order to call other processes. When we run our asynchronous “Hello, World” script we will want to also capture its standard output in our interactive session.</p>
+<p>With Python this is pretty straightforward because we don’t need to consider compiling code ourselves, much less linking object files. The following is a good start:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_python_file(file_path):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> subprocess.run(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            [<span class="st">"python"</span>, file_path],</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>            capture_output<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>            text<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>            check<span class="op">=</span><span class="va">True</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> result.stdout</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> subprocess.CalledProcessError <span class="im">as</span> e:</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"An error occurred while running the file: </span><span class="sc">{</span>e<span class="sc">.</span>stderr<span class="sc">}</span><span class="ss">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Putting this code in <code>../../scripts/run_python.py</code>, we can call it like this:</p>
+<div id="5c80329d" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">1</span>, <span class="st">'../../scripts'</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> run_python</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(run_python.run_python_file(<span class="st">'example.py'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Hello,
+World!
+</code></pre>
 </div>
 </div>
-</div>
-<p>In the previous diagram I left out details of what to consider in some of the steps. The following diagram expands on some of the steps by showing there are a variety of different approaches depending on the current state of a workflow.</p>
-<div class="cell" data-layout-align="default">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mindmap</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  root((Bayesian Workflow))</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    Validate Computation</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      Convergence Diagnostics</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      Fake data simulation</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      Simulation based calibration</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    Evaluate and use model</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      Posterior predictive check</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>      Cross validation</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>      Influence of individual data points</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>      Influence of prior</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>      Prediction</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>      Post stratification</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    Modify the model</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>      Pick a new starting model</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>      Replace model component</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>      Enrich/Expand model</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>      Use an approximation</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>      Add more data</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>      Modify priors</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    Compare models</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>      Comparing inferences</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>      Multiverse analysis</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>      Model averaging/stacking</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    Addressing computational issues</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>      Simplify the model</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>      Implement model components separately</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>      Run small number of iterations</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>      Run on a subset of the data</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>      Stacking individual chains</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>      Check for multimodality</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>      Reparametrize</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>      Plot intermediate quantities</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>      Add prior information</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>      Add more data</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>      Give up</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">mindmap
-  root((Bayesian Workflow))
-    Validate Computation
-      Convergence Diagnostics
-      Fake data simulation
-      Simulation based calibration
-    Evaluate and use model
-      Posterior predictive check
-      Cross validation
-      Influence of individual data points
-      Influence of prior
-      Prediction
-      Post stratification
-    Modify the model
-      Pick a new starting model
-      Replace model component
-      Enrich/Expand model
-      Use an approximation
-      Add more data
-      Modify priors
-    Compare models
-      Comparing inferences
-      Multiverse analysis
-      Model averaging/stacking
-    Addressing computational issues
-      Simplify the model
-      Implement model components separately
-      Run small number of iterations
-      Run on a subset of the data
-      Stacking individual chains
-      Check for multimodality
-      Reparametrize
-      Plot intermediate quantities
-      Add prior information
-      Add more data
-      Give up
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p>Happy modelling.</p>
+<p>This setup is fine for simple and isolated blogging examples. Anyway, that’s about as close as I think we’ll get to a “Hello, World” script with Asyncio. As with similar scripts that I have written for Rust and other languages, Quarto’s automatic freezing feature will only look for if the source of the QMD file has changed. Quarto will ignore any example Python files outside of that.</p>
 
 
 
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-2011.01808" class="csl-entry" role="listitem">
-Gelman, Andrew, Aki Vehtari, Daniel Simpson, Charles C. Margossian, Bob Carpenter, Yuling Yao, Lauren Kennedy, Jonah Gabry, Paul-Christian Bürkner, and Martin Modrák. 2020. <span>“Bayesian Workflow.”</span> <a href="https://arxiv.org/abs/2011.01808">https://arxiv.org/abs/2011.01808</a>.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
