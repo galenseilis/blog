@@ -3,6 +3,7 @@
     "listing": "/index.html",
     "items": [
       "/posts/c-run-from-python/index.html",
+      "/posts/se-lib-fault-tree/index.html",
       "/posts/asyncio-hello-world/index.html",
       "/posts/bayesian-workflow-diagram-mermaid/index.html",
       "/posts/flask-basic-error-handling/index.html",
