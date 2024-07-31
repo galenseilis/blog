@@ -27,8 +27,8 @@ flowchart TD
 2 --> |Accept Priors| 3
 2 --> |Reject Priors| 7
 3 --> 4
-4 -->|Invalid| 5
-4 -->|Valid| 6
+4 --> |Invalid| 5
+4 --> |Valid| 6
 5 --> 3
 6 --> |Reject Model| 7
 6 --> |Accept Model| 8
