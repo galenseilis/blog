@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="484pt" height="374pt" viewBox="0.00 0.00 484.00 374.00">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 370)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-370 480,-370 480,4 -4,4"/>
+<!-- Patient Adverse Event&lt;br/&gt;p=0.04 -->
+<g id="node1" class="node">
+<title>Patient Adverse Event&lt;br/&gt;p=0.04</title>
+<polygon fill="none" stroke="black" points="196,-323.5 196,-361.5 268,-361.5 268,-323.5 196,-323.5"/>
+<text text-anchor="start" x="197" y="-351.7" font-family="Times,serif" font-size="11.00">Patient Adverse</text>
+<text text-anchor="start" x="219" y="-339.7" font-family="Times,serif" font-size="11.00">Event</text>
+<text text-anchor="start" x="216.5" y="-327.7" font-family="Times,serif" font-size="11.00">p=0.04</text>
+<image xlink:href="OR_node.svg" width="50px" height="39px" preserveAspectRatio="xMinYMin meet" x="207" y="-323.5"/>
+<image xlink:href="OR_node_bottom.svg" width="50px" height="36px" preserveAspectRatio="xMinYMin meet" x="207" y="-284.5"/>
+</g>
+<!-- Medication Error&lt;br/&gt;p=5.0e&#45;05 -->
+<g id="node2" class="node">
+<title>Medication Error&lt;br/&gt;p=5.0e-05</title>
+<polygon fill="none" stroke="black" points="81,-166.5 81,-204.5 134,-204.5 134,-166.5 81,-166.5"/>
+<text text-anchor="start" x="82" y="-194.7" font-family="Times,serif" font-size="11.00">Medication</text>
+<text text-anchor="start" x="95.5" y="-182.7" font-family="Times,serif" font-size="11.00">Error</text>
+<text text-anchor="start" x="85" y="-170.7" font-family="Times,serif" font-size="11.00">p=5.0e-05</text>
+<image xlink:href="AND_node.svg" width="50px" height="33px" preserveAspectRatio="xMinYMin meet" x="82.5" y="-166.5"/>
+<image xlink:href="OR_node_bottom.svg" width="50px" height="36px" preserveAspectRatio="xMinYMin meet" x="82.5" y="-133.5"/>
+</g>
+<!-- Patient Adverse Event&lt;br/&gt;p=0.04&#45;&gt;Medication Error&lt;br/&gt;p=5.0e&#45;05 -->
+<g id="edge1" class="edge">
+<title>Patient Adverse Event&lt;br/&gt;p=0.04:s-&gt;Medication Error&lt;br/&gt;p=5.0e-05:n</title>
+<path fill="none" stroke="black" stroke-width="2" d="M232,-283.5C232,-283.5 111.84,-207.92 108.09,-205.56"/>
+<polygon fill="black" stroke="black" stroke-width="2" points="108,-205.5 108,-205.5 108,-205.5 108,-205.5"/>
+</g>
+<!-- Surgical Error&lt;br/&gt;p=3.0e&#45;04 -->
+<g id="node3" class="node">
+<title>Surgical Error&lt;br/&gt;p=3.0e-04</title>
+<polygon fill="none" stroke="black" points="208,-166.5 208,-204.5 255,-204.5 255,-166.5 208,-166.5"/>
+<text text-anchor="start" x="213" y="-194.7" font-family="Times,serif" font-size="11.00">Surgical</text>
+<text text-anchor="start" x="219.5" y="-182.7" font-family="Times,serif" font-size="11.00">Error</text>
+<text text-anchor="start" x="209" y="-170.7" font-family="Times,serif" font-size="11.00">p=3.0e-04</text>
+<image xlink:href="AND_node.svg" width="47px" height="33px" preserveAspectRatio="xMinYMin meet" x="208" y="-166.5"/>
+<image xlink:href="OR_node_bottom.svg" width="47px" height="36px" preserveAspectRatio="xMinYMin meet" x="208" y="-133.5"/>
+</g>
+<!-- Patient Adverse Event&lt;br/&gt;p=0.04&#45;&gt;Surgical Error&lt;br/&gt;p=3.0e&#45;04 -->
+<g id="edge2" class="edge">
+<title>Patient Adverse Event&lt;br/&gt;p=0.04:s-&gt;Surgical Error&lt;br/&gt;p=3.0e-04:n</title>
+<path fill="none" stroke="black" stroke-width="2" d="M232,-283.5C232,-283.5 232,-207.92 232,-205.56"/>
+<polygon fill="black" stroke="black" stroke-width="2" points="232,-205.5 232,-205.5 232,-205.5 232,-205.5"/>
+</g>
+<!-- Infection&lt;br/&gt;p=0.04 -->
+<g id="node4" class="node">
+<title>Infection&lt;br/&gt;p=0.04</title>
+<polygon fill="none" stroke="black" points="336,-175.5 336,-201.5 378,-201.5 378,-175.5 336,-175.5"/>
+<text text-anchor="start" x="337" y="-191.7" font-family="Times,serif" font-size="11.00">Infection</text>
+<text text-anchor="start" x="341.5" y="-179.7" font-family="Times,serif" font-size="11.00">p=0.04</text>
+<image xlink:href="OR_node.svg" width="42px" height="39px" preserveAspectRatio="xMinYMin meet" x="336" y="-175.5"/>
+<image xlink:href="OR_node_bottom.svg" width="42px" height="36px" preserveAspectRatio="xMinYMin meet" x="336" y="-136.5"/>
+</g>
+<!-- Patient Adverse Event&lt;br/&gt;p=0.04&#45;&gt;Infection&lt;br/&gt;p=0.04 -->
+<g id="edge3" class="edge">
+<title>Patient Adverse Event&lt;br/&gt;p=0.04:s-&gt;Infection&lt;br/&gt;p=0.04:n</title>
+<path fill="none" stroke="black" stroke-width="2" d="M232,-283.5C232,-283.5 353.12,-205.01 356.91,-202.56"/>
+<polygon fill="black" stroke="black" stroke-width="2" points="357,-202.5 357,-202.5 357,-202.5 357,-202.5"/>
+</g>
+<!-- Wrong Dosage&lt;br/&gt;p=0.01 -->
+<g id="node5" class="node">
+<title>Wrong Dosage&lt;br/&gt;p=0.01</title>
+<polygon fill="none" stroke="black" points="9,-10 9,-48 45,-48 45,-10 9,-10"/>
+<text text-anchor="start" x="11.5" y="-38.2" font-family="Times,serif" font-size="11.00">Wrong</text>
+<text text-anchor="start" x="10" y="-26.2" font-family="Times,serif" font-size="11.00">Dosage</text>
+<text text-anchor="start" x="11.5" y="-14.2" font-family="Times,serif" font-size="11.00">p=0.01</text>
+</g>
+<!-- Medication Error&lt;br/&gt;p=5.0e&#45;05&#45;&gt;Wrong Dosage&lt;br/&gt;p=0.01 -->
+<g id="edge4" class="edge">
+<title>Medication Error&lt;br/&gt;p=5.0e-05:s-&gt;Wrong Dosage&lt;br/&gt;p=0.01:n</title>
+<path fill="none" stroke="black" stroke-width="2" d="M108,-132.5C108,-132.5 29.51,-51.59 27.06,-49.06"/>
+<polygon fill="black" stroke="black" stroke-width="2" points="27,-49 27,-49 27,-49 27,-49"/>
+</g>
+<!-- Wrong Medication&lt;br/&gt;p=0.005 -->
+<g id="node6" class="node">
+<title>Wrong Medication&lt;br/&gt;p=0.005</title>
+<polygon fill="none" stroke="black" points="81,-10 81,-48 134,-48 134,-10 81,-10"/>
+<text text-anchor="start" x="92" y="-38.2" font-family="Times,serif" font-size="11.00">Wrong</text>
+<text text-anchor="start" x="82" y="-26.2" font-family="Times,serif" font-size="11.00">Medication</text>
+<text text-anchor="start" x="89.5" y="-14.2" font-family="Times,serif" font-size="11.00">p=0.005</text>
+</g>
+<!-- Medication Error&lt;br/&gt;p=5.0e&#45;05&#45;&gt;Wrong Medication&lt;br/&gt;p=0.005 -->
+<g id="edge5" class="edge">
+<title>Medication Error&lt;br/&gt;p=5.0e-05:s-&gt;Wrong Medication&lt;br/&gt;p=0.005:n</title>
+<path fill="none" stroke="black" stroke-width="2" d="M108,-132.5C108,-132.5 108,-51.59 108,-49.06"/>
+<polygon fill="black" stroke="black" stroke-width="2" points="108,-49 108,-49 108,-49 108,-49"/>
+</g>
+<!-- Equipment Failure&lt;br/&gt;p=0.02 -->
+<g id="node7" class="node">
+<title>Equipment Failure&lt;br/&gt;p=0.02</title>
+<polygon fill="none" stroke="black" points="168,-10 168,-48 218,-48 218,-10 168,-10"/>
+<text text-anchor="start" x="169" y="-38.2" font-family="Times,serif" font-size="11.00">Equipment</text>
+<text text-anchor="start" x="177" y="-26.2" font-family="Times,serif" font-size="11.00">Failure</text>
+<text text-anchor="start" x="177.5" y="-14.2" font-family="Times,serif" font-size="11.00">p=0.02</text>
+</g>
+<!-- Surgical Error&lt;br/&gt;p=3.0e&#45;04&#45;&gt;Equipment Failure&lt;br/&gt;p=0.02 -->
+<g id="edge6" class="edge">
+<title>Surgical Error&lt;br/&gt;p=3.0e-04:s-&gt;Equipment Failure&lt;br/&gt;p=0.02:n</title>
+<path fill="none" stroke="black" stroke-width="2" d="M232,-132.5C232,-132.5 194.21,-51.59 193.03,-49.06"/>
+<polygon fill="black" stroke="black" stroke-width="2" points="193,-49 193,-49 193,-49 193,-49"/>
+</g>
+<!-- Human Error&lt;br/&gt;p=0.015 -->
+<g id="node8" class="node">
+<title>Human Error&lt;br/&gt;p=0.015</title>
+<polygon fill="none" stroke="black" points="252,-10 252,-48 290,-48 290,-10 252,-10"/>
+<text text-anchor="start" x="254.5" y="-38.2" font-family="Times,serif" font-size="11.00">Human</text>
+<text text-anchor="start" x="259" y="-26.2" font-family="Times,serif" font-size="11.00">Error</text>
+<text text-anchor="start" x="253" y="-14.2" font-family="Times,serif" font-size="11.00">p=0.015</text>
+</g>
+<!-- Surgical Error&lt;br/&gt;p=3.0e&#45;04&#45;&gt;Human Error&lt;br/&gt;p=0.015 -->
+<g id="edge7" class="edge">
+<title>Surgical Error&lt;br/&gt;p=3.0e-04:s-&gt;Human Error&lt;br/&gt;p=0.015:n</title>
+<path fill="none" stroke="black" stroke-width="2" d="M232,-132.5C232,-132.5 269.79,-51.59 270.97,-49.06"/>
+<polygon fill="black" stroke="black" stroke-width="2" points="271,-49 271,-49 271,-49 271,-49"/>
+</g>
+<!-- Post&#45;operative Infection&lt;br/&gt;p=0.01 -->
+<g id="node9" class="node">
+<title>Post-operative Infection&lt;br/&gt;p=0.01</title>
+<polygon fill="none" stroke="black" points="324,-10 324,-48 390,-48 390,-10 324,-10"/>
+<text text-anchor="start" x="325" y="-38.2" font-family="Times,serif" font-size="11.00">Post-operative</text>
+<text text-anchor="start" x="337" y="-26.2" font-family="Times,serif" font-size="11.00">Infection</text>
+<text text-anchor="start" x="341.5" y="-14.2" font-family="Times,serif" font-size="11.00">p=0.01</text>
+</g>
+<!-- Infection&lt;br/&gt;p=0.04&#45;&gt;Post&#45;operative Infection&lt;br/&gt;p=0.01 -->
+<g id="edge8" class="edge">
+<title>Infection&lt;br/&gt;p=0.04:s-&gt;Post-operative Infection&lt;br/&gt;p=0.01:n</title>
+<path fill="none" stroke="black" stroke-width="2" d="M357,-135.5C357,-135.5 357,-51.68 357,-49.06"/>
+<polygon fill="black" stroke="black" stroke-width="2" points="357,-49 357,-49 357,-49 357,-49"/>
+</g>
+<!-- Hospital Acquired Infection&lt;br/&gt;p=0.03 -->
+<g id="node10" class="node">
+<title>Hospital Acquired Infection&lt;br/&gt;p=0.03</title>
+<polygon fill="none" stroke="black" points="424,-4 424,-54 468,-54 468,-4 424,-4"/>
+<text text-anchor="start" x="427" y="-44.2" font-family="Times,serif" font-size="11.00">Hospital</text>
+<text text-anchor="start" x="425" y="-32.2" font-family="Times,serif" font-size="11.00">Acquired</text>
+<text text-anchor="start" x="426" y="-20.2" font-family="Times,serif" font-size="11.00">Infection</text>
+<text text-anchor="start" x="430.5" y="-8.2" font-family="Times,serif" font-size="11.00">p=0.03</text>
+</g>
+<!-- Infection&lt;br/&gt;p=0.04&#45;&gt;Hospital Acquired Infection&lt;br/&gt;p=0.03 -->
+<g id="edge9" class="edge">
+<title>Infection&lt;br/&gt;p=0.04:s-&gt;Hospital Acquired Infection&lt;br/&gt;p=0.03:n</title>
+<path fill="none" stroke="black" stroke-width="2" d="M357,-135.5C357,-135.5 443.24,-57.5 445.94,-55.06"/>
+<polygon fill="black" stroke="black" stroke-width="2" points="446,-55 446,-55 446,-55 446,-55"/>
+</g>
+</g>
+</svg>
