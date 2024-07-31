@@ -108,7 +108,7 @@ Two events $E_1$ and $E_2$ are considered almost-surely disjoint if-and-only-if
 
 $$\mu \left( E_1 \cap E_2 \right) = 0.$$
 
-for any choice of measure $\mu$. This might look very similar to the disjoint case that we just covered. However, they are not the same. See @590864 for some examples, noting that for our purposes we would take $\mu$ to be a probability measure.
+for a choice of measure $\mu$. This might look very similar to the disjoint case that we just covered. However, they are not the same. See @590864 for some examples, noting that for our purposes we would take $\mu$ to be a probability measure.
 
 If two sets of disjoint, then they are also almost-surely disjoint:
 
