@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/pymc-simulate-autoregressive-data/index.html",
       "/posts/c-run-from-python/index.html",
       "/posts/se-lib-fault-tree/index.html",
       "/posts/asyncio-hello-world/index.html",
