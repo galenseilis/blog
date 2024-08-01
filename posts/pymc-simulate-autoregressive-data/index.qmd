@@ -1,0 +1,88 @@
+---
+title: "How to Naïvely Generate Autoregressive Time Series Data in Python"
+author: "Galen Seilis"
+date: "2024-07-31"
+categories: [Python, Statistics, Stochastic Processes, Autoregressive, Time Series, Matplotlib, NumPy]
+---
+
+In this post I will show you how to simulate an autoregressive (AR) process using Matplotlib and NumPy.
+
+First, let's define a function which pseudorandomly generates the data sequence. We'll set an intercept parameter to set a consistent offset of the series from zero, and a sequence of autoregressive coefficients. The order of the coefficients entails the lag order that they are each applied to, so if you want to skip a lag order you can just set it to zero. Some AR series are noisier than others, and you can set that level of noise using the `noise` parameter. In this model we assume that the noise is a stationary normal distribution:
+
+$$\epsilon_t \sim \mathcal{N}(0,1)$$
+
+for all $t$.
+
+The following implementation is a generalization of [*Generate Fake Autoregressive Data*](https://www.pymc.io/projects/examples/en/latest/time_series/Forecasting_with_structural_timeseries.html#generate-fake-autoregressive-data) in which I have allowed for any number of time lags. I have also allowed a user-provided random number generator to be passed.
+
+```{python}
+import numpy as np
+from matplotlib import pyplot as plt
+from typing import List
+
+def simulate_ar(
+    intercept: float,
+    coefs: List[float],
+    noise: float = 0.3,
+    warmup: int = 10,
+    steps: int = 200,
+    rng=None
+    ) -> np.ndarray:
+    """Simulates an autoregressive (AR) time series.
+
+    Args:
+        intercept (float): The intercept term of the AR process.
+        coefs (List[float]): List of coefficients for the lagged terms.
+        noise (float, optional): The standard deviation of the Gaussian noise. Default is 0.3.
+        warmup (int, optional): Number of initial steps to discard to allow the process to stabilize. Default is 10.
+        steps (int, optional): Number of steps to simulate after the warmup period. Default is 200.
+
+    Returns:
+        np.ndarray: Simulated AR time series data of length `steps`.
+    """
+    rng = np.random.default_rng() if rng is None else rng
+    max_lag = len(coefs)
+    draws = np.zeros(warmup + steps)
+    draws[:max_lag] = intercept
+    for step in range(max_lag, warmup + steps):
+        draws[step] = intercept + rng.normal(0, noise)
+        for lag, coef in enumerate(coefs, start=1):
+            draws[step] += coef * draws[step - lag]
+    return draws[warmup:]
+```
+
+
+Let us set a seed for reproducibility.
+
+
+```{python}
+RANDOM_SEED = 2018
+rng = np.random.default_rng(RANDOM_SEED)
+```
+
+Now let's choose some parameters.
+
+```{python}
+# True parameters of the AR process
+intercept = 10
+coefs = [-0.3, 0.1, -0.3]  # Example coefficients for AR process with 3 lags
+```
+
+Now let us simulate the AR process.
+
+```{python}
+ar_data = simulate_ar(intercept, coefs, warmup=2018, steps=200, rng=rng)
+```
+
+Finally, let us plot the simulated data using Matplotlib.
+
+```{python}
+fig, ax = plt.subplots(figsize=(8, 3))
+ax.set_title("Generated Autoregressive Timeseries", fontsize=15)
+ax.plot(ar_data)
+ax.set_xlabel('Time')
+ax.set_ylabel('Signal')
+plt.show()
+```
+
+This implementation is not particularly efficient in terms of computing resources. Although performance is influenced by many things, a large factor is the presence of an ordinary `for` loop. Upon every iteration of the loop the Python interpreter will check that all types are still valid, which is a waste of computing resources when you can assume that they are. Perhaps I will write a more efficient function, but this example should be suitable for examples and tinkering for now.

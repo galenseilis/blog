@@ -10,7 +10,7 @@ bibliography: references.bib
 
 The `se-lib` (*Systems Engineering Library*) offers a variety of diagrams that simply take in tuples of strings and numbers. In this post I want to dicsuss their [quantitative fault tree](http://se-lib.org/examples.html#quantitative-fault-tree) diagrams.
 
-Since I work in healthcare, I put together a healthcare-related example. The overall points of discussion are about statistical, however. 
+Since I work in healthcare, I put together a healthcare-related example. The overall points of discussion are about statistics, however. 
 
 ```python
 import selib as se
