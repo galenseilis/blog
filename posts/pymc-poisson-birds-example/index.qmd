@@ -1,0 +1,152 @@
+---
+title: "Modelling Flower Visits With PyMC"
+author: "Galen Seilis"
+date: "2024-08-01"
+categories: [Python, Poisson Distribution, Exponential Distribution, Flowers, PyMC, Bayesian Inference, Bayesian Modelling, Bayesian Statistics]
+bibliography: references.bib
+draft: true
+---
+
+## Introduction
+
+This post produces a model of flower visits as described in @651343. Here is the author's description of the data:
+
+> My data consists of 3 variables, one is a numerical variable of the number of flower visits that I have counted on certain locations and on certain shrub species. My other 2 variables are categorical variables: Category ID (location), which can be either "RA", "RN" or "UN" and Species, which can be either "Common hawthorn", "Blackberry" or "Rose".
+
+## Getting the Data
+
+The first problem we have to solve is obtaining the data. This can be done with the `requests` Python library.
+
+```{python}
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+from io import StringIO
+
+# URL of the Stack Exchange question
+url = "https://stats.stackexchange.com/q/651343/69508"
+
+# Send a request to the URL
+response = requests.get(url)
+response.raise_for_status()
+```
+
+## Parsing the Data
+
+Just because we have successfully obtaining code from the target URL does not mean it is in a form for analysis. The next steps involve parsing the site response text using Beautiful Soup, a Python package dedicated to this very task. It will look through the HTML to identify the desired block of code which contains the example data, which I identified by looking for the substring `"visits_df"`. 
+
+```{python}
+# Parse the HTML content using BeautifulSoup
+soup = BeautifulSoup(response.text, 'html.parser')
+
+# Find the code block containing the example data
+code_blocks = soup.find_all('code')
+
+# Search for the specific code block containing "visits_df"
+example_data = ""
+for block in code_blocks:
+    if "visits_df" in block.text:
+        example_data = block.text
+        break
+
+# Clean the extracted example data
+# Remove the non-tabular lines and headers
+lines = example_data.split("\n")
+data_lines = lines[2:]  # Skip the first two lines of metadata
+
+# Join the data lines into a single string
+cleaned_data = "\n".join(data_lines)
+
+# Convert the cleaned data into a pandas DataFrame
+data = StringIO(cleaned_data)
+
+# Try reading the data with a custom delimiter
+df = pd.read_fwf(data, widths=[12, 24, 12], header=None, skiprows=1, names=['Category_ID', 'Species', 'Total_visits'])
+df = df.drop(index=0)
+df['Category_ID'] = df['Category_ID'].apply(lambda s: s.split(' ')[1])
+df['Total_visits'] = df['Total_visits'].astype(int)
+```
+
+```{python}
+#| label: tbl-flower-visits
+#| tbl-cap: Flower Visits Data
+from IPython.display import display, Markdown
+
+display(Markdown(df.to_markdown(index=False)))
+```
+
+```{python}
+#| echo: false
+df.to_csv('flower_visits.csv', index=False)
+```
+
+```{python}
+df.groupby(by=['Category_ID', 'Species']).describe()
+```
+
+## Model Definition
+
+Now that we have the data loaded, let's define the basic model.
+
+
+```{python}
+import pymc as pm
+import pandas as pd
+import numpy as np
+import arviz as az
+
+# Convert categorical columns to integer indices
+df['Category_ID_code'] = pd.Categorical(df['Category_ID']).codes
+df['Species_code'] = pd.Categorical(df['Species']).codes
+
+# Coordinates for PyMC
+coords = {
+    'locations': df['Category_ID'].unique(),
+    'species': df['Species'].unique()
+}
+
+with pm.Model() as model:
+    # Define priors for λ
+    num_categories = len(df['Category_ID'].unique())
+    num_species = len(df['Species'].unique())
+    λ = pm.Exponential('λ', 1.0, shape=(num_categories, num_species))
+
+    # Define the observed data
+    indices = (df['Category_ID_code'].values, df['Species_code'].values)
+    observed_data = df['Total_visits'].values
+
+    # Likelihood
+    likelihood = pm.Poisson('flower_visits', mu=λ[indices], observed=observed_data)
+```
+
+Here is the model diagram:
+
+```{python}
+pm.model_to_graphviz(model)
+```
+
+## Model Fitting
+
+```{python}
+# Sample from the posterior
+rng = np.random.default_rng(2018)
+
+with model:
+    trace = pm.sample(random_seed=rng)
+```
+
+## Model Evaluation
+
+```{python}
+#| label: tbl-model-trace-summary
+#| tbl-cap: Summary of Posterior Distribution Sampling Trace
+az.summary(trace, round_to=2)
+```
+
+```{python}
+#| label: fig-trace-plot
+#| fig-cap: "Model Posterior Distribution Sampling Trace Plot"
+# Inspect the trace
+with model:
+    pm.plot_trace(trace)
+```

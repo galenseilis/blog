@@ -12,6 +12,7 @@ website:
         href: https://github.com/galenseilis
       - icon: twitter
         href: https://twitter.com/GSeilis
+  draft-mode: unlinked
 format:
   html:
     theme: darkly

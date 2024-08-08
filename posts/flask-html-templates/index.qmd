@@ -12,7 +12,7 @@ To check that a number is prime we can first check whether the candidate is less
 ::: {.callout-note}
 In the complex numbers, $\mathbb{C}$, the number 2 is not a "Gaussian prime". It can be factored:
 
-$$2 = (1 + i) (1 - i))$$
+$$2 = (1 + i) (1 - i)$$
 :::
 
 The next criterion is that we only need to check whether there exists a natural number $k$ such that $k^2 < n$ and $k | n$. If such a number $k$ does not exist, then $n$ is a prime number.

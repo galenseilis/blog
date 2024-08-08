@@ -1,0 +1,12 @@
+{
+  "hash": "dc94eab4647946de7f31d41ea70f3bcb",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"`evcxr_jupyter` provides Rust execution in Quarto\"\nauthor: \"Galen Seilis\"\ndate: \"2024-08-08\"\ncategories: [Quarto, Rust, evcxr, evcxr_jupyter, Jupyter, Jupyter Notebooks]\necho: false\n---\n\n\nI recently learned that setting up Rust execution in Quarto is easy via `evcxr_jupyter`.\n\nThe first thing you need to do is ensure that Rust is installed. See [**Install Rust**](https://www.rust-lang.org/tools/install).\n\n::: {.callout-tip}\nIt doesn't hurt to run `rustup update` if you have not updated in a while.\n:::\n\nThen you can use Cargo to install relevant crate. Expect this step to take a while.\n\n```bash\n$ cargo install evcxr_jupyter\n````\n\nThen, if necessary, add the executable `evcxr_jupyter` to `PATH`. On Debian-based Linux put the following in your `.bashrc` file\n\n```bash\nexport PATH=$PATH:~/.cargo/bin/\n```\n\nand run `source .bashrc`.\n\nThen use the binary to install the Jupyter tool.\n\n```bash\nevcxr_jupyter --install\n```\n\nAt this point it should be installed. You'll see a Rust kernel will be available when you use `jupyter notebook` and Quarto will similarly recognize Rust code in `{rust}` as being executable. Start with something like a \"Hello, World\" example. You'll find that in the Rust REPL you will not need to specify `main {...}`.\n\n::: {#f5df5b92 .cell execution_count=1}\n``` {.rust .cell-code}\nprintln!(\"Hello, World.\");\n```\n\n::: {.cell-output .cell-output-stdout}\n```\nHello, World.\n```\n:::\n:::\n\n\nYou can control the code echo by using `//| echo: true` and `//| echo: false` near the beginning of the code block.\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

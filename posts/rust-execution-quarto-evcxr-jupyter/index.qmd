@@ -1,0 +1,46 @@
+---
+title: "`evcxr_jupyter` provides Rust execution in Quarto"
+author: "Galen Seilis"
+date: "2024-08-08"
+categories: [Quarto, Rust, evcxr, evcxr_jupyter, Jupyter, Jupyter Notebooks]
+echo: false
+---
+
+I recently learned that setting up Rust execution in Quarto is easy via `evcxr_jupyter`.
+
+The first thing you need to do is ensure that Rust is installed. See [**Install Rust**](https://www.rust-lang.org/tools/install).
+
+::: {.callout-tip}
+It doesn't hurt to run `rustup update` if you have not updated in a while.
+:::
+
+Then you can use Cargo to install relevant crate. Expect this step to take a while.
+
+```bash
+$ cargo install evcxr_jupyter
+````
+
+Then, if necessary, add the executable `evcxr_jupyter` to `PATH`. On Debian-based Linux put the following in your `.bashrc` file
+
+```bash
+export PATH=$PATH:~/.cargo/bin/
+```
+
+and run `source .bashrc`.
+
+Then use the binary to install the Jupyter tool.
+
+```bash
+evcxr_jupyter --install
+```
+
+At this point it should be installed. You'll see a Rust kernel will be available when you use `jupyter notebook` and Quarto will similarly recognize Rust code in `{rust}` as being executable. Start with something like a "Hello, World" example. You'll find that in the Rust REPL you will not need to specify `main {...}`.
+
+```{rust}
+//| echo: true
+println!("Hello, World.");
+```
+
+You can control the code echo by using `//| echo: true` and `//| echo: false` near the beginning of the code block.
+
+

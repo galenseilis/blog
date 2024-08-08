@@ -86,3 +86,12 @@ plt.show()
 ```
 
 This implementation is not particularly efficient in terms of computing resources. Although performance is influenced by many things, a large factor is the presence of an ordinary `for` loop. Upon every iteration of the loop the Python interpreter will check that all types are still valid, which is a waste of computing resources when you can assume that they are. Perhaps I will write a more efficient function, but this example should be suitable for examples and tinkering for now.
+
+
+---
+
+Here is the output data for the example:
+
+```{python}
+ar_data
+```
