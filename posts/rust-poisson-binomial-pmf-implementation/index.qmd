@@ -12,7 +12,7 @@ $$\sum_{A \in F_k} \prod_{i \in A} p_i \prod_{j \in A^c} (1 - p_j)$$
 
 where $F_k$ is the set of all subsets of $k$ integers that can be selected from the set $\{ 1, \ldots, n \}$. This expression does not by itself suggest one algorithm over another due to the cummutativty and associativity of the operators involved.
 
-[Wikipedia](https://en.wikipedia.org/wiki/Poisson_binomial_distribution#Probability_Mass_Function) gives pseudocode for computing the probability mass function for the Poisson binomial distribution via what it terms the "direct convolution algorithm". The algorithm works by iteratively
+[Wikipedia](https://en.wikipedia.org/wiki/Poisson_binomial_distribution#Probability_Mass_Function) gives pseudocode for computing the probability mass function for the Poisson binomial distribution via what it terms the "direct convolution algorithm".
 
 
 ```{rust}
