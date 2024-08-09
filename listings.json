@@ -2,7 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/poisson-binomial-pmf-implementation/index.html",
+      "/posts/rust-poisson-binomial-pmf-implementation/index.html",
       "/posts/rust-execution-quarto-evcxr-jupyter/index.html",
       "/posts/python-naive-simulate-autoregressive-data/index.html",
       "/posts/c-run-from-python/index.html",
