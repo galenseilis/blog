@@ -1,0 +1,56 @@
+---
+title: "Rendering a Dot Representation of a Graph in Quarto Using Petgraph and Petgraph-evcxr"
+author: "Galen Seilis"
+date: "2024-08-08"
+categories: [Rust, Petgraph, Petgraph-evcxr, Dot]
+echo: true
+---
+
+In this post I want to quickly showcase the use of the use of the Petgraph and Petgraph-evcxr packages. Petgraph is a popular graph data structures and algorithms crate available for Rust. Petgraph-evcxr is a tool that makes it possible to easily visualize graphs created using Petgraph within Jupyter notebooks. This in turn allows us to visualize such graphs within Quarto.
+
+This we need to include them as dependencies.
+
+```{rust}
+:dep petgraph = "*"
+:dep petgraph-evcxr = "*"
+
+extern crate petgraph;
+use petgraph::graph::Graph;
+use petgraph::dot::Dot;
+use petgraph_evcxr::{draw_graph, draw_dot};
+```
+
+Then we define the graph.
+
+```{rust}
+let mut g : Graph<&str, &str> = Graph::new();
+let rock = g.add_node("Rock");
+let paper = g.add_node("Paper");
+let scissors = g.add_node("Scissors");
+
+g.add_edge(rock, scissors, "beats");
+g.add_edge(paper, rock, "beats");
+g.add_edge(scissors, paper, "beats");
+```
+
+Finally, we call draw the graph.
+
+```{rust}
+draw_graph(&g);
+```
+
+::: {.callout-tip}
+
+# Mermaid is an easy alternative
+
+One should be aware of the fact that it is easy to produce similar diagrams with Mermaid.
+
+```{mermaid}
+flowchart TD
+A --> B
+B --> C
+C --> A
+```
+
+Perhaps a small advantage of using Petgraph here is that you can programmatically generate the properties of the diagram, as other tools such as `networkx` would let us do. Above I just wanted to show that we 'can' produce such diagrams starting with Rust.
+:::
