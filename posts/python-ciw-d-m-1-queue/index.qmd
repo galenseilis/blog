@@ -1,0 +1,77 @@
+---
+title: "Implementing a D/M/1 Queue in Ciw"
+author: "Galen Seilis"
+date: "2023-12-20"
+categories: [Python, Discrete Event Simulation, Ciw, Queueing Network,  Queueing System, Queueing Theory, Exponential Distribution, Statistics, Operations Research, Random Variables, Inter-Arrival Times, Service Times, Random Number Generation, Servers]
+echo: true
+---
+
+## Introduction
+
+[Ciw](https://ciw.readthedocs.io/en/latest/) is a [Python](https://www.python.org/) package for [simulating](https://en.wikipedia.org/wiki/Discrete-event_simulation) [queueing networks](https://en.wikipedia.org/wiki/Queueing_theory). 
+
+## Simulation
+
+A [D/M/1 queue](https://en.wikipedia.org/wiki/D/M/1_queue) can be implemented and simulated using Ciw in the following way.
+
+```{python}
+import ciw
+
+ciw.seed(2018)
+
+ARRIVAL_TIME = 1
+SERVICE_TIME = 1 / 2
+HORIZON = 365
+
+network = ciw.create_network(
+    arrival_distributions = [ciw.dists.Deterministic(ARRIVAL_TIME)],
+    service_distributions = [ciw.dists.Exponential(SERVICE_TIME)],
+    number_of_servers = [1]
+    )
+
+simulation = ciw.Simulation(network)
+simulation.simulate_until_max_time(HORIZON)
+records = simulation.get_all_records()
+```
+
+## Results
+
+We can tabulate the results.
+
+```{python}
+from IPython.display import Markdown, display
+import pandas as pd
+records = pd.DataFrame(records)
+display(
+    Markdown(
+        records
+        [['waiting_time', 'service_time', 'queue_size_at_arrival', 'queue_size_at_departure']]
+        .describe()
+        .to_markdown()
+        )
+    )
+```
+
+We can plot the arrival times against the waiting times.
+
+```{python}
+records.plot(x='arrival_date', y='waiting_time')
+```
+
+We can plot the service start times against the service times.
+
+```{python}
+records.plot(x='service_start_date', y='service_time')
+```
+
+We can plot the arrival dates against the length of the queue when the customer arrived.
+
+```{python}
+records.plot(x='arrival_date', y='queue_size_at_arrival')
+```
+
+We can plot the departure dates against the length of the queue when the customer departed.
+
+```{python}
+records.plot(x='exit_date', y='queue_size_at_departure')
+```
