@@ -1,0 +1,101 @@
+---
+title: "Using the DKW(M) Inequality to Calculate Sample Size"
+author: "Galen Seilis"
+date: "2024-07-30"
+categories: [DKWM Inequality, Statistics, Cumulative Probability Distribution, Nonparametric Statistics]
+bibliography: references.bib
+draft: true
+---
+
+## Derivations of Sample Size Bounds
+
+In this section I am going to cover the mathematics needed to derive the sample size bounds.
+
+### Univariate Case
+
+The two-sided estimate for the DKWM inequality is given by
+
+$$\Pr \left[ \sup_{x \in \mathbb{R}} \lvert F_n(x) - F(x) \rvert > \epsilon \right] \leq 2 e^{-2n\epsilon^2}$$
+
+Let us define
+
+$$\alpha \triangleq 1 - \Pr \left[ \sup_{x \in \mathbb{R}} \lvert F_n(x) - F(x) \rvert > \epsilon \right] = \Pr \left[ \sup_{x \in \mathbb{R}} \lvert F_n(x) - F(x) \rvert \leq \epsilon \right]$$
+
+so that
+
+
+$$1 - \alpha \leq 2 e^{-2n\epsilon^2}.$$
+
+We can directly solve for an upper bound on $n$:
+
+$$n \leq \frac{\ln 2 - \ln (1 - \alpha)}{2 \epsilon^2}$$
+
+Clearly the sample size is an positive integer whereas the bound we have place on it is not. We can take the ceil round to simplify our conclusion about the sample size:
+
+
+$$n \leq \left\lceil \frac{\ln 2 - \ln (1 - \alpha)}{2 \epsilon^2} \right\rceil$$
+
+
+### Multivariate Case
+
+The [multivariate DKW inequality](https://en.wikipedia.org/wiki/Dvoretzky%E2%80%93Kiefer%E2%80%93Wolfowitz_inequality#Multivariate_case) is given by
+
+$$\Pr \left[ \sup_{t \in \mathbb{R}^k} \left| F_n(t) - F(t)  \right| > \epsilon \right] \leq (n+1)k e^{-2n\epsilon^2},$$
+
+where $F_n(t)$ is the [eCDF](https://en.wikipedia.org/wiki/Empirical_distribution_function), $F(t)$ is the population [CDF](https://en.wikipedia.org/wiki/Cumulative_distribution_function), $\epsilon \in \mathbb{R}_{>0}$, and $n,k \in \mathbb{N}$.
+
+With the multivariate approach we cannot take the direct approach of algebraically obtaining an exact answer for an upper bound on $n$. I tried to apply the [Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function), but I did not find a way to make that approach work (@647066).
+
+The approach I found fruitful is due to @647096, and I will go over the steps below. The first step is to define 
+
+$$f(n; p, k, \epsilon) = \ln (1 + n) - \ln \left( \frac{p}{k} \right) - 2 \epsilon^2 n$$
+
+where 
+
+$$p \triangleq \Pr \left[ \sup_{t \in \mathbb{R}^k} \left| F_n(t) - F(t)  \right| > \epsilon \right]$$
+
+for the purposes of brevity. Notice that $f$ is a monotonic function of the upper bound, which means that it will preserve the location of optima.
+
+Next we will find where $f$ is at its maximum at a fixed $p$, $k$,  and $\epsilon$. This optimization problem can be expressed by:
+
+$$n_* = \arg \max_n f(n; p, k, \epsilon)$$
+
+We can solve this optimization problem exactly using univariable calculus. First we find the derivative:
+
+$$\frac{df}{dn} = \frac{1}{1+n} - 2 \epsilon^2$$
+
+Next we assign the derivative to be zero, and solve for the optimal value of $n$.
+
+$$\frac{df}{dn} := 0 \implies 0=\frac{1}{1+n_*} - 2 \epsilon^2 \iff n_* = \frac{1}{2 \epsilon^2} - 1$$
+
+Now let us consider the Taylor series of $f$ at $n_*$.
+
+```{python}
+import sympy
+
+n = sympy.Symbol('n', real=True, positive=True)
+p = sympy.Symbol('p', real=True, positive=True)
+k = sympy.Symbol('k', integer=True, positive=True)
+epsilon = sympy.Symbol('\\epsilon', real=True, positive=True)
+
+f = sympy.log(1 + n) - sympy.log(p / k) - 2 * epsilon ** 2 * n
+f.series(n, 1 / (2 * epsilon ** 2) - 1, 3)
+```
+
+Since this Taylor series goes on forever, we can choose a finite number of terms as an approximation of $f$. We know that this produces a polynomial which is guaranteed to have no more roots than the degree of the polynomial because of the fundamental theorem of algebra. There will always be exactly the degree number of roots on the complex plane, but we only care about non-negative real roots.
+
+## Applications
+
+A plausible application is to prescribe the sample size for simulations, including discrete event simulation.
+
+Sometimes it is possible to get large IID samples, in which cases you could prescribe the sample size to be collected.
+
+Although not a bound on the sample size itself, the DKW(M) inequality can also be used to 
+
+## Limitations
+
+There are two substantial limitations of these sample size bounds. 
+
+The first comes from the assumption of the theorem that we must be considering independent sampling.
+
+The second limitation is that the bound will tend to be quite large. In a sense this limitation comes from the generality of this bound. Some distributions converge more slowly than others, and such a general bound must hold for even the most slowly converging distributios.

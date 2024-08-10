@@ -47,9 +47,10 @@ One should be aware of the fact that it is easy to produce similar diagrams with
 
 ```{mermaid}
 flowchart TD
-A --> B
-B --> C
-C --> A
+
+Rock -->|Beats| Scissors
+Paper -->|Beats| Rock
+Scissors -->|Beats| Paper
 ```
 
 Perhaps a small advantage of using Petgraph here is that you can programmatically generate the properties of the diagram, as other tools such as `networkx` would let us do. Above I just wanted to show that we 'can' produce such diagrams starting with Rust.
