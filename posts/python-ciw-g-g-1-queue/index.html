@@ -191,6 +191,16 @@ window.Quarto = {
                 <div class="quarto-category">Python</div>
                 <div class="quarto-category">Discrete Event Simulation</div>
                 <div class="quarto-category">Ciw</div>
+                <div class="quarto-category">Simulation</div>
+                <div class="quarto-category">Queueing Systems</div>
+                <div class="quarto-category">Queueing Theory</div>
+                <div class="quarto-category">Hyperexponential Distribution</div>
+                <div class="quarto-category">Gamma Distribution</div>
+                <div class="quarto-category">Statistics</div>
+                <div class="quarto-category">Operations Research</div>
+                <div class="quarto-category">Random Variables</div>
+                <div class="quarto-category">Inter-Arrival Times</div>
+                <div class="quarto-category">Service Times</div>
               </div>
                   </div>
   </div>
@@ -246,7 +256,7 @@ window.Quarto = {
 <section id="simulation" class="level2">
 <h2 class="anchored" data-anchor-id="simulation">Simulation</h2>
 <p>A <a href="https://en.wikipedia.org/wiki/G/G/1_queue">G/G/1 queue</a> as described can be implemented and simulated using Ciw in the following way.</p>
-<div id="f834a3fa" class="cell" data-execution_count="1">
+<div id="8234ff9b" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ciw</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>ciw.seed(<span class="dv">2018</span>)</span>
@@ -269,7 +279,7 @@ window.Quarto = {
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
 <p>We can tabulate the results.</p>
-<div id="b45da1bd" class="cell" data-execution_count="2">
+<div id="81f9b349" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown, display</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>records <span class="op">=</span> pd.DataFrame(records)</span>
@@ -361,7 +371,7 @@ window.Quarto = {
 </div>
 </div>
 <p>We can plot the arrival times against the waiting times.</p>
-<div id="c1e69ba9" class="cell" data-execution_count="3">
+<div id="ec1438da" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>records.plot(x<span class="op">=</span><span class="st">'arrival_date'</span>, y<span class="op">=</span><span class="st">'waiting_time'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -372,7 +382,7 @@ window.Quarto = {
 </div>
 </div>
 <p>We can plot the service start times against the service times.</p>
-<div id="50285912" class="cell" data-execution_count="4">
+<div id="7174be11" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>records.plot(x<span class="op">=</span><span class="st">'service_start_date'</span>, y<span class="op">=</span><span class="st">'service_time'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -383,7 +393,7 @@ window.Quarto = {
 </div>
 </div>
 <p>We can plot the arrival dates against the length of the queue when the customer arrived.</p>
-<div id="97428135" class="cell" data-execution_count="5">
+<div id="c55e3313" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>records.plot(x<span class="op">=</span><span class="st">'arrival_date'</span>, y<span class="op">=</span><span class="st">'queue_size_at_arrival'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -394,7 +404,7 @@ window.Quarto = {
 </div>
 </div>
 <p>We can plot the departure dates against the length of the queue when the customer departed.</p>
-<div id="33065f47" class="cell" data-execution_count="6">
+<div id="f71411ee" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>records.plot(x<span class="op">=</span><span class="st">'exit_date'</span>, y<span class="op">=</span><span class="st">'queue_size_at_departure'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
