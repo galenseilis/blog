@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/mermaid-healthcare-service-diagram/index.html",
       "/posts/zig-run-from-python/index.html",
       "/posts/rust-gcd/index.html",
       "/posts/rust-poisson-binomial-pmf-implementation/index.html",
@@ -28,6 +29,7 @@
       "/posts/combining-kedro-with-rye/index.html",
       "/posts/python-clie-log-trace/index.html",
       "/posts/python-ciw-simpy-car/index.html",
+      "/posts/rust-simpy-car/index.html",
       "/posts/python-ciw-d-m-1-queue/index.html",
       "/posts/python-ciw-g-g-1-queue/index.html",
       "/posts/python-ciw-simpy-clock/index.html",
