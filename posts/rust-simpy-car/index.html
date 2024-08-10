@@ -9,7 +9,7 @@
 <meta name="author" content="Galen Seilis">
 <meta name="dcterms.date" content="2023-12-20">
 
-<title>Implementing a G/G/1 Queue in Ciw – Galen Seilis</title>
+<title>A Rust Implementation of SimPy’s Simple Car DES – Galen Seilis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -157,21 +157,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Implementing a G/G/1 Queue in Ciw</h1>
+      <h1 class="title">A Rust Implementation of SimPy’s Simple Car DES</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Python</div>
+                <div class="quarto-category">Rust</div>
                 <div class="quarto-category">Discrete Event Simulation</div>
-                <div class="quarto-category">Ciw</div>
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">SimPy</div>
                 <div class="quarto-category">Simulation</div>
-                <div class="quarto-category">Queueing Systems</div>
-                <div class="quarto-category">Queueing Theory</div>
-                <div class="quarto-category">Hyperexponential Distribution</div>
-                <div class="quarto-category">Gamma Distribution</div>
-                <div class="quarto-category">Statistics</div>
-                <div class="quarto-category">Operations Research</div>
-                <div class="quarto-category">Random Variables</div>
-                <div class="quarto-category">Inter-Arrival Times</div>
-                <div class="quarto-category">Service Times</div>
+                <div class="quarto-category">Software Design</div>
+                <div class="quarto-category">Prototyping</div>
               </div>
                   </div>
   </div>
@@ -196,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">August 9, 2024</p>
+        <p class="date-modified">August 10, 2024</p>
       </div>
     </div>
       
@@ -214,8 +208,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div id="8441d44d" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> simpy</span>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>This post gives an implementation of <a href="https://simpy.readthedocs.io/en/latest/simpy_intro/basic_concepts.html">this example</a> from the SimPy documentation:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> simpy</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> car(env):</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
@@ -230,16 +226,120 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> simpy.Environment()</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>env.process(car(env))</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>env.run(until<span class="op">=</span><span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Start parking at 0
-Start driving at 5
-Start parking at 7
-Start driving at 12
-Start parking at 14</code></pre>
-</div>
-</div>
+</section>
+<section id="rust-implementation" class="level2">
+<h2 class="anchored" data-anchor-id="rust-implementation">Rust Implementation</h2>
+<p>I implemented the above car example in Rust.</p>
+<section id="key-concepts" class="level3">
+<h3 class="anchored" data-anchor-id="key-concepts">Key Concepts</h3>
+<p>The major difference is the introduction of enums for driving events and parking events rather than just having a single type of event. Let’s break down the key concepts anyway.</p>
+<p>First, there are events implemented using an <code>Event</code> struct which always have two types of data: <code>time</code> and <code>event_type</code>. The <code>time</code> datum is the time that the event is scheduled to elapse. The <code>event_type</code> essentially provides a flag for how to update the state of the simulated car.</p>
+<p>The <code>Environment</code> struct manages the simulation, including the event schedule is is implemented as a reverse binary heap (<code>BinaryHeap</code> combined with <code>Reverse</code>).</p>
+<p>Lastly, is the use of Rust’s enums. Here they are used to define the two types of events: <code>Parking</code> and <code>Driving</code>.</p>
+</section>
+<section id="implementation" class="level3">
+<h3 class="anchored" data-anchor-id="implementation">Implementation</h3>
+<p>Now that we’ve looked at the key concepts, let’s go through the code in more detail. First, we need to include some crates to help us with the implementation.</p>
+<p>First we need to import some crates.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// car.rs</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">std::cmp::</span>Ordering<span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">std::collections::</span>BinaryHeap<span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">std::cmp::</span>Reverse<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>Ordering</code> provides traits that we’ll use for implementing the ordering of events in the event schedule. <code>BinaryHeap</code> and <code>Reverse</code> are useful for implementing the event schedule itself.</p>
+<p>Next I defined different types of events. Maybe it would be more logical to define the existence of events first, but we’re just going in the order of my code event if that is a little weird. I defined different types of events as a <code>EventType</code> enumeration. I also used the <code>derive</code> attribute to attach traits related to debugging and comparison of events.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>derive<span class="at">(</span><span class="bu">Debug</span><span class="op">,</span> <span class="bu">PartialEq</span><span class="op">,</span> <span class="bu">PartialOrd</span><span class="at">)]</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> EventType <span class="op">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    Parking<span class="op">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    Driving<span class="op">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Defining events themselves as structs works well here because they basically are value objects. They contain two pieces of data: <code>time</code> and <code>event_type</code>. The former is the time that an event is scheduled to occur. The latter is where each instance of <code>Event</code> will store its type.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>derive<span class="at">(</span><span class="bu">Debug</span><span class="op">,</span> <span class="bu">PartialEq</span><span class="op">,</span> <span class="bu">PartialOrd</span><span class="at">)]</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Event <span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    time<span class="op">:</span> <span class="dt">f64</span><span class="op">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    event_type<span class="op">:</span> EventType</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>I also included implementations for the <code>Eq</code> and <code>Ord</code>, which involves using some predefined methods. We just need to declare them.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">impl</span> <span class="bu">Eq</span> <span class="cf">for</span> Event <span class="op">{}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">impl</span> <span class="bu">Ord</span> <span class="cf">for</span> Event <span class="op">{</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fn</span> cmp(<span class="op">&amp;</span><span class="kw">self</span><span class="op">,</span> other<span class="op">:</span> <span class="op">&amp;</span><span class="dt">Self</span>) <span class="op">-&gt;</span> Ordering <span class="op">{</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">self</span><span class="op">.</span>partial_cmp(other)<span class="op">.</span>unwrap_or(<span class="pp">Ordering::</span>Equal)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The environment struct is responsible for running the simulation, and has two main components: the event schedule and a clock. The event schedule, which I somewhat weirdly called a “queue” in the code, is actually a reverse binary heap.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Environment <span class="op">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    event_queue<span class="op">:</span> BinaryHeap<span class="op">&lt;</span>Reverse<span class="op">&lt;</span>Event<span class="op">&gt;&gt;,</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    clock<span class="op">:</span> <span class="dt">f64</span><span class="op">,</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now just because the environment has an event schedule and a clock doesn’t mean it knows what to do with these things, so I provide some implementations so that the environment knows what to do. The <code>new</code> implementation simply instantiates a new (empty) event schedule and begins with a clock set to zero.</p>
+<p>The <code>schedule_event</code> pushes an event (in reverse ordering in terms of how the data structre operates) to the event schedule. We’re using a predefined data structure so we don’t need to implement actually finding the right location to insert a new value.</p>
+<p>The <code>run_until</code> implementation is where the magic happens. We continually loop until either a maximum time has been reached or the event schedule is empty, whichever comes first. The logic involves iteratively getting the next event, updating the clock, and then executing the event.</p>
+<p>The <code>now</code> implementation is an afterthought that maybe if we extended this coded example then we might want to access the time, but it really doesn’t add anything substantial.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">impl</span> Environment <span class="op">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fn</span> new() <span class="op">-&gt;</span> <span class="dt">Self</span> <span class="op">{</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="dt">Self</span> <span class="op">{</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>            event_queue<span class="op">:</span> <span class="pp">BinaryHeap::</span>new()<span class="op">,</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            clock<span class="op">:</span> <span class="dv">0.0</span><span class="op">,</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fn</span> schedule_event(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span><span class="op">,</span> event<span class="op">:</span> Event) <span class="op">{</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">self</span><span class="op">.</span>event_queue<span class="op">.</span>push(Reverse(event))<span class="op">;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fn</span> run_until(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span><span class="op">,</span> end_time<span class="op">:</span> <span class="dt">f64</span>) <span class="op">{</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="kw">let</span> <span class="cn">Some</span>(Reverse(current_event)) <span class="op">=</span> <span class="kw">self</span><span class="op">.</span>event_queue<span class="op">.</span>pop() <span class="op">{</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> current_event<span class="op">.</span>time <span class="op">&lt;</span> end_time <span class="op">{</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                <span class="kw">self</span><span class="op">.</span>clock <span class="op">=</span> current_event<span class="op">.</span>time<span class="op">;</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>                current_event<span class="op">.</span>execute(<span class="kw">self</span>)<span class="op">;</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                <span class="kw">self</span><span class="op">.</span>clock <span class="op">=</span> end_time<span class="op">;</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fn</span> now(<span class="op">&amp;</span><span class="kw">self</span>) <span class="op">-&gt;</span> <span class="dt">f64</span> <span class="op">{</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>        <span class="kw">self</span><span class="op">.</span>clock</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>I know this code is weirdly ordered. Next I defined some implementations for <code>Event</code>. Just like <code>Environment</code>, it doesn’t magically know what to do. We have to tell it.</p>
+<p>The <code>new</code> implementation sets the time and event type.</p>
+<p>The <code>execute</code> implementation checks which type of event is elapsing, and updates the state of the car depending on the type of event. Notice that the events themselves ask the environment to schedule further events, which is how the system continues to evolve.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">impl</span> Event <span class="op">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fn</span> new(time<span class="op">:</span> <span class="dt">f64</span><span class="op">,</span> event_type<span class="op">:</span> EventType) <span class="op">-&gt;</span> <span class="dt">Self</span> <span class="op">{</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="dt">Self</span> <span class="op">{</span> time<span class="op">,</span> event_type <span class="op">}</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fn</span> execute(<span class="op">&amp;</span><span class="kw">self</span><span class="op">,</span> env<span class="op">:</span> <span class="op">&amp;</span><span class="kw">mut</span> Environment) <span class="op">{</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">match</span> <span class="kw">self</span><span class="op">.</span>event_type <span class="op">{</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>            <span class="pp">EventType::</span>Parking <span class="op">=&gt;</span> <span class="op">{</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                <span class="pp">println!</span>(<span class="st">"Start parking at {}"</span><span class="op">,</span> <span class="kw">self</span><span class="op">.</span>time)<span class="op">;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                <span class="kw">let</span> parking_duration <span class="op">=</span> <span class="dv">5.0</span><span class="op">;</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>                env<span class="op">.</span>schedule_event(<span class="pp">Event::</span>new(<span class="kw">self</span><span class="op">.</span>time <span class="op">+</span> parking_duration<span class="op">,</span> <span class="pp">EventType::</span>Driving))<span class="op">;</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>            <span class="pp">EventType::</span>Driving <span class="op">=&gt;</span> <span class="op">{</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>                <span class="pp">println!</span>(<span class="st">"Start driving at {}"</span><span class="op">,</span> <span class="kw">self</span><span class="op">.</span>time)<span class="op">;</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>                <span class="kw">let</span> trip_duration <span class="op">=</span> <span class="dv">2.0</span><span class="op">;</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>                env<span class="op">.</span>schedule_event(<span class="pp">Event::</span>new(<span class="kw">self</span><span class="op">.</span>time <span class="op">+</span> trip_duration<span class="op">,</span> <span class="pp">EventType::</span>Parking))<span class="op">;</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then we just need to instantiate the environment, schedule the first event which will trigger the cycle of state transitions, and run for the desired amount of time.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="kw">mut</span> env <span class="op">=</span> <span class="pp">Environment::</span>new()<span class="op">;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">// Schedule the initial clock event</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>env<span class="op">.</span>schedule_event(<span class="pp">Event::</span>new(<span class="dv">0.0</span><span class="op">,</span> <span class="pp">EventType::</span>Parking))<span class="op">;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">// Run the simulation until max time</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>env<span class="op">.</span>run_until(<span class="dv">15.0</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>I think this design is “okay”, but I want to keep exploring different designs for DES in Rust. I like that <code>Environment</code> does not need to know anything about the state of the system being simulated. I would like to weaken the coupling between state transitions and the types of events. Instead of providing <code>impl</code>s perhaps all events could have an <code>execute</code> method which just calls a function which it is borrowing from the implementation of the system’s state. That way events could be coupled to state transitions weakly, but not responsible for defining what those state transitions are.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
