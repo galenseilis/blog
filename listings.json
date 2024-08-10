@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/zig-run-from-python/index.html",
       "/posts/rust-poisson-binomial-pmf-implementation/index.html",
       "/posts/rust-execution-quarto-evcxr-jupyter/index.html",
       "/posts/rust-petgraph-dot-example/index.html",
