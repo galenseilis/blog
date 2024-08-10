@@ -13,16 +13,20 @@
     <lastmod>2024-07-30T05:25:19.457Z</lastmod>
   </url>
   <url>
-    <loc>https://galenseilis.github.io/blog/posts/my-quarto-blog/index.html</loc>
-    <lastmod>2024-07-31T04:26:28.818Z</lastmod>
+    <loc>https://galenseilis.github.io/blog/posts/python-ciw-d-m-1-queue/index.html</loc>
+    <lastmod>2024-08-10T05:37:21.989Z</lastmod>
   </url>
   <url>
-    <loc>https://galenseilis.github.io/blog/posts/rust-gcd/index.html</loc>
-    <lastmod>2024-08-10T04:56:26.031Z</lastmod>
+    <loc>https://galenseilis.github.io/blog/posts/unzip-inaturalist-observations-ubuntu/index.html</loc>
+    <lastmod>2024-07-27T21:22:38.372Z</lastmod>
   </url>
   <url>
-    <loc>https://galenseilis.github.io/blog/posts/rust-execution-for-quarto/index.html</loc>
-    <lastmod>2024-07-30T05:39:18.596Z</lastmod>
+    <loc>https://galenseilis.github.io/blog/posts/zig-run-from-python/index.html</loc>
+    <lastmod>2024-08-10T04:31:59.277Z</lastmod>
+  </url>
+  <url>
+    <loc>https://galenseilis.github.io/blog/posts/python-ciw-simpy-clock/index.html</loc>
+    <lastmod>2024-08-10T05:24:00.394Z</lastmod>
   </url>
   <url>
     <loc>https://galenseilis.github.io/blog/posts/rust-execution-quarto-evcxr-jupyter/index.html</loc>
@@ -65,20 +69,24 @@
     <lastmod>2024-07-27T21:22:09.505Z</lastmod>
   </url>
   <url>
-    <loc>https://galenseilis.github.io/blog/posts/cpp-execution-for-quarto/index.html</loc>
-    <lastmod>2024-07-30T05:44:42.591Z</lastmod>
-  </url>
-  <url>
-    <loc>https://galenseilis.github.io/blog/publications.html</loc>
-    <lastmod>2024-07-22T00:42:45.116Z</lastmod>
+    <loc>https://galenseilis.github.io/blog/posts/c-run-from-python/index.html</loc>
+    <lastmod>2024-07-30T14:07:26.366Z</lastmod>
   </url>
   <url>
     <loc>https://galenseilis.github.io/blog/index.html</loc>
     <lastmod>2024-07-22T00:42:45.116Z</lastmod>
   </url>
   <url>
-    <loc>https://galenseilis.github.io/blog/posts/c-run-from-python/index.html</loc>
-    <lastmod>2024-07-30T14:07:26.366Z</lastmod>
+    <loc>https://galenseilis.github.io/blog/publications.html</loc>
+    <lastmod>2024-07-22T00:42:45.116Z</lastmod>
+  </url>
+  <url>
+    <loc>https://galenseilis.github.io/blog/posts/cpp-execution-for-quarto/index.html</loc>
+    <lastmod>2024-07-30T05:44:42.591Z</lastmod>
+  </url>
+  <url>
+    <loc>https://galenseilis.github.io/blog/posts/python-ciw-simpy-car/index.html</loc>
+    <lastmod>2024-08-10T05:31:21.016Z</lastmod>
   </url>
   <url>
     <loc>https://galenseilis.github.io/blog/posts/se-lib-fault-tree/index.html</loc>
@@ -117,12 +125,16 @@
     <lastmod>2024-07-30T03:39:10.646Z</lastmod>
   </url>
   <url>
-    <loc>https://galenseilis.github.io/blog/posts/zig-run-from-python/index.html</loc>
-    <lastmod>2024-08-10T04:31:59.277Z</lastmod>
+    <loc>https://galenseilis.github.io/blog/posts/rust-execution-for-quarto/index.html</loc>
+    <lastmod>2024-07-30T05:39:18.596Z</lastmod>
   </url>
   <url>
-    <loc>https://galenseilis.github.io/blog/posts/unzip-inaturalist-observations-ubuntu/index.html</loc>
-    <lastmod>2024-07-27T21:22:38.372Z</lastmod>
+    <loc>https://galenseilis.github.io/blog/posts/rust-gcd/index.html</loc>
+    <lastmod>2024-08-10T04:57:36.916Z</lastmod>
+  </url>
+  <url>
+    <loc>https://galenseilis.github.io/blog/posts/my-quarto-blog/index.html</loc>
+    <lastmod>2024-07-31T04:26:28.818Z</lastmod>
   </url>
   <url>
     <loc>https://galenseilis.github.io/blog/posts/rust-petgraph-dot-example/index.html</loc>
