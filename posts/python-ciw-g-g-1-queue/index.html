@@ -9,7 +9,7 @@
 <meta name="author" content="Galen Seilis">
 <meta name="dcterms.date" content="2023-12-20">
 
-<title>A Ciw Implementation of SimPy’s Car Example – Galen Seilis</title>
+<title>Implementing a G/G/1 Queue in Ciw – Galen Seilis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -102,9 +102,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -189,24 +186,11 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">A Ciw Implementation of SimPy’s Car Example</h1>
+      <h1 class="title">Implementing a G/G/1 Queue in Ciw</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Python</div>
-                <div class="quarto-category">Simulation</div>
-                <div class="quarto-category">Queueing System</div>
-                <div class="quarto-category">Queueing Network</div>
-                <div class="quarto-category">Queueing Theory</div>
-                <div class="quarto-category">Routing</div>
-                <div class="quarto-category">Process-Based Simulation</div>
-                <div class="quarto-category">Random Variables</div>
-                <div class="quarto-category">Constant Random Variables</div>
-                <div class="quarto-category">Arrival Distributions</div>
-                <div class="quarto-category">Service Distributions</div>
-                <div class="quarto-category">Timing</div>
-                <div class="quarto-category">Initialization</div>
                 <div class="quarto-category">Discrete Event Simulation</div>
                 <div class="quarto-category">Ciw</div>
-                <div class="quarto-category">SimPy</div>
               </div>
                   </div>
   </div>
@@ -228,6 +212,12 @@ window.Quarto = {
       </div>
     </div>
     
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">August 9, 2024</p>
+      </div>
+    </div>
       
     </div>
     
@@ -243,145 +233,180 @@ window.Quarto = {
 
 
 
-<p>In the SimPy documentation they describe a <a href="https://simpy.readthedocs.io/en/latest/simpy_intro/basic_concepts.html#our-first-process">car process</a> which involves a car which transitions between parking and driving. From being parked it takes 5 units of time to change to being in a state of driving. Similarly, it takes 2 units of time to go from being in a state of driving to a state of parkerd. Here is a state diagram representing this system:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">stateDiagram
-    [*] --&gt; Parked
-    Parked --&gt; Driving: 5
-    Driving --&gt; Parked: 2
-    Parked --&gt; [*]
-    Driving --&gt; [*]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p>For something this simple we don’t really need discrete event simulation software, but it can be helpful for the sake of illustration to do it anyway. Let’s use idiomatic Ciw to make an equivalent simulation.</p>
-<p>Let our queueing network have two nodes, each representing either of the two states “Parked” or “Driving”. The car will go between these two nodes. When the car arrives at a node that will repesent that it has begun the whatever process is involved, and when the car finishes service at that node we will interpret that to mean it is now changing state.</p>
-<p>Since there will be only one car in the whole network, we do not need to give any consideration to service discipline. If the car is on the queue, then serve it. Otherwise, don’t.</p>
-<p>We do need to pay attention to arrival times however. We need the car to arrive at the first node at the start of the simulation and for no additional cars to arrive thereafter. This can be achieved with a sequential distribution available in Ciw:</p>
-<div id="921cb782" class="cell" data-execution_count="1">
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p><a href="https://ciw.readthedocs.io/en/latest/">Ciw</a> is a <a href="https://www.python.org/">Python</a> package for <a href="https://en.wikipedia.org/wiki/Discrete-event_simulation">simulating</a> <a href="https://en.wikipedia.org/wiki/Queueing_theory">queueing networks</a>.</p>
+<p>The two G’s in G/G/1 do not have to be the same distribution, and respectively can be any distribution with non-negative support.</p>
+<p>We will use a <a href="https://en.wikipedia.org/wiki/Hyperexponential_distribution">Hyperexponential distribution</a> for the arrival distribution. A hyperexponential distribution is exactly a <a href="https://en.wikipedia.org/wiki/Mixture_distribution">mixture distribution</a> of <a href="https://en.wikipedia.org/wiki/Exponential_distribution">exponential distributions</a>. This has an interpretation of there being an implicit set of arrival processes that each have their own distinct but independent exponential arrival times. In this case we will choose a mixture of four such arrival processes with distinct arrival rates:</p>
+<p><span class="math display">\[\begin{align} U_1 \sim &amp; \text{Exponential}\left( \frac{1}{9} \right) \\ U_2 \sim &amp; \text{Exponential}\left( \frac{1}{5} \right) \\ U_3 \sim &amp; \text{Exponential}\left( \frac{1}{6} \right) \\ U_4 \sim &amp; \text{Exponential}\left( 1 \right) \end{align}\]</span></p>
+<p>The following mixture distribution for the arrival times will be used:</p>
+<p><span class="math display">\[T_{\text{arrivals}} \sim \frac{1}{5} f_{U_1} + \frac{1}{10} f_{U_2} + \frac{3}{5} f_{U_3} + \frac{1}{10} f_{U_4}\]</span></p>
+<p>We will use a <a href="https://en.wikipedia.org/wiki/Gamma_distribution">gamma distribution</a> for the sake of example. A gamma distribution is the result of a sum of <a href="https://en.wikipedia.org/wiki/Independence_(probability_theory)">independent</a> <a href="https://en.wikipedia.org/wiki/Exponential_distribution">exponentially-distributed</a> <a href="https://en.wikipedia.org/wiki/Random_variable">random variable</a>, and thus for this example we have an interpretation that the servicing is implicitly a multi-step process where each step has an exponentially-distributed completion time.</p>
+</section>
+<section id="simulation" class="level2">
+<h2 class="anchored" data-anchor-id="simulation">Simulation</h2>
+<p>A <a href="https://en.wikipedia.org/wiki/G/G/1_queue">G/G/1 queue</a> as described can be implemented and simulated using Ciw in the following way.</p>
+<div id="f834a3fa" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ciw</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ciw.dists.Sequential([<span class="dv">0</span>, <span class="bu">float</span>(<span class="st">'inf'</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>Sequential([0, inf])</code></pre>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>ciw.seed(<span class="dv">2018</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>arrival_dist <span class="op">=</span> ciw.dists.HyperExponential(rates<span class="op">=</span>[<span class="dv">9</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">1</span>], probs<span class="op">=</span>[<span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.6</span>, <span class="fl">0.1</span>])</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>service_dist <span class="op">=</span> ciw.dists.Gamma(shape<span class="op">=</span><span class="fl">0.6</span>, scale<span class="op">=</span><span class="fl">1.2</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>HORIZON <span class="op">=</span> <span class="dv">365</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>network <span class="op">=</span> ciw.create_network(</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    arrival_distributions <span class="op">=</span> [arrival_dist],</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    service_distributions <span class="op">=</span> [service_dist],</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    number_of_servers <span class="op">=</span> [<span class="dv">1</span>]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>simulation <span class="op">=</span> ciw.Simulation(network)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>simulation.simulate_until_max_time(HORIZON)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>records <span class="op">=</span> simulation.get_all_records()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<p>We can tabulate the results.</p>
+<div id="b45da1bd" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown, display</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>records <span class="op">=</span> pd.DataFrame(records)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>display(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    Markdown(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        records</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        [[<span class="st">'waiting_time'</span>, <span class="st">'service_time'</span>, <span class="st">'queue_size_at_arrival'</span>, <span class="st">'queue_size_at_departure'</span>]]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        .describe()</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        .to_markdown()</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 27%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">waiting_time</th>
+<th style="text-align: right;">service_time</th>
+<th style="text-align: right;">queue_size_at_arrival</th>
+<th style="text-align: right;">queue_size_at_departure</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">count</td>
+<td style="text-align: right;">546</td>
+<td style="text-align: right;">546</td>
+<td style="text-align: right;">546</td>
+<td style="text-align: right;">546</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mean</td>
+<td style="text-align: right;">118.578</td>
+<td style="text-align: right;">0.668262</td>
+<td style="text-align: right;">176.855</td>
+<td style="text-align: right;">510.295</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">std</td>
+<td style="text-align: right;">64.0327</td>
+<td style="text-align: right;">0.813994</td>
+<td style="text-align: right;">103.554</td>
+<td style="text-align: right;">289.318</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">min</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">9.40731e-07</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">25%</td>
+<td style="text-align: right;">66.9117</td>
+<td style="text-align: right;">0.0991315</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">258</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">50%</td>
+<td style="text-align: right;">119.865</td>
+<td style="text-align: right;">0.348732</td>
+<td style="text-align: right;">177.5</td>
+<td style="text-align: right;">527.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">75%</td>
+<td style="text-align: right;">175.243</td>
+<td style="text-align: right;">0.901602</td>
+<td style="text-align: right;">270.75</td>
+<td style="text-align: right;">763.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">max</td>
+<td style="text-align: right;">224.18</td>
+<td style="text-align: right;">4.88812</td>
+<td style="text-align: right;">352</td>
+<td style="text-align: right;">1015</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-<p>The class <code>ciw.dists.Sequential</code> takes an iterable (usually a list) representing the sequence of arrival times to be done. When it has gotten through the list it will start again at the start of the list. But here’s the catch: we have set the second time to <span class="math inline">\(\infty\)</span>, which it will never reach. So there will be a single arrival at <span class="math inline">\(t=0\)</span> and non thereafter. We need to specify that no arrivals occur at the second node, which we can do using <code>None</code>:</p>
-<div id="745a0f1b" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>arrival_dists <span class="op">=</span> [ciw.dists.Sequential([<span class="dv">0</span>, <span class="bu">float</span>(<span class="st">'inf'</span>)]), <span class="va">None</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>For service times we know that the car will start driving after 5 units of time, then be parked for 2 units of time, and repeat. These are <a href="https://en.wikipedia.org/wiki/Degenerate_distribution#Constant_random_variable">constant random variables</a> which can be specified in Ciw using <code>ciw.dists.Deterministic</code>:</p>
-<div id="68ca02b9" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>service_dists <span class="op">=</span> [ciw.dists.Deterministic(<span class="dv">5</span>), ciw.dists.Deterministic(<span class="dv">2</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>We don’t need to, but let’s add some fluff so that we get a similar printout. To do that let’s write a wrapper distribution.</p>
-<div id="0e9a23df" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> NoReturn</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ciw</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> PrintDistWrapper(ciw.dists.Distribution):</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">    A wrapper class for a probability distribution that adds a print statement</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">    before sampling from the underlying distribution.</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">    - dist (ciw.dists.Distribution): The underlying probability distribution to be wrapped.</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">    - message (str): A custom message to be printed before sampling.</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">    Note: This class inherits from ciw.dists.Distribution.</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">    Example:</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">    ```</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">    underlying_dist = SomeDistributionClass(parameters)</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">    wrapper_dist = PrintDistWrapper(underlying_dist, "Sampling from the distribution:")</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">    sample_result = wrapper_dist.sample()</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">    ```</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, dist: ciw.dists.Distribution, message: <span class="bu">str</span>) <span class="op">-&gt;</span> NoReturn:</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co">        Initialize the PrintDistWrapper instance.</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co">        Parameters:</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co">        - dist (ciw.dists.Distribution): The underlying probability distribution to be wrapped.</span></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co">        - message (str): A custom message to be printed before sampling.</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.dist <span class="op">=</span> dist</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.message <span class="op">=</span> message</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> sample(<span class="va">self</span>, t: <span class="bu">float</span> <span class="op">=</span> <span class="va">None</span>, ind: ciw.Individual <span class="op">=</span> <span class="va">None</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="co">        Generate a sample from the underlying distribution, printing a custom message.</span></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="co">        Parameters:</span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="co">        - t: Optional parameter (if applicable to the underlying distribution).</span></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="co">        - ind: Optional parameter (if applicable to the underlying distribution).</span></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns:</span></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="co">        - The sampled value from the underlying distribution.</span></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="co">        Note: This method overrides the sample method of ciw.dists.Distribution.</span></span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="va">self</span>.message, t)</span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.dist.sample(t, ind)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>The <code>PrintDistWrapper</code> class allows us to print whatever message we like when the distribution is sampled from. Now we can just wrap our service distributions like this:</p>
-<div id="fc15d193" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>service_dists <span class="op">=</span> [</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  PrintDistWrapper(</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    ciw.dists.Deterministic(<span class="dv">5</span>),</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Start parking at'</span>),</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  PrintDistWrapper(</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    ciw.dists.Deterministic(<span class="dv">2</span>),</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Start driving at'</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>We only need one server at each node since there could only ever be one car either there, or not there, requiring service. So we can just set those number of servers in a list like this:</p>
-<div id="cdb87623" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>num_servers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Since we have two nodes, we need to specifying the routing behaviour. It is simple in this case, and stationary. Whenever the car is leaving node one, go to node to. Whenever the car is leaving node two, go to node one. We can specify this as the following routing matrix:</p>
-<p><span class="math display">\[\begin{bmatrix} 0 &amp; 1 \\ 1 &amp; 0 \end{bmatrix}\]</span></p>
-<p>In Ciw we can take our routing matrix to be:</p>
-<div id="efd287d1" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> [[<span class="fl">0.0</span>, <span class="fl">1.0</span>], [<span class="fl">1.0</span>, <span class="fl">0.0</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>We can now put together our simulation object:</p>
-<div id="003ce93b" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>network <span class="op">=</span> ciw.create_network(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    arrival_distributions <span class="op">=</span> arrival_dists,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    service_distributions <span class="op">=</span> service_dists,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    number_of_servers <span class="op">=</span> num_servers,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    routing<span class="op">=</span>R</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>And put together out simulation object:</p>
-<div id="934a6535" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>simulation <span class="op">=</span> ciw.Simulation(network)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>And simulate (for 15 units of time)!</p>
-<div id="3fd8f644" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>simulation.simulate_until_max_time(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Start parking at 0
-Start driving at 5
-Start parking at 7
-Start driving at 12
-Start parking at 14</code></pre>
+<p>We can plot the arrival times against the waiting times.</p>
+<div id="c1e69ba9" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>records.plot(x<span class="op">=</span><span class="st">'arrival_date'</span>, y<span class="op">=</span><span class="st">'waiting_time'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-4-output-1.png" width="575" height="429" class="figure-img"></p>
+</figure>
 </div>
 </div>
-<p>Happy simulating! :)</p>
+</div>
+<p>We can plot the service start times against the service times.</p>
+<div id="50285912" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>records.plot(x<span class="op">=</span><span class="st">'service_start_date'</span>, y<span class="op">=</span><span class="st">'service_time'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-5-output-1.png" width="558" height="429" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can plot the arrival dates against the length of the queue when the customer arrived.</p>
+<div id="97428135" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>records.plot(x<span class="op">=</span><span class="st">'arrival_date'</span>, y<span class="op">=</span><span class="st">'queue_size_at_arrival'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-6-output-1.png" width="575" height="429" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can plot the departure dates against the length of the queue when the customer departed.</p>
+<div id="33065f47" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>records.plot(x<span class="op">=</span><span class="st">'exit_date'</span>, y<span class="op">=</span><span class="st">'queue_size_at_departure'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-7-output-1.png" width="583" height="429" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
