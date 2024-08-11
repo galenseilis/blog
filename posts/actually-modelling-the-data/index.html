@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.54">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Galen Seilis">
+<meta name="dcterms.date" content="2024-03-04">
+
+<title>Actually Modelling The Data – Galen Seilis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<meta name="quarto:status" content="draft">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><div id="quarto-draft-alert" class="alert alert-warning"><i class="bi bi-pencil-square"></i>Draft</div>
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Galen Seilis</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Galen Seilis</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../presentations.html"> 
+<span class="menu-text">Presentations</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/galenseilis"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/GSeilis"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Actually Modelling The Data</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Statistics</div>
+                <div class="quarto-category">Statistical Modelling</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Galen Seilis </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 4, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#what-are-models" id="toc-what-are-models" class="nav-link" data-scroll-target="#what-are-models">What are Models?</a></li>
+  <li><a href="#a-general-statistical-model" id="toc-a-general-statistical-model" class="nav-link" data-scroll-target="#a-general-statistical-model">A General Statistical Model</a></li>
+  <li><a href="#what-are-transformations" id="toc-what-are-transformations" class="nav-link" data-scroll-target="#what-are-transformations">What are Transformations?</a></li>
+  <li><a href="#some-models-are-more-expressive-than-others" id="toc-some-models-are-more-expressive-than-others" class="nav-link" data-scroll-target="#some-models-are-more-expressive-than-others">Some Models are More Expressive Than Others</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>This post is about comparing and contrasting my view of what a statistical model is with how Dustin Fife views statistical models. One of the keystones of Dustin’s perspective is that we should actually model the data rather than transformations of the data.</p>
+<p>A <a href="https://en.wikipedia.org/wiki/Keystone_(architecture)">keystone</a> is a term from architecture for a force-balancing stone at the top of an archway. Without it, the archway would collapse.</p>
+<div id="fig-keystone" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-keystone-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://upload.wikimedia.org/wikipedia/commons/0/02/L-Karniesbogen_%28keystone%29.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-keystone-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: A similar notion is that of a <a href="https://en.wikipedia.org/wiki/Keystone_species">keystone species</a> in community ecology.
+</figcaption>
+</figure>
+</div>
+<p>I want to challenge this keystone in this post, and suggest a different keystone. That is, I want to explain why I find the phrase “actually modelling the data” eventually unhelpful in my thinking, and how other ways of thinking can take its place. I think that Dustin’s intuition about “<em>actually modelling the data</em>” help him and his students avoid certain mistakes, so it is beneficial, but it also needlessly limits what you can do.</p>
+<p>Let us jump straight to the crux of the matter: what are models?</p>
+</section>
+<section id="what-are-models" class="level1">
+<h1>What are Models?</h1>
+<p>Dustin has already said a bunch of things about modelling. I’ve embedded videos where he describes models, and put quotes below them that are relevant. Go ahead and watch the videos if you have time, otherwise these quotes are a sampling of his opinions.</p>
+<div id="fig-video-are-modern-robust-methods-useless" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-video-are-modern-robust-methods-useless-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/guJ0wTxiky4?si=LC_FR2HW7mvHKP3n" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-video-are-modern-robust-methods-useless-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2
+</figcaption>
+</figure>
+</div>
+<blockquote class="blockquote">
+<p><strong>Quotation</strong> (Dustin Fife)</p>
+<p>If you’re a modeler, robustifying taints your data and the “model” you fit isn’t really a model anyone, because it’s trying to fit data that do not represent reality.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Quotation</strong> (Dustin Fife)</p>
+<p>So if you are a model[er] your primary concern is to find a model that accurately represents your data.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Quotation</strong> (Dustin Fife)</p>
+<p>A model is a simplification of reality, and it retains the essential features [and] it ignores the non-essentials. I’m borrowing that definition from Joe Rogers.</p>
+</blockquote>
+<div id="fig-video-the-foundation-of-all-statistics" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-video-the-foundation-of-all-statistics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/t2URzeyrDx4?si=CRc_QOQ6DS_l3JcZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-video-the-foundation-of-all-statistics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3
+</figcaption>
+</figure>
+</div>
+<blockquote class="blockquote">
+<p><strong>Quotation</strong> (Dustin Fife)</p>
+<p>A model is a representation of reality. Its going to retain the “essential features” of reality while ignoring the non-essentials.</p>
+</blockquote>
+<p>And I myself have echoed a similar sentiment in a comment on one of his videos:</p>
+<blockquote class="blockquote">
+<p><strong>Quotation</strong> (Galen Seilis)</p>
+<p>I generally agree that modelling the data is preferable as it demonstrates a more complete understanding of the data generating process, but I don’t think it is always practical.</p>
+</blockquote>
+<p>Unfortunately, Galen today disagrees with Galen from over a year ago. Reading and contemplation will do that. Later in this post I will try to recover some likely points of agreement, but let us understand the disagreement about models first.</p>
+<p>Without getting <em>too deep</em> into quagmires of epistemology and ontology, there is a basic philosophical problem: <em>representation</em> is too ubiquitous for our purposes here. If you’re using any kind of language or symbols to represent things at all, and using this representation notion of a model, then you are modelling things. Taken to even a cursory logical rigor we find that anything that references the data can be thought of as <em>modelling the data</em>.</p>
+<p>There is a metaphor I find helpful around this: the <a href="https://en.wikipedia.org/wiki/Map%E2%80%93territory_relation">map-territory relation</a>. I was going to explain it here, but I think these blog posts adequately cover the idea:</p>
+<ul>
+<li><a href="https://www.lesswrong.com/tag/the-map-is-not-the-territory">The Map is Not the Territory</a> on the <em>LessWrong</em> blog.</li>
+<li><a href="https://fs.blog/map-and-territory/">The Map is Not the Territory</a> on the <em>fs</em> blog.</li>
+</ul>
+<p>Because anything that represents the data in some way can be claimed to be a model of it, it is a criterion that adds little to the considerations that we make in theoretical or applied statistcs. Since rank-based statistics refer to the data via random variables, they are models of the data in this representation sense. We might model more or less of something, but whether we are modelling at all is a very low bar to meet.</p>
+<p>It may be tempting to lean on the distinction that a model only represents the <em>essential</em> properties of something, but I don’t find that helpful either. <a href="https://en.wikipedia.org/wiki/Essentialism">Essentialism</a> looks at <strong>all</strong> the attributes necessary to specify the identity, but that is not what we’re doing when we model. If I simulate a compartmental model of COVID-19 I am not keeping track of every <a href="https://en.wikipedia.org/wiki/Quantum_number">quantum number</a> of every particle in the system. And yet such quantum numbers we be part of our best models based on something frameworks like <a href="https://en.wikipedia.org/wiki/Quantum_mechanics">quantum mechanics</a> or <a href="https://en.wikipedia.org/wiki/Quantum_field_theory">quantum field theory</a>. When I think I am modelling something, I don’t think everything real is in it. Rather, my model itself is a part of everything that is real. Even if we go for essentialism, we will get stuck on the myriad traps in ontology. While I enjoy thinking about ontology, I don’t think it is a productive direction for deciding whether to use certain statistical procedures. If you’d like an entertaining crash course in ontology, this edutainment video by VSauce is absolute gold.</p>
+<div id="fig-video-do-chairs-exist" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-video-do-chairs-exist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/fXW-QjBsruE?si=1jQj4MSwgoEabYfO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-video-do-chairs-exist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4
+</figcaption>
+</figure>
+</div>
+<p>I don’t think that Dustin is referring to essentialism. He has mentioned separating the <em>signal</em> from <em>noise</em>, which is a different distinction from essentialism. But it also isn’t clear to me how this distinction makes rank-based statistics into non-models.</p>
+<p>While this “model as representation” is my preferred choice of meaning for “model” in my philosophical thinking, it is too broad for the binary classification Dustin would like to draw between rank-based statistics and non-rank-based statistics.</p>
+<p>Let us move on to what I think about as a “statistical model”.</p>
+</section>
+<section id="a-general-statistical-model" class="level1">
+<h1>A General Statistical Model</h1>
+<p>One of the lexical barriers that exists between Dustin and I pertains to what we call a “model”. Vaguely, a model is anything that we use to represent another thing. In particular we are interested in “statistical models” in this context. This motivated me to think on what I would call a model, and most especially near the edge cases where it is harder to decide if something is a model or not.</p>
+<p>The most fundamental example I can think of in statistics is the notion of a random variable on a probability space. <a href="https://en.wikipedia.org/wiki/Random_variable">Random variables</a> are <a href="https://en.wikipedia.org/wiki/Measurable_function">measurable functions</a> of the <a href="https://en.wikipedia.org/wiki/Sample_space">outcome space</a> of a <a href="https://en.wikipedia.org/wiki/Probability_space">probability space</a>, and are perhaps the most common and elementary statistical models that we use to represent data with. A random variable <span class="math inline">\(X\)</span> has some probability distribution <span class="math inline">\(F_X\)</span> associated with it.</p>
+<p>Simply declaring a random variable to represent a variable in our data set is usually only the beginning what we can consider. Often we calculate functions of random variables, called “statistics”. Functions of random variables are themselves random variables. So given a function <span class="math inline">\(g\)</span> and a random variable <span class="math inline">\(X\)</span> it holds that <span class="math inline">\(g(X)\)</span> is also a random variable. This still holds for compositions of functions. If I have a sequence of functions <span class="math inline">\(g_1, \cdots, g_k\)</span> and a random variable <span class="math inline">\(X\)</span>, then <span class="math inline">\((g_k \circ g_{k-1} \circ \cdots g_2 \circ g_1) (X)\)</span> is also a random variable. In my view, all random variables are statistical models if they are intended to represent something.</p>
+<blockquote class="blockquote">
+<p>This view is not restricted to random scalars. We could likewise think about random vectors, random matrices, random tensors, random graphs, random hypergraphs, random simplicial complexes, …, random “things”. The requirements of a random variable do not even include numbers, nor do mathematical functions have to even consider numbers. There is a lot more generality than some, perhaps Dustin or perhaps not, may realize. {: .prompt-tip}</p>
+</blockquote>
+<p>In contrast to using random variables (as formally or as informally as required), I am unsure what Dustin means by a “model”. From watching many of his videos I believe he considers <a href="https://en.wikipedia.org/wiki/General_linear_model">general linear models</a>, <a href="https://en.wikipedia.org/wiki/Generalized_linear_model">generalized linear models</a>, <a href="https://en.wikipedia.org/wiki/Mixed_model">(linear) effects models</a>, and <a href="https://en.wikipedia.org/wiki/Structural_equation_modeling">structural equation models</a>, and at least some (unspecified) <a href="https://en.wikipedia.org/wiki/Nonlinear_regression">nonlinear regression</a> models to be models. I suspect further combinations thereof such as <a href="https://en.wikipedia.org/wiki/Generalized_linear_mixed_model">generalized linear mixed models</a> and <a href="https://en.wikipedia.org/wiki/Nonlinear_mixed-effects_model">nonlinear mixed effects models</a> probably qualify as well. Attempting an empirical induction (which may suffer from the <a href="https://en.wikipedia.org/wiki/Problem_of_induction">problem of induction</a>), I infer that any <a href="https://en.wikipedia.org/wiki/Regression_analysis">regression analysis</a> has sufficient conditions for being a model in Dustin’s view, but I will leave that speculation for Dustin to correct. I agree that these are all models, but what remains is unclear to me is whether we agree on that conclusion for the same reasons.</p>
+<p>There are a couple of things I like about this ‘general statistical model’ I have suggested.</p>
+<p>The first thing is that it allows for careful reasoning. I can state various assumptions about functions and distributions and derive or compute the consequences of the assumptions. This doesn’t make the reasoning easy to carry out, but it does provide a framework for carefully doing so.</p>
+<p>The second thing is that it is a highly general theoretical framework. Whenever I encounter a new statistical problem I very often find that it falls within this framework of thinking. (The exceptions are interesting, weird, and beyond the scope of this post.) Recipes that be useful mental shortcuts if they are prepared carefully and used in an appropriate context, but often they fall short. I was taught such recipes early in my education, and they are not what has stuck with me because of the problem described in the following quote:</p>
+<blockquote class="blockquote">
+<p><strong>Quotation</strong> (as cited in <a href="https://www.sciencedirect.com/science/article/abs/pii/0169743993E00412?via%3Dihub">Sundberg 1994</a>)</p>
+<p>Most real-life statistical problems have one or more nonstandard features. There are no routine statistical questions, only questionable statistical routines. &gt; This quote is attributed to J.M. Hammersley in a footnote of Sundberg 1994. It is also attributed to D.R. Cox <a href="https://stats.stackexchange.com/a/737/69508">here</a> where I found the same link to Sundberg’s paper. {: .prompt-info}</p>
+</blockquote>
+<p>To emphasize again, I don’t think statistical recipes like flow charts are <em>useless</em>. Rather they are just part of a wider arsenal of ways of thinking and solving problems. I appreciate the attitude expressed by Richard McElreath in his <em>Statistical Rethinking</em> course material. He expresses his view in the first few minutes of the following video, although I will provide a quote below as well.</p>
+<div id="fig-video-statistical-rethinking-2023-golem-of-prague" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-video-statistical-rethinking-2023-golem-of-prague-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cclUd_HoRlo?si=Ct0xmuYFEHnnGcsQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-video-statistical-rethinking-2023-golem-of-prague-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5
+</figcaption>
+</figure>
+</div>
+<blockquote class="blockquote">
+<p><strong>Quotation</strong> (Richard McElreath)</p>
+<p>In introductory statistics courses what you do is consult a flow chart. Pick a procedure which gives you a p-value. The purpose of all of the procedures that populate a chart like this are to test the null hypothesis; to reject the null hypothesis (hopefully). The research hypothesis itself, the target of your scientific investigation, is anonymous in these charts. And this has led to a lot of disatisfaction when you move on to do more fundamental research in your field because the procedures in these introductory courses don’t really address fundamental causation in any satisfying way. And they’re highly inflexible compared to the very large domain of hypotheses that scientists consider at the cutting edge of their fields.</p>
+</blockquote>
+<p>Richard in this quote is considering things from a fundamental science point of view, as I think he should. An example of this is his emphasis on causation because he wants to teach scientists how to incorporate causal reasoning into their statistical anlaysis. There are applications of statistics are purely predictive which actually benefit from using non-causal statistical dependence. Even null hypothesis testing have utility in certain control systems, but (1) they tend not to align with research hypotheses and (2) require ‘nice’ assumptions that often do not hold for partially understood complex systems like people or ecosystems.</p>
+<p>This problem of (sometimes mindlessly) sticking to recipes is not limited to classic null hypothesis tests. We should not limit ourselves to particular regression procedures such as general(ized) linear models either.</p>
+<p>If you’ve never seen statistical analysis outside general linear models, Richard McElreath provides some introductory examples which I think are instructive:</p>
+<div id="fig-video-statistical-rethinking-2023-generalized-lienar-madness" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-video-statistical-rethinking-2023-generalized-lienar-madness-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Doaod09YitA?si=aAGohPJU1NLY3FwM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-video-statistical-rethinking-2023-generalized-lienar-madness-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6
+</figcaption>
+</figure>
+</div>
+<p>Even the highly general notion of a statistical model that I suggested earlier should be abandoned when it doesn’t suite us. We should seek out approachs and ideas that are suitable to our problems.</p>
+<p>Starting with random variables isn’t perfect or “universal”, but it provides a framework that allows me to develop models that are highly applicable and general. It goes beyond simplistic flow charts as well as common regression models such as GLMs, but also includes them.</p>
+<p>Hopefully this helps you and Dustin understand what I think a statistical model is, and why I prefer it.</p>
+</section>
+<section id="what-are-transformations" class="level1">
+<h1>What are Transformations?</h1>
+<p>Relevant to this discussion is Dustin’s distinction between “model” and “transformation”.</p>
+<div id="fig-video-robustness-in-statistics" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-video-robustness-in-statistics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bHmyMlZ0ODg?si=fnIOALVfHL37lT-k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-video-robustness-in-statistics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7
+</figcaption>
+</figure>
+</div>
+<blockquote class="blockquote">
+<p><strong>Quotation</strong> (Dustin Fife)</p>
+<p>So all of these are just transforming your data into ranks. So its just sorting the people in terms of highest score to lowest score and then analyzing the sorted data. I don’t like that idea because you have all the disadvantages of transformations. So you lose the original scale of the variable, and you’re not actually modelling the data. You’re modelling the ranks of the data. You should model the data.</p>
+</blockquote>
+<p>In my view, a <em>transformation</em> is just another word for a function. A function <span class="math inline">\(f : \Omega \mapsto \Omega^{\prime}\)</span> is a binary relation <span class="math inline">\(f \subseteq \Omega \times \Omega^{\prime}\)</span> which is right-unique and left-total.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>One can construct similar relations that are left-unique and right-total. Such maps can themselves be mapped back to functions as we have considered here using a permutation on the elements of the relation. Alternatively you could define respective “left” and “right” functions. We won’t rely on any of that here.</p>
+</div>
+</div>
+<p>A binary relation <span class="math inline">\(f\)</span> being right-unique means that for all <span class="math inline">\(\omega \in \Omega\)</span> and for all <span class="math inline">\(\omega^{\prime}, \tau \in \Omega^{\prime}\)</span> it holds that <span class="math inline">\((\omega, \omega^{\prime}) \in f \land (\omega, \tau) \in f \implies \omega^{\prime} = \tau\)</span>. A binary relation <span class="math inline">\(f\)</span> being left-total means that for all <span class="math inline">\(\omega \in \Omega\)</span> there exists <span class="math inline">\(\omega^{\prime} \in \Omega^{\prime}\)</span> such that <span class="math inline">\((\omega, \omega^{\prime}) \in f\)</span>. Plainly, a function is a way of pairing every element in one set (called the domain) to only one element of another set (called the <em>codomain</em>). An example of a non-injective function is shown below:</p>
+<div id="fig-function-color-homomorphism" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-function-color-homomorphism-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Function_color_example_3.svg/953px-Function_color_example_3.svg.png" class="img-fluid figure-img"></p>
+<figcaption>File:Function color example 3.svg</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-function-color-homomorphism-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: In this visualization of a function it is non-injective because it pairs both the red triangle and the red square to the red blurred disc. In this example the mapping is “colour-preserving”.
+</figcaption>
+</figure>
+</div>
+<p>Generically we transform variables such that <code>&lt;blah blah blah&gt;</code>. What is <code>&lt;blah blah blah&gt;</code>? Well, anything you want. I don’t mean this in a glib or flippant way. I mean that whenever we apply a transformation we should be getting something for it. In a statistical modelling frame, we are often looking to make descriptions, inferences, or predictions after or <em>via</em> some transformation. This is similar to Dustin’s view.</p>
+<blockquote class="blockquote">
+<p><strong>Quotation</strong> (Dustin Fife)</p>
+<p>Know what transformations are. It’s basically we are applying some mathematical function like the log, or the square root, or the square to our data to make it look more normal.</p>
+</blockquote>
+<p>If normality is important to what you are doing, then transformations <em>might</em> be a sensible approach. My only caution here is that you really can use transformations for other things than obtaining a normal distribution. I’m not convinced that normality is usually important to research goals (i.e.&nbsp;does your research question really involve normality <em>per se</em>?), but rather that the analyst is trying to satisfy the assumptions of <a href="https://en.wikipedia.org/wiki/Ordinary_least_squares">ordinary least squares</a> estimation in order to obtain an unbiased and minimum variance (see <a href="https://en.wikipedia.org/wiki/Gauss%E2%80%93Markov_theorem">Gauss-Markov theorem</a>) estimate of their regression parameters.</p>
+<p>Transformations are not only for preparing variables to satisfy the assumptions of a general linear model. Indeed, transformations are how we construct the notion of general linear models! We can see this in the following example of a multiple linear regression equation:</p>
+<p><span class="math display">\[f(X,Z; \vec{\beta}) \triangleq \underbrace{\underbrace{\underbrace{\underbrace{\beta_1 X}_{\text{Scale }X} + \underbrace{\beta_2 Z}_{\text{Scale } Z}}_{\text{Sum}} + \beta_0}_{\text{Translate by } \beta_0} + \epsilon}_{\text{Sum}}\]</span></p>
+<p>Within the above equation I have underbraced multiple transformations of the random variables. The way I have pointed them out is not unique. I could have focused on linear combinations and their relation to linear transformations, for example. A fairly general way to look at the non-uniqueness is to think of an expression tree or computation graph which has a partial order on the operations. Here is an example of an expression tree for the linear regression above.</p>
+<div id="eea59656" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">This script constructs the expression tree for a multiple linear</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">regression as shown earlier in this post.</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sympy <span class="im">as</span> sp</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> graphviz <span class="im">import</span> Source</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>vec_beta <span class="op">=</span> np.array([sp.Symbol(<span class="ss">f'</span><span class="ch">\\</span><span class="ss">beta_</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">'</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>)])</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>vec_var <span class="op">=</span> np.array([<span class="dv">1</span>, sp.Symbol(<span class="st">'X'</span>), sp.Symbol(<span class="st">'Z'</span>)])</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> vec_beta <span class="op">@</span> vec_var <span class="op">+</span> sp.Symbol(<span class="st">'</span><span class="ch">\\</span><span class="st">epsilon'</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>Source(sp.dotprint(f))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The point of this example is that transformations are often part of our models. What is the <code>&lt;blah blah blah&gt;</code> here? Why should we care about <span class="math inline">\(f(X,Z;\vec \beta)\)</span>? Often we are motivated by also having a third variable <span class="math inline">\(Y\)</span> so that <code>&lt;blah blah blah&gt;</code> is to achieve <span class="math inline">\(Y \approx f(X,Z; \vec{\beta})\)</span> by choosing <span class="math inline">\(\vec{\beta}\)</span> in an optimal way.</p>
+<p>In showing that models like a multiple linear regression can be shown to be compositions of transformations I have relied on the inference that most readers will agree that a multiple linear regression is a model in some sense. We may not all agree on what is a model, however. For example, is a test statistic a model? Given how I presented statistical models in the last section, there is no useful distinction for me here. Any (measurable) function of a random variable is a random variable. We use random variables to model our data, and when we transform them the representation of the data is still part of the overall model.</p>
+<p>Dustin makes a distinction between transforming the data and modelling the data. In contrast, I don’t think there is much difference. Every transform that we apply to our data set has a corresponding change to the random variables that represent the data. For me, it is models the whole way along.</p>
+</section>
+<section id="some-models-are-more-expressive-than-others" class="level1">
+<h1>Some Models are More Expressive Than Others</h1>
+<p>I’ve spilled a lot of digital “ink” on where Dustin and I disagree. Let’s find some common ground.</p>
+<p>Let us consider an example to explain how some models capture more about a data generating process than others. Suppose we have a random variable <span class="math inline">\(X\)</span> and that we have seen that <span class="math inline">\(X\)</span> seems to vary over time. We collect measurements of <span class="math inline">\(X\)</span> at two time points and plot them as histograms</p>
+<div id="31fa4a9b" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="21">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Time</th>
+<th data-quarto-table-cell-role="th">X</th>
+<th data-quarto-table-cell-role="th">Y</th>
+<th data-quarto-table-cell-role="th">Z</th>
+<th data-quarto-table-cell-role="th">timepoint</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>500.000000</td>
+<td>500.000000</td>
+<td>500.000000</td>
+<td>500.000000</td>
+<td>500.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>0.249500</td>
+<td>0.873056</td>
+<td>0.554448</td>
+<td>63.192231</td>
+<td>2.794000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>0.144482</td>
+<td>1.690001</td>
+<td>3.971526</td>
+<td>45.136578</td>
+<td>1.168887</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>0.000000</td>
+<td>-2.236984</td>
+<td>-6.366656</td>
+<td>0.975990</td>
+<td>1.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>0.124750</td>
+<td>-0.288582</td>
+<td>-2.440167</td>
+<td>6.116329</td>
+<td>2.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>0.249500</td>
+<td>1.051971</td>
+<td>1.513327</td>
+<td>82.307745</td>
+<td>3.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>0.374250</td>
+<td>1.873041</td>
+<td>3.823644</td>
+<td>105.080530</td>
+<td>4.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>0.499000</td>
+<td>4.082682</td>
+<td>6.797086</td>
+<td>130.460110</td>
+<td>4.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="c347ee09" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>timepoint
+1    Axes(0.125,0.11;0.775x0.77)
+2    Axes(0.125,0.11;0.775x0.77)
+Name: X, dtype: object</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-4-output-2.png" width="566" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>At this juncture of having two groups of measurements of <span class="math inline">\(X\)</span> corresponding to two timepoints, we might consider inferring how different the values of <span class="math inline">\(X_{0.1}\)</span> are from the values of <span class="math inline">\(X_{0.2}\)</span>. Maybe you decide that these distributions appear approximately normal but with non-equal variances so you perform a <a href="https://en.wikipedia.org/wiki/Welch%27s_t-test">Welch’s t-test</a>. Maybe you decide you can model the distributions of <span class="math inline">\(X_{0.1}\)</span> and <span class="math inline">\(X_{0.2}\)</span> and derive the sampling distribution of <span class="math inline">\(\frac{\bar X_{0.2} - \bar X_{0.1}}{S_{\Delta \bar X}}\)</span> under those distribution assumptions.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Many data analysts take their confidence level <span class="math inline">\(\alpha \in (0,1)\)</span> to be an arbitrary number such as 0.1, 0.05, 0.01, or 0.005. I don’t recommend this practice, although it is beyond the scope of this post to address why.</p>
+</div>
+</div>
+<p>Or maybe you just perform a non-parametric bootstrap. Maybe you goes with a Bayesian approach with some choice of priors and then procede in sampling posterior values of <span class="math inline">\(\frac{\bar X_{0.2} - \bar X_{0.1}}{S_{\Delta \bar X}}\)</span>. Whatever of these approach we go with, or others, we’re pretty limited <em>prima facie</em> with what we can do with a data set like this. One of the main takeaways of this analysis is that <span class="math inline">\(X\)</span> seems to have net-increased between the time points.</p>
+<p>Now let’s suppose we collect a third time point to make open up more types of analysis. We examine the data as boxplots shown in the next plot. If you’re from an earlier generation of statisticians you might think about setting up one of various choices of analysis of variance. And again, you might get concerned about equality of variances and do something like derive sampling distributions or bootstrap. Or even estimate the posterior of the F-scores. If you’re from a later generation of statisticians you might look at this from a linear model perspective and again consider various choices about the model. Whatever you do here, you can model a richer description with these three time points in comparison to when we had measurements at only two. You get a sense that <span class="math inline">\(X\)</span> seems to increase and then decrease, which is more complicated than the two-group analysis could show us</p>
+<div id="0ce28c86" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-5-output-1.png" width="662" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Digging further into the matter, you discover there are two other variables <span class="math inline">\(Y\)</span> and <span class="math inline">\(Z\)</span> that seem to covary with <span class="math inline">\(X\)</span>! Fortunately your grad student collected paired measurements <span class="math inline">\((X,Y,Z)\)</span> for the three time points and plot them as a scatter. At this juncture you notice that there seems to be three elongate shapes in the data. Maybe you hop on using a linear mixed effect model to allow for different slopes and intercepts. Maybe you include polynomial predictors when you notice some bending (i.e.&nbsp;curvature) would help the testing error.</p>
+<div id="2c574ad2" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-stderr">
+<pre><code>/tmp/ipykernel_131178/2513081468.py:9: UserWarning:
+
+Tight layout not applied. The bottom and top margins cannot be made large enough to accommodate all Axes decorations.
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-6-output-2.png" width="409" height="9863" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Confused by the unusual collection of scatter, you finally do that literature review you should have done months ago and discover that there is a curve that should explain your data. You mention this to your grad student, and they tell you they already know and immediately send you a plot of the best-fitting curve.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/dynamics_3D_all.png" class="img-fluid figure-img"></p>
+<figcaption>Dynamics Boxplot</figcaption>
+</figure>
+</div>
+<p>What I didn’t tell you at the start of this example is how the data was generated. After all, with real data we usually don’t know it. The data was generated with the following system of differential equations</p>
+<p><span class="math display">\[\frac{d}{d t} X{\left(t \right)} = \sigma \left(- X{\left(t \right)} + Y{\left(t \right)}\right)\]</span></p>
+<p><span class="math display">\[\frac{d}{d t} Y{\left(t \right)} = \left(\rho - Z{\left(t \right)}\right) X{\left(t \right)} - Y{\left(t \right)}\]</span></p>
+<p><span class="math display">\[\frac{d}{d t} Z{\left(t \right)} = \beta X{\left(t \right)} Y{\left(t \right)} Z{\left(t \right)}\]</span></p>
+<p>where <span class="math inline">\(\sigma = 10\)</span>, <span class="math inline">\(\rho = 28\)</span>, <span class="math inline">\(\beta = \frac{8}{3}\)</span>.</p>
+<blockquote class="blockquote">
+<p>This system is similar the <a href="https://en.wikipedia.org/wiki/Lorenz_system">Lorenz system</a> in three variables. I simply replaced <span class="math inline">\(\frac{d}{d t} Z{\left(t \right)} = X{\left(t \right)} Y{\left(t \right)} - \beta Z{\left(t \right)}\)</span> with <span class="math inline">\(\frac{d}{d t} Z{\left(t \right)} = \beta X{\left(t \right)} Y{\left(t \right)} Z{\left(t \right)}\)</span>. {: .prompt-info}</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>I noticed that SymPy (a computer algebra system) grumbled about not finding a closed form solution for this system of equation. This is why I have not provided an exact solution, but rather just shared the rate equations with you. {: .prompt-info}</p>
+</blockquote>
+<p>All of the randomness in this simulation originated from normally-distributed initial conditions <span class="math display">\[[X_0, Y_0, Z_0]^T \sim \mathcal{N}\left(\vec 1_3, \frac{1}{20} I_{3 \times 3} \right)\]</span>. Because the initial conditions are random variables, so are the future states when we attempt to measure the system.</p>
+<p>In case you wish to tinker, here is the requisite code to reproduce the above results up to pseudorandom variation.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">This script simulates a system of ordinary differential</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">equations and saves the results to a file.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> odeint</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Dynamical system definition</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>rho <span class="op">=</span> <span class="fl">28.0</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="fl">10.0</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> <span class="fl">8.0</span> <span class="op">/</span> <span class="fl">3.0</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.arange(<span class="fl">0.0</span>, <span class="fl">0.5</span>, <span class="fl">0.001</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(state, t):</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    x, y, z <span class="op">=</span> state</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sigma <span class="op">*</span> (y <span class="op">-</span> x), x <span class="op">*</span> (rho <span class="op">-</span> z) <span class="op">-</span> y, beta <span class="op">*</span> x <span class="op">*</span> y <span class="op">*</span> z</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate random paths at selected timepoints</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> np.array((<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>)).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {}</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">100</span>):</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    state0 <span class="op">=</span> np.random.normal(<span class="dv">1</span>, <span class="fl">0.05</span>, size<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    states <span class="op">=</span> odeint(f, state0, t)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    select_states <span class="op">=</span> states[(t<span class="op">==</span><span class="fl">0.1</span>)<span class="op">|</span>(t<span class="op">==</span><span class="fl">0.2</span>)<span class="op">|</span>(t<span class="op">==</span><span class="fl">0.3</span>)]</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    data[i] <span class="op">=</span> np.concatenate((times, select_states), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.concatenate(<span class="bu">tuple</span>(data.values()))</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data, columns<span class="op">=</span>[<span class="st">'Time'</span>, <span class="st">'X'</span>, <span class="st">'Y'</span>, <span class="st">'Z'</span>])</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">'select_dynamics_data.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate mean path at many timepoints</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>states0 <span class="op">=</span> (<span class="dv">1</span>,)<span class="op">*</span><span class="dv">3</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>states <span class="op">=</span> odeint(f, state0, t)</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.concatenate((t.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>), states), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data, columns<span class="op">=</span>[<span class="st">'Time'</span>, <span class="st">'X'</span>, <span class="st">'Y'</span>, <span class="st">'Z'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">This script loads the data generated in the previous script</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">and plots it.</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'select_dynamics_data.csv'</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>all_df <span class="op">=</span> pd.read_csv(<span class="st">'all_dynamics_data.csv'</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Histogram</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> time, dfi <span class="kw">in</span> df.groupby(<span class="st">'Time'</span>):</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> time <span class="kw">in</span> (<span class="fl">0.1</span>, <span class="fl">0.2</span>):</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        plt.hist(dfi.X, label<span class="op">=</span><span class="ss">f'Time=</span><span class="sc">{</span>time<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'X'</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Frequency'</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Box Plot</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'Time'</span>, y<span class="op">=</span><span class="st">'X'</span>, hue<span class="op">=</span><span class="st">'Time'</span>, dodge<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co"># 3D Plot</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> fig.add_subplot(projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> time, dfi <span class="kw">in</span> df.groupby(<span class="st">'Time'</span>):</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    ax.scatter(<span class="op">*</span>dfi[[<span class="st">'X'</span>, <span class="st">'Y'</span>, <span class="st">'Z'</span>]].to_numpy().T, label<span class="op">=</span><span class="ss">f'Time=</span><span class="sc">{</span>time<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'X'</span>)</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Y'</span>)</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>ax.set_zlabel(<span class="st">'Z'</span>)</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'dynamics_3D_scatter.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, transparent<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>ax.plot(<span class="op">*</span>all_df[[<span class="st">'X'</span>, <span class="st">'Y'</span>, <span class="st">'Z'</span>]].to_numpy().T, color<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'dynamics_3D_all.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, transparent<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that we are only considering ordinary differential equations in which we have taken our derivatives with respect to a deterministic variables (time). If you want to consider differentials of <a href="https://en.wikipedia.org/wiki/Stochastic_process">stochastic processes</a> you should look further to the tools of <a href="https://en.wikipedia.org/wiki/Stochastic_calculus">stochastic calculus</a> and <a href="https://en.wikipedia.org/wiki/Stochastic_differential_equation">stochstic differential equations</a>. See the <a href="https://en.wikipedia.org/wiki/It%C3%B4_calculus">Itô calculus</a> and <a href="https://en.wikipedia.org/wiki/Stratonovich_integral">Stratonovich integral</a> for a flavour of how such generalization is achieved in theory. Throwing derivatives around willy-nilly can result in sadness.</p>
+</div>
+</div>
+<p>What does this lengthy example show us? (Other than that you should have an amazing grad student.) It shows we can use statistics to understand a system at different levels of detail. First we had a single variable with two time points. Then we had a single variable with three timepoints. Then we had three variables at three time points. As we had more information available to us we had more options for functions we could compute in order to make inferences/predictions.</p>
+<p>If I am looking for a demonstration that we understand a complex system, it is more persuasive to me if the model has to get more of the details of the system correct. A t-test between just the two groups, when used carefully, can tell us if there is a significant difference. The system of differential equations goes much further than saying that things are different over time. It tells us <em>how</em> things change over time in such a way that we can make predictions of what should happen in future experiments/observations. Some of these predictions could be interpolative (i.e.&nbsp;in the range of the data in a sense I will not make precise here), but even more impressive are extrapolative (i.e.&nbsp;further away from the rest of the data) predictions. I think Dustin and I would likely agree that a GLM is more expressive than a single t-test score and a system of differential equations <em>can</em> be more expressive than a GLM (e.g.&nbsp;the classes of models are not mutually exclusive for reasons I will not cover here).</p>
+<p>Does this mean we should be using differential equations on every project? No.&nbsp;Each project will have its own goals and constraints, which will not always point to differential equations. Sometimes differential equations are an inappropriate choice of model because of properties of the data, or sometimes it is sufficient to do something less epistemically impressive to get the job done. I don’t often see it done, or done well, but careful planning can lead to a null hypothesis test such as a humble t-test also being a valid test of an actual research question. There are also control monitoring and decision models that do not require a rich causal model to be useful. I have also read studies where I would have done the statistics differently, but I still find their results valuable after carefully reading and reflection on their methods. The context around our statistics matters, and Dustin and I likely agree that basic scientific research benefits from us rolling up our sleeves to make richer models suppose <em>how</em> the world works.</p>
+</section>
+<section id="conclusions" class="level1">
+<h1>Conclusions</h1>
+<p>The main issues that prevent me from adopting Dustin’s view about “actually modelling the data” are as follows:</p>
+<ol type="1">
+<li>I’m still not sufficiently clear about what Dustin means by “modelling the data”, which is why I have mostly stuck to <em>what I understand</em> that phrase to mean in this post.</li>
+<li>Considering a “model” to be using one thing (e.g.&nbsp;a symbolic representation such as a word or a function) to represent another thing (e.g.&nbsp;a phenomena like that taller people are heavier <a href="https://en.wikipedia.org/wiki/Ceteris_paribus"><em>caeteris paribus</em></a>) is something we’re pretty much always doing. Representating things is what human language and mathematics are grounded upon to begin with, so it isn’t clear to me what is added by saying “actually modelling the data”.</li>
+<li>The way I think about statistical models is both general and clear (e.g.&nbsp;mathematically unambiguous), and can be used and discussed by theoreticians and practitioners alike to make advances on <em>new</em> problems. GLMs and similar things fit into this approach, but they are not the only things in the armamentarium.</li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/galenseilis\.github\.io\/blog\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
