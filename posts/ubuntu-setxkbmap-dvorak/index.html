@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Galen Seilis">
-<meta name="dcterms.date" content="2024-08-09">
+<meta name="dcterms.date" content="2024-08-11">
 
-<title>Calculating the Greatest Common Divisor in Rust – Galen Seilis</title>
+<title>How to Set Keyboard Bindings to Programmer’s Dvorak on Ubuntu Using setxkbmap – Galen Seilis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -56,27 +56,7 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -122,6 +102,7 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<meta name="quarto:status" content="draft">
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -130,7 +111,7 @@ div.csl-indent {
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><div id="quarto-draft-alert" class="alert alert-warning"><i class="bi bi-pencil-square"></i>Draft</div>
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -177,11 +158,12 @@ div.csl-indent {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Calculating the Greatest Common Divisor in Rust</h1>
+      <h1 class="title">How to Set Keyboard Bindings to Programmer’s Dvorak on Ubuntu Using <code>setxkbmap</code></h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Rust</div>
-                <div class="quarto-category">Mathematics</div>
-                <div class="quarto-category">Greatest Common Divisor</div>
+                <div class="quarto-category">Ubuntu</div>
+                <div class="quarto-category">setxkbamp</div>
+                <div class="quarto-category">Dvorak</div>
+                <div class="quarto-category">Keyboard Layouts</div>
               </div>
                   </div>
   </div>
@@ -199,7 +181,7 @@ div.csl-indent {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">August 9, 2024</p>
+        <p class="date">August 11, 2024</p>
       </div>
     </div>
     
@@ -218,53 +200,16 @@ div.csl-indent {
 
 
 
-<p>I recently learned that Rust does not have a greatest common divisor function. See <span class="citation" data-cites="rust_gcd_forum">Anonymous (<a href="#ref-rust_gcd_forum" role="doc-biblioref">2020</a>)</span> to read some discussion about it.</p>
-<p>So if the GCD function is not implemented natively in Rust, how can we go about calculating it?</p>
-<p>One option is to use the implementation available in <span class="citation" data-cites="programming_rust">Blandy and Orendorff (<a href="#ref-programming_rust" role="doc-biblioref">2021</a>)</span>.</p>
-<div id="b5ded35e" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> gcd(<span class="kw">mut</span> n<span class="op">:</span> <span class="dt">u64</span><span class="op">,</span> <span class="kw">mut</span> m<span class="op">:</span> <span class="dt">u64</span>) <span class="op">-&gt;</span> <span class="dt">u64</span> <span class="op">{</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="pp">assert!</span>(n <span class="op">!=</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> m <span class="op">!=</span> <span class="dv">0</span>)<span class="op">;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> m <span class="op">!=</span> <span class="dv">0</span> <span class="op">{</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> m <span class="op">&lt;</span> n <span class="op">{</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>            <span class="kw">let</span> t <span class="op">=</span> m<span class="op">;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            m <span class="op">=</span> n<span class="op">;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>            n <span class="op">=</span> t<span class="op">;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        m <span class="op">=</span> m <span class="op">%</span> n<span class="op">;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    n</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> x<span class="op">:</span> <span class="dt">u64</span> <span class="op">=</span> <span class="dv">2024</span><span class="op">;</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> y<span class="op">:</span> <span class="dt">u64</span> <span class="op">=</span> <span class="dv">748</span><span class="op">;</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="pp">println!</span>(<span class="st">"gcd({}, {}) = {}"</span><span class="op">,</span> x<span class="op">,</span> y<span class="op">,</span> gcd(x<span class="op">,</span> y))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>gcd(2024, 748) = 44</code></pre>
-</div>
-</div>
-<p>Another option is that we could use the <code>gcd</code> crate.</p>
-<div id="6063444b" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">:</span>dep gcd</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">gcd::</span>Gcd<span class="op">;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="pp">println!</span>(<span class="st">"gcd({}, {}) = {}"</span><span class="op">,</span> x<span class="op">,</span> y<span class="op">,</span> x<span class="op">.</span>gcd(y))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>gcd(2024, 748) = 44</code></pre>
-</div>
-</div>
-<p>Often I think going with the existing crate for work projects. There’s no need to reinvent such a simple wheel, and it supports a wider variety of types than the example from <span class="citation" data-cites="programming_rust">Blandy and Orendorff (<a href="#ref-programming_rust" role="doc-biblioref">2021</a>)</span>. But it is also a great code example since calculating the GCD is a well-known, and relatively simple, task.</p>
+<p>Changing over to programmer’s Dvorak on Ubuntu is really easy:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">setxkbmap</span> <span class="at">-layout</span> us <span class="at">-variant</span> dvp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that if you want to switch back to US layout, you can just drop the variant:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">setxkbmap</span> <span class="at">-layout</span> us</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you want to check what the current layout you are using is, you can run:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">setxkbmap</span> <span class="at">-query</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-rust_gcd_forum" class="csl-entry" role="listitem">
-Anonymous. 2020. <span>“Why No GCD in Standard Lib?”</span> 2020. <a href="https://users.rust-lang.org/t/why-no-gcd-in-standard-lib/36490/7">https://users.rust-lang.org/t/why-no-gcd-in-standard-lib/36490/7</a>.
-</div>
-<div id="ref-programming_rust" class="csl-entry" role="listitem">
-Blandy, Jim, and Jason Orendorff. 2021. <em>Programming Rust: Fast, Safe Systems Development</em>. O’Reilly Media. <a href="https://www.amazon.ca/Programming-Rust-Fast-Systems-Development/dp/1491927283">https://www.amazon.ca/Programming-Rust-Fast-Systems-Development/dp/1491927283</a>.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

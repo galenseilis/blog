@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Galen Seilis">
-<meta name="dcterms.date" content="2024-08-09">
+<meta name="dcterms.date" content="2023-05-12">
 
-<title>Calculating the Greatest Common Divisor in Rust – Galen Seilis</title>
+<title>Adding A Little Zest to Physics – Galen Seilis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,61 +22,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -122,7 +68,37 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<meta name="quarto:status" content="draft">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -130,7 +106,7 @@ div.csl-indent {
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><div id="quarto-draft-alert" class="alert alert-warning"><i class="bi bi-pencil-square"></i>Draft</div>
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -177,11 +153,10 @@ div.csl-indent {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Calculating the Greatest Common Divisor in Rust</h1>
+      <h1 class="title">Adding A Little Zest to Physics</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Rust</div>
-                <div class="quarto-category">Mathematics</div>
-                <div class="quarto-category">Greatest Common Divisor</div>
+                <div class="quarto-category">Physics</div>
+                <div class="quarto-category">Zest Physics</div>
               </div>
                   </div>
   </div>
@@ -199,7 +174,7 @@ div.csl-indent {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">August 9, 2024</p>
+        <p class="date">May 12, 2023</p>
       </div>
     </div>
     
@@ -218,53 +193,45 @@ div.csl-indent {
 
 
 
-<p>I recently learned that Rust does not have a greatest common divisor function. See <span class="citation" data-cites="rust_gcd_forum">Anonymous (<a href="#ref-rust_gcd_forum" role="doc-biblioref">2020</a>)</span> to read some discussion about it.</p>
-<p>So if the GCD function is not implemented natively in Rust, how can we go about calculating it?</p>
-<p>One option is to use the implementation available in <span class="citation" data-cites="programming_rust">Blandy and Orendorff (<a href="#ref-programming_rust" role="doc-biblioref">2021</a>)</span>.</p>
-<div id="b5ded35e" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> gcd(<span class="kw">mut</span> n<span class="op">:</span> <span class="dt">u64</span><span class="op">,</span> <span class="kw">mut</span> m<span class="op">:</span> <span class="dt">u64</span>) <span class="op">-&gt;</span> <span class="dt">u64</span> <span class="op">{</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="pp">assert!</span>(n <span class="op">!=</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> m <span class="op">!=</span> <span class="dv">0</span>)<span class="op">;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> m <span class="op">!=</span> <span class="dv">0</span> <span class="op">{</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> m <span class="op">&lt;</span> n <span class="op">{</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>            <span class="kw">let</span> t <span class="op">=</span> m<span class="op">;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            m <span class="op">=</span> n<span class="op">;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>            n <span class="op">=</span> t<span class="op">;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        m <span class="op">=</span> m <span class="op">%</span> n<span class="op">;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    n</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> x<span class="op">:</span> <span class="dt">u64</span> <span class="op">=</span> <span class="dv">2024</span><span class="op">;</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> y<span class="op">:</span> <span class="dt">u64</span> <span class="op">=</span> <span class="dv">748</span><span class="op">;</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="pp">println!</span>(<span class="st">"gcd({}, {}) = {}"</span><span class="op">,</span> x<span class="op">,</span> y<span class="op">,</span> gcd(x<span class="op">,</span> y))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>gcd(2024, 748) = 44</code></pre>
-</div>
-</div>
-<p>Another option is that we could use the <code>gcd</code> crate.</p>
-<div id="6063444b" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">:</span>dep gcd</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">gcd::</span>Gcd<span class="op">;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="pp">println!</span>(<span class="st">"gcd({}, {}) = {}"</span><span class="op">,</span> x<span class="op">,</span> y<span class="op">,</span> x<span class="op">.</span>gcd(y))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>gcd(2024, 748) = 44</code></pre>
-</div>
-</div>
-<p>Often I think going with the existing crate for work projects. There’s no need to reinvent such a simple wheel, and it supports a wider variety of types than the example from <span class="citation" data-cites="programming_rust">Blandy and Orendorff (<a href="#ref-programming_rust" role="doc-biblioref">2021</a>)</span>. But it is also a great code example since calculating the GCD is a well-known, and relatively simple, task.</p>
+<p>This early stages of the post began when I <a href="https://stats.stackexchange.com/questions/533577/what-is-the-difference-between-the-dot-product-and-the-element-by-element-multip/533578#533578">answered a question</a> on stats.se aobut the difference between the dot product and the element-wise multiplication. While I had certaintly used and thought about these notions before that post, I had not paid such close attention to how they are different.</p>
+<p>The kinetic energy of a classic object is given by</p>
+<p><span class="math display">\[E_K \triangleq \frac{m}{2} \vert| \frac{\partial s(t)}{\partial t} \vert|_2^2\]</span></p>
+<p>where <span class="math inline">\(m\)</span> is the object’s mass and <span class="math inline">\(s(t)\)</span> is the position vector as a function of time <span class="math inline">\(t\)</span>.</p>
+<p>There is a related concept to kinetic energy I will introduce in this post: zest. The notion of zest came about for me when I was considering the relation</p>
+<p><span class="math display">\[\vec x \cdot \vec y = \left( \vec x \odot \vec y \right) \cdot \vec 1\]</span></p>
+<p>where <span class="math inline">\(\vec x, \vec y \in \mathbb{R}^n\)</span>, <span class="math inline">\(\cdot\)</span> is the dot product, and <span class="math inline">\(\odot\)</span> is the Hadamard product.</p>
+<p>In the kinetic energy the</p>
+<p><span class="math display">\[\vert| \frac{\partial s(t)}{\partial t} \vert|_2^2\]</span></p>
+<p>factor can be equivalently written</p>
+<p><span class="math display">\[\frac{\partial s(t)}{\partial t} \cdot \frac{\partial s(t)}{\partial t}.\]</span></p>
+<p>By the correspondence between dot products and projected Hadamard products we can also write this as <span class="math display">\[\left( \frac{\partial s(t)}{\partial t} \odot \frac{\partial s(t)}{\partial t} \right) \cdot \vec 1.\]</span></p>
+<section id="a-correspondence" class="level1">
+<h1>A Correspondence</h1>
+</section>
+<section id="zest" class="level1">
+<h1>Zest</h1>
+<p>The next step to defining the zest of this object is to simply drop the dot product with <span class="math inline">\(\vec 1\)</span>, defining the zest to be</p>
+<p><span class="math display">\[\vec z \triangleq \frac{m}{2} \left( \frac{\partial s(t)}{\partial t} \odot \frac{\partial s(t)}{\partial t} \right)\]</span></p>
+<p>This components of the zest are bounded due to the Cauchy Scharwz in equality.</p>
+</section>
+<section id="apparent-energy" class="level1">
+<h1>Apparent Energy</h1>
+<p><span class="math display">\[\left(O A \vec z \right) \vec 1\]</span></p>
+</section>
+<section id="cross-zest" class="level1">
+<h1>Cross Zest</h1>
+<p>This components of the cross zest are bounded due to the Cauchy Scharwz in equality. # Multizest</p>
+<p><span class="math display">\[\vec z \triangleq \frac{1}{2^n} \sqrt{\prod_{i=1}^n m_i} \bigodot_{i=1}^n \frac{\partial \vec s_i(t)}{\partial t}\]</span></p>
+<p>The components of the multizest vector are bounded due to the generalized Holder inequality for sums.</p>
+</section>
+<section id="relation-to-array-functions" class="level1">
+<h1>Relation tO Array Functions</h1>
+<p>Notice that</p>
 
 
+</section>
 
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-rust_gcd_forum" class="csl-entry" role="listitem">
-Anonymous. 2020. <span>“Why No GCD in Standard Lib?”</span> 2020. <a href="https://users.rust-lang.org/t/why-no-gcd-in-standard-lib/36490/7">https://users.rust-lang.org/t/why-no-gcd-in-standard-lib/36490/7</a>.
-</div>
-<div id="ref-programming_rust" class="csl-entry" role="listitem">
-Blandy, Jim, and Jason Orendorff. 2021. <em>Programming Rust: Fast, Safe Systems Development</em>. O’Reilly Media. <a href="https://www.amazon.ca/Programming-Rust-Fast-Systems-Development/dp/1491927283">https://www.amazon.ca/Programming-Rust-Fast-Systems-Development/dp/1491927283</a>.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
