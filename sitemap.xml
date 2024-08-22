@@ -77,60 +77,64 @@
     <lastmod>2024-07-30T02:53:00.986Z</lastmod>
   </url>
   <url>
-    <loc>https://galenseilis.github.io/blog/posts/c-execution-for-quarto/index.html</loc>
-    <lastmod>2024-07-30T05:44:01.327Z</lastmod>
+    <loc>https://galenseilis.github.io/blog/posts/fastapi-hello-world/index.html</loc>
+    <lastmod>2024-08-22T03:15:30.867Z</lastmod>
   </url>
   <url>
-    <loc>https://galenseilis.github.io/blog/posts/math-distribution-independent-max-greater-than-min/index.html</loc>
-    <lastmod>2024-08-11T03:27:24.918Z</lastmod>
-  </url>
-  <url>
-    <loc>https://galenseilis.github.io/blog/posts/quantecon-2-numba/index.html</loc>
-    <lastmod>2024-07-27T20:50:26.108Z</lastmod>
-  </url>
-  <url>
-    <loc>https://galenseilis.github.io/blog/posts/starting-data-science/index.html</loc>
-    <lastmod>2024-07-22T01:33:50.344Z</lastmod>
-  </url>
-  <url>
-    <loc>https://galenseilis.github.io/blog/posts/python-ciw-simpy-car/index.html</loc>
-    <lastmod>2024-08-10T05:47:42.176Z</lastmod>
-  </url>
-  <url>
-    <loc>https://galenseilis.github.io/blog/posts/cpp-execution-for-quarto/index.html</loc>
-    <lastmod>2024-07-30T05:44:42.591Z</lastmod>
-  </url>
-  <url>
-    <loc>https://galenseilis.github.io/blog/publications.html</loc>
-    <lastmod>2024-07-22T00:42:45.116Z</lastmod>
-  </url>
-  <url>
-    <loc>https://galenseilis.github.io/blog/index.html</loc>
-    <lastmod>2024-07-22T00:42:45.116Z</lastmod>
-  </url>
-  <url>
-    <loc>https://galenseilis.github.io/blog/posts/c-run-from-python/index.html</loc>
-    <lastmod>2024-07-30T14:07:26.366Z</lastmod>
-  </url>
-  <url>
-    <loc>https://galenseilis.github.io/blog/posts/pie-chart-inaturalist/index.html</loc>
-    <lastmod>2024-07-27T21:22:09.505Z</lastmod>
-  </url>
-  <url>
-    <loc>https://galenseilis.github.io/blog/posts/se-lib-fault-tree/index.html</loc>
-    <lastmod>2024-07-31T20:22:19.933Z</lastmod>
-  </url>
-  <url>
-    <loc>https://galenseilis.github.io/blog/posts/flask-basic-error-handling/index.html</loc>
-    <lastmod>2024-07-30T04:09:54.987Z</lastmod>
+    <loc>https://galenseilis.github.io/blog/posts/hello-world-flask/index.html</loc>
+    <lastmod>2024-07-30T00:32:00.511Z</lastmod>
   </url>
   <url>
     <loc>https://galenseilis.github.io/blog/posts/notes-differential-forms/index.html</loc>
     <lastmod>2024-08-11T02:57:09.286Z</lastmod>
   </url>
   <url>
-    <loc>https://galenseilis.github.io/blog/posts/hello-world-flask/index.html</loc>
-    <lastmod>2024-07-30T00:32:00.511Z</lastmod>
+    <loc>https://galenseilis.github.io/blog/posts/flask-basic-error-handling/index.html</loc>
+    <lastmod>2024-07-30T04:09:54.987Z</lastmod>
+  </url>
+  <url>
+    <loc>https://galenseilis.github.io/blog/posts/se-lib-fault-tree/index.html</loc>
+    <lastmod>2024-07-31T20:22:19.933Z</lastmod>
+  </url>
+  <url>
+    <loc>https://galenseilis.github.io/blog/posts/pie-chart-inaturalist/index.html</loc>
+    <lastmod>2024-07-27T21:22:09.505Z</lastmod>
+  </url>
+  <url>
+    <loc>https://galenseilis.github.io/blog/posts/c-run-from-python/index.html</loc>
+    <lastmod>2024-07-30T14:07:26.366Z</lastmod>
+  </url>
+  <url>
+    <loc>https://galenseilis.github.io/blog/index.html</loc>
+    <lastmod>2024-07-22T00:42:45.116Z</lastmod>
+  </url>
+  <url>
+    <loc>https://galenseilis.github.io/blog/publications.html</loc>
+    <lastmod>2024-07-22T00:42:45.116Z</lastmod>
+  </url>
+  <url>
+    <loc>https://galenseilis.github.io/blog/posts/cpp-execution-for-quarto/index.html</loc>
+    <lastmod>2024-07-30T05:44:42.591Z</lastmod>
+  </url>
+  <url>
+    <loc>https://galenseilis.github.io/blog/posts/python-ciw-simpy-car/index.html</loc>
+    <lastmod>2024-08-10T05:47:42.176Z</lastmod>
+  </url>
+  <url>
+    <loc>https://galenseilis.github.io/blog/posts/starting-data-science/index.html</loc>
+    <lastmod>2024-07-22T01:33:50.344Z</lastmod>
+  </url>
+  <url>
+    <loc>https://galenseilis.github.io/blog/posts/quantecon-2-numba/index.html</loc>
+    <lastmod>2024-07-27T20:50:26.108Z</lastmod>
+  </url>
+  <url>
+    <loc>https://galenseilis.github.io/blog/posts/math-distribution-independent-max-greater-than-min/index.html</loc>
+    <lastmod>2024-08-11T03:27:24.918Z</lastmod>
+  </url>
+  <url>
+    <loc>https://galenseilis.github.io/blog/posts/c-execution-for-quarto/index.html</loc>
+    <lastmod>2024-07-30T05:44:01.327Z</lastmod>
   </url>
   <url>
     <loc>https://galenseilis.github.io/blog/posts/mermaid-healthcare-service-diagram/index.html</loc>
