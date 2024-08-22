@@ -214,7 +214,7 @@
     "href": "posts/fastapi-hello-world/index.html",
     "title": "Hello World, in FastAPI",
     "section": "",
-    "text": "This is a quick post showing how to create a “Hello, World” example in FastAPI.\nSimilar to the example *Hello World, In Flask, with FastAPI we instantiate an app which contains methods that decorate other functions which will be used to returns responses. Finally, I used uvicorn to actually run the application at a given host and port.\nfrom fastapi import FastAPI\n\napp = FastAPI()\n\n@app.get(\"/\")\ndef read_root():\n    return {\"message\": \"Hello, World!\"}\n\nif __name__ == '__main__':\n    import uvcorn\n    uvicorn.run(app, host=\"127.0.0.1\", port=8000)\nThat’s all there is for this minimum working example."
+    "text": "This is a quick post showing how to create a “Hello, World” example in FastAPI.\nSimilar to the example Hello World, In Flask, with FastAPI we instantiate an app which contains methods that decorate other functions which will be used to returns responses. Finally, I used uvicorn to actually run the application at a given host and port.\nfrom fastapi import FastAPI\n\napp = FastAPI()\n\n@app.get(\"/\")\ndef read_root():\n    return {\"message\": \"Hello, World!\"}\n\nif __name__ == '__main__':\n    import uvcorn\n    uvicorn.run(app, host=\"127.0.0.1\", port=8000)\nThat’s all there is for this minimum working example."
   },
   {
     "objectID": "posts/hello-world-flask/index.html",
