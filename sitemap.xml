@@ -78,7 +78,7 @@
   </url>
   <url>
     <loc>https://galenseilis.github.io/blog/posts/fastapi-hello-world/index.html</loc>
-    <lastmod>2024-08-22T03:15:30.867Z</lastmod>
+    <lastmod>2024-08-22T04:20:27.414Z</lastmod>
   </url>
   <url>
     <loc>https://galenseilis.github.io/blog/posts/hello-world-flask/index.html</loc>
@@ -97,28 +97,32 @@
     <lastmod>2024-07-31T20:22:19.933Z</lastmod>
   </url>
   <url>
-    <loc>https://galenseilis.github.io/blog/posts/pie-chart-inaturalist/index.html</loc>
-    <lastmod>2024-07-27T21:22:09.505Z</lastmod>
-  </url>
-  <url>
-    <loc>https://galenseilis.github.io/blog/posts/c-run-from-python/index.html</loc>
-    <lastmod>2024-07-30T14:07:26.366Z</lastmod>
-  </url>
-  <url>
-    <loc>https://galenseilis.github.io/blog/index.html</loc>
-    <lastmod>2024-07-22T00:42:45.116Z</lastmod>
-  </url>
-  <url>
-    <loc>https://galenseilis.github.io/blog/publications.html</loc>
-    <lastmod>2024-07-22T00:42:45.116Z</lastmod>
+    <loc>https://galenseilis.github.io/blog/posts/python-ciw-simpy-car/index.html</loc>
+    <lastmod>2024-08-10T05:47:42.176Z</lastmod>
   </url>
   <url>
     <loc>https://galenseilis.github.io/blog/posts/cpp-execution-for-quarto/index.html</loc>
     <lastmod>2024-07-30T05:44:42.591Z</lastmod>
   </url>
   <url>
-    <loc>https://galenseilis.github.io/blog/posts/python-ciw-simpy-car/index.html</loc>
-    <lastmod>2024-08-10T05:47:42.176Z</lastmod>
+    <loc>https://galenseilis.github.io/blog/publications.html</loc>
+    <lastmod>2024-07-22T00:42:45.116Z</lastmod>
+  </url>
+  <url>
+    <loc>https://galenseilis.github.io/blog/index.html</loc>
+    <lastmod>2024-07-22T00:42:45.116Z</lastmod>
+  </url>
+  <url>
+    <loc>https://galenseilis.github.io/blog/posts/c-run-from-python/index.html</loc>
+    <lastmod>2024-07-30T14:07:26.366Z</lastmod>
+  </url>
+  <url>
+    <loc>https://galenseilis.github.io/blog/posts/pie-chart-inaturalist/index.html</loc>
+    <lastmod>2024-07-27T21:22:09.505Z</lastmod>
+  </url>
+  <url>
+    <loc>https://galenseilis.github.io/blog/posts/fastapi-kedro-params/index.html</loc>
+    <lastmod>2024-08-22T05:03:22.268Z</lastmod>
   </url>
   <url>
     <loc>https://galenseilis.github.io/blog/posts/starting-data-science/index.html</loc>
