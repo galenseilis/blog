@@ -1,9 +1,9 @@
 import subprocess
 
-def run_python_file(file_path):
+def run_python_file(file_path, interpreter='python'):
     try:
         result = subprocess.run(
-            ["python", file_path],
+            [interpreter, file_path],
             capture_output=True,
             text=True,
             check=True

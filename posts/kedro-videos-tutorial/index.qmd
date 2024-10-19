@@ -1,0 +1,1862 @@
+---
+title: "Kedro Video Tutorial Notes"
+author: "Galen Seilis"
+date: "2023-05-12"
+categories: [Python, Kedro]
+toc: true
+draft: true
+---
+
+
+## Introduction to Kedro - What is Kedro?
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PdNkECqvI58?si=EWZ5ArRXeVEgghI8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+### History
+
+According to [this article](https://www.mckinsey.com/about-us/new-at-mckinsey-blog/meet-kedro-mckinseys-first-open-source-software-tool):
+
+> The name Kedro, which derives from the Greek word meaning center or core, signifies that this open-source software provides crucial code for ‘productionizing’ advanced analytics projects.
+
+- Kedro is a Python framework for data science projects
+- It was created internally at [Quantum Black](https://www.mckinsey.com/capabilities/quantumblack/how-we-help-clients), acquired by [McKinsey & Company](https://www.mckinsey.com/), in 2017.
+- It was originally being used for internal projects for clients.
+- In 2019 kedro was open-sourced.
+- Later than 2019, Kedro was donated to the Linunx Foundation and AI Data Initiative.
+
+```{mermaid}
+timeline
+	title History of Kedro Ownership
+	2017: Created Internally at Quantum Black
+	    : Acquired by McKinsey and Company
+	2019: Open-sourced.
+	2022: Donated to Linux Foundation
+```
+
+- A goal of further development of Kedro is to have an open standard.
+> **Question**: Is there an official standards document?
+
+### Overview
+
+Claimed benefits of Using Kedro:
+
+- Kedro is aimed at reducing the time spent rewriting data science experiments so that they are fit for production.
+- Kedro is aimed at encouraging harmonious team collaboration and improve productivity.
+> **Question** In what ways does Kedro encourage harmonious team collaboration?
+- Kedro is aimed at upskilling collaborators on how to apply software engineering principles to data science code.
+- Kedro is a data-centric pipeline tool.
+	- It provides you with a project template, a declarative catalog, and powerful pipelines.
+	- Helps to separate responsibilities into different aspects:
+		- Project Template
+			- Inspired by Cookiecutter Data Science
+		- Data Catalog
+			- The core declative IO abstraction layer.
+			- The data catalog in hard drive space is specified by one or more YAML files.
+		- Nodes + Pipelines
+			- Contructs which enable data-centric workflows.
+			- The Pipelines at a mathematical level of abstraction are directed acyclic graphs where:
+				- the nodes are functions,
+				- the in-edges are inputs to the function,
+				- and the out-nodes are the outputs of a function.
+			- If you want to perform cyclic compositions of functions you must do so with unique sets of names to the input/outputs.
+				- Because all these names of inputs/outputs are in the same namespace scope, [connascence](https://en.wikipedia.org/wiki/Connascence) can be a bit of a challenge.
+			- Kedro will execute the nodes in such a way that respects the partial order induced by the structure of the directed acyclic graph.
+		- Experiment Tracking
+			- Constructs which enable data-centric workflows.
+		- Extensibility
+			- Inherit, hook in or plug-in to make the Kedro work for you.
+
+```{mermaid}
+stateDiagram-v2
+	direction LR
+    [*] --> IngestRawData
+    state ZoneOfInfluence {
+	    IngestRawData --> CleanAndJoinData
+	    CleanAndJoinData --> EngineerFeatures
+	    EngineerFeatures --> TrainAndValidateModel
+	    }
+	TrainAndValidateModel --> DeployModel
+    DeployModel --> [*]
+```
+
+### Kedro Main Features
+
+- Templates, pipelines and a strong configuration library encourage good coding practices.
+- Standard & customizable project templates.
+	- You can standardize how
+		- configuration,
+		- source code,
+		- tests,
+		- documentation,
+		- and notebooks
+		are organized with an adaptable, easy-to-use project template.
+	- You can create your own cookie cutter project template with Starters.
+- Pipeline visualizations & experiment tracking
+	- Kedro pipeline visualizations shows a blueprint of your developing data and machine-learning workflows,
+	- provides data lineage,
+	- keeps track of machine-learning experiments,
+	- and makes it easier to collaborate with business stake holders.
+- World's most evolved configuration library
+	- Configuration enables your code to be used in different situations when your experiment or data changes.
+	- Kedro supports data access, model and logging configuration.
+
+```yaml
+"{namespace}.{dataset_name}@spark":
+	type: spark.SparkDataSet
+	filepath: data/{namespace}/{dataset_name}.pq
+	file_format: parquet
+
+"{dataset_name}@csv":
+	type: pandas.CSVDataSet
+	filepath: data/01_raw/{dataset_name}.csv
+```
+
+### Catalog entries, nodes and pipelines
+
+- Here is an example of the directed acyclic graph abstraction.
+- Square nodes are functions, round nodes are inputs/outputs of functions to a given node, and cylinders are input/output datasets of the pipeline.
+- The pipeline itself has a set of inputs and a set of outputs.
+
+```{mermaid}
+flowchart TD
+	subgraph Inputs
+	0[(Companies)]
+	1[(Reviews)]
+	2[(Shuttles)]
+	end
+    0 --> 3[Preprocess Companies Node] --> 4([Preprocessed Companies]) --> 5[Create Model Input Table Node]
+    1 --> 5
+	2 --> 6[Preprocess Shuttles Node] --> 7([Preprocessed Shuttles]) --> 5
+	subgraph Outputs
+	8
+	end
+	5 --> 8[(Model Input Table)]
+```
+
+- Catalog specifies what data sets exist as inputs, or will become outputs.
+
+```yaml
+companies:
+	type: pandas.CSVDataset
+	filepath: data/01_raw/companies.csv
+
+shuttles:
+	type: pandas.ExcelDataset
+	filepath: data/01_raw/shuttles.xlsx
+
+reviews:
+	type: pandas.CSVDataset
+	filepath: data/01_raw/reviews.csv
+
+model_input_table:
+	type: pandas.ParquetDataset
+	filepath: s3://my_bucket/model_input_table.pq
+	versional: true
+```
+
+- The pipelines definition specifies what nodes exist and what the inputs are.
+
+```python
+def create_pipeline(**kwargs):
+	return pipeline([
+		node(
+			func=preprocess_companies,
+			inputs="companies",
+			outputs="preprocessed_companies",
+		),
+		node(
+			func=preprocess_shuttles,
+			inputs="shuttles",
+			outputs="preprocessed_shuttles",
+		),
+		node(
+			func=create_model_input_table,
+			inputs= [
+				"preprocessed_shuttles",
+				"preprocessed_companies",
+				"reviews",
+			],
+			outputs="model_input_table",
+		),
+	])
+```
+
+## Introduction to Kedro - Kedro and data orchestrators
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_HH8SCmCP_Q?si=g5xXbadQxwSU_n3y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+Kedro is a :
+- Data science development framework
+- Machine learning engineering framework
+- Pipeline framework
+Kedro is not a:
+- Full-stack MLOPs framework
+- Orchestrator
+	- Kedro has been described as a [ML orchestration tool](https://www.reddit.com/r/dataengineering/comments/1152wow/which_ml_orchestration_tool_fits_my_use_case/).
+- Replacement for data infrastructure
+
+- The Kedro team cares about how teams write code for [data science experiments](https://docs.aws.amazon.com/whitepapers/latest/build-secure-enterprise-ml-platform/data-science-experimentation-environment.html).
+- Kedro focuses on the [machine learning engineering](https://www.coursera.org/articles/what-is-machine-learning-engineer) part of developing data science code and leaves [MLOPs](https://en.wikipedia.org/wiki/MLOps) to tools like
+	- [Airflow](https://airflow.apache.org/),
+	- [Argo](https://argoproj.github.io/argo-workflows/),
+	- [Prefect](https://www.prefect.io/),
+	- etc.
+- Kedro does not do [data pipeline monitoring](https://www.acceldata.io/article/what-is-data-pipeline-monitoring) or [data pipeline scheduling](https://datapipelines.com/blog/what-is-pipeline-scheduling/) but integrates well with these tools.
+- Kedro is also [cloud infrastructure](https://aws.amazon.com/what-is/cloud-infrastructure/) agnostic, but we have recommended approaches for using Kedro on
+	- [Databricks](https://www.databricks.com/),
+	- [AWS](https://aws.amazon.com/),
+	- [GCP](https://cloud.google.com/),
+	- and [Azure](https://azure.microsoft.com/en-ca).
+
+Motto: "Write once, deploy everywhere"
+- The transition to production should be seamless with plugins and documentation.
+
+```{mermaid}
+flowchart LR
+    0{Kedro}
+	style 0 fill:#F7CA00,stroke:#333,stroke-width:4px
+
+	subgraph "Commerical ML Platforms"
+		1[AWS Batch]
+		2[Amazon EMR]
+		3[Amazon SageMaker]
+		4[AWS Step Functions]
+		5[Azure ML]
+		Databricks
+		Iguazio
+		Snowflake
+		6[Vertex AI]
+	end
+
+	1[AWS Batch] o--o 0
+	2[Amazon EMR] o--o 0
+	3[Amazon SageMaker] o--o 0
+	4[AWS Step Functions] o--o 0
+	5[Azure ML] o--o 0
+	Databricks o--o 0
+	Iguazio o--o 0
+	Snowflake o--o 0
+	6[Vertex AI] o--o 0
+
+	subgraph "Open Source Orchestrators"
+		Airflow
+		Argo
+		Dask
+		Kubeflow
+		Prefect
+	end
+
+	0 o--o Airflow
+	0 o--o Argo
+	0 o--o Dask
+	0 o--o Kubeflow
+	0 o--o Prefect
+```
+
+### Kedro on Databricks
+
+Multiple workflows are supported, both IDE-based and notebook-base:
+- Direct development on Databricks Notebooks
+- Local IDE work and synchronization with Databricks Repos (depicted  below).
+- Package and deploy to Databricks Jobs.
+
+Example: Develop on local [IDE](https://aws.amazon.com/what-is/ide/) and synchronize with [Databricks Repos](https://www.databricks.com/product/repos) using [dbx](https://docs.databricks.com/en/archive/dev-tools/dbx/dbx.html):
+- Versioning with [https://git-scm.com/](https://git-scm.com/).
+	- Also see [Git integration with Databricks Repos](https://docs.databricks.com/en/repos/index.html).
+- [Delta Lake](https://delta.io/) for [lakehouses](https://www.databricks.com/glossary/data-lakehouse)
+
+```{mermaid}
+
+flowchart TD
+subgraph LocalIDE
+	Development
+	style Development fill:#3CA5EA,stroke:#333,stroke-width:4px
+	0{Kedro}
+	style 0 fill:#F7CA00,stroke:#333,stroke-width:4px
+end
+
+LocalIDE --> git
+style git fill:#F44D27,stroke:#333,stroke-width:4px
+
+subgraph DatabricksRepos
+	Databricks
+	style Databricks fill:#FF4621,stroke:#333,stroke-width:4px
+	1{Kedro}
+	style 1 fill:#F7CA00,stroke:#333,stroke-width:4px
+end
+
+dbx --> LocalIDE
+LocalIDE --> dbx
+style dbx fill:#FF4621,stroke:#333,stroke-width:4px
+DatabricksRepos --> dbx
+dbx --> DatabricksRepos
+
+2[(Delta Lake)]
+style 2 fill:#00a8cd,stroke:#333,stroke-width:4px
+
+DatabricksRepos --> 2
+```
+
+
+## Introduction to Kedro - Where does Kedro fit in the data science ecosystem?
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nAyUqORd9R8?si=uVKAdzbsLSUg-VqR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+- The data tooling space is competitive.
+- Below is a table which shows **some** but not all of the feature space of some of the available tools, rather focusing on Kedro's feature set.
+- It is difficult for Kedro developers and proponents to remain unbiased in comparing their tool to other tools, but this table is their attempt.
+	- I have added some links to these tools so you can quickly check how fair you think their comparisons are.
+
+| Tool | Focus | Project Template | Data Catalog | DAG Workflow | DAG UI | Experiment Tracking | Data Versioning | Scheduler | Monitoring |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Kedro | "Kedro is an open-source Python framework for creating reproducible, maintainable and modular data science code." | ✅ | ✅ | ✅ Data-centric DAG | ✅ | ✅ | ☑️ Basic Feature |
+| [ZenML](https://www.zenml.io/) | "ZenML is an extensible, open-source ML Ops framework for using production-ready Machine Learning pipelines, in a simple way." | | | ✅ Task-centric DAG | ✅ | ✅ | ✅ | ✅ | |
+| [Cookiecutter](https://cookiecutter.readthedocs.io/en/stable/) | "A logical, reasonably standardized, but flexible project structure for doing and sharing data science work." |  ✅ | | | | | | | |
+| [MLFlow](https://mlflow.org/) | "MLFlow is an open source platform to manage the ML lifecycle, including experimentation, reproducibility, deployment, and a central model registry." | | | ☑️ Basic Feature | | ✅ | ☑️ Models | | ✅ |
+| [Intake](https://intake.readthedocs.io/en/latest/index.html) | "Data catalogs provide an abstraction that allows you to externally define, and optionally share, descriptions of datasets, called catalog entries."
+| `<Various Orchestration Plantforms>` | Orchestration platforms allow users to author, schedule and monitor workflows - task-centric data workflows | | | ✅ Task-centric DAG | ✅ | | | ✅ | ✅ |
+| [DVC](https://dvc.org/) | "DVC is built to make ML models shareable and reproducible. Designed to handle data sets, machine learning models, and metrics as well as code." | | | ☑️ Basic Feature | | | ✅ | | |
+| [Pachyderm](https://www.pachyderm.com/) | "Pachyderm is the data layer that powers your machine learning lifecycle. Automate and unify your MLOps tool chain. With automatic data versioning and data driven pipelines." | | | ✅ Data-centric DAG | ✅ | | |
+| [dbt](https://www.getdbt.com/) | "dbt is a SQL transformation workflow that lets teams quickly and collaboratively deploy analytics code following software engineering best practices like modularity, portability, CI/CD, and documentation." | ✅ | ✅ | ✅ Data-centric DAG | ✅ | | | | |
+
+- There is a [Kedro-MLFlow plugin](https://kedro-mlflow.readthedocs.io/en/stable/)to allow MLFlow to be readily used with Kedro.
+- When should you **NOT** use Kedro?
+	- Notebook-based workflows:
+		- Some data scientists build production pipelines directly in notebooks rather than IDEs.
+		- Currently, Kedro is best used within an IDE.
+		- The upcoming Kedro `0.19.0` release will enable authoring pipelines within notebooks.
+- Limited language support:
+	- Kedro pipelines are written in Python.
+	- While Kedro provides SQL and Snowflake data connectors, Kedro is not optimized for workflows authored solely in SQL, and tools like dbt may be a better choice.
+- Overhead for experimental projects:
+	- For pilots and experiments not intended for production, Kedro adds unnecessary boilerplate and structure.
+	- For experimentation, notesbooks may be more appropriate.
+- Transitioning from existing standards:
+	- Teams with existing standardized templates may experience friction transitioning to Kedro's structure and conventions.
+	- Currently, teams use a custom Kedro starter to merge templates.
+	- The upcoming `0.19.0` release will enable the use of Kedro without the standard Cookiecutter template, facilitating adoption alongside existing internal templates.
+
+## Get started with Kedro - Create a Kedro project from scratch
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YBY2Lcz7Gw4?si=uukv-rVNkA-r94D3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+- Kedro documentation has this [Spaceflights Tutorial](https://docs.kedro.org/en/stable/tutorial/spaceflights_tutorial.html).
+- There is a related [kedro-starters Github](https://github.com/kedro-org/kedro-starters).
+	- You can take a look at the instructions for getting started within the Github repo [here](https://github.com/kedro-org/kedro-starters/tree/main/spaceflights-pandas).
+	- You can see the `{{cookiecutter.repo_name}}` template [here](https://github.com/kedro-org/kedro-starters/tree/main/spaceflights-pandas/%7B%7B%20cookiecutter.repo_name%20%7D%7D).
+		- You can see every default file and directory that you can expect in a default Kedro project.
+
+Hopping in a BASH session I ran:
+
+```bash
+$ git clone https://github.com/kedro-org/kedro-starters.git
+$ cd kedro-starters/spaceflights-pandas/\{\{\ cookiecutter.repo_name\ \}\}/
+$ tree .
+.
+├── conf
+│   ├── base
+│   │   ├── catalog.yml
+│   │   ├── parameters_data_processing.yml
+│   │   ├── parameters_data_science.yml
+│   │   └── parameters.yml
+│   ├── local
+│   │   └── credentials.yml
+│   ├── logging.yml
+│   └── README.md
+├── data
+│   ├── 01_raw
+│   │   ├── companies.csv
+│   │   ├── reviews.csv
+│   │   └── shuttles.xlsx
+│   ├── 02_intermediate
+│   ├── 03_primary
+│   ├── 04_feature
+│   ├── 05_model_input
+│   ├── 06_models
+│   ├── 07_model_output
+│   └── 08_reporting
+├── docs
+│   └── source
+│       ├── conf.py
+│       └── index.rst
+├── notebooks
+├── pyproject.toml
+├── README.md
+├── requirements.txt
+├── src
+│   └── {{ cookiecutter.python_package }}
+│       ├── __init__.py
+│       ├── __main__.py
+│       ├── pipeline_registry.py
+│       ├── pipelines
+│       │   ├── data_processing
+│       │   │   ├── __init__.py
+│       │   │   ├── nodes.py
+│       │   │   └── pipeline.py
+│       │   ├── data_science
+│       │   │   ├── __init__.py
+│       │   │   ├── nodes.py
+│       │   │   └── pipeline.py
+│       │   └── __init__.py
+│       └── settings.py
+└── tests
+   ├── __init__.py
+   ├── pipelines
+   │   ├── __init__.py
+   │   └── test_data_science.py
+   └── test_run.py
+
+22 directories, 30 files
+```
+
+- `Conf` is the configuration directory
+	- with two subdirectories:
+		- `base`
+		- `local`
+	- Contains all the configuration data for the project.
+- `data` directory is for storing (permanent or temporary) data where the Kedro project has direct access to it.
+	- It contains multiple subdirectories for different classifications of data.
+		- e.g. `01_raw` contains the starting or "raw" data that is going to be used in the spaceflights project.
+			- `companies.csv`
+			- `reviews.csv`
+			- `shuttles.xlsx`
+- `docs` is a high-level directory for putting stuff related to documentation.
+	- `/docs/source` provides the basic starting source code for a [Sphinx-generated documentation](https://www.sphinx-doc.org/en/master/).
+- `notebooks` is a directory for putting notebooks (e.g. [Jupyter notebooks](https://jupyter.org/)).
+- `src` contains all the source code of the Kedro project.
+	- It contains the required files (e.g. `__init__.py`'s') so that the project can be built as a Python package.
+
+
+## Get started with Kedro - The spaceflights starter
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/K6PhgVyXhWE?si=yhNA7ThoNjgEJkQu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+- Kedro should be compatible with most IDEs since it is just Python development which is text-based.
+- Let's go through the steps alongside the video.
+
+First, let's create a project path.
+
+```bash
+$ cd ~/projects\
+```
+
+Next they create an environment. There are different choices to pick from. Here I will attempt to follow their instructions using Micromamba. I don't have Micromamba installed, but you can find their [installation instructions](https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html) online.
+
+The Micromamba instructions tell us to begin with using `curl` to download and run the script:
+
+```bash
+"${SHELL}" <(curl -L micro.mamba.pm/install.sh)
+```
+
+::: {.callout-note}
+This command is a one-liner in a shell script or command line that performs the following actions:
+
+1. **`"${SHELL}"`**: This part of the command is a variable substitution. It uses the value of the `SHELL` environment variable. The `SHELL` environment variable typically contains the path to the user's preferred shell. The double quotes around `${SHELL}` are used to prevent word-splitting and globbing of the value.
+2. **`<(curl -L micro.mamba.pm/install.sh)`**: This is a process substitution. It involves the use of the `<()` syntax to treat the output of a command as if it were a file. In this case, the command within the substitution is `curl -L micro.mamba.pm/install.sh`. Let's break it down:
+    - `curl` is a command-line tool for making HTTP requests. In this case, it is used to download the content of the specified URL.
+    - `-L` is an option for `curl` that tells it to follow redirects. If the URL specified has a redirect, `curl` will follow it.
+    - `micro.mamba.pm/install.sh` is the URL from which the script is being downloaded.
+
+So, the overall effect of `<(curl -L micro.mamba.pm/install.sh)` is to execute the `curl` command, fetch the content of `micro.mamba.pm/install.sh`, and make that content available as if it were a file.
+Finally, the whole command `"${SHELL}" <(curl -L micro.mamba.pm/install.sh)` takes the downloaded script as input and runs it using the user's preferred shell. This is a common pattern for installing software using a one-liner, often seen in shell scripts or package managers. In this case, it seems like it might be installing something related to Mamba, a package manager for data science environments.
+:::
+
+You may get something in [stdout](https://en.wikipedia.org/wiki/Standard_streams#Standard_output_(stdout)) that looks like this:
+
+```bash
+ % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                Dload  Upload   Total   Spent    Left  Speed
+ 0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100  3069  100  3069    0     0   2195      0  0:00:01  0:00:01 --:--:-- 10921
+Micromamba binary folder? [~/.local/bin]  
+Init shell (bash)? [Y/n]   
+Configure conda-forge? [Y/n]  
+Prefix location? [~/micromamba]  
+Modifying RC file "/home/galen/.bashrc"
+Generating config for root prefix "/home/galen/micromamba"
+Setting mamba executable to: "/home/galen/.local/bin/micromamba"
+Adding (or replacing) the following in your "/home/galen/.bashrc" file
+# >>> mamba initialize >>>                                                                                                                                                                                        
+# !! Contents within this block are managed by 'mamba init' !!                                                                                                                                                    
+export MAMBA_EXE='/home/galen/.local/bin/micromamba';                                                                                                                                                             
+export MAMBA_ROOT_PREFIX='/home/galen/micromamba';                                                     
+__mamba_setup="$("$MAMBA_EXE" shell hook --shell bash --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+if [ $? -eq 0 ]; then
+   eval "$__mamba_setup"                                                                                      
+else          
+   alias micromamba="$MAMBA_EXE"  # Fallback on help from mamba activate                                       
+fi
+unset __mamba_setup
+# <<< mamba initialize <<<                     
+Please restart your shell to activate micromamba or run the following:\n
+ source ~/.bashrc (or ~/.zshrc, ~/.xonshrc, ~/.config/fish/config.fish, ...)
+```
+
+::: {.callout-note}
+This BASH script sets up environment variables and configurations related to the Mamba package manager. Let's break down each part of the script:
+
+1. **`export MAMBA_EXE='/home/galen/.local/bin/micromamba';`**
+    - This line exports the variable `MAMBA_EXE` and assigns it the value `/home/galen/.local/bin/micromamba`. This variable is likely the path to the Mamba executable.
+2. **`export MAMBA_ROOT_PREFIX='/home/galen/micromamba';`**
+    - This line exports the variable `MAMBA_ROOT_PREFIX` and assigns it the value `/home/galen/micromamba`. This variable likely represents the root directory where Mamba will be installed or where it will manage environments.
+3. **`__mamba_setup="$("$MAMBA_EXE" shell hook --shell bash --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"`**
+    - This line defines a variable `__mamba_setup` by running a command. The command is the output of executing `"$MAMBA_EXE" shell hook --shell bash --root-prefix "$MAMBA_ROOT_PREFIX"`. This command is likely generating shell-specific configuration settings based on the provided parameters. The `2> /dev/null` part redirects any error output to `/dev/null` to suppress error messages.
+4. **`if [ $? -eq 0 ]; then`**
+    - This line checks the exit status of the last command. The special variable `$?` holds the exit status of the previous command. If the exit status is 0 (indicating success), the script proceeds to the next line.
+5. **`eval "$__mamba_setup"`**
+    - If the previous command succeeded, this line evaluates the content of the `__mamba_setup` variable as shell commands. It effectively applies the configurations generated by the Mamba setup command to the current shell session.
+6. **`else`**
+    - If the previous command fails (exit status is not 0), this line is executed.
+7. **`alias micromamba="$MAMBA_EXE"`**
+    - In case the Mamba setup command fails, this line creates an alias named `micromamba` that points to the Mamba executable (`$MAMBA_EXE`). This provides a fallback option for using Mamba, and the user can run `micromamba` directly.
+8. **`fi`**
+    - Closes the if-else block.
+9. **`unset __mamba_setup`**
+    - This line unsets (removes) the `__mamba_setup` variable. This is done for cleanup, and the variable is no longer needed after its content has been evaluated.
+
+In summary, this script is configuring the environment for Mamba, attempting to apply specific shell settings, and providing a fallback alias if the setup command fails. It's a common pattern in configuration scripts to handle different scenarios based on the success or failure of certain commands.
+:::
+
+Changing configuration files such as `.bashrc` often require restarting the shell environment. To restart the shell you can use this command:
+
+```bash
+source ~/.bashrc
+```
+
+::: {.callout-note}
+The `source` command, in the context of a shell script or interactive shell session, is used to read and execute the content of a file within the current shell environment. In this case, the command `source ~/.bashrc` is specifically used to execute the contents of the `.bashrc` file in the user's home directory.
+
+ Let's break it down in more detail:
+ 1. **`source` command**:
+    - The `source` command (or its synonym `.`) is used to read and execute commands from the specified file within the current shell session. It's commonly used to apply changes made in configuration files without starting a new shell session.
+ 2. **`~/.bashrc`**:
+    - `~` represents the home directory of the current user.
+    - `.bashrc` is a configuration file for the Bash shell. It typically contains settings, environment variables, and aliases that are specific to the user's Bash shell environment. The file is executed every time a new interactive Bash shell is started.
+
+ When you run `source ~/.bashrc`, you are telling the shell to read the contents of the `.bashrc` file and execute the commands within it. This is useful when you make changes to your `.bashrc` file, such as adding new aliases or modifying environment variables. Instead of starting a new shell session, you can use `source` to apply the changes immediately to the current session.
+
+Keep in mind that changes made by sourcing a file only affect the current shell session. If you want the changes to be applied to all future shell sessions, you should consider adding them directly to your shell configuration files (like `.bashrc`), so they are automatically executed each time you start a new shell.
+:::
+
+::: {.callout-note}
+Another way to restart the BASH is to call the following command:
+
+```bash
+ exec "${SHELL}"
+```
+
+The `exec "${SHELL}"` command is commonly used to replace the current shell process with a new instance of the same shell. Let's break down the command step by step:
+
+1. **`${SHELL}`**: This is a variable substitution that retrieves the path to the user's preferred shell. The `SHELL` environment variable typically contains the path to the default shell for the user. The `${SHELL}` expression is enclosed in double quotes to handle cases where the path might contain spaces or special characters.
+2. **`exec`**: This is a shell built-in command that is used to replace the current shell process with a new command. When `exec` is used without a command, it is often employed to replace the current shell process with another shell.
+3. **`"${SHELL}"`**: This part is the path to the shell obtained through variable substitution.
+
+Putting it all together, the command `exec "${SHELL}"` essentially instructs the shell to replace itself with a new instance of the shell specified by the value of the `SHELL` environment variable. This has the effect of restarting the shell. The new shell inherits the environment and settings of the previous shell.
+
+It's worth noting that when you run this command, any changes made in the current shell session, such as variable assignments, aliases, or function definitions, will be lost because the new shell starts with a clean environment. This command is often used when you want to apply changes to shell configuration files (like `.bashrc` or `.zshrc`) without having to manually exit and start a new shell session.
+:::
+
+With Micromamba installed we can now follow along with running this command:
+
+```bash
+micromamba create -n spaceflights310 python=3.10 -c conda-forge -y
+```
+- The name `spaceflights310` has `310` appended to it to help remind us later that this environment is prepared for Python version 3.10.
+	- Appending this string to the name does not have any influence on how Micromamba prepares the environment. It is just for us humans. 😊
+- `python=3.10` is used by `micromamba` to prepare the environment for Python 3.10.
+- The `-c conda-forge` is to indicate that we using the [Conda-Forge repository](https://conda-forge.org/) for our Python packages.
+- The `-y` just means to automatically accept any triggered `[Y/n]` options.
+
+After running the above command, you should get something like this:
+
+```bash
+conda-forge/noarch                                  13.0MB @   3.2MB/s  4.1s
+conda-forge/linux-64                                31.3MB @   5.8MB/s  5.5s
+
+Transaction
+
+ Prefix: /home/galen/micromamba/envs/spaceflights310
+
+ Updating specs:
+
+  - python=3.10
+
+
+ Package                Version  Build               Channel          Size
+─────────────────────────────────────────────────────────────────────────────
+ Install:
+─────────────────────────────────────────────────────────────────────────────
+
+ + _libgcc_mutex            0.1  conda_forge         conda-forge       3kB
+ + ld_impl_linux-64        2.40  h41732ed_0          conda-forge     705kB
+ + ca-certificates   2023.11.17  hbcca054_0          conda-forge     154kB
+ + libgomp               13.2.0  h807b86a_3          conda-forge     422kB
+ + _openmp_mutex            4.5  2_gnu               conda-forge      24kB
+ + libgcc-ng             13.2.0  h807b86a_3          conda-forge     774kB
+ + openssl                3.2.0  hd590300_1          conda-forge       3MB
+ + libzlib               1.2.13  hd590300_5          conda-forge      62kB
+ + libffi                 3.4.2  h7f98852_5          conda-forge      58kB
+ + bzip2                  1.0.8  hd590300_5          conda-forge     254kB
+ + ncurses                  6.4  h59595ed_2          conda-forge     884kB
+ + libuuid               2.38.1  h0b41bf4_0          conda-forge      34kB
+ + libnsl                 2.0.1  hd590300_0          conda-forge      33kB
+ + xz                     5.2.6  h166bdaf_0          conda-forge     418kB
+ + tk                    8.6.13  noxft_h4845f30_101  conda-forge       3MB
+ + libsqlite             3.44.2  h2797004_0          conda-forge     846kB
+ + readline                 8.2  h8228510_1          conda-forge     281kB
+ + tzdata                 2023c  h71feb2d_0          conda-forge     118kB
+ + python               3.10.13  hd12c33a_0_cpython  conda-forge      25MB
+ + wheel                 0.42.0  pyhd8ed1ab_0        conda-forge      58kB
+ + setuptools            68.2.2  pyhd8ed1ab_0        conda-forge     464kB
+ + pip                   23.3.2  pyhd8ed1ab_0        conda-forge       1MB
+
+ Summary:
+
+ Install: 22 packages
+
+ Total download: 39MB
+
+─────────────────────────────────────────────────────────────────────────────
+
+
+
+Transaction starting
+_libgcc_mutex                                        2.6kB @  12.6kB/s  0.2s
+_openmp_mutex                                       23.6kB @ 104.5kB/s  0.2s
+ca-certificates                                    154.1kB @ 604.2kB/s  0.3s
+ld_impl_linux-64                                   704.7kB @   1.9MB/s  0.4s
+libgomp                                            421.8kB @   1.0MB/s  0.4s
+readline                                           281.5kB @ 660.6kB/s  0.2s
+xz                                                 418.4kB @ 826.4kB/s  0.3s
+libffi                                              58.3kB @ 106.5kB/s  0.1s
+wheel                                               57.6kB @ 102.7kB/s  0.2s
+libgcc-ng                                          773.6kB @   1.2MB/s  0.2s
+ncurses                                            884.4kB @   1.3MB/s  0.5s
+libnsl                                              33.4kB @  50.4kB/s  0.2s
+tzdata                                             117.6kB @ 173.5kB/s  0.1s
+pip                                                  1.4MB @   1.7MB/s  0.3s
+bzip2                                              254.2kB @ 280.6kB/s  0.3s
+libsqlite                                          845.8kB @ 889.0kB/s  0.3s
+libzlib                                             61.6kB @  51.8kB/s  0.4s
+libuuid                                             33.6kB @  26.2kB/s  0.3s
+setuptools                                         464.4kB @ 351.5kB/s  0.4s
+openssl                                              2.9MB @   1.7MB/s  1.0s
+tk                                                   3.3MB @   1.7MB/s  1.3s
+python                                              25.5MB @   5.6MB/s  3.4s
+Linking _libgcc_mutex-0.1-conda_forge
+Linking ld_impl_linux-64-2.40-h41732ed_0
+Linking ca-certificates-2023.11.17-hbcca054_0
+Linking libgomp-13.2.0-h807b86a_3
+Linking _openmp_mutex-4.5-2_gnu
+Linking libgcc-ng-13.2.0-h807b86a_3
+Linking openssl-3.2.0-hd590300_1
+Linking libzlib-1.2.13-hd590300_5
+Linking libffi-3.4.2-h7f98852_5
+Linking bzip2-1.0.8-hd590300_5
+Linking ncurses-6.4-h59595ed_2
+Linking libuuid-2.38.1-h0b41bf4_0
+Linking libnsl-2.0.1-hd590300_0
+Linking xz-5.2.6-h166bdaf_0
+Linking tk-8.6.13-noxft_h4845f30_101
+Linking libsqlite-3.44.2-h2797004_0
+Linking readline-8.2-h8228510_1
+Linking tzdata-2023c-h71feb2d_0
+Linking python-3.10.13-hd12c33a_0_cpython
+Linking wheel-0.42.0-pyhd8ed1ab_0
+Linking setuptools-68.2.2-pyhd8ed1ab_0
+Linking pip-23.3.2-pyhd8ed1ab_0
+
+Transaction finished
+
+To activate this environment, use:
+
+   micromamba activate spaceflights310
+
+Or to execute a single command in this environment, use:
+
+   micromamba run -n spaceflights310 mycommand
+```
+
+- If something doesn't seem to be working and you need to ask for help, remember to look at the printout to get information on what packages were initially installed and with what version.
+
+We can now activate the environment in order to start working in it.
+
+```bash
+micromamba activate spaceflights310
+```
+
+In some systems you will see a `(spaceflights310)` appear in front of your shell's prompt in order to remind you that you are not in your home environment. This is important to consider because this separation provides a valuable barrier for both security and dependency reasons.
+
+Even if you have a different version of Python installed, you should be able to verify the version is `3.10.XX`:
+
+```bash
+(spaceflights310) $ python -V
+Python 3.10.13
+```
+
+And likewise, you can check what version of pip you are running:
+
+```bash
+(spaceflights310) $ pip --version
+pip 23.3.1 from /home/galen/.local/lib/python3.10/site-packages/pip (python 3.10)
+```
+
+Additionally, you can check **where** your environment's installations of Python and pip and located:
+
+```bash
+(spaceflights310) $ which python
+/home/galen/micromamba/envs/spaceflights310/bin/python
+(spaceflights310) $ which pip
+/home/galen/micromamba/envs/spaceflights310/bin/pip
+```
+
+Up until this point we have not installed Kedro! But now let's do it!
+
+```bash
+(spaceflights310) $ pip install kedro
+```
+
+I'll spare you the long output this time. 😉
+
+But you may have a message at the bottom like this indicating that your version of pip is not the latest:
+
+```bash
+[notice] A new release of pip is available: 23.3.1 -> 23.3.2
+[notice] To update, run: pip install --upgrade pip
+```
+
+As suggested, we can upgrade pip using pip!
+
+```bash
+(spaceflights310) $ pip install --upgrade pip
+```
+
+With Kedro installed, we can produce a basic summary.
+
+```bash
+(spaceflights310) $ kedro info
+_            _                                                                                                      
+| | _____  __| |_ __ ___                                                                                             
+| |/ / _ \/ _` | '__/ _ \                                                                                            
+|   <  __/ (_| | | | (_) |                                                                                           
+|_|\_\___|\__,_|_|  \___/                                                                                            
+v0.18.14                                                                                                             
+                                                                                                                    
+Kedro is a Python framework for
+creating reproducible, maintainable
+and modular data science code.
+
+No plugins installed
+```
+
+It doesn't have much to show us at this point because we have an entirely-vanilla install of Kedro. I ended up using `v0.18.14` instead of `v0.18.13`, but that's okay. 👌
+
+In [software versioning](https://en.wikipedia.org/wiki/Software_versioning) they usually have a semantics similar to this:
+
+$$\underbrace{\texttt{M}}_{\text{Major}}.\underbrace{\texttt{m}}_{\text{Minor}}.\underbrace{\texttt{p}}_{\text{Patch}}$$
+
+So with `v0.18.14` instead of `v0.18.13` we have only a small difference. If your curious you can read about the changes in different releases [here](https://github.com/kedro-org/kedro/releases).
+
+Currently we have Kedro installed, but we don't have a Kedro project. Remember that folder system we went over earlier? Now it is time to make that!
+
+Because the spaceflights project is a prebuilt project that is ready to be used, we could setup up by merely running:
+
+```bash
+(spaceflights310) $ kedro new --starter=spaceflights
+```
+
+But it will be more illustrative if we go over the steps of how to setup the project from scratch. ([Not this Scratch](https://scratch.mit.edu/)!)
+
+So instead, let us run the following command to merely make a starting project with only the defaults done for us.
+
+```bash
+(spaceflights310) $ kedro new
+From Kedro 0.19.0, the command `kedro new` will come with the option of interactively selecting add-ons for your pro
+ject such as linting, testing, custom logging, and more. The selected add-ons will add the basic setup for the utili
+ties selected to your projects.                                                                                      
+
+Project Name
+============
+Please enter a human readable name for your new project.
+Spaces, hyphens, and underscores are allowed.
+[New Kedro Project]: spaceflights
+
+The project name 'spaceflights' has been applied to:  
+- The project title in /home/galen/projects/spaceflights/README.md  
+- The folder created for your project in /home/galen/projects/spaceflights  
+- The project's python package in /home/galen/projects/spaceflights/src/spaceflights
+
+A best-practice setup includes initialising git and creating a virtual environment before running 'pip install -r sr
+c/requirements.txt' to install project-specific dependencies. Refer to the Kedro documentation: https://kedro.readth
+edocs.io/
+
+Change directory to the project generated in /home/galen/projects/spaceflights by entering 'cd /home/galen/projects/
+spaceflights'
+```
+
+Running the above will prompt you for a project name. You can put anything you like as a valid path name, but we'll stick with the tutorial by calling it `spaceflights`. There will now be a `spaceflights` path! It is Christmas time (literally, at time of writing I am on a Christmas break)! 🎄 Take a look inside the gift we just gave ourselves.
+
+```bash
+(spaceflights310) $ cd /home/galen/projects/spaceflights
+```
+
+If we run `tree .` we should see something just like what we saw in the cookiecutter template.
+
+```bash
+(spaceflights310) $ tree .
+.
+├── conf
+│   ├── base
+│   │   ├── catalog.yml
+│   │   ├── logging.yml
+│   │   └── parameters.yml
+│   ├── local
+│   │   └── credentials.yml
+│   └── README.md
+├── data
+│   ├── 01_raw
+│   ├── 02_intermediate
+│   ├── 03_primary
+│   ├── 04_feature
+│   ├── 05_model_input
+│   ├── 06_models
+│   ├── 07_model_output
+│   └── 08_reporting
+├── docs
+│   └── source
+│       ├── conf.py
+│       └── index.rst
+├── notebooks
+├── pyproject.toml
+├── README.md
+└── src
+   ├── pyproject.toml
+   ├── requirements.txt
+   ├── spaceflights
+   │   ├── __init__.py
+   │   ├── __main__.py
+   │   ├── pipeline_registry.py
+   │   ├── pipelines
+   │   │   └── __init__.py
+   │   └── settings.py
+   └── tests
+       ├── __init__.py
+       ├── pipelines
+       │   └── __init__.py
+       └── test_run.py
+
+20 directories, 19 files
+```
+
+All that boilerplate file structure taken care of! 😌 We still have work to do, but at least that time, attention and energy won't get spoiled on that drudgery.
+
+The tutorial uses [VSCode](https://code.visualstudio.com/), which is fine. But I'm staying right here in the terminal. 😼
+
+## Get started with Kedro - Use Kedro from Jupyter notebook
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3q2RNWLibyY?si=3cCxFLNiG3xh6sVi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+- This tutorial video is about using Jupyter notebook alongside Kedro.
+
+Naturally, to use Jupyter notebooks we need to install it.
+
+```bash
+(spaceflights310) $ pip install notebook
+```
+
+Now we're going to use the Kedro-IPython extension to enable using these tools together. 🫂 The extension allows us to easily bring in components of our Kedro project into our Jupyter notebook.
+
+::: {.callout-tip}
+If you're completely unfamiliar with Jupyter Notebook, you can also look through [*Jupyter Notebook: An Introduction*](https://realpython.com/jupyter-notebook-introduction/) before continuing.
+:::
+
+Let's open Jupyter notebook:
+
+```bash
+(spaceflights310) $ jupyter notebook
+```
+
+You may see some text flash before your eyes on the terminal and then suddenly your browser will probably open to the address `http://localhost:8888/tree`. If you don't, check out [Jupyter Notebook Error: display nothing on "http://localhost:8888/tree"](https://superuser.com/questions/1416574/jupyter-notebook-error-display-nothing-on-http-localhost8888-tree).
+
+::: {.callout-tip}
+The URL "[http://localhost:8888/tree](http://localhost:8888/tree)," is a local address pointing to a web server running on your own machine. Let me break down the components of the URL to help you understand it:
+
+1. **Protocol:** The URL starts with "http://," indicating that it is using the Hypertext Transfer Protocol (HTTP). This is a standard protocol for transmitting data over the internet.
+2. **Hostname:** "localhost" is a special hostname that refers to the local machine. In networking, it always points back to the current device. In this context, it means that the web server is running on the same machine where you are opening the URL.
+3. **Port:** ":8888" is the port number. Ports are used to differentiate between different services or processes on a single machine. In this case, the web server is configured to listen on port 8888.
+4. **Path:** "/tree" is the path component of the URL. In web applications, the path often corresponds to a specific resource or endpoint. In this context, "/tree" refers to the Jupyter Notebook interface, where you can view and manage your files and notebooks in a tree-like structure.
+:::
+
+
+Now that we have the notebook interface open, go to the `notebooks` directory in the interface (not the CLI). Following with the tutorial, create a notebook called `first-exploration.ipynb`. Note that creating this notebook has created and renamed a notebook `Untitled.ipynb` to `first-exploration.ipynb` in your `notebooks` directory on your system.
+
+Sadly, at the time of writing, I don't have embedding Jupyter Notebooks setup on my blog. So I am going to use the prompt `(spaceflights310):JN>` to signify that we looking at commands in a Jupyter Notebook environment.
+
+
+First thing we can do is load the Kedro-IPython extension:
+
+```python
+(spaceflights310):JN> %load_ext kedro.ipython
+[12/17/23 14:08:12] INFO     Resolved project path as: /home/galen/projects/spaceflights.           __init__.py:139
+                             To set a different path, run '%reload_kedro <project_root>'
+
+[12/17/23 14:08:12] INFO     Kedro project spaceflights                                             __init__.py:108
+
+                    INFO     Defined global variable 'context', 'session', 'catalog' and            __init__.py:109
+                             'pipelines'
+```
+
+- You can see in the above output that loading the extension how loaded some information into our project including `context`, `session`, `catalog`, and `pipelines`.
+- Both `context`, `session` and session provide a bunch of information we'll get back to.
+- The `catalog` gives us access to all of the datasets that we will declare to be available.
+- `pipelines` should currently be a dictionary with an empty `Pipeline` instance:
+
+```python
+(spaceflights310):JN> pipelines
+{'__default__': Pipeline([])}
+```
+
+Since Jupyter Notebook is itself an environment built on other tools including IPython, and IPython is also a standalone tool, and we have a Kedro-IPython extension, can we load Kedro into a standalone IPython session? Yes. 🎉
+
+::: {.callout-note}
+Although, note the section [Jupyter and the future of IPython](https://ipython.org/#jupyter-and-the-future-of-ipython "Permalink to this headline") on the ipython site.
+:::
+
+So back to our `(spaceflights310) $`, prompt we can start IPython with the command:
+```bash
+(spaceflights310) $ ipython
+```
+
+You should see a CLI like this:
+
+```python
+$ ipython
+Python 3.10.13 | packaged by conda-forge | (main, Oct 26 2023, 18:07:37) [GCC 12.3.0]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 8.18.1 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]:
+```
+
+And we can readily load our Kedro stuff in the same way:
+
+```python
+$ ipython
+In [1]: %load_ext kedro.ipython
+[12/17/23 14:26:13] INFO     Resolved project path as: /home/galen/projects/spaceflights.            __init__.py:139
+                            To set a different path, run '%reload_kedro <project_root>'                             
+[12/17/23 14:26:13] INFO     Kedro project spaceflights                                              __init__.py:108
+                    INFO     Defined global variable 'context', 'session', 'catalog' and 'pipelines' __init__.py:109
+```
+
+The same Kedro project things will be available including `context`, `session`, `catalog`, and `pipelines`. Other available notebook interfaces can use this extension, including Databricks and [Google Colab](https://colab.research.google.com/?utm_source=scs-index).
+
+## Get started with Kedro - Set up the Kedro Data Catalog
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rl2cncGxyts?si=2ryduPkd7eiXWiVV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+The `context`, `session`, `catalog`, and `pipelines` that we encountered in the last tutorial have not been prepared to contain any useful information yet. But not we'll get the Catalog up and running. If you have not been following along in the Kedro docs, we are at the [Set up the data](https://docs.kedro.org/en/stable/tutorial/set_up_data.html) section.
+
+- There are three datasets that we care about for this example:
+	- `companies.csv`
+	- `reviews.csv`
+	- `shuttles.xlsx`
+
+Let's go get that data. I'm just going to download those files from [here](https://github.com/WaylonWalker/kedro-spaceflights/tree/feature/project-template/data/01_raw)and put them in my own `data/01_raw` path. You should be able to see the following:
+
+```bash
+(spaceflights310) $ ls data/01_raw/
+companies.csv  reviews.csv  shuttles.xlsx
+```
+
+Now create a new Jupyter Notebook titled `data-exploration.ipynb`, and install the following command using the following magic command:
+
+```python
+(spaceflights310):JN> %pip install kedro-datasets[pandas]
+```
+
+What the above does is install some useful dependencies for this tutorial that assume we're primarily using [Pandas](https://pandas.pydata.org/).
+
+::: {.callout-tip}
+If you're unfamiliar with Pandas you should probably learn it if you're interested in doing Data Science with Python (although also check out [Polars](https://pola.rs/)). There are a ton of resources out there to help you learn it. Here are just a few:
+
+- [*Python for Data Analysis, 3E*](https://wesmckinney.com/book/)
+- [*10 minutes to pandas*](https://pandas.pydata.org/docs/user_guide/10min.html)
+- [*Effective Pandas*](https://store.metasnake.com/effective-pandas-book)
+- [Pandas Cheat Sheet](https://pandas.pydata.org/Pandas_Cheat_Sheet.pdf)
+:::
+
+Alright, so you *still* cannot access those data files in Kedro just yet until your register them in the catalog. Where is the catalog? `conf/base/catalog.yml`.
+
+```yaml
+companies:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/companies.csv
+
+reviews:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/reviews.csv
+
+shuttles:
+  type: pandas.ExcelDataset
+  filepath: data/01_raw/shuttles.xlsx
+  load_args:
+    engine: openpyxl # Use modern Excel engine (the default since Kedro 0.18.0)
+```
+
+In most cases you need to provide at least a name for each data source, the type of data source which must be a valid Kedro dataset class, and the filepath. You can see for the `xlsx` file that we require an additional `load_args` which will tell Pandas to use the `openpyxl` package for parsing the Excel file. When you get into external/remote data sources (e.g. SQL databases) you will see that it is possible to register data sources in the catalog to pull remote data for you.
+
+Let's hop back into our `data-exploration.ipynb` notebook to load the Kedro-ipython extension.
+
+```python
+(spaceflights310):JN> %load_ext kedro.ipython
+[12/17/23 15:49:25] INFO     Resolved project path as: /home/galen/projects/spaceflights.           __init__.py:139
+                             To set a different path, run '%reload_kedro <project_root>'
+
+[12/17/23 15:49:25] INFO     Kedro project spaceflights                                             __init__.py:108
+
+                    INFO     Defined global variable 'context', 'session', 'catalog' and            __init__.py:109
+                             'pipelines'
+```
+
+It will again load the Kedro artifacts, but this time our data should be available in `catalog`!
+
+```python
+(spaceflights310):JN> catalog.load("companies")
+                    INFO     Loading data from 'companies' (CSVDataset)...                      [data_catalog.py](file:///home/galen/.local/lib/python3.10/site-packages/kedro/io/data_catalog.py):[502](file:///home/galen/.local/lib/python3.10/site-packages/kedro/io/data_catalog.py#502)
+
+||id|company_rating|company_location|total_fleet_count|iata_approved|
+|---|---|---|---|---|---|
+|0|35029|100%|Niue|4.0|f|
+|1|30292|67%|Anguilla|6.0|f|
+|2|19032|67%|Russian Federation|4.0|f|
+|3|8238|91%|Barbados|15.0|t|
+|4|30342|NaN|Sao Tome and Principe|2.0|t|
+|...|...|...|...|...|...|
+|77091|6654|100%|Tonga|3.0|f|
+|77092|8000|NaN|Chile|2.0|t|
+|77093|14296|NaN|Netherlands|4.0|f|
+|77094|27363|80%|NaN|3.0|t|
+|77095|12542|98%|Mauritania|19.0|t|
+
+77096 rows × 5 columns
+```
+
+In case you're eyeballing that strange format for a table, it is markdown which we can render to:
+
+| |id|company_rating|company_location|total_fleet_count|iata_approved|
+|---|---|---|---|---|---|
+|0|35029|100%|Niue|4.0|f|
+|1|30292|67%|Anguilla|6.0|f|
+|2|19032|67%|Russian Federation|4.0|f|
+|3|8238|91%|Barbados|15.0|t|
+|4|30342|NaN|Sao Tome and Principe|2.0|t|
+|...|...|...|...|...|...|
+|77091|6654|100%|Tonga|3.0|f|
+|77092|8000|NaN|Chile|2.0|t|
+|77093|14296|NaN|Netherlands|4.0|f|
+|77094|27363|80%|NaN|3.0|t|
+|77095|12542|98%|Mauritania|19.0|t|
+
+But what is exciting is we now have access to a Pandas dataframe of our `companies.csv`, as well as the other data sets we included in the catalog.
+
+Let's assign our dataframe to something convenient for exploration purposes:
+
+```python
+(spaceflights310):JN> df = catalog.load("companies")
+[12/17/23 15:53:59] INFO     Loading data from 'companies' (CSVDataset)...                      [data_catalog.py](file:///home/galen/.local/lib/python3.10/site-packages/kedro/io/data_catalog.py):[502](file:///home/galen/.local/lib/python3.10/site-packages/kedro/io/data_catalog.py#502)
+```
+
+::: {.callout-warning}
+The [Pandas-Vet](https://pandas-vet.readthedocs.io/en/stable/index.html) package [warns](https://pandas-vet.readthedocs.io/en/stable/guides/warnings.html) that `df` is not a good variable name. I tend to agree although I am guilty of doing this sometimes.
+
+`PD901 ‘df’ is a bad variable name. Be kinder to your future self.`
+:::
+
+Next we will look at the top few entries of the data frame.
+
+```python
+(spaceflights310):JN> df.head()
+||id|company_rating|company_location|total_fleet_count|iata_approved|
+|---|---|---|---|---|---|
+|0|35029|100%|Niue|4.0|f|
+|1|30292|67%|Anguilla|6.0|f|
+|2|19032|67%|Russian Federation|4.0|f|
+|3|8238|91%|Barbados|15.0|t|
+|4|30342|NaN|Sao Tome and Principe|2.0|t|
+```
+
+Here is the table again rendered in Markdown.
+
+| |id|company_rating|company_location|total_fleet_count|iata_approved|
+|---|---|---|---|---|---|
+|0|35029|100%|Niue|4.0|f|
+|1|30292|67%|Anguilla|6.0|f|
+|2|19032|67%|Russian Federation|4.0|f|
+|3|8238|91%|Barbados|15.0|t|
+|4|30342|NaN|Sao Tome and Principe|2.0|t|
+
+In case you were skeptical that we had really loaded a Pandas data frame (I'll admit, I'm not), you can always run `type` on any Python object.
+
+```python
+(spaceflights310):JN> type(df)
+pandas.core.frame.DataFrame
+```
+
+Yup, just an ordinary data frame.
+
+::: {.callout-note}
+Ever wondered what `type(type)` should return? The answer is `type`, making it `type` a [fixed point](https://en.wikipedia.org/wiki/Fixed_point_(mathematics))of itself. This has to do with how classes work in Python, but that is a story for another time. See [Real Python: Python Metaclasses](https://realpython.com/python-metaclasses/)for some introductory background info.
+:::
+
+We can also load the other data sets:
+
+```python
+(spaceflights310):JN> catalog.load("reviews")
+[12/17/23 16:09:59] INFO     Loading data from 'reviews' (CSVDataset)...                        [data_catalog.py](file:///home/galen/.local/lib/python3.10/site-packages/kedro/io/data_catalog.py):[502](file:///home/galen/.local/lib/python3.10/site-packages/kedro/io/data_catalog.py#502)
+
+||shuttle_id|review_scores_rating|review_scores_comfort|review_scores_amenities|review_scores_trip|review_scores_crew|review_scores_location|review_scores_price|number_of_reviews|reviews_per_month|
+|---|---|---|---|---|---|---|---|---|---|---|
+|0|63561|97.0|10.0|9.0|10.0|10.0|9.0|10.0|133|1.65|
+|1|36260|90.0|8.0|9.0|10.0|9.0|9.0|9.0|3|0.09|
+|2|57015|95.0|9.0|10.0|9.0|10.0|9.0|9.0|14|0.14|
+|3|14035|93.0|10.0|9.0|9.0|9.0|10.0|9.0|39|0.42|
+|4|10036|98.0|10.0|10.0|10.0|10.0|9.0|9.0|92|0.94|
+|...|...|...|...|...|...|...|...|...|...|...|
+|77091|4368|NaN|NaN|NaN|NaN|NaN|NaN|NaN|0|NaN|
+|77092|2983|NaN|NaN|NaN|NaN|NaN|NaN|NaN|0|NaN|
+|77093|69684|NaN|NaN|NaN|NaN|NaN|NaN|NaN|0|NaN|
+|77094|21738|NaN|NaN|NaN|NaN|NaN|NaN|NaN|0|NaN|
+|77095|72645|NaN|NaN|NaN|NaN|NaN|NaN|NaN|0|NaN|
+
+77096 rows × 10 columns
+```
+
+Here is the Markdown for the table:
+
+| |shuttle_id|review_scores_rating|review_scores_comfort|review_scores_amenities|review_scores_trip|review_scores_crew|review_scores_location|review_scores_price|number_of_reviews|reviews_per_month|
+|---|---|---|---|---|---|---|---|---|---|---|
+|0|63561|97.0|10.0|9.0|10.0|10.0|9.0|10.0|133|1.65|
+|1|36260|90.0|8.0|9.0|10.0|9.0|9.0|9.0|3|0.09|
+|2|57015|95.0|9.0|10.0|9.0|10.0|9.0|9.0|14|0.14|
+|3|14035|93.0|10.0|9.0|9.0|9.0|10.0|9.0|39|0.42|
+|4|10036|98.0|10.0|10.0|10.0|10.0|9.0|9.0|92|0.94|
+|...|...|...|...|...|...|...|...|...|...|...|
+|77091|4368|NaN|NaN|NaN|NaN|NaN|NaN|NaN|0|NaN|
+|77092|2983|NaN|NaN|NaN|NaN|NaN|NaN|NaN|0|NaN|
+|77093|69684|NaN|NaN|NaN|NaN|NaN|NaN|NaN|0|NaN|
+|77094|21738|NaN|NaN|NaN|NaN|NaN|NaN|NaN|0|NaN|
+|77095|72645|NaN|NaN|NaN|NaN|NaN|NaN|NaN|0|NaN|
+
+```python
+(spaceflights310):JN> catalog.load("shuttles")
+[12/17/23 16:05:15] INFO     Loading data from 'shuttles' (ExcelDataset)...                     [data_catalog.py](file:///home/galen/.local/lib/python3.10/site-packages/kedro/io/data_catalog.py):[502](file:///home/galen/.local/lib/python3.10/site-packages/kedro/io/data_catalog.py#502)
+
+||id|shuttle_location|shuttle_type|engine_type|engine_vendor|engines|passenger_capacity|cancellation_policy|crew|d_check_complete|moon_clearance_complete|price|company_id|
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+|0|63561|Niue|Type V5|Quantum|ThetaBase Services|1.0|2|strict|1.0|f|f|$1,325.0|35029|
+|1|36260|Anguilla|Type V5|Quantum|ThetaBase Services|1.0|2|strict|1.0|t|f|$1,780.0|30292|
+|2|57015|Russian Federation|Type V5|Quantum|ThetaBase Services|1.0|2|moderate|0.0|f|f|$1,715.0|19032|
+|3|14035|Barbados|Type V5|Plasma|ThetaBase Services|3.0|6|strict|3.0|f|f|$4,770.0|8238|
+|4|10036|Sao Tome and Principe|Type V2|Plasma|ThetaBase Services|2.0|4|strict|2.0|f|f|$2,820.0|30342|
+|...|...|...|...|...|...|...|...|...|...|...|...|...|...|
+|77091|4368|Barbados|Type V5|Quantum|ThetaBase Services|2.0|4|flexible|2.0|t|f|$4,107.0|6654|
+|77092|2983|Bouvet Island (Bouvetoya)|Type F5|Quantum|ThetaBase Services|1.0|1|flexible|1.0|t|f|$1,169.0|8000|
+|77093|69684|Micronesia|Type V5|Plasma|ThetaBase Services|0.0|2|flexible|1.0|t|f|$1,910.0|14296|
+|77094|21738|Uzbekistan|Type V5|Plasma|ThetaBase Services|1.0|2|flexible|1.0|t|f|$2,170.0|27363|
+|77095|72645|Malta|Type F5|Quantum|ThetaBase Services|0.0|2|moderate|2.0|t|f|$1,455.0|12542|
+
+77096 rows × 13 columns
+```
+
+Here is the Markdown of the above table.
+
+| |id|shuttle_location|shuttle_type|engine_type|engine_vendor|engines|passenger_capacity|cancellation_policy|crew|d_check_complete|moon_clearance_complete|price|company_id|
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+|0|63561|Niue|Type V5|Quantum|ThetaBase Services|1.0|2|strict|1.0|f|f|$1,325.0|35029|
+|1|36260|Anguilla|Type V5|Quantum|ThetaBase Services|1.0|2|strict|1.0|t|f|$1,780.0|30292|
+|2|57015|Russian Federation|Type V5|Quantum|ThetaBase Services|1.0|2|moderate|0.0|f|f|$1,715.0|19032|
+|3|14035|Barbados|Type V5|Plasma|ThetaBase Services|3.0|6|strict|3.0|f|f|$4,770.0|8238|
+|4|10036|Sao Tome and Principe|Type V2|Plasma|ThetaBase Services|2.0|4|strict|2.0|f|f|$2,820.0|30342|
+|...|...|...|...|...|...|...|...|...|...|...|...|...|...|
+|77091|4368|Barbados|Type V5|Quantum|ThetaBase Services|2.0|4|flexible|2.0|t|f|$4,107.0|6654|
+|77092|2983|Bouvet Island (Bouvetoya)|Type F5|Quantum|ThetaBase Services|1.0|1|flexible|1.0|t|f|$1,169.0|8000|
+|77093|69684|Micronesia|Type V5|Plasma|ThetaBase Services|0.0|2|flexible|1.0|t|f|$1,910.0|14296|
+|77094|21738|Uzbekistan|Type V5|Plasma|ThetaBase Services|1.0|2|flexible|1.0|t|f|$2,170.0|27363|
+|77095|72645|Malta|Type F5|Quantum|ThetaBase Services|0.0|2|moderate|2.0|t|f|$1,455.0|12542|
+
+::: {.callout-tip}
+With 77096 rows you can be grateful that Pandas limits them! If you ever want to modify the number of displayed rows you can set `pandas.set_option('display.max_rows', <number>)`.
+:::
+
+One of the advantages of how we were able to pull in the data with the catalog is that we didn't need to specify any file paths. So we can change only what is registered in the data catalog and not have to worry about the [connascence of name](https://en.wikipedia.org/wiki/Connascence#Connascence_of_name_(CoN)).
+
+## Get started with Kedro - Explore the spaceflights data
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bZD8N0yv3Fs?si=bsDJ8nnacb6_qqxQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+For this tutorial we will not need `%pip install kedro-datasets[pandas]` again, so delete that from the beginning of `data-exploration.ipynb`.
+
+Remember that naming a dataframe just `df` is not great? Well, let's rename our datasets:
+
+```python
+(spaceflights310):JN> companies = catalog.load("companies")
+[12/17/23 16:16:07] INFO     Loading data from 'companies' (CSVDataset)...                      [data_catalog.py](file:///home/galen/.local/lib/python3.10/site-packages/kedro/io/data_catalog.py):[502](file:///home/galen/.local/lib/python3.10/site-packages/kedro/io/data_catalog.py#502)
+```
+
+```python
+(spaceflights310):JN> reviews = catalog.load("reviews")
+[12/17/23 16:16:22] INFO     Loading data from 'reviews' (CSVDataset)...                        [data_catalog.py](file:///home/galen/.local/lib/python3.10/site-packages/kedro/io/data_catalog.py):[502](file:///home/galen/.local/lib/python3.10/site-packages/kedro/io/data_catalog.py#502)
+```
+
+```python
+(spaceflights310):JN> shuttles = catalog.load("shuttles")
+[12/17/23 16:16:27] INFO     Loading data from 'shuttles' (ExcelDataset)...                     [data_catalog.py](file:///home/galen/.local/lib/python3.10/site-packages/kedro/io/data_catalog.py):[502](file:///home/galen/.local/lib/python3.10/site-packages/kedro/io/data_catalog.py#502)
+```
+
+Now let us explore! 🧭
+
+First we might wish to look at the dtypes of the columns. Each Pandas column has a single dtype.
+
+```python
+(spaceflights310):JN> companies.dtypes
+id                     int64
+company_rating        object
+company_location      object
+total_fleet_count    float64
+iata_approved         object
+dtype: object
+```
+
+You can see that accessing the `panda.DataFrame.dtypes` attribute gives a table of each column and their respective dtype.
+
+Suppose that in the `companies` data we would like to:
+1. Convert `company_rating` to a single or double precision float format and
+2. Convert `iata_approved` to a [Boolean](https://en.wikipedia.org/wiki/Boolean_data_type) dtype.
+
+Let us start with the `iata_approved` column. This transformation is quite straighforward with the `==` comparator.
+
+```python
+(spaceflights310):JN> companies['iata_approved'] == 't'
+0        False
+1        False
+2        False
+3         True
+4         True
+         ...
+77091    False
+77092     True
+77093    False
+77094     True
+77095     True
+Name: iata_approved, Length: 77096, dtype: bool
+```
+
+There is a nice property here that `values == t` will be `True` and otherwise `False`, which happens to coincide with whenever the value in the `iata_approved` is `f`. Except -- oooops! Consider this check for unique values:
+
+```python
+(spaceflights310):JN> companies['iata_approved'].unique()
+array(['f', 't', nan], dtype=object)
+```
+
+The tutorial does not mention those `nan` values. Maybe there is a good reason for that, but in a real analysis we would persue this further.
+
+::: {.callout-note}
+See [Working with missing data](https://pandas.pydata.org/docs/user_guide/missing_data.html) for a Pandas-oriented point of view.
+:::
+
+::: {.callout-important}
+I strongly suggest that if you have missing data that you learn about the statistical side of it. Missing data is a less obvious problem in most cases than using `pandas.DataFrame.dropna()`.  Not thinking about the causality of the missingness can confound your results.
+
+An excellent introduction to this is Richard McElreath's *Statistical Rethinking 2023 - 18 -Missing Data*:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Oeq6GChHOzc?si=oAdNGjzLy6C09-gB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+:::
+
+Anyway, you may want to overwrite the original column to save computer memory and/or name proliforation.
+
+```python
+(spaceflights310):JN> companies['iata_approved'] = companies['iata_approved'] == 't'
+```
+
+We can double check that the new type is `bool` by again looking at the output of `pandas.DataFrame.dtypes`:
+
+```python
+companies.dtypes
+id                     int64
+company_rating        object
+company_location      object
+total_fleet_count    float64
+iata_approved           bool
+dtype: object
+```
+
+Moving onto `company_rating`, we want to convert it to a float type. First take a peek at the column:
+
+```python
+(spaceflights310):JN>  companies["company_rating"]
+0        100%
+1         67%
+2         67%
+3         91%
+4         NaN
+         ...
+77091    100%
+77092     NaN
+77093     NaN
+77094     80%
+77095     98%
+Name: company_rating, Length: 77096, dtype: object
+```
+
+You can see that there are also `NaN` values, but these are more general Pandas `NaN` types rather than the [`np.nan` type](https://numpy.org/doc/stable/reference/constants.html#numpy.NAN) which counts as a float.
+
+::: {.callout-warning}
+The Pandas `NaN` should further not be confused with Pandas' `NA`. See [Experimental `NA` scalar to denote missing values](https://pandas.pydata.org/docs/user_guide/missing_data.html#missing-data-na)for more information.
+:::
+
+We can acheive this by replacing the string value `"%"` with an empty string `""`. This might seem like a [weird flex](https://www.dictionary.com/e/slang/weird-flex-but-okay/)to replace a string character with an empty string character if you're not used to programming, but it is a common practice that doesn't have any logical issues provided that you think carefully about what an [empty string](https://en.wikipedia.org/wiki/Empty_string) is.
+
+```python
+(spaceflights310):JN> companies["company_rating"] = (
+    companies["company_rating"].str
+    .replace("%", "")
+    .astype(float)
+)
+```
+
+There may be a few things that could strike someone as odd about the above code.
+
+The first is that I stuck everything on the right-hand-side inside of an extra set of brackets and wrapped it onto multiple lines. This bit of syntax is optional, but can improve the readability of a statement.
+
+The second is that we were able to access string methods via `str`, which is a specialized method called an [accessor](https://stackoverflow.com/questions/623618/what-is-the-definition-of-accessor-method). It provides us with access to a string representation of the element of the column without having to use `apply(lambda s: s.replace("%", ""))` or similar.
+
+And perhaps thirdly is the method chaining itself. That is, having `method1().method2()...`. This simply works by combining the facts that instance methods take `self` as their first argument and that functions which also return `self` can likewise be passed into further instance methods.
+
+We could call `companies.dtypes` again to check the types, but since we are also potentially interested in missing values I would typically use `pandas.DataFrame.info` instead.
+
+```python
+(spaceflights310):JN> companies.info()
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 77096 entries, 0 to 77095
+Data columns (total 5 columns):
+ #   Column             Non-Null Count  Dtype
+---  ------             --------------  -----
+ 0   id                 77096 non-null  int64
+ 1   company_rating     47187 non-null  float64
+ 2   company_location   57966 non-null  object
+ 3   total_fleet_count  77089 non-null  float64
+ 4   iata_approved      77096 non-null  bool
+dtypes: bool(1), float64(2), int64(1), object(1)
+memory usage: 2.4+ MB
+```
+
+You can see that `company_rating` is now `float64`, and that there are 47187 out of 77096 non-null entries in that column.
+
+In a real analysis we would want to take a look at all of the columns, which would likely be feasible since there are only 2 additional ones to look at. But for this tutorial let's move on the `shuttles` data set.
+
+The tutorial asks us to do the same thing with `d_check_complete` and `moon_clearance_complete` as we did with `iata_approved`. It also asks us to do a very similar thing with `price` as we did with `company_rating`. Let's make use of `assign` to do all this in one chain.
+
+```python
+(spaceflights310):JN> shuttles = shuttles.assign(
+    d_check_complete=shuttles["d_check_complete"] == "t",
+    moon_clearance_complete=shuttles["moon_clearance_complete"] == "t",
+	price=(
+		shuttles["price"].str
+		.replace("\$", "", regex=True).str
+		.replace(",","")
+		.astype(float)
+		)
+	)
+```
+
+And the tutorial for this basic data processing stops there.
+
+## Get started with Kedro - Refactor your data processing code into functions
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VFcrvnnNas4?si=TcBZl0-7aefm2sn_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+- At this junction we are aiming to refactor some of the commands we wrote in our Jupyter notebook `data-exploration.ipynb` so that they are suitable for being used in a Kedro pipeline.
+- For example, we could re-write those cases where we checked `col == "t"` to be a Python function which we could re-use.
+
+Here is an attempted implementation.
+
+```python
+import pandas as pd
+
+def _is_char(x: pd.Series, char: str = "t") -> pd.Series:
+    """
+    Checks if each element in a pandas Series is equal to a specified character.
+
+    Args:
+        x (pd.Series): The pandas Series to be checked.
+        char (str, optional): The character to compare each element in the Series to. Default is 't'.
+
+    Returns:
+        pd.Series: A boolean Series indicating whether each element in the input Series is equal to the specified character.
+
+    Example:
+        >>> import pandas as pd
+        >>> data = pd.Series(['t', 'a', 't', 'b', 't'])
+        >>> result = _is_char(data, char='t')
+        >>> print(result)
+        0     True
+        1    False
+        2     True
+        3    False
+        4     True
+        dtype: bool
+
+    Note:
+        The comparison is case-sensitive.
+    """
+    if not isinstance(char, str):
+	    raise ValueError(f'{char} must be of type `str`, but got {type(char)}.')
+    return x == char
+```
+
+I've generalized somewhat from the tutorial to only default to checking for `"t"`, but passing in other values for `char` will extend the capabilities of this function. You may also note that I have used type hinting which you can learn about in the [standard library](https://docs.python.org/3/library/typing.html)or [PEP8](https://peps.python.org/pep-0008/#other-recommendations)or [Real Python: Type Hinting](https://realpython.com/lessons/type-hinting/). Type hints do not coerce types nor do they enforce the types, so as a quick solution I have included a `raise` statement. Some other options include `Enums` (with some careful thought) or more readily we could have simply used an `assert`. The docstrings are [Google's Style](https://google.github.io/styleguide/pyguide.html), if you are unfamiliar.
+
+And likewise here is an implementation of the `str --> float` examples via dropping characters before casting to a float.
+
+```python
+from typing import List
+
+def _iter_empty_replace(x: pd.Series, sub_targets: str | List[str] = "%") -> pd.Series:
+    """
+    Parses a pandas Series containing percentage strings into numeric values.
+
+    Args:
+        x (pd.Series): The pandas Series containing strings to be parsed before casting to a float.
+
+    Returns:
+        pd.Series: A new Series with parsed numeric values. The sub_targets character(s) is/are removed, and the result is cast to float.
+
+    Example:
+        >>> import pandas as pd
+        >>> data = pd.Series(['25%', '50.5%', '75.25%'])
+        >>> result = _iter_null_replace(data)
+        >>> print(result)
+        0    25.00
+        1    50.50
+        2    75.25
+        dtype: float64
+
+    Note:
+        - The function assumes that the input Series contains strings representing percentages.
+        - The resulting values are of type float.
+    """
+    if isinstance(sub_targets, str):
+	    return x.str.replace(sub_targets, "", regex=True).astype(float)
+	elif all([isinstance(target, str) for target in sub_target]):
+		for target in sub_targets:
+			x = x.str.replace(target, "", regex=True)
+		return x.astype(float)
+
+	raise ValueError('Incorrect types.')
+```
+
+## Get started with Kedro - Create your first data pipeline with Kedro
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3YeE_gvDCvw?si=RTZzAo5fYa5rR9qk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+- Refer to [Create a data processing pipeline](https://docs.kedro.org/en/stable/tutorial/create_a_pipeline.html#the-data-processing-pipeline).
+
+Finally, remember those directed acyclic graphs and pipelines? Well, we're going to [kill two birds with one stone](https://en.wiktionary.org/wiki/kill_two_birds_with_one_stone)...
+
+(🪨 ➕ [🐦 ➕ 🐤]) ➡️  (💀 ➕ 👻)
+
+Honestly, figures of speech are really weird. 😕😬
+
+Okay, all we need to do to create a pipeline called `date_processing` is just call the following command from the root of the project.
+
+```bash
+(spaceflights310) $ kedro pipeline create data_processing
+Using pipeline template at: '/home/galen/.local/lib/python3.10/site-packages/kedro/templates/pipeline'
+Creating the pipeline 'data_processing': OK
+ Location: '/home/galen/projects/spaceflights/src/spaceflights/pipelines/data_processing'
+Creating '/home/galen/projects/spaceflights/src/tests/pipelines/data_processing/test_pipeline.py': OK
+Creating '/home/galen/projects/spaceflights/src/tests/pipelines/data_processing/__init__.py': OK
+Creating '/home/galen/projects/spaceflights/conf/base/parameters_data_processing.yml': OK
+
+Pipeline 'data_processing' was successfully created.
+```
+
+Note above that this command not only prepared the path for your source code, but also for your test suite! Wonderful! 🤖
+
+Let's hop on down to the path where we can write our pipeline for processing data:
+
+```bash
+(spaceflights310) $ cd src/spaceflights/pipelines/data_processing/
+```
+
+Remember from (much) earlier that the nodes are functions (sometimes partial functions) which have a set of inputs and an output. The pipeline specifies how everything glues together. Let's start with the nodes.
+
+We'll just stick our refactored code into `nodes.py`, and also write some functions called `preprocess_companies` and `preprocess_shuttles`.
+
+```python
+from typing import List
+
+import pandas as pd
+
+def _is_char(x: pd.Series, char: str = "t") -> pd.Series:
+    """Checks if each element in a pandas Series is equal to a specified character.
+
+    Args:
+        x (pd.Series): The pandas Series to be checked.
+        char (str, optional): The character to compare each element in the Series to. Default is 't'.
+
+    Returns:
+        pd.Series: A boolean Series indicating whether each element in the input Series is equal to the specified character.
+
+    Example:
+        >>> import pandas as pd
+        >>> data = pd.Series(['t', 'a', 't', 'b', 't'])
+        >>> result = _is_char(data, char='t')
+        >>> print(result)
+        0     True
+        1    False
+        2     True
+        3    False
+        4     True
+        dtype: bool
+
+    Note:
+        The comparison is case-sensitive.
+    """
+    if not isinstance(char, str):
+	    raise ValueError(f'{char} must be of type `str`, but got {type(char)}.')
+    return x == char
+
+def _iter_empty_replace(x: pd.Series, sub_targets: str | List[str] = "%") -> pd.Series:
+    """Parses a pandas Series containing percentage strings into numeric values.
+
+    Args:
+        x (pd.Series): The pandas Series containing strings to be parsed before casting to a float.
+
+    Returns:
+        pd.Series: A new Series with parsed numeric values. The sub_targets character(s) is/are removed, and the result is cast to float.
+
+    Example:
+        >>> import pandas as pd
+        >>> data = pd.Series(['25%', '50.5%', '75.25%'])
+        >>> result = _iter_null_replace(data)
+        >>> print(result)
+        0    25.00
+        1    50.50
+        2    75.25
+        dtype: float64
+
+    Note:
+        - The function assumes that the input Series contains strings representing percentages.
+        - The resulting values are of type float.
+    """
+    if isinstance(sub_targets, str):
+	    return x.str.replace(sub_targets, "", regex=True).astype(float)
+	elif all([isinstance(target, str) for target in sub_target]):
+		for target in sub_targets:
+			x = x.str.replace(target, "", regex=True)
+		return x.astype(float)
+
+	raise ValueError('Incorrect types.')
+
+def preprocess_companies(df: pd.DataFrame) -> pd.DataFrame:
+	"""Preprocesses a DataFrame containing information about companies.
+
+	This function applies specific preprocessing steps to the input DataFrame, including:
+	- Converting the 'iata_approved' column to a boolean Series using the _is_char function.
+	- Replacing empty values in the 'company_rating' column with a default value using the _iter_empty_replace function.
+
+	Args:
+		df (pd.DataFrame): The input DataFrame containing information about companies.
+
+	Returns:
+		pd.DataFrame: A new DataFrame with the specified preprocessing applied.
+
+	Example:
+		>>> import pandas as pd
+		>>> data = {'iata_approved': ['t', 'f', 't', 'f'],
+		...         'company_rating': ['', '4.5', '', '3.2']}
+		>>> df = pd.DataFrame(data)
+		>>> result = preprocess_companies(df)
+		>>> print(result)
+		  iata_approved  company_rating
+		0          True             NaN
+		1         False             4.5
+		2          True             NaN
+		3         False             3.2
+
+	Note:
+		- The 'iata_approved' column is converted to a boolean Series using the _is_char function.
+		- The 'company_rating' column is processed to replace empty values with a default value.
+    """
+	df["iata_approved"] = _is_char(df["iata_approved"])
+	df["company_rating"] = _iter_empty_replace(df["company_rating"])
+	return df
+
+def preprocess_shuttles(df: pd.DataFrame) -> pd.DataFrame:
+	"""Preprocesses a DataFrame containing information about shuttles.
+
+    This function applies specific preprocessing steps to the input DataFrame, including:
+    - Converting the 'd_check_complete' and 'moon_clearance_complete' columns to boolean Series using the _is_char function.
+    - Replacing empty values and formatting the 'price' column by removing '$' and ',' characters using the _iter_empty_replace function.
+
+    Args:
+        df (pd.DataFrame): The input DataFrame containing information about shuttles.
+
+    Returns:
+        pd.DataFrame: A new DataFrame with the specified preprocessing applied.
+
+    Example:
+        >>> import pandas as pd
+        >>> data = {'d_check_complete': ['t', 'f', 't', 'f'],
+        ...         'moon_clearance_complete': ['f', 't', 't', 'f'],
+        ...         'price': ['$', '12,000', '$15,500', '']}
+        >>> df = pd.DataFrame(data)
+        >>> result = preprocess_shuttles(df)
+        >>> print(result)
+          d_check_complete  moon_clearance_complete    price
+        0              True                    False      NaN
+        1             False                     True  12000.0
+        2              True                     True  15500.0
+        3             False                    False      NaN
+
+    Note:
+        - The 'd_check_complete' and 'moon_clearance_complete' columns are converted to boolean Series using the _is_char function.
+        - The 'price' column is processed to replace empty values and format the values by removing '$' and ',' characters.
+    """
+	df["d_check_complete"] = _is_char(df["d_check_complete"])
+	df["moon_clearance_complete"] = _is_char(df["moon_clearance_complete"])
+	df['price'] = _iter_empty_replace(df["price"], ['\$', ','])
+	return df
+```
+
+At this juncture you could use formatters such as [`black`](https://black.readthedocs.io/en/stable/) or [`ruff format`](https://docs.astral.sh/ruff/formatter/) if you feel your code could do with some cleaning up.
+
+## Get started with Kedro - Assemble your nodes into a Kedro pipeline
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/P__gFG1TmMo?si=Qrw2ZUiJ5_50PKou" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+- Last time we wrote our functions in `nodes.py` to define the nodes of our Kedro pipeline.
+- Now we will glue together the nodes by defining a directed acylclic graph in Kedro.
+
+Your file will start off looking like this:
+
+```python
+"""
+This is a boilerplate pipeline 'data_processing'
+generated using Kedro 0.18.14
+"""
+
+from kedro.pipeline import Pipeline, pipeline
+
+
+def create_pipeline(**kwargs) -> Pipeline:
+    return pipeline([])
+
+```
+
+There are two things that you must immediately do... I am actually not sure why they are not default behaviour for Kedro. 😶
+
+1. import `node` from `kedro.pipeline`
+2. import nodes from local path.
+
+These updates are straightforward:
+
+```python
+"""
+This is a boilerplate pipeline 'data_processing'
+generated using Kedro 0.18.14
+"""
+
+from kedro.pipeline import Pipeline, node, pipeline
+
+from . import nodes
+
+def create_pipeline(**kwargs) -> Pipeline:
+    return pipeline([])
+
+```
+
+
+```python
+"""
+This is a boilerplate pipeline 'data_processing'
+generated using Kedro 0.18.14
+"""
+
+from kedro.pipeline import Pipeline, node, pipeline
+
+from . import nodes
+
+def create_pipeline(**kwargs) -> Pipeline:
+    return pipeline([
+	    node(
+		    func=nodes.preprocess_companies,
+		    inputs="companies",
+		    outputs="preprocessed_companies",
+		    name="preprocess_companies"
+	    ),
+	    node(
+		    func=nodes.preprocess_shuttles,
+		    inputs="shuttles",
+		    outputs="preprocessed_shuttles",
+		    name="preprocess_shuttles"
+	    ),
+    ])
+```
+
+The above illustrates something that I don't particular love; repetitive and highly similar naming. Let us refactor this to a loop:
+
+```python
+"""
+This is a boilerplate pipeline 'data_processing'
+generated using Kedro 0.18.14
+"""
+
+from kedro.pipeline import Pipeline, node, pipeline
+
+from . import nodes
+
+def create_pipeline(**kwargs) -> Pipeline:
+
+	prefixes = ["preprocess", "preprocessed"]
+	suffixes = ["companies", "shuttles"]
+
+	dag_nodes = []
+
+	for suffix in suffixes:
+		fname = f"{prefixes[0]}_{suffix}"
+		dag_nodes.append(
+			node(
+				func=getattr(nodes, f"{prefixes[0]}_{suffix}"),
+				inputs=suffix,
+				outputs=f"{prefixes[1]}_{suffix}",
+				name=f"{fname}_node",
+			)
+		)
+
+    return pipeline(dag_nodes)
+```
+
+That's a little bit better. 🤪 I'm sure there are improvements that could be made if you wanted to do something tidier than having those hard-coded lists. But let's move on.
+
+Back at the root of our project we can call `kedro registry list` to give us a list of all the registered pipelines.
+
+```bash
+(spaceflights310) $ kedro registry list
+- __default__
+- data_processing
+```
+
+If you have not run the following already (like way back near the beginning of setting this project up), then now is the time:
+
+```bash
+(spaceflights310) $ pip install -r src/requirements.txt
+```
+
+We FINALLY have a thing that does a thing.
+
+```bash
+(spaceflights310) $ kedro run --pipeline data_processing
+[12/17/23 19:44:12] INFO     Kedro project spaceflights                                                                                       session.py:365
+                   INFO     Loading data from 'companies' (CSVDataset)...                                                               data_catalog.py:502
+                   INFO     Running node: preprocess_companies_node: preprocess_companies([companies]) -> [preprocessed_companies]              node.py:331
+                   INFO     Saving data to 'preprocessed_companies' (MemoryDataset)...                                                  data_catalog.py:541
+                   INFO     Completed 1 out of 2 tasks                                                                              sequential_runner.py:85
+                   INFO     Loading data from 'shuttles' (ExcelDataset)...                                                              data_catalog.py:502
+[12/17/23 19:44:19] INFO     Running node: preprocess_shuttles_node: preprocess_shuttles([shuttles]) -> [preprocessed_shuttles]                  node.py:331
+                   INFO     Saving data to 'preprocessed_shuttles' (MemoryDataset)...                                                   data_catalog.py:541
+                   INFO     Completed 2 out of 2 tasks                                                                              sequential_runner.py:85
+                   INFO     Pipeline execution completed successfully.                                                                        runner.py:105
+                   INFO     Loading data from 'preprocessed_companies' (MemoryDataset)...                                               data_catalog.py:502
+                   INFO     Loading data from 'preprocessed_shuttles' (MemoryDataset)...                                                data_catalog.py:502
+```
+
+We have lift off! 🚀
+
+## Get started with Kedro - Run your Kedro pipeline
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/sll_LhZE-p8?si=eh4dfKIzfvshi4dw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+- Last time we ran the pipeline, but we didn't actually produce anything.
+- We just did some processing steps that were summarily forgotten after the pipeline finished running.
+	- These types of data set is called a `MemoryDataset`
+- Time to go back to the catalog!
+
+Let's add these entries to the `catalog.yml`. The `pq` file extension is for the [Apache Parquet](https://parquet.apache.org/)format, which is considered one of the fast-to-load data formats due to how information is stored.
+
+```yaml
+preprocessed_companies:
+	type: pandas.ParquetDataSet
+	filepath: data/02_intermediate/preprocessed_companies.pq
+
+preprocessed_shuttles:
+	type: pandas.ParquetDataSet
+	filepath: data/02_intermediate/preprocessed_shuttles.pq
+```
+
+This time, when you run the pipeline, you will see the Parquet files in the logging output.
+
+```bash
+(spaceflights310) $ kedro run --pipeline data_processing
+[12/17/23 19:58:00] INFO     Kedro project spaceflights                                                                                       session.py:365
+[12/17/23 19:58:01] INFO     Loading data from 'companies' (CSVDataset)...                                                               data_catalog.py:502
+                   INFO     Running node: preprocess_companies_node: preprocess_companies([companies]) -> [preprocessed_companies]              node.py:331
+                   INFO     Saving data to 'preprocessed_companies' (ParquetDataSet)...                                                 data_catalog.py:541
+                   INFO     Completed 1 out of 2 tasks                                                                              sequential_runner.py:85
+                   INFO     Loading data from 'shuttles' (ExcelDataset)...                                                              data_catalog.py:502
+[12/17/23 19:58:07] INFO     Running node: preprocess_shuttles_node: preprocess_shuttles([shuttles]) -> [preprocessed_shuttles]                  node.py:331
+                   INFO     Saving data to 'preprocessed_shuttles' (ParquetDataSet)...                                                  data_catalog.py:541
+                   INFO     Completed 2 out of 2 tasks                                                                              sequential_runner.py:85
+                   INFO     Pipeline execution completed successfully.                                                                        runner.py:105
+```
+
+And now when you check the intermediate data folder you should see the intermediate data results files:
+
+```bash
+(spaceflights310) $ du -sh data/02_intermediate/*.pq
+540K    data/02_intermediate/preprocessed_companies.pq
+1.2M    data/02_intermediate/preprocessed_shuttles.pq
+```
+
+## Get started with Kedro - Visualise your data pipeline with Kedro-Viz
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KWqSzbHgNW4?si=9j4IMRnSSkDB8JYK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+- [`kedro-viz`](https://github.com/kedro-org/kedro-viz) is a plugin for Kedro to show us a high-level view of our Kedro pipelines.
+	- Check out this [demo](https://demo.kedro.org/)if you are just passing through without coding along.
+- With our pipeline built we know there is a DAG there, but we would like to see the DAG.
+
+
+First we need to install kedro-viz plugin.
+
+```bash
+(spaceflights310) $ pip install kedro-viz
+```
+
+In many cases you would want to include this additional package in your `requirements.txt`.
+
+Now we can simply call `kedro viz`, which will ordinarily open a web browser to the local host `http://127.0.0.1:4141/`.
+
+![](/assets/images/kedro-viz-tutorial-example.png)
+
+::: {.callout-note}
+The URL `http://127.0.0.1:4141/` is a specific web address that uses the HTTP protocol. Let's break down the components of this URL:
+
+1. **Protocol**: `http`
+
+    - This stands for Hypertext Transfer Protocol, which is the foundation of any data exchange on the Web. It is used for transmitting data between a web server and a web browser.
+2. **IP Address**: `127.0.0.1`
+
+    - This IP address is a loopback address, also known as the localhost. It is used to establish network connections with the same host (i.e., the device making the request). In this context, when the IP address is set to `127.0.0.1`, it means the server is running on the same machine that is making the request.
+3. **Port Number**: `4141`
+
+    - Ports are used to distinguish different services or processes running on the same machine. The number `4141` in this case is the port number to which the HTTP requests are directed. It is a non-standard port, as standard HTTP traffic usually uses port 80.
+4. **Path**: `/`
+
+    - In the context of a URL, the path specifies the location of a resource on the server. In this case, the path is set to `/`, indicating the root or default location.
+
+Putting it all together, `http://127.0.0.1:4141/` refers to a web server running on the same machine (localhost) on port `4141`, and it is serving content from the root directory. Accessing this URL/home/galen/Dropbox/bin/testing_grounds_galenseilis.github.io/assets/images/kedro-viz-tutorial-example.png in a web browser or through a programmatic HTTP request would send a request to the local server, and the server would respond accordingly with the content or behavior associated with the root path.
+:::
+
+## Make complex Kedro pipelines - Merge different dataframes in Kedro
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ctTFAeL4JgU?si=kCTOC9l9t37C66DX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
