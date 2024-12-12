@@ -1,9 +1,8 @@
 ---
 title: "How to Set Keyboard Bindings to Programmer's Dvorak on Ubuntu Using `setxkbmap`"
 author: "Galen Seilis"
-date: "2024-08-11"
+date: "2024-12-11"
 categories: [Ubuntu, setxkbamp, Dvorak, Keyboard Layouts]
-draft: true
 ---
 
 Changing over to programmer's Dvorak on Ubuntu is really easy:
@@ -23,3 +22,5 @@ If you want to check what the current layout you are using is, you can run:
 ```bash
 setxkbmap -query
 ```
+
+That's it!
