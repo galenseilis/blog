@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.54">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -139,7 +105,7 @@ window.Quarto = {
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -183,209 +149,181 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">A Rust Implementation of the Poisson Binomial Probability Distribution</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">Rust</div>
-                <div class="quarto-category">Statistics</div>
-                <div class="quarto-category">Poisson Binomial Distribution</div>
-                <div class="quarto-category">Probability Mass Function</div>
-                <div class="quarto-category">Cumulative Distribution Function</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Galen Seilis </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">August 8, 2024</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">A Rust Implementation of the Poisson Binomial Probability Distribution</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Rust</div>
+    <div class="quarto-category">Statistics</div>
+    <div class="quarto-category">Poisson Binomial Distribution</div>
+    <div class="quarto-category">Probability Mass Function</div>
+    <div class="quarto-category">Cumulative Distribution Function</div>
+  </div>
+  </div>
 
 
 
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Galen Seilis </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 8, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
 
 
 <p>The probability mass function of the Poisson binomial distribution is given by</p>
 <p><span class="math display">\[\sum_{A \in F_k} \prod_{i \in A} p_i \prod_{j \in A^c} (1 - p_j)\]</span></p>
 <p>where <span class="math inline">\(F_k\)</span> is the set of all subsets of <span class="math inline">\(k\)</span> integers that can be selected from the set <span class="math inline">\(\{ 1, \ldots, n \}\)</span>. This expression does not by itself suggest one algorithm over another due to the cummutativty and associativity of the operators involved.</p>
 <p><a href="https://en.wikipedia.org/wiki/Poisson_binomial_distribution#Probability_Mass_Function">Wikipedia</a> gives pseudocode for computing the probability mass function for the Poisson binomial distribution via what it terms the “direct convolution algorithm”.</p>
-<div id="e188efa3" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> dc(p<span class="op">:</span> <span class="op">&amp;</span>[<span class="dt">f64</span>]) <span class="op">-&gt;</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">f64</span><span class="op">&gt;</span> <span class="op">{</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> n <span class="op">=</span> p<span class="op">.</span>len()<span class="op">;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">mut</span> pmf<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="pp">vec!</span>[<span class="dv">1.0</span>]<span class="op">;</span> <span class="co">// PMF array with size 1, initialized to 1</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="dv">0</span><span class="op">..</span>n <span class="op">{</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Create a new next_pmf array with size i + 2</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> <span class="kw">mut</span> next_pmf<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="pp">vec!</span>[<span class="dv">0.0</span><span class="op">;</span> i <span class="op">+</span> <span class="dv">2</span>]<span class="op">;</span> </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Calculate the first element of next_pmf</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        next_pmf[<span class="dv">0</span>] <span class="op">=</span> (<span class="dv">1.0</span> <span class="op">-</span> p[i]) <span class="op">*</span> pmf[<span class="dv">0</span>]<span class="op">;</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Calculate the last element of next_pmf if within bounds</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i <span class="op">&lt;</span> pmf<span class="op">.</span>len() <span class="op">{</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>            next_pmf[i <span class="op">+</span> <span class="dv">1</span>] <span class="op">=</span> p[i] <span class="op">*</span> pmf[i]<span class="op">;</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Update the rest of next_pmf</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> k <span class="kw">in</span> <span class="dv">1</span><span class="op">..=</span>i <span class="op">{</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>            next_pmf[k] <span class="op">=</span> p[i] <span class="op">*</span> pmf[k <span class="op">-</span> <span class="dv">1</span>] <span class="op">+</span> (<span class="dv">1.0</span> <span class="op">-</span> p[i]) <span class="op">*</span> pmf[k]<span class="op">;</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Update pmf for the next iteration</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        pmf <span class="op">=</span> next_pmf<span class="op">;</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    pmf</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<pre class="{rust}"><code>
+fn dc(p: &amp;[f64]) -&gt; Vec&lt;f64&gt; {
+    let n = p.len();
+    let mut pmf: Vec&lt;f64&gt; = vec![1.0]; // PMF array with size 1, initialized to 1
+
+    for i in 0..n {
+        // Create a new next_pmf array with size i + 2
+        let mut next_pmf: Vec&lt;f64&gt; = vec![0.0; i + 2]; 
+
+        // Calculate the first element of next_pmf
+        next_pmf[0] = (1.0 - p[i]) * pmf[0];
+
+        // Calculate the last element of next_pmf if within bounds
+        if i &lt; pmf.len() {
+            next_pmf[i + 1] = p[i] * pmf[i];
+        }
+
+        // Update the rest of next_pmf
+        for k in 1..=i {
+            next_pmf[k] = p[i] * pmf[k - 1] + (1.0 - p[i]) * pmf[k];
+        }
+
+        // Update pmf for the next iteration
+        pmf = next_pmf;
+    }
+
+    pmf
+}
+</code></pre>
 <p>Let’s try to use the algorithm.</p>
-<div id="13d2e310" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Example usage</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> p<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="pp">vec!</span>[<span class="dv">0.1</span><span class="op">,</span> <span class="dv">0.2</span><span class="op">,</span> <span class="dv">0.3</span><span class="op">,</span> <span class="dv">0.4</span>]<span class="op">;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> pmf<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">f64</span><span class="op">&gt;</span> <span class="op">=</span> dc(<span class="op">&amp;</span>p)<span class="op">;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="pp">println!</span>(<span class="st">"{:?}"</span><span class="op">,</span> pmf)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[0.3024, 0.4404, 0.2144, 0.0404, 0.0024000000000000007]</code></pre>
-</div>
-</div>
+<pre class="{rust}"><code>// Example usage
+let p: Vec&lt;f64&gt; = vec![0.1, 0.2, 0.3, 0.4];
+let pmf: Vec&lt;f64&gt; = dc(&amp;p);
+println!("{:?}", pmf);
+</code></pre>
 <p>We can also double check that the result resembles a probability by checking if the sum of the probabilities is in fact equal to unity.</p>
-<div id="1ba74529" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> sum_check<span class="op">:</span> <span class="dt">f64</span> <span class="op">=</span> pmf<span class="op">.</span>iter()<span class="op">.</span>sum()<span class="op">;</span> <span class="co">// Calculate the sum of the PMF values</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="pp">println!</span>(<span class="st">"Sum of PMF: {}"</span><span class="op">,</span> sum_check)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Sum of PMF: 1</code></pre>
-</div>
-</div>
+<pre class="{rust}"><code>let sum_check: f64 = pmf.iter().sum(); // Calculate the sum of the PMF values
+println!("Sum of PMF: {}", sum_check);</code></pre>
 <p>We can also define the cumulative distribution function (CDF) as the cumulative sum of the PMF.</p>
-<div id="39a2da1f" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> compute_cdf(pmf<span class="op">:</span> <span class="op">&amp;</span>[<span class="dt">f64</span>]) <span class="op">-&gt;</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">f64</span><span class="op">&gt;</span> <span class="op">{</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">mut</span> cdf<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="dt">Vec</span><span class="pp">::</span>with_capacity(pmf<span class="op">.</span>len())<span class="op">;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">mut</span> sum <span class="op">=</span> <span class="dv">0.0</span><span class="op">;</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">&amp;</span>prob <span class="kw">in</span> pmf <span class="op">{</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        sum <span class="op">+=</span> prob<span class="op">;</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        cdf<span class="op">.</span>push(sum)<span class="op">;</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    cdf</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<pre class="{rust}"><code>fn compute_cdf(pmf: &amp;[f64]) -&gt; Vec&lt;f64&gt; {
+    let mut cdf: Vec&lt;f64&gt; = Vec::with_capacity(pmf.len());
+    let mut sum = 0.0;
+
+    for &amp;prob in pmf {
+        sum += prob;
+        cdf.push(sum);
+    }
+
+    cdf
+}</code></pre>
 <p>Here is an example of using the CDF.</p>
-<div id="996d17b9" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> cdf<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">f64</span><span class="op">&gt;</span> <span class="op">=</span> compute_cdf(<span class="op">&amp;</span>pmf)<span class="op">;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="pp">println!</span>(<span class="st">"CDF: {:?}"</span><span class="op">,</span> cdf)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>CDF: [0.3024, 0.7428, 0.9572, 0.9976, 1.0]</code></pre>
-</div>
-</div>
+<pre class="{rust}"><code>let cdf: Vec&lt;f64&gt; = compute_cdf(&amp;pmf);
+println!("CDF: {:?}", cdf);</code></pre>
 <p>Often we will want to be able to sample from such a probability distribution. Here is a function which implicitly relies on the inverse transform theorem.</p>
-<div id="3d2da879" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">:</span>dep rand</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">rand::</span>Rng<span class="op">;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> sample_from_distribution(cdf<span class="op">:</span> <span class="op">&amp;</span>[<span class="dt">f64</span>]) <span class="op">-&gt;</span> <span class="dt">usize</span> <span class="op">{</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">mut</span> rng <span class="op">=</span> <span class="pp">rand::</span>thread_rng()<span class="op">;</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> random_value<span class="op">:</span> <span class="dt">f64</span> <span class="op">=</span> rng<span class="op">.</span>gen()<span class="op">;</span> <span class="co">// Generate a uniform random value between 0 and 1</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    cdf<span class="op">.</span>iter()</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>position(<span class="op">|&amp;</span>x<span class="op">|</span> random_value <span class="op">&lt;=</span> x)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>unwrap_or(cdf<span class="op">.</span>len() <span class="op">-</span> <span class="dv">1</span>) <span class="co">// If not found, return the last index</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<pre class="{rust}"><code>:dep rand
+use rand::Rng;
+
+fn sample_from_distribution(cdf: &amp;[f64]) -&gt; usize {
+    let mut rng = rand::thread_rng();
+    let random_value: f64 = rng.gen(); // Generate a uniform random value between 0 and 1
+
+    cdf.iter()
+        .position(|&amp;x| random_value &lt;= x)
+        .unwrap_or(cdf.len() - 1) // If not found, return the last index
+}</code></pre>
 <p>Now let us take some samples.</p>
-<div id="f42e5c71" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> num_samples <span class="op">=</span> <span class="dv">10000</span><span class="op">;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> samples<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">usize</span><span class="op">&gt;</span> <span class="op">=</span> (<span class="dv">0</span><span class="op">..</span>num_samples)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>map(<span class="op">|</span>_<span class="op">|</span> sample_from_distribution(<span class="op">&amp;</span>cdf))</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>collect()<span class="op">;</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="pp">println!</span>(<span class="st">"Samples: {:?}"</span><span class="op">,</span> samples)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Samples: [2, 2, 2, 1, 0, 1, 1, 2, 1, 0, 1, 0, 0, 2, 0, 1, 1, 0, 1, 0, 2, 2, 0, 1, 0, 2, 0, 2, 2, 2, 0, 1, 1, 0, 2, 1, 1, 2, 3, 1, 0, 0, 0, 2, 2, 0, 1, 0, 1, 3, 1, 2, 1, 1, 2, 2, 0, 2, 1, 0, 2, 1, 1, 0, 0, 2, 1, 1, 1, 0, 1, 2, 0, 3, 1, 1, 1, 2, 0, 0, 1, 2, 0, 1, 1, 0, 1, 2, 1, 0, 1, 2, 2, 1, 3, 0, 3, 1, 2, 2, 2, 1, 0, 0, 1, 2, 1, 3, 0, 0, 1, 1, 1, 1, 2, 0, 1, 0, 0, 0, 1, 0, 2, 0, 2, 0, 2, 0, 0, 0, 0, 1, 2, 1, 2, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 2, 0, 1, 0, 1, 1, 1, 0, 0, 1, 2, 2, 0, 2, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 2, 0, 2, 0, 2, 1, 1, 3, 1, 2, 0, 0, 1, 1, 2, 2, 3, 2, 1, 1, 0, 1, 1, 1, 2, 1, 1, 2, 1, 0, 1, 0, 2, 1, 0, 0, 2, 1, 0, 1, 1, 2, 2, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 3, 1, 0, 1, 2, 4, 1, 4, 0, 1, 1, 2, 1, 0, 1, 1, 1, 1, 0, 2, 2, 1, 1, 0, 1, 2, 1, 2, 0, 1, 0, 1, 1, 0, 1, 2, 0, 1, 1, 1, 0, 2, 2, 1, 1, 1, 0, 2, 2, 1, 0, 0, 0, 0, 2, 0, 2, 2, 1, 1, 1, 0, 1, 2, 4, 2, 2, 1, 1, 1, 2, 1, 2, 1, 0, 4, 0, 0, 1, 0, 1, 1, 1, 1, 2, 3, 0, 1, 2, 1, 0, 2, 0, 1, 2, 1, 2, 3, 0, 1, 1, 1, 2, 1, 0, 0, 0, 2, 1, 1, 0, 2, 0, 1, 1, 0, 0, 1, 2, 1, 0, 1, 2, 2, 2, 2, 2, 2, 0, 2, 1, 0, 0, 2, 0, 2, 2, 0, 1, 1, 1, 1, 2, 2, 1, 0, 1, 1, 1, 3, 2, 2, 0, 0, 1, 2, 2, 1, 2, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 2, 1, 1, 2, 0, 1, 0, 0, 1, 1, 2, 1, 1, 1, 0, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 2, 1, 3, 0, 2, 2, 2, 1, 2, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 2, 2, 1, 1, 2, 1, 0, 2, 0, 1, 0, 0, 2, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 2, 0, 1, 2, 1, 0, 0, 0, 0, 1, 1, 1, 0, 2, 2, 2, 1, 1, 1, 0, 2, 2, 2, 1, 1, 1, 1, 0, 2, 0, 1, 1, 1, 0, 2, 1, 1, 0, 1, 1, 2, 1, 1, 1, 2, 2, 1, 0, 2, 1, 0, 1, 1, 0, 2, 0, 2, 2, 1, 1, 1, 0, 0, 0, 1, 2, 2, 2, 1, 0, 0, 0, 2, 2, 0, 0, 2, 0, 2, 1, 0, 0, 1, 1, 2, 2, 1, 1, 1, 2, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 3, 0, 1, 0, 0, 0, 1, 1, 0, 2, 1, 1, 0, 1, 2, 1, 0, 2, 0, 0, 2, 1, 2, 1, 1, 0, 1, 0, 1, 0, 1, 2, 0, 0, 0, 1, 2, 3, 0, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 0, 1, 0, 1, 1, 1, 1, 2, 1, 0, 1, 1, 2, 3, 0, 0, 1, 1, 3, 1, 2, 1, 0, 1, 0, 0, 1, 1, 3, 2, 2, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 2, 1, 0, 1, 2, 1, 0, 1, 0, 0, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 0, 1, 1, 2, 0, 2, 0, 0, 4, 1, 0, 1, 2, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 2, 0, 1, 2, 0, 1, 2, 0, 2, 2, 0, 0, 3, 1, 1, 1, 1, 1, 1, 0, 0, 1, 2, 1, 1, 1, 1, 1, 2, 1, 0, 0, 3, 0, 2, 1, 0, 0, 2, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 2, 0, 0, 1, 2, 2, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 2, 2, 0, 0, 3, 1, 2, 2, 0, 1, 2, 2, 2, 1, 1, 0, 1, 3, 0, 0, 3, 1, 1, 0, 3, 1, 1, 2, 0, 1, 1, 1, 1, 3, 1, 2, 1, 1, 2, 2, 2, 0, 0, 1, 1, 0, 3, 1, 0, 2, 1, 0, 1, 1, 1, 0, 0, 2, 2, 1, 2, 1, 0, 1, 1, 1, 0, 2, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 3, 1, 1, 1, 1, 1, 0, 1, 1, 1, 3, 0, 2, 0, 2, 1, 0, 2, 1, 0, 0, 0, 1, 1, 2, 0, 1, 0, 2, 1, 1, 1, 2, 2, 1, 1, 0, 0, 0, 0, 1, 1, 2, 0, 1, 2, 1, 2, 1, 2, 1, 1, 1, 3, 0, 1, 0, 0, 2, 2, 0, 0, 0, 2, 2, 2, 1, 1, 2, 2, 1, 3, 1, 1, 0, 0, 2, 2, 0, 1, 0, 0, 2, 2, 1, 2, 1, 2, 1, 2, 2, 1, 1, 0, 2, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 2, 2, 2, 2, 2, 1, 1, 1, 0, 0, 2, 0, 1, 0, 1, 2, 1, 1, 2, 2, 2, 0, 0, 1, 0, 1, 1, 1, 0, 2, 1, 2, 1, 1, 1, 2, 1, 0, 1, 0, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 1, 0, 2, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 3, 1, 1, 0, 0, 1, 0, 1, 2, 1, 0, 1, 0, 1, 1, 1, 1, 0, 2, 0, 2, 0, 2, 2, 3, 1, 2, 0, 1, 1, 1, 2, 0, 0, 1, 1, 1, 0, 1, 2, 3, 1, 1, 2, 0, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 2, 0, 2, 0, 2, 0, 2, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 3, 1, 2, 1, 1, 2, 1, 1, 0, 1, 2, 0, 1, 1, 2, 2, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 2, 2, 1, 1, 1, 1, 0, 1, 1, 2, 0, 1, 1, 3, 2, 0, 0, 1, 2, 2, 2, 1, 2, 0, 2, 0, 0, 2, 0, 1, 1, 0, 1, 1, 2, 1, 0, 2, 1, 2, 2, 1, 1, 1, 0, 1, 1, 2, 0, 1, 2, 0, 1, 3, 0, 1, 1, 1, 0, 0, 1, 0, 1, 2, 0, 0, 2, 1, 0, 2, 1, 1, 3, 3, 0, 2, 2, 0, 2, 0, 1, 0, 0, 0, 1, 2, 0, 0, 2, 3, 0, 1, 2, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 2, 1, 1, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 0, 0, 0, 2, 2, 1, 1, 1, 1, 0, 1, 2, 0, 1, 1, 2, 1, 1, 1, 1, 0, 3, 2, 0, 0, 1, 2, 2, 0, 2, 0, 1, 0, 1, 1, 0, 0, 0, 1, 2, 1, 0, 1, 2, 1, 3, 1, 1, 1, 1, 1, 0, 1, 1, 2, 1, 1, 1, 0, 1, 1, 2, 0, 3, 2, 1, 0, 2, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 0, 1, 1, 2, 1, 0, 2, 4, 1, 0, 2, 0, 0, 0, 1, 2, 1, 0, 1, 0, 1, 2, 1, 2, 1, 0, 1, 1, 1, 2, 3, 0, 1, 2, 0, 1, 0, 1, 1, 0, 3, 1, 1, 2, 1, 1, 2, 0, 2, 1, 0, 1, 2, 2, 0, 1, 1, 1, 0, 0, 2, 1, 0, 2, 0, 0, 2, 0, 1, 1, 1, 1, 2, 0, 0, 0, 2, 2, 0, 0, 3, 1, 2, 0, 0, 2, 0, 3, 0, 0, 2, 1, 2, 0, 1, 0, 1, 1, 2, 0, 1, 1, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 0, 0, 1, 1, 0, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 2, 2, 2, 1, 0, 1, 0, 3, 2, 1, 0, 0, 2, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 3, 0, 1, 1, 2, 3, 0, 2, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 2, 0, 1, 0, 1, 0, 2, 1, 0, 2, 1, 0, 0, 1, 1, 0, 0, 2, 2, 1, 2, 2, 0, 1, 0, 1, 2, 1, 1, 1, 1, 3, 1, 0, 0, 1, 0, 1, 0, 0, 2, 2, 1, 1, 1, 0, 0, 1, 1, 1, 2, 2, 0, 1, 0, 0, 1, 0, 0, 2, 0, 1, 0, 2, 2, 2, 2, 1, 1, 2, 1, 1, 0, 1, 1, 2, 1, 3, 2, 1, 0, 3, 2, 2, 0, 2, 0, 0, 2, 1, 3, 1, 1, 1, 1, 1, 3, 3, 2, 2, 1, 0, 1, 1, 3, 1, 1, 0, 2, 2, 1, 0, 1, 1, 1, 1, 1, 1, 0, 2, 1, 0, 1, 1, 1, 2, 1, 0, 0, 1, 1, 1, 0, 1, 0, 2, 0, 1, 1, 2, 1, 0, 2, 0, 0, 0, 1, 2, 1, 2, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 2, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 2, 2, 4, 2, 1, 2, 1, 0, 2, 1, 0, 1, 1, 0, 0, 0, 0, 2, 3, 2, 1, 0, 1, 0, 2, 0, 0, 1, 3, 1, 0, 1, 0, 0, 1, 3, 2, 2, 1, 0, 1, 1, 2, 1, 0, 1, 1, 0, 2, 1, 0, 1, 1, 0, 0, 0, 0, 2, 1, 1, 0, 0, 1, 2, 1, 0, 0, 1, 2, 3, 1, 2, 1, 1, 2, 1, 1, 2, 2, 1, 2, 1, 0, 1, 3, 2, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 2, 1, 0, 1, 1, 1, 0, 1, 0, 0, 2, 2, 0, 1, 0, 1, 0, 0, 2, 2, 1, 1, 1, 1, 1, 1, 1, 2, 0, 1, 2, 0, 0, 1, 2, 0, 1, 1, 1, 1, 0, 2, 1, 0, 0, 1, 3, 0, 2, 2, 1, 1, 1, 3, 3, 4, 0, 0, 1, 1, 1, 0, 1, 0, 0, 3, 2, 1, 0, 1, 0, 0, 0, 0, 0, 3, 2, 1, 0, 3, 0, 3, 1, 1, 1, 1, 1, 0, 2, 0, 2, 0, 2, 2, 1, 3, 2, 1, 1, 0, 2, 2, 2, 1, 3, 0, 0, 1, 2, 3, 0, 0, 1, 2, 0, 0, 0, 1, 0, 1, 2, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 2, 2, 0, 3, 1, 1, 2, 0, 2, 1, 2, 2, 1, 1, 2, 1, 0, 3, 3, 2, 0, 1, 0, 2, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 2, 2, 0, 1, 3, 1, 1, 2, 1, 0, 1, 0, 0, 2, 0, 1, 2, 2, 1, 1, 1, 0, 0, 3, 2, 2, 1, 0, 1, 1, 1, 2, 1, 0, 1, 1, 1, 1, 1, 0, 2, 2, 1, 0, 1, 3, 3, 1, 1, 0, 3, 0, 1, 1, 2, 0, 1, 2, 0, 0, 1, 1, 1, 1, 2, 1, 2, 3, 0, 1, 0, 0, 1, 1, 3, 1, 3, 1, 1, 0, 3, 1, 2, 0, 0, 1, 0, 1, 0, 2, 0, 0, 2, 0, 2, 1, 1, 0, 0, 0, 1, 1, 1, 1, 2, 0, 1, 2, 1, 2, 1, 2, 0, 1, 3, 1, 2, 0, 1, 1, 0, 0, 1, 1, 2, 2, 1, 1, 3, 2, 0, 2, 3, 1, 0, 2, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 2, 1, 0, 2, 1, 1, 2, 1, 1, 0, 1, 2, 2, 1, 1, 3, 3, 0, 0, 1, 0, 2, 0, 3, 0, 0, 1, 0, 2, 1, 1, 0, 1, 1, 0, 0, 1, 2, 1, 2, 1, 0, 0, 2, 1, 1, 2, 1, 2, 2, 0, 1, 1, 1, 2, 0, 2, 2, 0, 1, 0, 2, 0, 2, 1, 1, 1, 0, 2, 0, 0, 2, 1, 0, 0, 0, 2, 0, 1, 1, 1, 1, 1, 1, 1, 2, 0, 1, 1, 0, 1, 1, 1, 3, 0, 0, 0, 1, 1, 1, 1, 1, 0, 2, 1, 1, 1, 0, 1, 1, 1, 1, 2, 0, 1, 0, 1, 0, 2, 1, 0, 1, 0, 0, 1, 0, 1, 0, 2, 1, 0, 2, 2, 2, 0, 0, 2, 2, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 2, 1, 2, 0, 0, 2, 2, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 2, 3, 1, 0, 0, 1, 1, 2, 0, 1, 2, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 2, 1, 2, 1, 1, 2, 2, 1, 1, 0, 1, 0, 3, 1, 1, 2, 0, 1, 0, 2, 1, 2, 1, 1, 3, 0, 3, 1, 2, 2, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 0, 1, 0, 2, 1, 2, 1, 1, 1, 2, 2, 0, 0, 1, 3, 3, 2, 1, 2, 0, 2, 1, 0, 0, 1, 2, 2, 1, 0, 2, 1, 1, 0, 3, 2, 2, 1, 0, 1, 2, 1, 0, 3, 2, 1, 2, 1, 1, 0, 2, 1, 3, 1, 2, 0, 1, 2, 3, 1, 1, 1, 1, 2, 0, 0, 0, 1, 0, 1, 1, 2, 2, 2, 0, 0, 1, 1, 1, 1, 1, 1, 0, 3, 2, 1, 0, 1, 1, 1, 0, 2, 0, 1, 2, 1, 2, 0, 0, 1, 2, 0, 1, 2, 0, 1, 0, 1, 2, 1, 2, 1, 0, 1, 1, 0, 1, 3, 1, 1, 1, 1, 1, 1, 1, 3, 0, 1, 2, 0, 2, 2, 1, 1, 0, 2, 1, 2, 1, 1, 3, 0, 0, 1, 1, 2, 2, 3, 1, 1, 1, 0, 0, 1, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0, 3, 3, 0, 1, 1, 0, 1, 1, 1, 3, 1, 1, 1, 0, 1, 2, 1, 0, 2, 1, 1, 1, 2, 1, 3, 0, 0, 3, 1, 1, 0, 1, 1, 0, 2, 3, 2, 1, 2, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 2, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 2, 0, 1, 2, 1, 3, 0, 2, 2, 1, 2, 1, 1, 1, 2, 2, 2, 1, 2, 1, 1, 1, 1, 0, 0, 1, 2, 1, 2, 2, 1, 0, 1, 2, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 2, 1, 0, 1, 0, 0, 1, 1, 0, 2, 1, 2, 2, 2, 1, 1, 2, 1, 1, 1, 2, 1, 2, 0, 1, 3, 1, 1, 3, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 2, 1, 2, 2, 2, 1, 1, 1, 0, 2, 0, 1, 1, 0, 0, 1, 2, 1, 2, 1, 3, 1, 2, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 2, 0, 1, 2, 1, 2, 3, 0, 0, 2, 1, 1, 0, 0, 2, 1, 1, 1, 2, 1, 0, 2, 1, 3, 3, 2, 1, 0, 0, 0, 1, 1, 1, 0, 2, 1, 0, 1, 1, 2, 1, 1, 2, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 2, 0, 1, 0, 2, 2, 0, 1, 0, 0, 1, 1, 0, 2, 1, 1, 1, 1, 0, 2, 2, 1, 1, 0, 3, 0, 1, 1, 1, 0, 2, 2, 1, 2, 1, 1, 0, 3, 2, 1, 1, 2, 3, 2, 3, 1, 2, 0, 3, 1, 1, 2, 2, 0, 0, 2, 0, 2, 1, 0, 2, 1, 1, 1, 0, 2, 0, 1, 0, 1, 1, 0, 2, 0, 1, 3, 0, 1, 2, 0, 2, 0, 0, 0, 1, 2, 2, 2, 1, 2, 1, 1, 0, 0, 0, 1, 1, 0, 2, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 3, 2, 1, 1, 2, 0, 2, 4, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 2, 2, 1, 1, 1, 3, 0, 3, 1, 2, 2, 2, 0, 1, 0, 2, 1, 1, 1, 2, 2, 0, 2, 3, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 2, 1, 0, 1, 0, 1, 1, 2, 0, 1, 0, 1, 2, 1, 3, 0, 1, 1, 1, 2, 2, 2, 0, 1, 2, 2, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 2, 2, 0, 1, 1, 1, 1, 2, 1, 0, 0, 1, 0, 3, 0, 2, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 0, 2, 0, 0, 2, 3, 1, 0, 0, 0, 0, 1, 0, 1, 2, 2, 1, 0, 1, 0, 0, 0, 0, 2, 0, 0, 2, 2, 2, 1, 1, 0, 2, 2, 2, 0, 1, 1, 2, 2, 0, 0, 0, 2, 1, 0, 1, 0, 1, 1, 2, 1, 1, 2, 2, 1, 2, 0, 3, 0, 1, 0, 2, 1, 0, 1, 1, 1, 3, 1, 1, 0, 1, 2, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 3, 0, 0, 0, 2, 2, 2, 1, 0, 0, 0, 3, 1, 0, 0, 1, 0, 1, 2, 3, 1, 1, 0, 2, 1, 1, 1, 1, 3, 0, 1, 1, 1, 0, 2, 2, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 2, 0, 1, 1, 1, 2, 0, 1, 1, 1, 1, 2, 0, 1, 0, 1, 2, 2, 0, 3, 1, 1, 3, 3, 2, 2, 0, 2, 0, 1, 0, 2, 2, 2, 1, 1, 0, 1, 2, 1, 1, 1, 3, 1, 1, 1, 2, 0, 1, 0, 1, 0, 2, 2, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 3, 1, 0, 0, 3, 1, 2, 0, 2, 3, 2, 1, 0, 0, 2, 0, 0, 2, 2, 0, 0, 0, 3, 1, 3, 0, 0, 0, 1, 0, 2, 0, 0, 1, 1, 1, 1, 1, 2, 2, 0, 1, 1, 3, 0, 2, 0, 1, 1, 1, 1, 1, 1, 2, 1, 0, 2, 1, 1, 2, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 2, 2, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 3, 1, 3, 2, 2, 2, 1, 1, 2, 2, 2, 1, 0, 0, 1, 0, 2, 0, 0, 1, 1, 0, 1, 0, 1, 2, 0, 1, 1, 0, 1, 0, 2, 1, 1, 2, 3, 2, 1, 1, 2, 1, 1, 0, 0, 0, 1, 1, 2, 2, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 2, 2, 3, 1, 0, 1, 2, 1, 1, 1, 1, 2, 3, 0, 1, 1, 1, 2, 0, 1, 0, 1, 2, 0, 2, 1, 2, 0, 0, 1, 3, 0, 1, 1, 1, 2, 3, 1, 1, 2, 0, 1, 0, 2, 0, 2, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 2, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 3, 1, 0, 3, 0, 0, 0, 1, 2, 1, 0, 2, 1, 0, 1, 2, 1, 1, 1, 0, 1, 0, 1, 0, 3, 1, 1, 0, 1, 1, 2, 0, 2, 0, 2, 2, 1, 2, 1, 1, 0, 2, 1, 0, 0, 1, 0, 1, 2, 0, 1, 1, 0, 0, 0, 2, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 3, 0, 1, 0, 0, 2, 1, 2, 0, 1, 1, 2, 1, 0, 3, 1, 1, 1, 3, 1, 2, 0, 1, 1, 2, 2, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 2, 1, 3, 2, 1, 0, 1, 3, 2, 1, 1, 2, 0, 1, 1, 1, 1, 0, 0, 1, 2, 3, 2, 0, 1, 1, 1, 1, 0, 2, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 2, 0, 1, 1, 3, 2, 1, 0, 2, 1, 1, 2, 2, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 2, 1, 0, 2, 1, 0, 0, 1, 2, 0, 1, 0, 1, 0, 1, 2, 1, 2, 0, 1, 1, 1, 1, 1, 2, 0, 0, 0, 1, 0, 2, 1, 2, 0, 2, 1, 1, 0, 2, 2, 3, 2, 0, 2, 0, 1, 0, 1, 0, 2, 0, 1, 2, 1, 2, 2, 0, 1, 2, 0, 1, 2, 0, 2, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 2, 1, 0, 0, 3, 0, 1, 0, 2, 1, 0, 1, 1, 3, 3, 1, 0, 0, 0, 3, 1, 4, 1, 0, 0, 0, 1, 1, 0, 1, 1, 2, 0, 1, 1, 0, 0, 0, 0, 2, 2, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 0, 1, 3, 2, 1, 1, 1, 0, 2, 1, 0, 0, 0, 0, 1, 0, 1, 0, 2, 1, 0, 1, 0, 3, 1, 0, 1, 1, 0, 2, 2, 1, 1, 0, 0, 1, 0, 1, 2, 1, 1, 1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 1, 3, 1, 2, 1, 0, 3, 0, 2, 0, 1, 1, 1, 2, 1, 2, 1, 2, 1, 0, 0, 2, 0, 1, 3, 2, 0, 2, 1, 1, 1, 0, 0, 3, 1, 2, 0, 1, 1, 1, 0, 0, 1, 0, 1, 2, 1, 1, 1, 0, 1, 0, 2, 1, 2, 2, 0, 2, 1, 1, 1, 3, 1, 0, 1, 0, 1, 1, 1, 1, 4, 1, 1, 0, 2, 2, 2, 1, 0, 1, 1, 1, 0, 2, 1, 0, 0, 2, 0, 1, 0, 0, 0, 1, 1, 0, 2, 1, 1, 0, 3, 0, 0, 0, 1, 2, 2, 1, 0, 1, 1, 2, 2, 1, 1, 2, 1, 0, 2, 1, 1, 0, 3, 4, 0, 1, 1, 0, 1, 2, 1, 2, 2, 2, 0, 1, 2, 1, 0, 1, 0, 1, 2, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 0, 2, 0, 1, 1, 0, 1, 1, 1, 4, 1, 2, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 2, 0, 0, 1, 3, 2, 2, 3, 0, 1, 1, 1, 1, 1, 2, 2, 1, 1, 0, 0, 1, 1, 2, 0, 1, 2, 2, 1, 1, 3, 0, 0, 1, 1, 2, 2, 1, 2, 2, 2, 0, 3, 0, 2, 2, 0, 1, 0, 1, 0, 1, 1, 1, 2, 0, 1, 2, 2, 0, 0, 0, 1, 1, 2, 3, 3, 0, 1, 3, 0, 1, 2, 1, 1, 2, 1, 0, 1, 2, 1, 0, 0, 0, 1, 2, 1, 1, 1, 0, 1, 3, 2, 0, 0, 2, 0, 1, 1, 1, 0, 1, 1, 1, 2, 2, 1, 1, 2, 1, 1, 2, 1, 2, 0, 0, 3, 0, 0, 2, 1, 2, 0, 0, 0, 3, 0, 2, 1, 3, 2, 1, 1, 1, 0, 1, 2, 1, 0, 1, 0, 1, 2, 2, 1, 0, 1, 1, 1, 3, 0, 0, 0, 1, 1, 0, 3, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 2, 1, 0, 3, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 2, 2, 1, 1, 0, 2, 2, 0, 2, 0, 2, 1, 2, 2, 2, 0, 0, 1, 0, 1, 2, 1, 2, 1, 1, 0, 2, 0, 0, 1, 2, 1, 0, 0, 1, 1, 2, 1, 1, 1, 2, 1, 2, 2, 1, 2, 1, 0, 0, 2, 2, 2, 2, 1, 1, 0, 2, 0, 1, 2, 0, 2, 1, 2, 2, 0, 0, 1, 1, 1, 2, 1, 0, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 2, 2, 1, 1, 0, 1, 1, 2, 1, 0, 3, 1, 2, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 2, 0, 1, 1, 2, 3, 1, 1, 1, 0, 0, 1, 0, 1, 2, 2, 2, 1, 2, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 0, 2, 0, 2, 1, 2, 2, 1, 1, 1, 1, 0, 0, 1, 1, 2, 1, 3, 3, 1, 1, 1, 1, 0, 1, 1, 1, 0, 2, 1, 1, 1, 2, 1, 0, 1, 0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 1, 0, 2, 1, 0, 0, 1, 1, 1, 1, 0, 2, 0, 0, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 0, 1, 0, 2, 1, 3, 1, 0, 1, 1, 0, 1, 0, 2, 2, 2, 0, 1, 0, 2, 1, 0, 1, 1, 2, 1, 0, 1, 1, 1, 1, 2, 3, 0, 0, 1, 1, 1, 0, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 0, 1, 1, 2, 0, 1, 1, 1, 2, 1, 0, 0, 1, 1, 2, 1, 2, 2, 1, 1, 0, 2, 1, 1, 1, 1, 1, 0, 2, 1, 1, 1, 1, 1, 0, 1, 1, 2, 0, 1, 1, 1, 0, 1, 2, 1, 1, 0, 1, 2, 1, 0, 1, 2, 1, 1, 0, 0, 2, 2, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 2, 0, 2, 1, 0, 1, 0, 3, 2, 1, 2, 0, 2, 2, 2, 0, 0, 1, 0, 1, 1, 1, 1, 1, 3, 2, 0, 1, 0, 1, 3, 1, 2, 0, 2, 0, 1, 2, 2, 0, 1, 3, 1, 2, 0, 2, 0, 1, 2, 1, 2, 1, 1, 1, 1, 1, 0, 2, 0, 1, 1, 0, 2, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 2, 2, 1, 1, 1, 1, 0, 1, 1, 2, 2, 1, 1, 1, 2, 0, 0, 3, 1, 1, 3, 1, 1, 1, 2, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 2, 0, 1, 1, 1, 1, 1, 1, 0, 2, 0, 0, 1, 0, 1, 1, 2, 0, 1, 1, 2, 1, 2, 0, 0, 1, 0, 1, 0, 0, 2, 1, 2, 0, 1, 0, 0, 2, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 2, 0, 0, 0, 2, 2, 2, 0, 1, 2, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 0, 2, 1, 1, 1, 0, 1, 0, 1, 3, 0, 1, 1, 0, 1, 2, 2, 1, 3, 2, 1, 0, 0, 0, 1, 0, 3, 1, 1, 3, 1, 2, 2, 1, 0, 1, 1, 2, 3, 1, 0, 2, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 2, 0, 0, 0, 0, 1, 3, 0, 2, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 3, 2, 0, 3, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 0, 1, 0, 0, 0, 1, 0, 2, 0, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 0, 3, 2, 2, 2, 1, 0, 1, 1, 1, 2, 0, 2, 1, 2, 2, 1, 1, 2, 0, 1, 0, 3, 0, 1, 2, 0, 1, 2, 1, 0, 0, 0, 1, 2, 1, 1, 0, 1, 1, 0, 2, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 2, 1, 1, 1, 0, 0, 0, 2, 0, 0, 0, 0, 2, 1, 1, 2, 0, 3, 0, 1, 0, 1, 1, 2, 1, 1, 1, 1, 1, 0, 1, 2, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 3, 0, 2, 0, 0, 1, 1, 0, 2, 0, 3, 2, 1, 2, 0, 1, 2, 1, 0, 1, 1, 1, 2, 1, 1, 1, 2, 1, 0, 1, 0, 1, 1, 0, 1, 1, 2, 1, 1, 0, 2, 0, 1, 1, 1, 2, 1, 0, 0, 2, 0, 0, 1, 1, 1, 2, 2, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 3, 1, 0, 0, 2, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 2, 0, 1, 2, 0, 2, 1, 1, 1, 1, 3, 0, 0, 1, 2, 1, 2, 1, 1, 0, 1, 0, 1, 0, 2, 1, 1, 2, 0, 1, 1, 1, 1, 1, 0, 2, 1, 2, 1, 2, 1, 2, 0, 1, 1, 0, 0, 1, 2, 0, 1, 2, 0, 1, 0, 0, 2, 2, 1, 2, 1, 1, 1, 0, 1, 1, 0, 2, 0, 1, 0, 1, 0, 2, 1, 1, 0, 3, 1, 0, 1, 1, 0, 0, 1, 0, 2, 1, 0, 1, 1, 1, 1, 1, 0, 3, 1, 0, 2, 2, 1, 0, 0, 1, 0, 2, 1, 1, 0, 1, 2, 0, 1, 0, 1, 1, 0, 1, 0, 2, 0, 1, 1, 0, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 1, 1, 2, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 2, 0, 0, 0, 2, 2, 2, 0, 2, 1, 1, 1, 1, 1, 0, 1, 1, 2, 0, 2, 0, 1, 2, 1, 0, 2, 1, 1, 1, 1, 2, 2, 0, 1, 2, 1, 1, 1, 0, 2, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 2, 0, 1, 1, 2, 2, 2, 0, 1, 0, 2, 1, 0, 2, 3, 1, 1, 2, 0, 2, 1, 2, 1, 0, 1, 2, 1, 0, 0, 1, 1, 2, 2, 1, 1, 0, 1, 0, 3, 2, 1, 2, 1, 1, 2, 0, 1, 1, 0, 0, 2, 0, 2, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 2, 0, 1, 1, 1, 1, 1, 1, 1, 2, 0, 1, 1, 2, 1, 0, 1, 0, 1, 3, 1, 0, 2, 1, 1, 0, 0, 2, 2, 1, 1, 1, 0, 0, 1, 2, 0, 2, 0, 2, 0, 0, 1, 0, 2, 2, 2, 1, 2, 0, 0, 1, 1, 2, 0, 1, 2, 1, 2, 1, 3, 1, 0, 1, 1, 2, 1, 2, 0, 1, 2, 2, 1, 1, 1, 0, 2, 2, 2, 1, 0, 1, 2, 2, 1, 2, 3, 2, 2, 1, 1, 0, 3, 2, 0, 1, 1, 0, 1, 2, 2, 1, 2, 0, 1, 1, 0, 0, 2, 2, 2, 1, 2, 0, 0, 1, 2, 1, 1, 1, 0, 2, 0, 1, 1, 1, 2, 0, 1, 1, 1, 1, 0, 3, 1, 3, 2, 0, 2, 2, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 2, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 2, 2, 0, 2, 4, 1, 2, 0, 1, 0, 1, 1, 1, 0, 2, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 2, 0, 3, 0, 1, 1, 2, 1, 1, 1, 1, 2, 0, 0, 1, 1, 2, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 2, 1, 1, 0, 2, 0, 1, 1, 1, 2, 2, 3, 1, 1, 1, 1, 1, 3, 1, 1, 2, 1, 2, 2, 1, 1, 2, 0, 0, 1, 2, 0, 0, 2, 2, 1, 1, 2, 0, 0, 2, 2, 1, 0, 1, 1, 1, 1, 0, 2, 2, 0, 1, 1, 2, 1, 0, 2, 1, 2, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 2, 1, 1, 1, 2, 1, 0, 1, 1, 1, 1, 1, 0, 2, 0, 2, 2, 1, 2, 1, 2, 1, 1, 1, 3, 2, 0, 0, 2, 1, 2, 1, 1, 1, 1, 0, 1, 1, 2, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 4, 2, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 2, 1, 3, 1, 0, 0, 0, 1, 2, 2, 0, 0, 2, 1, 4, 2, 0, 2, 1, 0, 2, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 2, 1, 1, 1, 0, 0, 0, 0, 1, 0, 3, 0, 1, 3, 3, 0, 2, 1, 0, 2, 1, 2, 0, 1, 1, 1, 2, 1, 0, 1, 0, 1, 3, 1, 1, 1, 0, 1, 1, 0, 0, 1, 2, 1, 0, 0, 1, 0, 1, 3, 1, 2, 2, 0, 0, 2, 1, 1, 2, 2, 1, 2, 1, 1, 0, 0, 0, 1, 0, 1, 0, 2, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 2, 0, 0, 0, 2, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 2, 2, 2, 1, 0, 0, 1, 2, 0, 1, 1, 2, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 2, 2, 0, 0, 0, 0, 0, 1, 1, 0, 2, 2, 2, 1, 1, 2, 2, 3, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 0, 3, 1, 0, 2, 1, 1, 1, 3, 3, 2, 0, 0, 1, 1, 1, 0, 1, 1, 2, 0, 1, 1, 0, 0, 1, 2, 2, 0, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 2, 2, 1, 2, 1, 2, 0, 2, 1, 0, 2, 0, 1, 1, 1, 1, 2, 3, 2, 0, 1, 1, 0, 0, 2, 2, 1, 1, 1, 1, 2, 3, 0, 2, 0, 1, 1, 2, 0, 2, 1, 0, 1, 1, 1, 1, 1, 1, 2, 1, 2, 3, 0, 2, 1, 1, 1, 1, 1, 2, 1, 2, 2, 1, 1, 0, 0, 0, 2, 1, 0, 2, 0, 0, 2, 0, 1, 1, 1, 2, 2, 2, 2, 2, 1, 0, 3, 2, 0, 0, 1, 3, 1, 1, 0, 1, 2, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 2, 1, 0, 2, 0, 2, 2, 1, 0, 0, 2, 0, 0, 1, 1, 1, 1, 3, 0, 0, 0, 1, 1, 1, 2, 0, 1, 1, 0, 2, 2, 1, 0, 1, 1, 2, 2, 3, 2, 0, 0, 4, 1, 0, 2, 0, 2, 1, 2, 0, 0, 2, 1, 1, 1, 1, 1, 3, 0, 1, 0, 2, 2, 2, 1, 3, 1, 0, 2, 3, 1, 0, 0, 0, 3, 0, 2, 3, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 0, 1, 1, 0, 2, 0, 1, 1, 0, 2, 1, 0, 1, 1, 0, 1, 0, 1, 2, 1, 0, 1, 1, 0, 3, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 2, 0, 2, 1, 1, 1, 0, 1, 1, 2, 1, 2, 1, 2, 1, 2, 2, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 2, 0, 1, 1, 2, 1, 2, 1, 1, 0, 2, 1, 1, 1, 1, 1, 1, 0, 1, 1, 2, 3, 2, 0, 1, 1, 0, 1, 0, 1, 1, 0, 2, 1, 0, 2, 1, 1, 1, 0, 1, 2, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 2, 1, 1, 0, 1, 0, 1, 3, 1, 1, 0, 1, 1, 0, 1, 1, 3, 0, 0, 1, 3, 2, 1, 2, 1, 0, 2, 0, 1, 1, 0, 2, 2, 1, 1, 3, 2, 1, 1, 0, 2, 2, 2, 1, 1, 1, 0, 1, 0, 1, 2, 1, 0, 0, 0, 1, 1, 1, 2, 1, 0, 2, 1, 1, 1, 0, 0, 0, 1, 2, 0, 2, 0, 0, 2, 2, 0, 1, 2, 1, 0, 0, 0, 0, 0, 0, 2, 1, 1, 2, 1, 0, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 3, 1, 2, 0, 1, 0, 1, 1, 2, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 2, 1, 0, 2, 2, 1, 0, 0, 2, 0, 4, 1, 3, 0, 0, 1, 1, 0, 1, 2, 1, 1, 1, 2, 1, 0, 1, 0, 0, 2, 0, 0, 2, 1, 1, 2, 1, 2, 0, 2, 2, 1, 1, 1, 1, 1, 2, 1, 1, 0, 1, 1, 1, 0, 1, 2, 1, 2, 1, 2, 2, 1, 1, 1, 0, 1, 2, 2, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 2, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 2, 1, 1, 1, 1, 0, 0, 2, 0, 0, 0, 0, 1, 0, 1, 3, 1, 3, 1, 0, 1, 1, 2, 2, 2, 0, 0, 2, 0, 1, 1, 2, 1, 1, 0, 1, 2, 0, 1, 0, 1, 0, 0, 1, 2, 2, 1, 1, 2, 0, 1, 0, 2, 2, 2, 2, 0, 0, 1, 2, 1, 2, 2, 1, 1, 1, 2, 1, 1, 0, 0, 2, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 3, 1, 0, 1, 0, 1, 0, 2, 1, 0, 0, 0, 3, 2, 1, 0, 3, 2, 0, 1, 1, 1, 1, 0, 1, 1, 1, 2, 1, 1, 0, 0, 2, 1, 0, 1, 1, 0, 1, 2, 1, 0, 0, 1, 0, 1, 0, 3, 1, 0, 0, 0, 1, 1, 0, 2, 1, 1, 1, 0, 1, 2, 0, 2, 1, 2, 1, 2, 0, 0, 1, 0, 2, 1, 2, 2, 2, 2, 0, 1, 1, 2, 0, 2, 0, 1, 1, 0, 0, 1, 1, 1, 2, 3, 1, 1, 3, 1, 3, 1, 1, 3, 1, 0, 2, 1, 2, 2, 1, 0, 0, 2, 1, 1, 0, 0, 0, 0, 1, 0, 3, 1, 1, 1, 2, 2, 1, 0, 0, 0, 1, 1, 1, 3, 2, 1, 0, 1, 0, 1, 2, 0, 1, 0, 0, 0, 1, 0, 3, 0, 2, 0, 1, 0, 2, 0, 0, 1, 0, 0, 0, 0, 2, 0, 0, 2, 1, 2, 1, 1, 2, 2, 1, 2, 1, 1, 1, 1, 1, 0, 2, 0, 1, 1, 0, 0, 0, 1, 2, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 2, 0, 2, 1, 2, 1, 1, 2, 0, 1, 3, 0, 0, 1, 1, 1, 1, 0, 0, 0, 2, 2, 1, 1, 1, 3, 1, 2, 0, 2, 1, 1, 0, 3, 1, 1, 1, 0, 0, 1, 0, 2, 1, 2, 1, 1, 0, 1, 2, 1, 1, 2, 4, 1, 2, 2, 1, 1, 1, 2, 2, 1, 3, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 1, 2, 2, 1, 1, 3, 1, 2, 0, 1, 2, 1, 0, 0, 3, 1, 0, 0, 1, 0, 0, 2, 2, 2, 1, 2, 1, 2, 1, 2, 1, 0, 2, 0, 2, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 2, 0, 2, 2, 2, 1, 2, 1, 1, 0, 2, 1, 0, 1, 1, 0, 1, 1, 2, 2, 2, 2, 1, 1, 3, 2, 0, 0, 1, 1, 0, 3, 1, 1, 0, 1, 3, 1, 1, 1, 2, 0, 2, 2, 2, 1, 2, 0, 1, 2, 0, 1, 2, 0, 0, 0, 1, 0, 1, 3, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 2, 1, 2, 1, 3, 0, 2, 1, 0, 3, 1, 2, 3, 2, 1, 1, 1, 0, 1, 2, 1, 1, 0, 3, 2, 0, 1, 2, 0, 2, 0, 2, 1, 2, 1, 1, 1, 1, 1, 1, 0, 3, 1, 2, 0, 0, 3, 1, 0, 0, 1, 0, 0, 1, 0, 3, 0, 0, 2, 3, 1, 1, 0, 2, 1, 0, 1, 0, 0, 1, 1, 1, 0, 3, 0, 1, 0, 2, 0, 2, 1, 1, 1, 3, 1, 0, 1, 1, 1, 0, 1, 0, 1, 3, 1, 1, 2, 0, 2, 2, 2, 2, 0, 0, 1, 1, 2, 0, 1, 0, 2, 2, 2, 1, 0, 0, 0, 1, 1, 2, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 0, 0, 3, 0, 1, 0, 1, 2, 1, 1, 1, 2, 1, 1, 0, 1, 1, 0, 1, 1, 2, 0, 1, 1, 1, 1, 1, 2, 0, 0, 2, 2, 2, 1, 0, 3, 3, 1, 1, 1, 2, 0, 1, 2, 1, 0, 0, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 0, 1, 0, 1, 2, 0, 2, 1, 2, 0, 0, 1, 1, 1, 1, 2, 1, 0, 0, 0, 2, 2, 2, 3, 2, 1, 2, 2, 1, 3, 0, 0, 3, 2, 1, 0, 1, 1, 0, 3, 1, 0, 2, 2, 2, 1, 1, 1, 1, 1, 1, 3, 0, 1, 2, 0, 1, 2, 1, 1, 2, 2, 1, 1, 1, 0, 2, 1, 2, 1, 0, 3, 0, 1, 1, 1, 1, 2, 2, 2, 1, 1, 3, 1, 1, 3, 0, 0, 2, 1, 1, 1, 1, 1, 1, 0, 1, 1, 2, 0, 1, 1, 1, 0, 1, 0, 0, 1, 2, 1, 0, 1, 0, 1, 2, 1, 3, 2, 1, 1, 0, 0, 3, 1, 0, 2, 1, 0, 1, 1, 0, 0, 1, 3, 2, 2, 2, 1, 0, 0, 0, 3, 0, 1, 1, 2, 0, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 3, 1, 2, 0, 1, 0, 0, 3, 1, 1, 0, 1, 1, 2, 0, 1, 2, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 2, 2, 1, 2, 1, 0, 3, 2, 1, 1, 0, 0, 1, 4, 1, 0, 1, 2, 0, 1, 3, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 2, 0, 0, 3, 0, 1, 2, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 2, 1, 0, 1, 2, 0, 0, 0, 2, 2, 0, 1, 1, 1, 1, 1, 1, 2, 0, 2, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 2, 1, 0, 1, 1, 2, 0, 1, 3, 1, 2, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 2, 3, 2, 1, 1, 3, 1, 1, 1, 2, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 2, 0, 1, 1, 0, 0, 1, 0, 1, 3, 1, 0, 0, 1, 0, 1, 1, 1, 2, 2, 2, 1, 0, 2, 3, 3, 1, 1, 1, 0, 2, 2, 1, 0, 1, 1, 1, 1, 0, 2, 3, 0, 2, 0, 2, 2, 2, 1, 2, 2, 1, 2, 1, 1, 1, 1, 0, 3, 0, 1, 1, 0, 2, 1, 1, 1, 1, 0, 1, 0, 2, 2, 1, 1, 0, 0, 1, 0, 0, 0, 1, 2, 2, 1, 1, 1, 2, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 3, 1, 0, 3, 0, 1, 2, 0, 2, 1, 0, 0, 0, 3, 0, 2, 2, 0, 0, 2, 1, 0, 2, 2, 2, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 3, 0, 2, 2, 1, 0, 0, 0, 0, 2, 3, 1, 1, 1, 1, 1, 0, 0, 2, 3, 0, 0, 0, 1, 2, 0, 1, 1, 2, 1, 4, 3, 0, 2, 1, 1, 0, 1, 2, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 1, 3, 2, 1, 3, 1, 1, 1, 1, 1, 2, 0, 0, 0, 2, 0, 1, 1, 0, 1, 2, 2, 1, 3, 0, 1, 2, 0, 0, 1, 1, 1, 0, 2, 3, 1, 2, 1, 0, 3, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 2, 0, 0, 3, 1, 2, 1, 0, 0, 1, 1, 1, 1, 1, 2, 1, 1, 1, 3, 2, 1, 2, 0, 0, 1, 2, 2, 1, 1, 0, 2, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 2, 1, 1, 2, 1, 2, 1, 0, 1, 2, 1, 0, 3, 1, 0, 0, 1, 1, 1, 0, 0, 0, 3, 0, 1, 1, 3, 2, 1, 2, 1, 1, 0, 2, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 2, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 3, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 2, 3, 1, 0, 1, 2, 1, 1, 1, 0, 0, 0, 2, 1, 3, 1, 0, 0, 1, 1, 2, 1, 1, 2, 0, 1, 0, 1, 0, 0, 2, 0, 1, 2, 0, 3, 2, 0, 0, 1, 2, 1, 2, 0, 2, 1, 0, 3, 0, 1, 0, 2, 1, 0, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 2, 2, 2, 2, 2, 2, 1, 3, 2, 1, 1, 2, 2, 2, 0, 0, 1, 1, 1, 2, 0, 0, 0, 2, 1, 0, 1, 1, 2, 2, 0, 2, 0, 2, 0, 2, 0, 0, 1, 1, 3, 1, 0, 0, 0, 0, 2, 0, 2, 1, 0, 2, 1, 0, 3, 1, 0, 1, 0, 1, 1, 0, 3, 2, 1, 0, 1, 1, 3, 2, 2, 2, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 2, 0, 2, 1, 0, 1, 2, 1, 0, 1, 0, 2, 2, 0, 1, 1, 2, 3, 0, 2, 1, 1, 0, 0, 1, 1, 2, 1, 1, 2, 0, 2, 2, 2, 0, 0, 1, 0, 1, 1, 2, 2, 1, 2, 1, 1, 1, 0, 1, 1, 2, 3, 0, 3, 1, 1, 0, 1, 1, 2, 1, 1, 0, 0, 0, 2, 2, 1, 1, 0, 1, 2, 1, 1, 0, 0, 1, 2, 1, 1, 0, 1, 1, 0, 0, 4, 1, 2, 0, 0, 3, 2, 1, 2, 0, 1, 1, 2, 1, 1, 1, 2, 0, 2, 1, 0, 2, 0, 0, 1, 3, 3, 0, 0, 1, 1, 1, 1, 2, 0, 1, 0, 1, 0, 1, 1, 3, 0, 2, 1, 1, 0, 0, 2, 2, 2, 0, 0, 1, 1, 0, 1, 2, 1, 1, 2, 0, 0, 1, 1, 2, 0, 1, 0, 0, 0, 1, 1, 2, 1, 1, 1, 1, 2, 1, 3, 0, 1, 1, 3, 3, 1, 2, 3, 2, 1, 0, 2, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 1, 0, 1, 1, 1, 1, 0, 0, 2, 0, 0, 0, 3, 0, 1, 1, 1, 0, 1, 1, 2, 1, 0, 0, 0, 1, 1, 1, 2, 2, 0, 2, 0, 1, 2, 2, 0, 2, 1, 2, 0, 2, 1, 0, 2, 1, 1, 0, 1, 2, 2, 1, 1, 0, 0, 0, 0, 2, 2, 0, 0, 1, 3, 1, 1, 0, 0, 2, 0, 1, 1, 2, 0, 2, 1, 0, 1, 3, 0, 2, 1, 0, 1, 1, 0, 1, 1, 3, 0, 2, 1, 1, 1, 0, 2, 2, 3, 1, 2, 1, 0, 1, 1, 1, 2, 2, 1, 2, 1, 0, 0, 1, 2, 2, 2, 0, 0, 1, 1, 0, 2, 1, 1, 1, 2, 0, 3, 1, 0, 2, 2, 2, 1, 2, 1, 1, 0, 2, 1, 2, 0, 2, 2, 0, 0, 2, 1, 1, 2, 2, 2, 2, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 3, 1, 2, 0, 0, 0, 1, 1, 0, 0, 2, 2, 1, 2, 2, 1, 0, 2, 0, 0, 0, 1, 0, 2, 1, 0, 1, 1, 1, 1, 3, 2, 0, 0, 1, 2, 2, 2, 4, 2, 0, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 0, 3, 0, 2, 0, 3, 2, 1, 3, 2, 0, 3, 2, 2, 0, 1, 0, 1, 2, 1, 2, 1, 2, 2, 0, 1, 0, 1, 1, 0, 3, 2, 0, 1, 1, 2, 1, 2, 0, 2, 1, 1, 0, 1, 1, 1, 2, 1, 0, 0, 2, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 3, 0, 1, 0, 2, 1, 0, 1, 2, 2, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 2, 1, 0, 1, 0, 2, 2, 1, 1, 1, 0, 0, 1, 0, 2, 1, 1, 0, 1, 0, 1, 2, 1, 0, 1, 0, 1, 0, 1, 1, 2, 2, 0, 0, 0, 2, 2, 0, 1, 1, 1, 0, 1, 1, 1, 3, 1, 1, 2, 0, 0, 1, 0, 0, 2, 1, 1, 1, 1, 1, 1, 2, 2, 0, 1, 2, 0, 2, 1, 2, 2, 2, 0, 0, 1, 1, 4, 0, 1, 1, 2, 3, 0, 0, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 0, 1, 0, 2, 2, 3, 3, 0, 2, 0, 0, 1, 0, 2, 1, 1, 2, 1, 2, 0, 0, 1, 1, 1, 1, 4, 2, 2, 2, 0, 2, 1, 1, 1, 0, 2, 2, 1, 1, 1, 2, 0, 1, 1, 0, 2, 0, 1, 1, 0, 1, 1, 2, 1, 1, 2, 0, 3, 1, 2, 1, 2, 0, 0, 1, 1, 1, 1, 1, 2, 0, 1, 1, 0, 1, 2, 3, 0, 3, 0, 0, 1, 1, 2, 1, 0, 1, 2, 1, 1, 0, 3, 3, 1, 1, 1, 1, 0, 1, 2, 2, 1, 0, 1, 0, 0, 1, 2, 2, 1, 0, 1, 2, 1, 2, 0, 2, 1, 1, 0, 1, 0, 0, 3, 1, 1, 1, 3, 2, 1, 1, 2, 1, 2, 1, 1, 1, 0, 1, 1, 2, 1, 1, 1, 2, 2, 2, 2, 0, 2, 1, 1, 1, 1, 1, 2, 2, 1, 1, 2, 3, 3, 1, 1, 2, 2, 1, 2, 0, 1, 1, 1, 2, 0, 1, 1, 2, 2, 1, 1, 0, 1, 1, 0, 0, 0, 2, 0, 1, 1, 1, 0, 1, 0, 0, 3, 2, 2, 2, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 3, 0, 0, 2, 1, 1, 2, 1, 1, 2, 0, 0, 1, 2, 0, 2, 0, 2, 0, 1, 1, 2, 3, 2, 1, 1, 0, 2, 1, 1, 0, 0, 2, 2, 0, 1, 1, 2, 1, 2, 1, 2, 1, 0, 2, 0, 1, 0, 3, 1, 1, 3, 2, 0, 1, 1, 0, 2, 1, 0, 2, 0, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 0, 1, 0, 2, 1, 2, 2, 1, 1, 2, 1, 0, 0, 0, 1, 3, 1, 0, 1, 2, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 2, 0, 3, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 2, 0, 1, 0, 3, 1, 0, 2, 1, 0, 2, 0, 1, 1, 1, 0, 0, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 1, 0, 2, 1, 1, 1, 0, 0, 2, 1, 1, 3, 0, 1, 1, 0, 1, 0, 3, 2, 2, 0, 2, 0, 1, 1, 1, 0, 0, 0, 2, 3, 2, 0, 0, 0, 2, 2, 3, 2, 1, 2, 3, 0, 0, 2, 0, 0, 0, 0, 1, 1, 2, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 2, 2, 1, 1, 0, 1, 1, 2, 1, 0, 1, 1, 1, 0, 1, 1, 2, 2, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 2, 0, 0, 2, 0, 2, 2, 1, 2, 0, 2, 0, 1, 1, 2, 1, 1, 2, 1, 0, 0, 2, 1, 2, 2, 2, 1, 2, 1, 1, 0, 2, 1, 2, 2, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 2, 1, 2, 1, 2, 1, 1, 0, 3, 1, 0, 1, 1, 0, 3, 0, 1, 2, 0, 3, 1, 0, 0, 2, 0, 0, 1, 1, 1, 1, 0, 1, 0, 2, 0, 1, 0, 2, 1, 1, 1, 1, 1, 3, 2, 0, 0, 3, 1, 3, 0, 2, 0, 1, 1, 0, 2, 0, 1, 1, 2, 0, 1, 2, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0, 1, 0, 2, 1, 1, 2, 1, 0, 1, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1, 2, 0, 2, 2, 2, 0, 0, 0, 2, 2, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 2, 2, 0, 3, 2, 1, 2, 1, 0, 1, 1, 1, 1, 0, 2, 0, 3, 0, 0, 2, 1, 1, 0, 4, 1, 0, 1, 1, 1, 0, 0, 1, 3, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 3, 0, 1, 1, 2, 0, 0, 0, 2, 0, 1, 2, 0, 1, 2, 1, 1, 2, 1, 2, 0, 0, 2, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 0, 2, 3, 1, 1, 2, 1, 0, 1, 1, 1, 2, 1, 1, 1, 1, 0, 1, 2, 1, 1, 1, 2, 2, 0, 1, 1, 0, 2, 0, 1, 0, 0, 0, 2, 2, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 3, 1, 1, 0, 0, 0, 0, 0, 1, 3, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 2, 0, 0, 1, 1, 0, 2, 1, 3, 0, 2, 1, 1, 0, 1, 1, 1, 0, 0, 2, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 2, 0, 1, 1, 1, 2, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 2, 3, 0, 1, 2, 1, 1, 1, 0, 1, 2, 1, 0, 1, 0, 2, 1, 2, 0, 1, 1, 1, 1, 1, 2, 1, 0, 2, 1, 2, 3, 1, 3, 1, 0, 1, 0, 1, 2, 2, 3, 1, 1, 1, 1, 1, 1, 0, 2, 1, 0, 1, 2, 1, 1, 1, 1, 1, 1, 3, 0, 1, 1, 0, 2, 1, 2, 2, 0, 2, 2, 2, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 3, 2, 0, 1, 1, 2, 0, 2, 1, 2, 1, 1, 1, 1, 0, 2, 2, 1, 2, 1, 1, 2, 1, 2, 0, 0, 0, 1, 3, 0, 1, 0, 2, 1, 1, 2, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 3, 0, 0, 1, 2, 0, 2, 1, 0, 3, 0, 1, 0, 2, 1, 3, 0, 2, 1, 1, 0, 1, 1, 1, 1, 2, 0, 2, 1, 0, 1, 0, 0, 0, 2, 2, 1, 3, 1, 3, 2, 1, 1, 1, 0, 1, 0, 2, 1, 0, 0, 0, 3, 2, 1, 1, 0, 1, 1, 1, 1, 1, 2, 3, 1, 0, 3, 2, 2, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 3, 1, 1, 2, 1, 0, 1, 1, 0, 2, 1, 0, 0, 2, 1, 0, 2, 1, 2, 3, 0, 0, 0, 1, 1, 0, 1, 1, 2, 1, 1, 1, 2, 0, 1, 1, 1, 2, 1, 2, 3, 0, 1, 0, 1, 1, 0, 1, 1, 1, 2, 1, 0, 2, 1, 2, 0, 2, 1, 1, 2, 1, 0, 0, 2, 1, 1, 2, 1, 2, 1, 3, 0, 1, 0, 1, 1, 0, 1, 2, 1, 0, 1, 0, 3, 1, 1, 1, 2, 0, 2, 1, 2, 2, 0, 2, 2, 0, 1, 2, 2, 0, 1, 0, 0, 2, 1, 2, 1, 2, 2, 0, 1, 2, 2, 0, 0, 2, 0, 1, 0, 2, 1, 1, 2, 1, 1, 2, 0, 0, 1, 2, 1, 0, 1, 2, 2, 0, 1, 0, 0, 0, 2, 1, 1, 2, 1, 1, 0, 2, 2, 2, 0, 1, 2, 1, 0, 1, 0, 2, 0, 0, 3, 1, 0, 0, 2, 2, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 2, 0, 1, 2, 1, 2, 1, 2, 1, 4, 2, 1, 2, 1, 1, 1, 2, 0, 1, 1, 0, 2, 2, 0, 1, 2, 2, 1, 0, 2, 4, 0, 0, 3, 0, 0, 1, 1, 1, 0, 1, 1, 3, 2, 0, 1, 0, 1, 1, 0, 0, 3, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 3, 1, 1, 0, 0, 1, 1, 0, 1, 2, 0, 1, 2, 0, 3, 1, 0, 1, 1, 2, 2, 2, 2, 1, 1, 1, 3, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 4, 0, 1, 1, 2, 1, 0, 4, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 2, 0, 2, 2, 2, 3, 2, 1, 0, 2, 1, 1, 1, 1, 2, 2, 0, 1, 1, 0, 1, 3, 2, 1]</code></pre>
-</div>
-</div>
+<pre class="{rust}"><code>let num_samples = 10000;
+
+let samples: Vec&lt;usize&gt; = (0..num_samples)
+        .map(|_| sample_from_distribution(&amp;cdf))
+        .collect();
+
+
+println!("Samples: {:?}", samples);</code></pre>
 <p>And finally let’s visualize the sample. In order to do this, let us define a chart using the <code>plotters</code> crate.</p>
-<div id="3199ccbc" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">:</span>dep plotters</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">plotters::prelude::</span><span class="op">*;</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> plot_histogram(samples<span class="op">:</span> <span class="op">&amp;</span>[<span class="dt">usize</span>]<span class="op">,</span> filename<span class="op">:</span> <span class="op">&amp;</span><span class="dt">str</span>) <span class="op">{</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> max_value <span class="op">=</span> <span class="op">*</span>samples<span class="op">.</span>iter()<span class="op">.</span>max()<span class="op">.</span>unwrap_or(<span class="op">&amp;</span><span class="dv">0</span>)<span class="op">;</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> frequencies <span class="op">=</span> (<span class="dv">0</span><span class="op">..=</span>max_value)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>map(<span class="op">|</span>value<span class="op">|</span> samples<span class="op">.</span>iter()<span class="op">.</span>filter(<span class="op">|&amp;&amp;</span>x<span class="op">|</span> x <span class="op">==</span> value)<span class="op">.</span>count() <span class="kw">as</span> <span class="dt">u32</span>)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="pp">collect::</span><span class="op">&lt;</span><span class="dt">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>()<span class="op">;</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> root <span class="op">=</span> <span class="pp">BitMapBackend::</span>new(filename<span class="op">,</span> (<span class="dv">1600</span><span class="op">,</span> <span class="dv">1200</span>))<span class="op">.</span>into_drawing_area()<span class="op">;</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    root<span class="op">.</span>fill(<span class="op">&amp;</span>WHITE)<span class="op">.</span>unwrap()<span class="op">;</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">mut</span> chart <span class="op">=</span> <span class="pp">ChartBuilder::</span>on(<span class="op">&amp;</span>root)</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>margin(<span class="dv">10</span>)</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>x_label_area_size(<span class="dv">40</span>)</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>y_label_area_size(<span class="dv">40</span>)</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>caption(<span class="st">"Sample Frequencies"</span><span class="op">,</span> (<span class="st">"sans-serif"</span><span class="op">,</span> <span class="dv">30</span>)<span class="op">.</span>into_font())</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>build_cartesian_2d(<span class="dv">0</span><span class="op">..</span>max_value<span class="op">,</span> <span class="dv">0</span><span class="op">..*</span>frequencies<span class="op">.</span>iter()<span class="op">.</span>max()<span class="op">.</span>unwrap_or(<span class="op">&amp;</span><span class="dv">0</span>))</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>unwrap()<span class="op">;</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    chart</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>configure_mesh()</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>x_desc(<span class="st">"Sample Values"</span>)</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>y_desc(<span class="st">"Frequencies"</span>)</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>draw()</span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>unwrap()<span class="op">;</span></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    chart</span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>draw_series(</span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>            (<span class="dv">0</span><span class="op">..=</span>max_value)</span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>                <span class="op">.</span>map(<span class="op">|</span>x<span class="op">|</span> <span class="op">{</span></span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>                    <span class="kw">let</span> freq <span class="op">=</span> frequencies[x]<span class="op">;</span></span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>                    <span class="pp">Rectangle::</span>new(</span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>                        [(x <span class="kw">as</span> <span class="dt">usize</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">,</span> ((x <span class="op">+</span> <span class="dv">1</span>) <span class="kw">as</span> <span class="dt">usize</span><span class="op">,</span> freq)]<span class="op">,</span></span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>                        BLUE<span class="op">.</span>filled()<span class="op">,</span></span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>                    )</span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span>)<span class="op">,</span></span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>unwrap()</span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>label(<span class="st">"Frequency"</span>)</span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>legend(<span class="op">|</span>(x<span class="op">,</span> y)<span class="op">|</span> <span class="pp">Rectangle::</span>new([(x<span class="op">,</span> y <span class="op">-</span> <span class="dv">10</span>)<span class="op">,</span> (x <span class="op">+</span> <span class="dv">20</span><span class="op">,</span> y)]<span class="op">,</span> BLUE<span class="op">.</span>filled()))<span class="op">;</span></span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>    chart</span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>configure_series_labels()</span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>border_style(<span class="op">&amp;</span>BLACK)</span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>background_style(<span class="op">&amp;</span>WHITE)</span>
-<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>draw()</span>
-<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>unwrap()<span class="op">;</span></span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<pre class="{rust}"><code>:dep plotters
+use plotters::prelude::*;
+
+fn plot_histogram(samples: &amp;[usize], filename: &amp;str) {
+    let max_value = *samples.iter().max().unwrap_or(&amp;0);
+    let frequencies = (0..=max_value)
+        .map(|value| samples.iter().filter(|&amp;&amp;x| x == value).count() as u32)
+        .collect::&lt;Vec&lt;_&gt;&gt;();
+
+    let root = BitMapBackend::new(filename, (1600, 1200)).into_drawing_area();
+    root.fill(&amp;WHITE).unwrap();
+
+    let mut chart = ChartBuilder::on(&amp;root)
+        .margin(10)
+        .x_label_area_size(40)
+        .y_label_area_size(40)
+        .caption("Sample Frequencies", ("sans-serif", 30).into_font())
+        .build_cartesian_2d(0..max_value, 0..*frequencies.iter().max().unwrap_or(&amp;0))
+        .unwrap();
+
+    chart
+        .configure_mesh()
+        .x_desc("Sample Values")
+        .y_desc("Frequencies")
+        .draw()
+        .unwrap();
+
+    chart
+        .draw_series(
+            (0..=max_value)
+                .map(|x| {
+                    let freq = frequencies[x];
+                    Rectangle::new(
+                        [(x as usize, 0), ((x + 1) as usize, freq)],
+                        BLUE.filled(),
+                    )
+                }),
+        )
+        .unwrap()
+        .label("Frequency")
+        .legend(|(x, y)| Rectangle::new([(x, y - 10), (x + 20, y)], BLUE.filled()));
+
+    chart
+        .configure_series_labels()
+        .border_style(&amp;BLACK)
+        .background_style(&amp;WHITE)
+        .draw()
+        .unwrap();
+}</code></pre>
 <p>Let’s make the plot.</p>
-<div id="b500f28f" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plot_histogram(<span class="op">&amp;</span>samples<span class="op">,</span> <span class="st">"histogram.png"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<pre class="{rust}"><code>plot_histogram(&amp;samples, "histogram.png");</code></pre>
 <div id="fig-histogram" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-histogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">

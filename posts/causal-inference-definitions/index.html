@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.54">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Galen Seilis">
-<meta name="dcterms.date" content="2024-07-29">
+<meta name="dcterms.date" content="2024-08-23">
 
-<title>Dynamic URLs in Flask – Galen Seilis</title>
+<title>Causalily Speedrun – Galen Seilis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -102,6 +68,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<meta name="quarto:status" content="draft">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -139,7 +106,7 @@ window.Quarto = {
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top"><div id="quarto-draft-alert" class="alert alert-warning"><i class="bi bi-pencil-square"></i>Draft</div>
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -183,68 +150,98 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Dynamic URLs in Flask</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">Python</div>
-                <div class="quarto-category">Flask</div>
-                <div class="quarto-category">Web Applications</div>
-                <div class="quarto-category">URL</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Galen Seilis </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">July 29, 2024</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Causalily Speedrun</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Causality</div>
+    <div class="quarto-category">Causal-Inference</div>
+  </div>
+  </div>
 
 
 
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Galen Seilis </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 23, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
 
 
-<p>In a previous post I showed how to start the most basic Flask web application. In this post I show a dynamic URL which renders content that depends on using the URL as user input. The mathematical function known as <em>factorial</em> is defined as</p>
-<p><span class="math display">\[n! \triangleq \prod_{i=1}^n i\]</span> when <span class="math inline">\(i \geq 1\)</span> and when <span class="math inline">\(n=0\)</span> then <span class="math inline">\(0! \triangleq 1\)</span>. We will set a dynamic URL which takes an integer for which the factorial will be calculated and displayed. We can specify this by passing <code>'/factorial/&lt;int:number&gt;'</code>. The prefix <code>/factorial/</code> is just to remind us that we’re calculating the factorial of a number. The angle brackets <code>&lt;TYPE:...&gt;</code> indicate that something is unspecified input in between the brackets with type <code>TYPE</code>. In this case we want <code>&lt;int: ...&gt;</code> because the factorial function (not to be confused with its generalizations, like the gamma function) is defined only for non-negative integers. It is natural to use <code>number</code> since we expect a number, but other names are possible for this.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> factorial</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> Flask(<span class="va">__name__</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">'/factorial/&lt;int:number&gt;'</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_factorial(number):</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">str</span>(factorial(number))</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">'__main__'</span>:</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    app.run(debug<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>That’s it. We’re just taking the number, calculating its factorial, casting the result to a string, and returning it. Flask takes care of the rest.</p>
+</header>
 
 
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>This post is a “speed run” through the definitions found in Judea Pearl’s *Causality: Models, Reasoning, and Inference”. I may have added or removed some topics subject to my prejudice.</p>
+</section>
+<section id="probability" class="level2">
+<h2 class="anchored" data-anchor-id="probability">Probability</h2>
+<p>The common definitions and results in probability are worth knowing.</p>
+<ul>
+<li>Kolmogorov’s axioms</li>
+<li>Joint, conditional, and marginal probability.</li>
+<li>Law of total probability,</li>
+<li>Statistical independence</li>
+<li>Conditional independence and its properties.</li>
+</ul>
+<p>It is also valuable to understand the expectation operator and the notion of a conditional expectation. Common results in the algebra of random variables are also helpful.</p>
+<p>Doesn’t hurt to know the chain rule of probability.</p>
+</section>
+<section id="graph-theory" class="level2">
+<h2 class="anchored" data-anchor-id="graph-theory">Graph Theory</h2>
+<p>Know the definition of a graph, and related terms such as <em>vertices</em>, <em>edges</em> and <em>paths</em>. Know that graphs can be directed or undirected, and that if there exists an adjacency homomorphism from a directed graph to an undirected graph up to the direction of the edges then the undirected graph is called a <em>skeleton</em> of the directed graph.</p>
+<ul>
+<li>connected vs unconnected graphs</li>
+<li>self-loops</li>
+<li>cycles</li>
+<li>directed acyclic graph (DAG)</li>
+<li>A <em>family</em> in a graph is a set of nodes containing a node and all its parents.</li>
+<li>A node in a directed graph is called a <em>root</em> if it has no parents and a <em>sink</em> if it has no children.</li>
+<li>A connected DAG in which every node has at-most one parent is called a <em>tree</em>.</li>
+<li>A tree in which every node has at-most one child is called a <em>chain</em>.</li>
+<li>A graph in which every pair of nodes is connected by an edge is called *complete.</li>
+</ul>
+</section>
+<section id="probability-and-graphs" class="level2">
+<h2 class="anchored" data-anchor-id="probability-and-graphs">Probability and Graphs</h2>
+<blockquote class="blockquote">
+<p>DEFINITION <em>Markovian Parents</em>: Let <span class="math inline">\(V = \{X_1, \ldots, X_n \}\)</span> be an ordered set of variables, and let <span class="math inline">\(P(v)\)</span> be the joint probability distribution on these variables. A set of variables <span class="math inline">\(PA_j\)</span> is said to be Markovian parents of <span class="math inline">\(X_j\)</span> if <span class="math inline">\(PA_j\)</span> is a minimal set of predecessors of <span class="math inline">\(X_j\)</span> that renders <span class="math inline">\(X_j\)</span> independent of all its other predecessors. In other words, $P(x_j pa_j) = P(x_j | x_1, , x_{j-1}) and such that no proper subset of <span class="math inline">\(PA_j\)</span> satisfies the above expression.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>DEFINITION <em>Markov Compatibility</em>: If a probability function <span class="math inline">\(P\)</span> admits the factorizatoin of <span class="math inline">\(P(x_1, \ldots, x_n) = \prod_{i} P(x_j \mid pa_i)\)</span> relate to a DAG <span class="math inline">\(G\)</span>, we say that <span class="math inline">\(G\)</span> and <span class="math inline">\(P\)</span>, or that <span class="math inline">\(G\)</span> represents <span class="math inline">\(P\)</span>, or that <span class="math inline">\(P\)</span> is Markov relative to <span class="math inline">\(G\)</span>.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>DEFINITION <em>d-separation</em> A <em>path</em> <span class="math inline">\(p\)</span> is said to be d-separated by a set of nodes <span class="math inline">\(Z\)</span> if and only if: 1. <span class="math inline">\(p\)</span> contains a chain <span class="math inline">\(i \rightarrow m \rightarrow j\)</span> or a fork <span class="math inline">\(i \leftarrow m \rightarrow j\)</span> such that the middle node <span class="math inline">\(m \in Z\)</span> or 2. <span class="math inline">\(p\)</span> contains an inverted fork (or collider) <span class="math inline">\(i \rightarrow m \leftarrow j\)</span> such that the middle node <span class="math inline">\(m\)</span> is not in <span class="math inline">\(Z\)</span> and such that no descendent of <span class="math inline">\(m\)</span> is in <span class="math inline">\(Z\)</span>. A set <span class="math inline">\(Z\)</span> is said to d-separate <span class="math inline">\(X\)</span> from <span class="math inline">\(Y\)</span> IFF <span class="math inline">\(Z\)</span> blocks every path from a node in <span class="math inline">\(X\)</span> to a node in <span class="math inline">\(Y\)</span>.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>THEOREM: Probabilistic Implications of d-Separation</p>
+<p>If sets <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are d-separated by <span class="math inline">\(Z\)</span> ina DAG <span class="math inline">\(G\)</span>, then <span class="math inline">\(X\)</span> is independent of <span class="math inline">\(Y\)</span> conditional on <span class="math inline">\(Z\)</span> in every distribution compatible with <span class="math inline">\(G\)</span>. Conversely, if <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are not d-separated by <span class="math inline">\(Z\)</span> in a DAG G, then <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are dependent conditional on <span class="math inline">\(Z\)</span> in at least one distribution compatible with <span class="math inline">\(G\)</span>.</p>
+</blockquote>
+
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -339,7 +336,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/galenseilis\.github\.io\/blog\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

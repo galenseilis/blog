@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.54">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -110,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -154,62 +154,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Bandit On Bandit</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">Python</div>
-                <div class="quarto-category">Security</div>
-                <div class="quarto-category">Information Security</div>
-                <div class="quarto-category">Bandit</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Galen Seilis </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">March 9, 2023</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Bandit On Bandit</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Python</div>
+    <div class="quarto-category">Security</div>
+    <div class="quarto-category">Information Security</div>
+    <div class="quarto-category">Bandit</div>
+  </div>
+  </div>
 
 
 
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Galen Seilis </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 9, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
 
 
 <p>Bandit is a Python package for checking for security issues in Python code. I have been thinking about using Bandit to check for security risks in my own sofware as well as 3rd party packages that I use. I couldn’t help but venture to the potentially ironic situation of Bandit evaluating that Bandit itself is insecure.</p>
 <p>We can find the version of Bandit we are using like this:</p>
-<div id="19ddf81e" class="cell" data-execution_count="1">
+<div id="e06cb40c" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> bandit</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(bandit.__version__)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1.7.9</code></pre>
+<pre><code>1.8.0</code></pre>
 </div>
 </div>
 <p>The path that the <code>__init__.py</code> file for Bandit is located on your system can be found in <code>bandit.__file__</code>. We can call Bandit from the command line on itself.</p>
-<div id="139d5be0" class="cell" data-execution_count="2">
+<div id="b1f0d30a" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -219,20 +218,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   0% -:--:--
-Working... ━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  14% -:--:--
-Working... ━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  14% -:--:--
-Working... ━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━  29% 0:00:01
-Working... ━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━  48% 0:00:01
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   0% -:--:--
+Working... ━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━  34% 0:00:01
+Working... ━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━  52% 0:00:01
+Working... ━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━  52% 0:00:01
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
-Run started:2024-08-11 05:16:57.106814
+Run started:2024-12-12 01:56:27.006617
 
 Test results:
-    No issues identified.
+&gt;&gt; Issue: [B613:trojansource] A Python source file contains bidirectional control characters ('\u202e').
+   Severity: High   Confidence: Medium
+   CWE: CWE-838 (https://cwe.mitre.org/data/definitions/838.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.0/plugins/b613_trojansource.html
+   Location: /home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/plugins/trojansource.py:22:36
+21       3      access_level = "user"
+22       4      if access_level != 'none‮⁦': # Check if admin ⁩⁦' and access_level != 'user
+23       5          print("You are an admin.\n")
+24  
+
+--------------------------------------------------
 
 Code scanned:
-    Total lines of code: 8340
+    Total lines of code: 8446
     Total lines skipped (#nosec): 0
     Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 10
 
@@ -241,11 +249,11 @@ Run metrics:
         Undefined: 0
         Low: 0
         Medium: 0
-        High: 0
+        High: 1
     Total issues (by confidence):
         Undefined: 0
         Low: 0
-        Medium: 0
+        Medium: 1
         High: 0
 Files skipped (0):
 </code></pre>
@@ -253,19 +261,19 @@ Files skipped (0):
 </div>
 <p>At a quick glance you might misread the above output as saying that there are no issues. There actually are, but the authors of Bandit have disabled them using the <code>#nosec</code> comment. This is indicated by the <code>Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 10</code>. Why the output also says <code>Total lines skipped (#nosec): 0</code> I am not sure.</p>
 <p>We can find the locations of these lines.</p>
-<div id="bfa7d018" class="cell" data-execution_count="3">
+<div id="2080ad82" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(subprocess.run([<span class="st">'grep'</span>, <span class="st">'-rin'</span>, <span class="st">'</span><span class="ch">\\</span><span class="st">#</span><span class="ch">\\</span><span class="st">snosec'</span>,  init_path], capture_output<span class="op">=</span><span class="va">True</span>, text<span class="op">=</span><span class="va">True</span>).stdout)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>/home/galen/.rye/py/cpython@3.12.3/lib/python3.12/site-packages/bandit/plugins/general_hardcoded_tmp.py:62:        return {"tmp_dirs": ["/tmp", "/var/tmp", "/dev/shm"]}  # nosec: B108
-/home/galen/.rye/py/cpython@3.12.3/lib/python3.12/site-packages/bandit/plugins/general_hardcoded_tmp.py:72:        tmp_dirs = ["/tmp", "/var/tmp", "/dev/shm"]  # nosec: B108
-/home/galen/.rye/py/cpython@3.12.3/lib/python3.12/site-packages/bandit/plugins/general_bind_all_interfaces.py:46:    if context.string_val == "0.0.0.0":  # nosec: B104
-/home/galen/.rye/py/cpython@3.12.3/lib/python3.12/site-packages/bandit/cli/baseline.py:18:import subprocess  # nosec: B404
-/home/galen/.rye/py/cpython@3.12.3/lib/python3.12/site-packages/bandit/cli/baseline.py:107:                output = subprocess.check_output(bandit_command)  # nosec: B603
-/home/galen/.rye/py/cpython@3.12.3/lib/python3.12/site-packages/bandit/cli/main.py:332:        help="do not skip lines with # nosec comments",
-/home/galen/.rye/py/cpython@3.12.3/lib/python3.12/site-packages/bandit/cli/main.py:586:            "do not skip lines with # nosec",
-/home/galen/.rye/py/cpython@3.12.3/lib/python3.12/site-packages/bandit/formatters/xml.py:38:from xml.etree import ElementTree as ET  # nosec: B405
-/home/galen/.rye/py/cpython@3.12.3/lib/python3.12/site-packages/bandit/core/manager.py:308:            # nosec_lines is a dict of line number -&gt; set of tests to ignore
-/home/galen/.rye/py/cpython@3.12.3/lib/python3.12/site-packages/bandit/core/utils.py:367:    except AttributeError:  # nosec(tkelsey): catching expected exception
+<pre><code>/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/plugins/general_hardcoded_tmp.py:62:        return {"tmp_dirs": ["/tmp", "/var/tmp", "/dev/shm"]}  # nosec: B108
+/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/plugins/general_hardcoded_tmp.py:72:        tmp_dirs = ["/tmp", "/var/tmp", "/dev/shm"]  # nosec: B108
+/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/plugins/general_bind_all_interfaces.py:46:    if context.string_val == "0.0.0.0":  # nosec: B104
+/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/core/utils.py:367:    except AttributeError:  # nosec(tkelsey): catching expected exception
+/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/core/manager.py:308:            # nosec_lines is a dict of line number -&gt; set of tests to ignore
+/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/cli/baseline.py:18:import subprocess  # nosec: B404
+/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/cli/baseline.py:107:                output = subprocess.check_output(bandit_command)  # nosec: B603
+/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/cli/main.py:332:        help="do not skip lines with # nosec comments",
+/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/cli/main.py:586:            "do not skip lines with # nosec",
+/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/formatters/xml.py:38:from xml.etree import ElementTree as ET  # nosec: B405
 </code></pre>
 </div>
 </div>

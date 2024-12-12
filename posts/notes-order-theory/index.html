@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.54">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -142,7 +142,7 @@ window.Quarto = {
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -186,65 +186,64 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Notes on Order Theory</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">Mathematics</div>
-                <div class="quarto-category">Order Theory</div>
-                <div class="quarto-category">Partial Orders</div>
-                <div class="quarto-category">Reflexive Relations</div>
-                <div class="quarto-category">Transitive Relations</div>
-                <div class="quarto-category">Antisymmetric Relations</div>
-                <div class="quarto-category">Asymmetric Relations</div>
-                <div class="quarto-category">Cartesian Products</div>
-                <div class="quarto-category">Binary Relations</div>
-                <div class="quarto-category">Relations</div>
-                <div class="quarto-category">Python</div>
-                <div class="quarto-category">LaTeX</div>
-                <div class="quarto-category">Directed Acyclic Graphs</div>
-                <div class="quarto-category">Strict Partial Orders</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Galen Seilis </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">February 19, 2023</p>
-      </div>
-    </div>
-    
-      <div>
-      <div class="quarto-title-meta-heading">Modified</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date-modified">August 10, 2024</p>
-      </div>
-    </div>
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Notes on Order Theory</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Mathematics</div>
+    <div class="quarto-category">Order Theory</div>
+    <div class="quarto-category">Partial Orders</div>
+    <div class="quarto-category">Reflexive Relations</div>
+    <div class="quarto-category">Transitive Relations</div>
+    <div class="quarto-category">Antisymmetric Relations</div>
+    <div class="quarto-category">Asymmetric Relations</div>
+    <div class="quarto-category">Cartesian Products</div>
+    <div class="quarto-category">Binary Relations</div>
+    <div class="quarto-category">Relations</div>
+    <div class="quarto-category">Python</div>
+    <div class="quarto-category">LaTeX</div>
+    <div class="quarto-category">Directed Acyclic Graphs</div>
+    <div class="quarto-category">Strict Partial Orders</div>
+  </div>
+  </div>
 
 
 
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Galen Seilis </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 19, 2023</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">August 10, 2024</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
 
 
 <section id="fundamentals" class="level1">
@@ -285,14 +284,14 @@ e \\
 \]</span></p>
 <p>Another representation is a directed graph (AKA a digraph):</p>
 </blockquote>
-<div id="61518e89" class="cell" data-execution_count="1">
+<div id="b68ab0d9" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> graphviz <span class="im">import</span> Digraph</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>XxX <span class="op">=</span> <span class="st">'aa'</span>, <span class="st">'ac'</span>, <span class="st">'ae'</span>, <span class="st">'bb'</span>, <span class="st">'bc'</span>, <span class="st">'bd'</span>, <span class="st">'be'</span>, <span class="st">'cc'</span>, <span class="st">'dd'</span>, <span class="st">'de'</span>, <span class="st">'ee'</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> Digraph(<span class="st">'example_partial_order'</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> xx <span class="kw">in</span> XxX:</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    D.edge(xx[<span class="dv">0</span>], xx[<span class="dv">1</span>])</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>D</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="50">
+<div class="cell-output cell-output-display" data-execution_count="1">
 <div>
 <figure class="figure">
 <p><img src="index_files/figure-html/cell-2-output-1.svg" class="img-fluid figure-img"></p>
@@ -313,7 +312,7 @@ Tip
 <blockquote class="blockquote">
 <p>The previous example only required a relatively small subset of the Cartesian <span class="math inline">\(X \times X\)</span>. When you a have too many elements in <span class="math inline">\(X\)</span> to deal with by hand, one quick Python script to make the pairs in a format suitable for <span class="math inline">\(\LaTeX\)</span> is the following:</p>
 </blockquote>
-<div id="d9563a7c" class="cell" data-execution_count="2">
+<div id="862bc2e4" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> product</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> <span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, <span class="st">'d'</span>, <span class="st">'e'</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>XxX <span class="op">=</span> [<span class="st">'('</span><span class="op">+</span><span class="st">', '</span>.join(i) <span class="op">+</span> <span class="st">')'</span> <span class="cf">for</span> i <span class="kw">in</span> product(X,X)]</span>
@@ -483,7 +482,7 @@ Tip
 <p><strong>Example</strong></p>
 <p>Suppose we have the strict partial order <span class="math inline">\(\\{(a,c), (a,e), (b,c), (b,d), (b,e), (d,e)\\}\)</span>, then its cover diagram would look like:</p>
 </blockquote>
-<div id="58fc9f64" class="cell" data-execution_count="3">
+<div id="2f001b24" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>

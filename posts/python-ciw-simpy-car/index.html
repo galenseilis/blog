@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.54">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -142,7 +142,7 @@ window.Quarto = {
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -186,61 +186,60 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">A Ciw Implementation of SimPy’s Car Example</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">Python</div>
-                <div class="quarto-category">Simulation</div>
-                <div class="quarto-category">Queueing System</div>
-                <div class="quarto-category">Queueing Network</div>
-                <div class="quarto-category">Queueing Theory</div>
-                <div class="quarto-category">Routing</div>
-                <div class="quarto-category">Process-Based Simulation</div>
-                <div class="quarto-category">Random Variables</div>
-                <div class="quarto-category">Constant Random Variables</div>
-                <div class="quarto-category">Arrival Distributions</div>
-                <div class="quarto-category">Service Distributions</div>
-                <div class="quarto-category">Timing</div>
-                <div class="quarto-category">Initialization</div>
-                <div class="quarto-category">Discrete Event Simulation</div>
-                <div class="quarto-category">Ciw</div>
-                <div class="quarto-category">SimPy</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Galen Seilis </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">December 20, 2023</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">A Ciw Implementation of SimPy’s Car Example</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Python</div>
+    <div class="quarto-category">Simulation</div>
+    <div class="quarto-category">Queueing System</div>
+    <div class="quarto-category">Queueing Network</div>
+    <div class="quarto-category">Queueing Theory</div>
+    <div class="quarto-category">Routing</div>
+    <div class="quarto-category">Process-Based Simulation</div>
+    <div class="quarto-category">Random Variables</div>
+    <div class="quarto-category">Constant Random Variables</div>
+    <div class="quarto-category">Arrival Distributions</div>
+    <div class="quarto-category">Service Distributions</div>
+    <div class="quarto-category">Timing</div>
+    <div class="quarto-category">Initialization</div>
+    <div class="quarto-category">Discrete Event Simulation</div>
+    <div class="quarto-category">Ciw</div>
+    <div class="quarto-category">SimPy</div>
+  </div>
+  </div>
 
 
 
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Galen Seilis </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 20, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
 
 
 <p>In the SimPy documentation they describe a <a href="https://simpy.readthedocs.io/en/latest/simpy_intro/basic_concepts.html#our-first-process">car process</a> which involves a car which transitions between parking and driving. From being parked it takes 5 units of time to change to being in a state of driving. Similarly, it takes 2 units of time to go from being in a state of driving to a state of parkerd. Here is a state diagram representing this system:</p>
@@ -265,7 +264,7 @@ window.Quarto = {
 <p>Let our queueing network have two nodes, each representing either of the two states “Parked” or “Driving”. The car will go between these two nodes. When the car arrives at a node that will repesent that it has begun the whatever process is involved, and when the car finishes service at that node we will interpret that to mean it is now changing state.</p>
 <p>Since there will be only one car in the whole network, we do not need to give any consideration to service discipline. If the car is on the queue, then serve it. Otherwise, don’t.</p>
 <p>We do need to pay attention to arrival times however. We need the car to arrive at the first node at the start of the simulation and for no additional cars to arrive thereafter. This can be achieved with a sequential distribution available in Ciw:</p>
-<div id="921cb782" class="cell" data-execution_count="1">
+<div id="b6abf252" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ciw</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ciw.dists.Sequential([<span class="dv">0</span>, <span class="bu">float</span>(<span class="st">'inf'</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
@@ -273,15 +272,15 @@ window.Quarto = {
 </div>
 </div>
 <p>The class <code>ciw.dists.Sequential</code> takes an iterable (usually a list) representing the sequence of arrival times to be done. When it has gotten through the list it will start again at the start of the list. But here’s the catch: we have set the second time to <span class="math inline">\(\infty\)</span>, which it will never reach. So there will be a single arrival at <span class="math inline">\(t=0\)</span> and non thereafter. We need to specify that no arrivals occur at the second node, which we can do using <code>None</code>:</p>
-<div id="745a0f1b" class="cell" data-execution_count="2">
+<div id="f5db38d2" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>arrival_dists <span class="op">=</span> [ciw.dists.Sequential([<span class="dv">0</span>, <span class="bu">float</span>(<span class="st">'inf'</span>)]), <span class="va">None</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>For service times we know that the car will start driving after 5 units of time, then be parked for 2 units of time, and repeat. These are <a href="https://en.wikipedia.org/wiki/Degenerate_distribution#Constant_random_variable">constant random variables</a> which can be specified in Ciw using <code>ciw.dists.Deterministic</code>:</p>
-<div id="68ca02b9" class="cell" data-execution_count="3">
+<div id="e90f3789" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>service_dists <span class="op">=</span> [ciw.dists.Deterministic(<span class="dv">5</span>), ciw.dists.Deterministic(<span class="dv">2</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We don’t need to, but let’s add some fluff so that we get a similar printout. To do that let’s write a wrapper distribution.</p>
-<div id="0e9a23df" class="cell" data-execution_count="4">
+<div id="cb3127e9" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> NoReturn</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ciw</span>
@@ -335,7 +334,7 @@ window.Quarto = {
 <span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.dist.sample(t, ind)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The <code>PrintDistWrapper</code> class allows us to print whatever message we like when the distribution is sampled from. Now we can just wrap our service distributions like this:</p>
-<div id="fc15d193" class="cell" data-execution_count="5">
+<div id="15f90f45" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>service_dists <span class="op">=</span> [</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  PrintDistWrapper(</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    ciw.dists.Deterministic(<span class="dv">5</span>),</span>
@@ -346,17 +345,17 @@ window.Quarto = {
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We only need one server at each node since there could only ever be one car either there, or not there, requiring service. So we can just set those number of servers in a list like this:</p>
-<div id="cdb87623" class="cell" data-execution_count="6">
+<div id="98e315f5" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>num_servers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Since we have two nodes, we need to specifying the routing behaviour. It is simple in this case, and stationary. Whenever the car is leaving node one, go to node to. Whenever the car is leaving node two, go to node one. We can specify this as the following routing matrix:</p>
 <p><span class="math display">\[\begin{bmatrix} 0 &amp; 1 \\ 1 &amp; 0 \end{bmatrix}\]</span></p>
 <p>In Ciw we can take our routing matrix to be:</p>
-<div id="efd287d1" class="cell" data-execution_count="7">
+<div id="ee3b2cde" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> [[<span class="fl">0.0</span>, <span class="fl">1.0</span>], [<span class="fl">1.0</span>, <span class="fl">0.0</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now put together our simulation object:</p>
-<div id="003ce93b" class="cell" data-execution_count="8">
+<div id="c49165ff" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>network <span class="op">=</span> ciw.create_network(</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    arrival_distributions <span class="op">=</span> arrival_dists,</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    service_distributions <span class="op">=</span> service_dists,</span>
@@ -365,11 +364,11 @@ window.Quarto = {
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>And put together out simulation object:</p>
-<div id="934a6535" class="cell" data-execution_count="9">
+<div id="b9f24c84" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>simulation <span class="op">=</span> ciw.Simulation(network)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>And simulate (for 15 units of time)!</p>
-<div id="3fd8f644" class="cell" data-execution_count="10">
+<div id="efcfce89" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>simulation.simulate_until_max_time(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Start parking at 0

@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.54">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Galen Seilis">
-<meta name="dcterms.date" content="2024-07-28">
+<meta name="dcterms.date" content="2024-09-29">
 
-<title>Trying Rust in Jupyter Notebook – Galen Seilis</title>
+<title>A Critique of the Scalability of Kedro – Galen Seilis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -102,15 +102,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<meta name="quarto:status" content="draft">
 
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top"><div id="quarto-draft-alert" class="alert alert-warning"><i class="bi bi-pencil-square"></i>Draft</div>
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -154,61 +155,118 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Trying Rust in Jupyter Notebook</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">Rust</div>
-                <div class="quarto-category">Jupyter Notebook</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Galen Seilis </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">July 28, 2024</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#computational-scalability" id="toc-computational-scalability" class="nav-link" data-scroll-target="#computational-scalability">Computational Scalability</a></li>
+  <li><a href="#todo-produce-an-example-pipeline-for-some-choice-of-foo" id="toc-todo-produce-an-example-pipeline-for-some-choice-of-foo" class="nav-link" data-scroll-target="#todo-produce-an-example-pipeline-for-some-choice-of-foo">TODO: Produce an example pipeline for some choice of ‘foo’</a></li>
+  <li><a href="#todo-example-of-generating-dags-that-run-some-function-e.g.-def-identityx-xw" id="toc-todo-example-of-generating-dags-that-run-some-function-e.g.-def-identityx-xw" class="nav-link" data-scroll-target="#todo-example-of-generating-dags-that-run-some-function-e.g.-def-identityx-xw">TODO: Example of generating DAGs that run some function (e.g.&nbsp;<code>def identity(x): x</code>):w</a></li>
+  <li><a href="#todo-research-and-discuss-how-to-deal-with-files-that-are-too-large-to-fit-into-memory.-how-would-kedro-deal-with-this" id="toc-todo-research-and-discuss-how-to-deal-with-files-that-are-too-large-to-fit-into-memory.-how-would-kedro-deal-with-this" class="nav-link" data-scroll-target="#todo-research-and-discuss-how-to-deal-with-files-that-are-too-large-to-fit-into-memory.-how-would-kedro-deal-with-this">TODO: Research and discuss how to deal with files that are too large to fit into memory. How would Kedro deal with this?</a></li>
+  <li><a href="#project-visualization" id="toc-project-visualization" class="nav-link" data-scroll-target="#project-visualization">Project Visualization</a></li>
+  <li><a href="#project-complexity" id="toc-project-complexity" class="nav-link" data-scroll-target="#project-complexity">Project Complexity</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">A Critique of the Scalability of Kedro</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Python</div>
+    <div class="quarto-category">Kedro</div>
+    <div class="quarto-category">Scalability</div>
+  </div>
+  </div>
 
 
 
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Galen Seilis </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 29, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
 
 
-<p>In a recent post I tried to write my own Lua filter for running Rust code.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="pp">eprintln!</span>(<span class="st">"Hello error"</span>)<span class="op">;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Hello error</p>
-<div id="1813f446" class="cell" data-execution_count="1">
-<div class="cell-output cell-output-stdout">
-<pre><code>Python lol</code></pre>
+</header>
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>In this post I give some critique of the scalability of Kedro. I happen to like Kedro, its plugin ecosystem, and the welcoming and helpful community. However, I don’t like leaving tools I enjoy without some degree of reflection or critique.</p>
+</section>
+<section id="computational-scalability" class="level1">
+<h1>Computational Scalability</h1>
+<p>Suppose you want to a function <code>foo</code>, representing some arbitrary set of Python instructions, on a fixed input <code>x</code>.</p>
+<p>A straightfoward approach is to just call <code>foo</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>foo(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="todo-produce-an-example-pipeline-for-some-choice-of-foo" class="level1">
+<h1>TODO: Produce an example pipeline for some choice of ‘foo’</h1>
+<p>There will always exist a <code>foo(x)</code> such that for a given set of hardware constraints will be computable without Kedro but not computable with Kedro.</p>
+<p>We never get function calls and additional objects in memory for free. This is one of the lurking problems with aiming for generality in programs.</p>
+<p>The more nodes we have, the more overhead.</p>
+</section>
+<section id="todo-example-of-generating-dags-that-run-some-function-e.g.-def-identityx-xw" class="level1">
+<h1>TODO: Example of generating DAGs that run some function (e.g.&nbsp;<code>def identity(x): x</code>):w</h1>
+</section>
+<section id="todo-research-and-discuss-how-to-deal-with-files-that-are-too-large-to-fit-into-memory.-how-would-kedro-deal-with-this" class="level1">
+<h1>TODO: Research and discuss how to deal with files that are too large to fit into memory. How would Kedro deal with this?</h1>
+<p>Kedro also does a lot of file IO. Having the</p>
+</section>
+<section id="project-visualization" class="level1">
+<h1>Project Visualization</h1>
+<p>I think that Kedro’s visualization plugin (Kedro Viz) can improve the experience of a developer coming onto a new project who wants to get a bird’s eye view.</p>
+<p><a href="https://en.wikipedia.org/wiki/Graphical_perception"><em>“Graphical perception is the human capacity for visually interpreting information on graphs and charts.”</em></a>. There are <em>many</em> rules and aphorisms that have been proposed for how to ensure good visualiations. What makes a visualization ‘good’ depends on your goals, such as the emphasis of being persuasive rather than highly informational. With Kedro Viz the use case I envision is primarily to be informative.</p>
+<p>One of the “golden rules” of visualizations is to keep them simple. That’s where Kedro has an eventual scaling problem.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Downscaling
 </div>
 </div>
+<div class="callout-body-container callout-body">
+<p>While I am primarily concerned in this post about ‘upscaling’, I have a concern about downscaling. For sufficiently small workflows not much is added in visualizing what you could easily see as a handful of instructions in a script.</p>
+</div>
+</div>
+<p>While Kedro Viz is capable of visualizing very complicated pipelines, its practical benefit eventually diminishes as the diagrams become highly complex. The computational scalability of Kedro Viz far outstrips the human ability to benefit from it.</p>
+</section>
+<section id="project-complexity" class="level1">
+<h1>Project Complexity</h1>
+<p>This is where Kedro has the best scalability properties, if you’re careful. The data sources, node IO, and pipelines themselves are required to have names. If this is done well then I think Kedro can keep a rather complicated</p>
+<p>Having naming conventions can help with ensuring some level of regularity in what names exist. In some cases it may be able to define the naming rules algorithmically, thus allowing further automation in the creation and searching of complex Kedro projects.</p>
+</section>
+<section id="conclusions" class="level1">
+<h1>Conclusions</h1>
+<p>While we examined Kedro in this particular</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -303,7 +361,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/galenseilis\.github\.io\/blog\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
