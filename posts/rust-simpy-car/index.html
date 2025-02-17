@@ -336,7 +336,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">// Run the simulation until max time</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>env<span class="op">.</span>run_until(<span class="dv">15.0</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="9f0b20de" class="cell" data-execution_count="1">
+<div id="4c526e3a" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-stdout">
 <pre><code>Start parking at 0
 Start driving at 5
@@ -352,7 +352,7 @@ Start parking at 14
 <section id="performance" class="level1">
 <h1>Performance</h1>
 <p>I am curious about the relative performance the simpy example compared to the Rust example. We can run each example a bunch of times to obtain distributions. Since this car example should be compatible with PyPy, a just in time compiled interpreter for a restriction implementation of Python, we will use that as well as the CPython interpreter. We’ll collect up a bunch of results for both Python and Rust.</p>
-<div id="45705771" class="cell" data-execution_count="2">
+<div id="90e367b0" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> time <span class="im">import</span> perf_counter</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -364,7 +364,7 @@ Start parking at 14
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">100</span></span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>BINS<span class="op">=</span><span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="fce93428" class="cell" data-execution_count="3">
+<div id="ffeb194d" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cpython_results <span class="op">=</span> []</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(N):</span>
@@ -373,7 +373,7 @@ Start parking at 14
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    toc <span class="op">=</span> perf_counter()</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    cpython_results.append(toc <span class="op">-</span> tic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cca9e010" class="cell" data-execution_count="4">
+<div id="ccf5a0ad" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pypy_results <span class="op">=</span> []</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(N):</span>
@@ -382,7 +382,7 @@ Start parking at 14
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    toc <span class="op">=</span> perf_counter()</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    pypy_results.append(toc <span class="op">-</span> tic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="d11b632e" class="cell" data-execution_count="5">
+<div id="15920356" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rust_results <span class="op">=</span> []</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(N):</span>
@@ -396,7 +396,7 @@ Start parking at 14
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    toc <span class="op">=</span> perf_counter()</span>
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    rust_results.append(toc <span class="op">-</span> tic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="73fd3a0b" class="cell" data-execution_count="6">
+<div id="d92b5f3d" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>counts, bin_edges <span class="op">=</span> np.histogram(cpython_results, bins<span class="op">=</span>BINS)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>normalized_counts <span class="op">=</span> counts <span class="op">/</span> counts.<span class="bu">sum</span>()</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>plt.bar(bin_edges[:<span class="op">-</span><span class="dv">1</span>], normalized_counts, width<span class="op">=</span>np.diff(bin_edges), label<span class="op">=</span><span class="st">'CPython'</span>)</span>
@@ -425,7 +425,7 @@ Start parking at 14
 </div>
 </div>
 <p>Let’s also tabulate a basic statistical summary:</p>
-<div id="65a46dd4" class="cell" data-execution_count="7">
+<div id="cc66fdb6" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown, display</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -457,45 +457,45 @@ Start parking at 14
 </tr>
 <tr class="even">
 <td style="text-align: left;">mean</td>
-<td style="text-align: right;">0.000892457</td>
-<td style="text-align: right;">0.0788536</td>
-<td style="text-align: right;">0.0517692</td>
+<td style="text-align: right;">0.000936035</td>
+<td style="text-align: right;">0.0763207</td>
+<td style="text-align: right;">0.051146</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">std</td>
-<td style="text-align: right;">9.89428e-05</td>
-<td style="text-align: right;">0.0268332</td>
-<td style="text-align: right;">0.00893929</td>
+<td style="text-align: right;">0.000149557</td>
+<td style="text-align: right;">0.0240181</td>
+<td style="text-align: right;">0.00297577</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">min</td>
-<td style="text-align: right;">0.000722241</td>
-<td style="text-align: right;">0.0537243</td>
-<td style="text-align: right;">0.0466234</td>
+<td style="text-align: right;">0.000738019</td>
+<td style="text-align: right;">0.0543931</td>
+<td style="text-align: right;">0.0467819</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">25%</td>
-<td style="text-align: right;">0.000843259</td>
-<td style="text-align: right;">0.056381</td>
-<td style="text-align: right;">0.0489677</td>
+<td style="text-align: right;">0.000858636</td>
+<td style="text-align: right;">0.0568216</td>
+<td style="text-align: right;">0.0494178</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">50%</td>
-<td style="text-align: right;">0.000872546</td>
-<td style="text-align: right;">0.062138</td>
-<td style="text-align: right;">0.0507101</td>
+<td style="text-align: right;">0.00091042</td>
+<td style="text-align: right;">0.0596203</td>
+<td style="text-align: right;">0.0504521</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">75%</td>
-<td style="text-align: right;">0.000926682</td>
-<td style="text-align: right;">0.109577</td>
-<td style="text-align: right;">0.0527598</td>
+<td style="text-align: right;">0.000978967</td>
+<td style="text-align: right;">0.108924</td>
+<td style="text-align: right;">0.051879</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">max</td>
-<td style="text-align: right;">0.00129563</td>
-<td style="text-align: right;">0.140147</td>
-<td style="text-align: right;">0.136516</td>
+<td style="text-align: right;">0.00175126</td>
+<td style="text-align: right;">0.118751</td>
+<td style="text-align: right;">0.065909</td>
 </tr>
 </tbody>
 </table>
