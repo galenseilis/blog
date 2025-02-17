@@ -238,7 +238,7 @@ window.Quarto = {
 <li><a href="https://math.stackexchange.com/questions/8742/are-functions-of-independent-variables-also-independent">Are functions of independent variables also independent</a></li>
 </ul>
 <p>So what happens if you train a model <span class="math display">\[Y = f(X; \theta) + \epsilon\]</span> when <span class="math display">\[\{ X,Y,\epsilon \}\]</span> are independent? I encourage you to try it out. You’ll observe that the sample estimates of <span class="math display">\[\mathbb{E}[Y \vert X]\]</span> and <span class="math display">\[\mathbb{E}[Y]\]</span> are equal up to sampling variation. Let’s see an example with coins (i.e.&nbsp;Bernoulli trials):</p>
-<div id="733d78a9" class="cell" data-execution_count="1">
+<div id="5457c38f" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.randint(<span class="dv">0</span>,<span class="dv">2</span>,size<span class="op">=</span><span class="dv">10</span><span class="op">**</span><span class="dv">4</span>)</span>
@@ -246,7 +246,7 @@ window.Quarto = {
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.mean(y[x <span class="op">==</span> <span class="dv">0</span>]), np.mean(y[x <span class="op">==</span> <span class="dv">1</span>]), np.mean(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.49091643116673395 0.5043598890210067 0.4977</code></pre>
+<pre><code>0.494831013916501 0.4973843058350101 0.4961</code></pre>
 </div>
 </div>
 <p>Not that this computational experiment of computing the conditional expectation didn’t assume anything about a dependence between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. And yet this conditional expectation is a choice of <span class="math inline">\(Y = f(X; \theta) + \epsilon\)</span> where the parameter <span class="math inline">\(\theta\)</span> doesn’t come into the picture. Is that cheating that we didn’t even talk about some <span class="math inline">\(\theta\)</span> in the example? Not really. We could have assigned it anything we like by declaring it <code>theta = 3</code> for example, but it wouldn’t participate in the computation. Go ahead with trying an example like <span class="math inline">\(Y = X + \beta\)</span> and you’ll find again that it doesn’t make much of difference, and the tiny bit of difference it makes will not generalize to future samples well. We were also being pretty charitable in assuming that <span class="math inline">\(\epsilon\)</span> was a degenerate random variable centered at zero because adding noise would just make any correspondence you would have hoped to find come out as even weaker.</p>

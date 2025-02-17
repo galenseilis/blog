@@ -200,7 +200,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>Bandit is a Python package for checking for security issues in Python code. I have been thinking about using Bandit to check for security risks in my own sofware as well as 3rd party packages that I use. I couldn’t help but venture to the potentially ironic situation of Bandit evaluating that Bandit itself is insecure.</p>
 <p>We can find the version of Bandit we are using like this:</p>
-<div id="e06cb40c" class="cell" data-execution_count="1">
+<div id="d62b72f7" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> bandit</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(bandit.__version__)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -208,7 +208,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>The path that the <code>__init__.py</code> file for Bandit is located on your system can be found in <code>bandit.__file__</code>. We can call Bandit from the command line on itself.</p>
-<div id="b1f0d30a" class="cell" data-execution_count="2">
+<div id="350f5522" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -219,12 +219,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   0% -:--:--
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   0% -:--:--
-Working... ━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━  34% 0:00:01
-Working... ━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━  52% 0:00:01
-Working... ━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━  52% 0:00:01
+Working... ━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  13% -:--:--
+Working... ━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  21% 0:00:02
+Working... ━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━  28% 0:00:02
+Working... ━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━  37% 0:00:01
+Working... ━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━  49% 0:00:01
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━  66% 0:00:01
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
-Run started:2024-12-12 01:56:27.006617
+Run started:2025-02-17 15:14:46.519729
 
 Test results:
 &gt;&gt; Issue: [B613:trojansource] A Python source file contains bidirectional control characters ('\u202e').
@@ -261,7 +264,7 @@ Files skipped (0):
 </div>
 <p>At a quick glance you might misread the above output as saying that there are no issues. There actually are, but the authors of Bandit have disabled them using the <code>#nosec</code> comment. This is indicated by the <code>Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 10</code>. Why the output also says <code>Total lines skipped (#nosec): 0</code> I am not sure.</p>
 <p>We can find the locations of these lines.</p>
-<div id="2080ad82" class="cell" data-execution_count="3">
+<div id="e1430c7f" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(subprocess.run([<span class="st">'grep'</span>, <span class="st">'-rin'</span>, <span class="st">'</span><span class="ch">\\</span><span class="st">#</span><span class="ch">\\</span><span class="st">snosec'</span>,  init_path], capture_output<span class="op">=</span><span class="va">True</span>, text<span class="op">=</span><span class="va">True</span>).stdout)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/plugins/general_hardcoded_tmp.py:62:        return {"tmp_dirs": ["/tmp", "/var/tmp", "/dev/shm"]}  # nosec: B108
