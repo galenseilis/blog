@@ -267,7 +267,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="example">Example</h2>
 <p>Let us say we have a curve <span class="math display">\[y = f(x)\]</span>, with a point <span class="math display">\[p = (a, f(a))\]</span>. A tangent vector at that point can be given by <span class="math display">\[\vec v = \langle 1, f^{\prime}(a) \rangle\]</span> where <span class="math display">\[\langle \cdot, \cdot \rangle\]</span> is an inner product. Then we can formulate the tangent space</p>
 <p><span class="math display">\[T_pC = \text{span} \{ \langle 1, f^{\prime} \rangle \} = \{ \langle c, c f^{\prime}(a) | c \in \mathbb{R} \}.\]</span></p>
-<div id="b7b5b11c" class="cell" data-execution_count="1">
+<div id="376180e5" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
@@ -316,7 +316,7 @@ window.Quarto = {
 <section id="example-1" class="level2">
 <h2 class="anchored" data-anchor-id="example-1">Example</h2>
 <p>Let <span class="math inline">\(y = x^2\)</span>, then the coordinate vector is <span class="math inline">\((x,y)(p) = (a, a^2) \in C\)</span>. Similarly <span class="math inline">\(\langle dx, dy \rangle (v) = \langle 1, 2a \rangle \in T_pC\)</span> where <span class="math inline">\(v\)</span> is a tangent vector to the function.</p>
-<div id="93b4dd21" class="cell" data-execution_count="2">
+<div id="ebaa8f14" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
@@ -376,7 +376,7 @@ Tip
 <section id="example-3" class="level2">
 <h2 class="anchored" data-anchor-id="example-3">Example</h2>
 <p>Suppose we have <span class="math inline">\(\langle 1, 2 \rangle_{(1,1)}\)</span>, we can think of the differentials as another set of axes as visualized below.</p>
-<div id="7b67ae6e" class="cell" data-execution_count="3">
+<div id="7c209ecc" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
