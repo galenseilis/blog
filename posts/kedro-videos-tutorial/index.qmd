@@ -1,7 +1,7 @@
 ---
 title: "Kedro Video Tutorial Notes"
 author: "Galen Seilis"
-date: "2023-05-12"
+date: "2025-02-17"
 categories: [Python, Kedro]
 toc: true
 draft: true
@@ -1860,3 +1860,413 @@ Putting it all together, `http://127.0.0.1:4141/` refers to a web server running
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ctTFAeL4JgU?si=kCTOC9l9t37C66DX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
+- You can rewrite your notebook code into functions.
+- For example:
+
+```python
+import pandas as pd
+
+def split_data(df: pd.DataFrame, parameters: dict) -> tuple:
+	X = df[parameters["features"]]
+	y = df["price"]
+	(
+		X_train,
+		X_test,
+		y_train,
+		y_test
+	) = train_test_split(
+		X,
+		y,
+		test_size=parameters["test_size"]
+		)
+	return X_train, X_test, y_train, y_test
+```
+
+::: {.callout-note}
+You can reload Kedro in an iPython session using `%reload_kedro` as an iPython magic command.
+:::
+
+You can load a Kedro project's parameters using the following:
+
+```python
+catalog.load("params")
+```
+
+You can further specify loading an entry in Kedro parameters using a colon:
+
+```python
+catalog.load("params:a")
+```
+
+This does assume that you have an instance of the catalog loaded. This will occur automatically in a Kedro Jpuyter notebook, but you may need to import and call some callables from Kedro when doing this from a script.
+
+## Make complex Kedro pipelines - Master parameters in Kedro
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/eIA12RQMlFY?si=Uuk7bUV8ErOAJJyX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+- Each pipelines will *de facto* have is own parameters file in YAML format.
+
+Suppose we have a parameters file like this:
+
+```yaml
+model_options:
+  test_size: 0.2
+  random_state: 2018
+  features:
+    - engines
+    - passenger_capacity
+    - crew
+    - d_check_complete
+    - noon_clearance_complete
+    - iata_approved
+    - company_rating
+    - review_scores_rating
+```
+
+Then in `nodes.py` for that pipeline we can put:
+
+
+```python
+import logging
+
+import pandas as pd
+from sklearn.model_selection import test_train_split
+from sklearn.metrics import r2_score
+from sklearn.linear_model import LinearRegression
+
+logger = logging.getLogger(__name__)
+
+def split_data(df: pd.DataFrame, parameters: dict) -> tuple:
+	X = df[parameters["features"]]
+	y = df["price"]
+	(
+		X_train,
+		X_test,
+		y_train,
+		y_test
+	) = train_test_split(
+		X,
+		y,
+		test_size=parameters["test_size"]
+		)
+	return X_train, X_test, y_train, y_test
+
+def train_linear_model(X_train: pd.DataFrame, y_train: pd.Series) -> LinearRegression:
+	regressor = LinearRegression()
+	regressor.fit(X_train, y_train)
+	return regressor
+
+def evaluate_model(
+	regressor: LinearRegression,
+	X_test: pd.DataFrame,
+	y_tests: pd.Series
+	):
+	y_pred = regresor.predict(X_test)
+	score = r2_score(y_test, y_pred)
+	logger.info(f"Model has a coefficient $R^2$ of {score} on test data.")
+```
+
+Next we can define corresponding calls for these functions in our `pipeline.py` file for the given pipeline.
+
+```python
+from kedro.pipeline import Pipeline, pipeline, node
+
+from .nodes import evaluate_model, train_model, split_data
+
+def create_pipeline(**kwargs) -> Pipeline:
+	return pipeline([
+		node(
+		 func=split_data,
+		 inputs=["model_input_table", "params:model_options"],
+		 outputs=["X_train", "X_test", "y_train", "y_test"]
+		 ),
+		node(
+		 func=train_model,
+		 inputs=["X_train", "y_train"],
+		 outputs=["regressor"],
+		 ),
+		node(
+		 func=evaluate_model,
+		 inputs=["regressor", "X_test", "y_test"],
+		 outputs=None,
+		 ),
+	])
+```
+
+This is only a toy example. What if you want to do some sort of model selection, feature selection, or some other aspect of optimization? This example should give you a sense of a basic setup.
+
+## Make complex Kedro pipelines - Apply versioning to datasets
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/iRwy-IStfPo?si=2LaTPvj1jR7KTFdF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+- Datasets can be versioned.
+- Models can be saved as a serialized file:
+
+```yaml
+regressor:
+  type: pickle.PickleDataset
+  filepath: data/06_models/regressor.pkl
+```
+
+We may want to version the model, which Kedro parameters allows us to do as a versioned dataset.
+
+```yaml
+regressor:
+  type: pickle.PickeDataset
+  filepath: data/06_models/regressor.pkl
+  versioned: true
+```
+
+::: {.callout-warning}
+For the unversioned dataset we will find a `yaml` file `data/06_models/regressor.pkl` whereas for the versioned counterpart `data/06_models/regressor.pkl` is actually a directory. This is a potential source of confusion because the paths appear to be identical when they are not, leading to confusion between what is a folder file vs a non-folder file.
+:::
+
+## make complex Kedro pipelines - Reuse your Kedro pipeline using namespaces
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cYHHVAoWZ2E?si=LYgJEGAzjveTEXbi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+We can use namespaces to adjust pipelines as desired.
+
+```python
+from kedro.pipeline import Pipeline, pipeline, node
+
+from .nodes import evaluate_model, train_model, split_data
+
+def create_pipeline(**kwargs) -> Pipeline:
+	pipeline_instance = pipeline([
+		node(
+		 func=split_data,
+		 inputs=["model_input_table", "params:model_options"],
+		 outputs=["X_train", "X_test", "y_train", "y_test"]
+		 ),
+		node(
+		 func=train_model,
+		 inputs=["X_train", "y_train"],
+		 outputs=["regressor"],
+		 ),
+		node(
+		 func=evaluate_model,
+		 inputs=["regressor", "X_test", "y_test"],
+		 outputs=None,
+		 ),
+	])
+
+	ds_pipeline_1 = pipeline(
+		pipe=pipeline_instance,
+		inputs="model_input_table",
+		namespace="activate_modelling_pipeline"
+		)
+
+
+	ds_pipeline_2 = pipeline(
+		pipe=pipeline_instance,
+		inputs="model_input_table",
+		namespace="candidate_modelling_pipeline"
+		)
+
+	return ds_pipeline_1 + ds_pipeline_2
+```
+
+These additional pipelines can have corresponding updates to the parameters file for the given Kedro pipeline.
+
+```yaml
+# data_science_parameters.yml
+activate_modelling_pipeline:
+  ...
+
+candidate_modelling_pipeline:
+  ...
+```
+
+While I just put `...` b/c I didn't feel like adding the details, the point is you can specify different sets of parameters for each of these namespaces.
+
+You can also have separate catalog entries for the various datasets.
+
+```yaml
+# catalog.yml
+namspaces_1.dataset_name:
+  ...
+
+namespace_2.dataset_name:
+  ...
+```
+
+- Having multiple namespaces will be represented in Kedro viz.
+
+Namespaces are not strictly needed, but they may help you reuse some pipeline components.
+
+
+## Make complex Kedro pipelines - Accelerate your Kedro pipeline using runners
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_B6R2uOj3-s?si=Rb_WIpYbGTcpLVvr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+- Kedro uses a sequential runner by default.
+- There are other runners.
+- For example:
+	- ParallelRunner: Good for CPU-bound problems.
+	- ThreadRunner: Good for IO-bound problems.
+
+Different runners can be specified using:
+
+```bash
+$ kedro run --runner=SequentialRunner
+$ kedro run --runner=ParallelRunner
+$ kedro run --runner=ThreadRunner
+```
+
+## Make complex Kedro pipelines - Create Kedro datasets dynamically using factories
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tNE-tdvHNP8?si=m5IX4ynt2RPO51tK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+A Kedro dataset factory can look like this:
+
+```yaml
+# catalog.yml
+
+"{subtype}_modelling_pipeline.regressor":
+  type: pickle.PickleDataset
+  filepath: data/06_models/regressor_{subtype}.pkl
+  versioned: true
+```
+
+Specific datasets will be created from a combination of the dataset factory and the namespaces within a pipeline.
+
+Calling `kedro catalog rank` will tell you how many datasets a project has in total, not taking Kedro factories into account.
+
+Calling `kedro catalog resolve` will tell you what your datasets are, including the various different datasets implied by the data factories.
+
+## Ship your Kedro project to production - Define your own Kedro environments
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9quRBGDOFq8?si=nqJAbRosz8eRKs6O" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+Kedro environments are basically distinct sets of configurations that you can have within a single Kedro project. By default you will see the `conf/` path contains `local/` and `base/`. You can add more configurations of your own.
+
+1. Create a new subdirectrory of `conf/` named whatever you want. In this case we will call it `test/`, but you can call it other things too.
+
+```bash
+$ mkdir conf/test
+```
+
+2. Add whatever catalog and parameter files you want within that new configuration path.
+3. When you wish, you can run your project with the new configuration using `kedro run --env=test`. 
+
+When you run with a custom environment you do not need to specify 'all' the same information as in `base`. The `base` environment is privileged as the default configuration environment. It is possible to change the default configuration catalog, but let's leave that topic for another occassion. When a non-default configuration is used it will add to the default configuration and also override the default configuration whenever there are name collisions.
+
+::: {.callout-note}
+There is an idea of there of defining [hierarchical configurations of environments](https://github.com/kedro-org/kedro/discussions/3871), but at the time of writing that has not been implemented.
+:::
+
+## Ship your Kedro project to production - Use S3 and MiniIO cloud storages with Kedro
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/TkoBEQIdHbA?si=Nsugj1WdknOI7R3z" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+The [`fsspec` library](https://filesystem-spec.readthedocs.io/en/latest/) allows for a unified interface to specify locations of files. This can be particularly handy if you have files that life on different computing systems. Kedro uses this library for this very purpose in its datasets so that you can specify file paths that are not on the local system.
+
+> [MinIO AIStor](https://min.io/) is designed to allow enterprises to consolidate all of their data on a single, private cloud namespace. Architected using the same principles as the hyperscalers, AIStor delivers performance at scale at a fraction of the cost compared to the public cloud.
+
+##  Ship your Kedro project to production - Package your Kedro project into a Python wheel
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/yaoAQVX0iM8?si=rpFYdNtcDsXRq4Pa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+Kedro projects are a special case of Python projects, including being able to build the project as Python package. You build your Kedro project using `kedro package`. You will find the package files in the `dist/` directory after having run the command. You can use `pip` to locally install your package from these files.
+
+Once installed, you can run the Kedro project:
+
+```bash
+$ python -m spaceflights --conf-source="path/to/dist/conf-spaceflights.tar.gz"
+```
+
+You can further specify what environment that you want. Suppose you had a `production` environment, you could specify that here:
+
+```bash
+$ python -m spaceflights --conf-source="path/to/dist/conf-spaceflights.tar.gz" --env=production
+```
+
+## Ship your Kedro project to production - Turn your Kedro project into a Docker container
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lA-Ivuxmakw?si=gsOnY9wJ1vRaHFJ0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+The [`kedro-docker`](https://github.com/kedro-org/kedro-plugins/tree/main/kedro-docker) plugin is one of the officially supported Kedro plugins. It exists to help you deploy Kedro projects from Docker containers.
+
+You can install it with pip:
+
+```bash
+$ pip install kedro-docker
+```
+
+You will also need to [install Docker](https://docs.docker.com/engine/install/).
+
+Next we can initialize using the plugin, which will put together a default dockerfile for you to use. It contains the information needed to put together the desired image. You can modify this file as you like.
+
+```bash
+$ kedro docker init
+```
+
+You can then run 
+```bash
+$ kedro docker build --base-image python:3.10-slim
+```
+to actually setup the environment.
+
+Finally, you can run 
+```bash
+$ kedro docker run
+``` 
+which will launch the docker image. This will mount local directories used in the Kedro project. Beyond that it will look like an ordinary Kedro run.
+
+## Ship your Kedro project to production - Deploy your Kedro project to Apache Airflow 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/AhCcnJ1Au70?si=RVr5OmOAY8su29s0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+The [`kedro-airflow`](https://github.com/kedro-org/kedro-plugins/tree/main/kedro-airflow) plugin is a Kedro plugin officially supported by the Kedro development team. It generates an airflow directed acyclic graph (DAG) which can be used to run as an Airflow pipeline.
+
+You can install this plugin using pip:
+
+```bash
+$ pip install kedro-airflow
+```
+
+
+::: {.callout-tip}
+When you run `kedro catalog resolve` the resulting output is valid as a yaml string for a Kedro catalog. Thus in bash you can create an expanded Kedro catalog file like this:
+
+```bash
+$ kedro catalog resolve > /path/to/new/catalog.yml
+```
+:::
+
+Now you can use the Kedro Airflow plugin to generate a script:
+
+```bash
+$ kedro airflow create --target-dir=dags/ --env=airflow
+```
+
+In the `dags/` path you'll find a script such as `spaceflights_baseline_dag.py`. One of the classes defined in this script is `KedroOperator` which defines an Airflow operator which will runs components of the Kedro project within the Airflow environment.
+
+Now that you have this script, you can copy it into your `airflow/dags/` directory. One choice of path is `~/airflow/dags/` if you are on Linux.
+
+## Continue your Kedro journey
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/JvXhv8_0tlE?si=vzQ6UJCVc6wnuDvn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+- There are many ways to use Kedro.
+- There is a Slack channel for Kedro.
+
+The current curriculum for the software envineering principles for data science:
+
+- Why is software engineering necessary for data science?
+- Writing Python functions and the refactoring cycle for Jupyter notebooks.
+- Managing dependencies and working with virtual environments.
+- Improving code maintainability and reproducibility with configuration.
+- An introduction to Git, GitHub, and best practices for collaborative version control.
+- Tools to optimize your workflows: IDE best-practices.
+
+::: {.callout-warning}
+I suggest avoiding the term "best practice" when referring to practices. Knowing that a given practice is best implies that it is better than all other practices with respect to a set of objectives. 
+
+Often the set of practices is indefinite or only partially defined, or discovered, leading to the usual [problem of empirical induction](https://plato.stanford.edu/entries/induction-problem/).
+
+For any given finite set of practices we can consider comparing them exhausitvely. It could still be the case that the requisite time, attention, energy and other resources required to actually decide which is the best practice among that set.
+
+Furthermore, there is a typical issue that arises even among relatively small sets of practices: the existence of tradeoffs. When we have tradeoffs we have a situation in which there is a set of mutually non-dominating options. This should not be confi
+:::

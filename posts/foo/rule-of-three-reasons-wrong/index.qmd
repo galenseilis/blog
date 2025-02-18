@@ -1,9 +1,0 @@
----
-title: "Imagine Three Ways You Could Be Wrong"
-author: "Galen Seilis"
-date: "2023-05-28"
-categories: [Reasoning, Decision Making]
-draft: true
----
-
-Someone once told me a rule that they had learned from their mother. When presented with some piece of information or when a decision has to be made, list three reasons you could be wrong. Let's consider the tradeoffs of using this rule.
