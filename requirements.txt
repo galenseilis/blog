@@ -1,0 +1,13 @@
+ciw
+jupyter
+pandas
+tabulate
+matplotlib
+simpy
+numba
+sympy
+graphviz
+scipy
+seaborn
+bandit
+pymc
