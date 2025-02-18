@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-cc1e396cda9b4d77c81dfa867c1b72f5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -284,19 +284,147 @@ e \\
 \]</span></p>
 <p>Another representation is a directed graph (AKA a digraph):</p>
 </blockquote>
-<div id="e08936a0" class="cell" data-execution_count="1">
+<div id="aeba4a36" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> graphviz <span class="im">import</span> Digraph</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>XxX <span class="op">=</span> <span class="st">'aa'</span>, <span class="st">'ac'</span>, <span class="st">'ae'</span>, <span class="st">'bb'</span>, <span class="st">'bc'</span>, <span class="st">'bd'</span>, <span class="st">'be'</span>, <span class="st">'cc'</span>, <span class="st">'dd'</span>, <span class="st">'de'</span>, <span class="st">'ee'</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> Digraph(<span class="st">'example_partial_order'</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> xx <span class="kw">in</span> XxX:</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    D.edge(xx[<span class="dv">0</span>], xx[<span class="dv">1</span>])</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>D</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-1.svg" class="img-fluid figure-img"></p>
-</figure>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">FileNotFoundError</span>                         Traceback (most recent call last)
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/backend/execute.py:76</span>, in <span class="ansi-cyan-fg">run_check</span><span class="ansi-blue-fg">(cmd, input_lines, encoding, quiet, **kwargs)</span>
+<span class="ansi-green-fg ansi-bold">     75</span>         kwargs[<span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">stdout</span><span style="color:rgb(175,0,0)">'</span>] <span style="color:rgb(98,98,98)">=</span> kwargs[<span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">stderr</span><span style="color:rgb(175,0,0)">'</span>] <span style="color:rgb(98,98,98)">=</span> subprocess<span style="color:rgb(98,98,98)">.</span>PIPE
+<span class="ansi-green-fg">---&gt; 76</span>     proc <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">_run_input_lines</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">cmd</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">input_lines</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">kwargs</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg ansi-bold">     77</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
+
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/backend/execute.py:96</span>, in <span class="ansi-cyan-fg">_run_input_lines</span><span class="ansi-blue-fg">(cmd, input_lines, kwargs)</span>
+<span class="ansi-green-fg ansi-bold">     95</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span><span style="color:rgb(188,188,188)"> </span><span style="color:rgb(0,0,255)">_run_input_lines</span>(cmd, input_lines, <span style="color:rgb(98,98,98)">*</span>, kwargs):
+<span class="ansi-green-fg">---&gt; 96</span>     popen <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">subprocess</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">Popen</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">cmd</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">stdin</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">subprocess</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">PIPE</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg ansi-bold">     98</span>     stdin_write <span style="color:rgb(98,98,98)">=</span> popen<span style="color:rgb(98,98,98)">.</span>stdin<span style="color:rgb(98,98,98)">.</span>write
+
+File <span class="ansi-green-fg">/usr/lib/python3.12/subprocess.py:1026</span>, in <span class="ansi-cyan-fg">Popen.__init__</span><span class="ansi-blue-fg">(self, args, bufsize, executable, stdin, stdout, stderr, preexec_fn, close_fds, shell, cwd, env, universal_newlines, startupinfo, creationflags, restore_signals, start_new_session, pass_fds, user, group, extra_groups, encoding, errors, text, umask, pipesize, process_group)</span>
+<span class="ansi-green-fg ansi-bold">   1023</span>             <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>stderr <span style="color:rgb(98,98,98)">=</span> io<span style="color:rgb(98,98,98)">.</span>TextIOWrapper(<span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>stderr,
+<span class="ansi-green-fg ansi-bold">   1024</span>                     encoding<span style="color:rgb(98,98,98)">=</span>encoding, errors<span style="color:rgb(98,98,98)">=</span>errors)
+<span class="ansi-green-fg">-&gt; 1026</span>     <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_execute_child</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">executable</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">preexec_fn</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">close_fds</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">   1027</span> <span class="ansi-yellow-bg">                        </span><span class="ansi-yellow-bg">pass_fds</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">cwd</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">env</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">   1028</span> <span class="ansi-yellow-bg">                        </span><span class="ansi-yellow-bg">startupinfo</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">creationflags</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">shell</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">   1029</span> <span class="ansi-yellow-bg">                        </span><span class="ansi-yellow-bg">p2cread</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">p2cwrite</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">   1030</span> <span class="ansi-yellow-bg">                        </span><span class="ansi-yellow-bg">c2pread</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">c2pwrite</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">   1031</span> <span class="ansi-yellow-bg">                        </span><span class="ansi-yellow-bg">errread</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">errwrite</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">   1032</span> <span class="ansi-yellow-bg">                        </span><span class="ansi-yellow-bg">restore_signals</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">   1033</span> <span class="ansi-yellow-bg">                        </span><span class="ansi-yellow-bg">gid</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">gids</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">uid</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">umask</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">   1034</span> <span class="ansi-yellow-bg">                        </span><span class="ansi-yellow-bg">start_new_session</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">process_group</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg ansi-bold">   1035</span> <span style="font-weight:bold;color:rgb(0,135,0)">except</span>:
+<span class="ansi-green-fg ansi-bold">   1036</span>     <span style="font-style:italic;color:rgb(95,135,135)"># Cleanup if the child failed starting.</span>
+
+File <span class="ansi-green-fg">/usr/lib/python3.12/subprocess.py:1955</span>, in <span class="ansi-cyan-fg">Popen._execute_child</span><span class="ansi-blue-fg">(self, args, executable, preexec_fn, close_fds, pass_fds, cwd, env, startupinfo, creationflags, shell, p2cread, p2cwrite, c2pread, c2pwrite, errread, errwrite, restore_signals, gid, gids, uid, umask, start_new_session, process_group)</span>
+<span class="ansi-green-fg ansi-bold">   1954</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> err_filename <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>:
+<span class="ansi-green-fg">-&gt; 1955</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> child_exception_type(errno_num, err_msg, err_filename)
+<span class="ansi-green-fg ansi-bold">   1956</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
+
+<span class="ansi-red-fg">FileNotFoundError</span>: [Errno 2] No such file or directory: PosixPath('dot')
+
+The above exception was the direct cause of the following exception:
+
+<span class="ansi-red-fg">ExecutableNotFound</span>                        Traceback (most recent call last)
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/IPython/core/formatters.py:1036</span>, in <span class="ansi-cyan-fg">MimeBundleFormatter.__call__</span><span class="ansi-blue-fg">(self, obj, include, exclude)</span>
+<span class="ansi-green-fg ansi-bold">   1033</span>     method <span style="color:rgb(98,98,98)">=</span> get_real_method(obj, <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>print_method)
+<span class="ansi-green-fg ansi-bold">   1035</span>     <span style="font-weight:bold;color:rgb(0,135,0)">if</span> method <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>:
+<span class="ansi-green-fg">-&gt; 1036</span>         <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">method</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">include</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">include</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">exclude</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">exclude</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg ansi-bold">   1037</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>
+<span class="ansi-green-fg ansi-bold">   1038</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
+
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/jupyter_integration.py:98</span>, in <span class="ansi-cyan-fg">JupyterIntegration._repr_mimebundle_</span><span class="ansi-blue-fg">(self, include, exclude, **_)</span>
+<span class="ansi-green-fg ansi-bold">     96</span> include <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(0,135,0)">set</span>(include) <span style="font-weight:bold;color:rgb(0,135,0)">if</span> include <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span> {<span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>_jupyter_mimetype}
+<span class="ansi-green-fg ansi-bold">     97</span> include <span style="color:rgb(98,98,98)">-</span><span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(0,135,0)">set</span>(exclude <span style="font-weight:bold;color:rgb(175,0,255)">or</span> [])
+<span class="ansi-green-fg">---&gt; 98</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> {mimetype: <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">getattr</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">method_name</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg ansi-bold">     99</span>         <span style="font-weight:bold;color:rgb(0,135,0)">for</span> mimetype, method_name <span style="font-weight:bold;color:rgb(175,0,255)">in</span> MIME_TYPES<span style="color:rgb(98,98,98)">.</span>items()
+<span class="ansi-green-fg ansi-bold">    100</span>         <span style="font-weight:bold;color:rgb(0,135,0)">if</span> mimetype <span style="font-weight:bold;color:rgb(175,0,255)">in</span> include}
+
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/jupyter_integration.py:112</span>, in <span class="ansi-cyan-fg">JupyterIntegration._repr_image_svg_xml</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-fg ansi-bold">    110</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span><span style="color:rgb(188,188,188)"> </span><span style="color:rgb(0,0,255)">_repr_image_svg_xml</span>(<span style="color:rgb(0,135,0)">self</span>) <span style="color:rgb(98,98,98)">-</span><span style="color:rgb(98,98,98)">&gt;</span> <span style="color:rgb(0,135,0)">str</span>:
+<span class="ansi-green-fg ansi-bold">    111</span> <span style="color:rgb(188,188,188)">    </span><span style="font-style:italic;color:rgb(175,0,0)">"""Return the rendered graph as SVG string."""</span>
+<span class="ansi-green-fg">--&gt; 112</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">pipe</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">format</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">'</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">svg</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">'</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">encoding</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">SVG_ENCODING</span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/piping.py:104</span>, in <span class="ansi-cyan-fg">Pipe.pipe</span><span class="ansi-blue-fg">(self, format, renderer, formatter, neato_no_op, quiet, engine, encoding)</span>
+<span class="ansi-green-fg ansi-bold">     55</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span><span style="color:rgb(188,188,188)"> </span><span style="color:rgb(0,0,255)">pipe</span>(<span style="color:rgb(0,135,0)">self</span>,
+<span class="ansi-green-fg ansi-bold">     56</span>          <span style="color:rgb(0,135,0)">format</span>: typing<span style="color:rgb(98,98,98)">.</span>Optional[<span style="color:rgb(0,135,0)">str</span>] <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>,
+<span class="ansi-green-fg ansi-bold">     57</span>          renderer: typing<span style="color:rgb(98,98,98)">.</span>Optional[<span style="color:rgb(0,135,0)">str</span>] <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>,
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-fg ansi-bold">     61</span>          engine: typing<span style="color:rgb(98,98,98)">.</span>Optional[<span style="color:rgb(0,135,0)">str</span>] <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>,
+<span class="ansi-green-fg ansi-bold">     62</span>          encoding: typing<span style="color:rgb(98,98,98)">.</span>Optional[<span style="color:rgb(0,135,0)">str</span>] <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>) <span style="color:rgb(98,98,98)">-</span><span style="color:rgb(98,98,98)">&gt;</span> typing<span style="color:rgb(98,98,98)">.</span>Union[<span style="color:rgb(0,135,0)">bytes</span>, <span style="color:rgb(0,135,0)">str</span>]:
+<span class="ansi-green-fg ansi-bold">     63</span> <span style="color:rgb(188,188,188)">    </span><span style="font-style:italic;color:rgb(175,0,0)">"""Return the source piped through the Graphviz layout command.</span>
+<span class="ansi-green-fg ansi-bold">     64</span> 
+<span class="ansi-green-fg ansi-bold">     65</span> <span style="font-style:italic;color:rgb(175,0,0)">    Args:</span>
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-fg ansi-bold">    102</span> <span style="font-style:italic;color:rgb(175,0,0)">        '&lt;?xml version='</span>
+<span class="ansi-green-fg ansi-bold">    103</span> <span style="font-style:italic;color:rgb(175,0,0)">    """</span>
+<span class="ansi-green-fg">--&gt; 104</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_pipe_legacy</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">format</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    105</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">renderer</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">renderer</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    106</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">formatter</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">formatter</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    107</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">neato_no_op</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">neato_no_op</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    108</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">quiet</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">quiet</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    109</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">engine</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">engine</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    110</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">encoding</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">encoding</span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/_tools.py:171</span>, in <span class="ansi-cyan-fg">deprecate_positional_args.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
+<span class="ansi-green-fg ansi-bold">    162</span>     wanted <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">, </span><span style="color:rgb(175,0,0)">'</span><span style="color:rgb(98,98,98)">.</span>join(<span style="color:rgb(175,0,0)">f</span><span style="color:rgb(175,0,0)">'</span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>name<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="color:rgb(175,0,0)">=</span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>value<span style="font-weight:bold;color:rgb(175,95,135)">!r}</span><span style="color:rgb(175,0,0)">'</span>
+<span class="ansi-green-fg ansi-bold">    163</span>                        <span style="font-weight:bold;color:rgb(0,135,0)">for</span> name, value <span style="font-weight:bold;color:rgb(175,0,255)">in</span> deprecated<span style="color:rgb(98,98,98)">.</span>items())
+<span class="ansi-green-fg ansi-bold">    164</span>     warnings<span style="color:rgb(98,98,98)">.</span>warn(<span style="color:rgb(175,0,0)">f</span><span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">The signature of </span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>func<span style="color:rgb(98,98,98)">.</span><span style="color:rgb(0,0,135)">__name__</span><span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="color:rgb(175,0,0)"> will be reduced</span><span style="color:rgb(175,0,0)">'</span>
+<span class="ansi-green-fg ansi-bold">    165</span>                   <span style="color:rgb(175,0,0)">f</span><span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)"> to </span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>supported_number<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="color:rgb(175,0,0)"> positional args</span><span style="color:rgb(175,0,0)">'</span>
+<span class="ansi-green-fg ansi-bold">    166</span>                   <span style="color:rgb(175,0,0)">f</span><span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)"> </span><span style="font-weight:bold;color:rgb(175,95,135)">{</span><span style="color:rgb(0,135,0)">list</span>(supported)<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="color:rgb(175,0,0)">: pass </span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>wanted<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="color:rgb(175,0,0)">'</span>
+<span class="ansi-green-fg ansi-bold">    167</span>                   <span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)"> as keyword arg(s)</span><span style="color:rgb(175,0,0)">'</span>,
+<span class="ansi-green-fg ansi-bold">    168</span>                   stacklevel<span style="color:rgb(98,98,98)">=</span>stacklevel,
+<span class="ansi-green-fg ansi-bold">    169</span>                   category<span style="color:rgb(98,98,98)">=</span>category)
+<span class="ansi-green-fg">--&gt; 171</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">func</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/piping.py:121</span>, in <span class="ansi-cyan-fg">Pipe._pipe_legacy</span><span class="ansi-blue-fg">(self, format, renderer, formatter, neato_no_op, quiet, engine, encoding)</span>
+<span class="ansi-green-fg ansi-bold">    112</span> <span style="color:rgb(175,0,255)">@_tools</span><span style="color:rgb(98,98,98)">.</span>deprecate_positional_args(supported_number<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(98,98,98)">2</span>)
+<span class="ansi-green-fg ansi-bold">    113</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span><span style="color:rgb(188,188,188)"> </span><span style="color:rgb(0,0,255)">_pipe_legacy</span>(<span style="color:rgb(0,135,0)">self</span>,
+<span class="ansi-green-fg ansi-bold">    114</span>                  <span style="color:rgb(0,135,0)">format</span>: typing<span style="color:rgb(98,98,98)">.</span>Optional[<span style="color:rgb(0,135,0)">str</span>] <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>,
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-fg ansi-bold">    119</span>                  engine: typing<span style="color:rgb(98,98,98)">.</span>Optional[<span style="color:rgb(0,135,0)">str</span>] <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>,
+<span class="ansi-green-fg ansi-bold">    120</span>                  encoding: typing<span style="color:rgb(98,98,98)">.</span>Optional[<span style="color:rgb(0,135,0)">str</span>] <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>) <span style="color:rgb(98,98,98)">-</span><span style="color:rgb(98,98,98)">&gt;</span> typing<span style="color:rgb(98,98,98)">.</span>Union[<span style="color:rgb(0,135,0)">bytes</span>, <span style="color:rgb(0,135,0)">str</span>]:
+<span class="ansi-green-fg">--&gt; 121</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_pipe_future</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">format</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    122</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">renderer</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">renderer</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    123</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">formatter</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">formatter</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    124</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">neato_no_op</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">neato_no_op</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    125</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">quiet</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">quiet</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    126</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">engine</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">engine</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    127</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">encoding</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">encoding</span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/piping.py:149</span>, in <span class="ansi-cyan-fg">Pipe._pipe_future</span><span class="ansi-blue-fg">(self, format, renderer, formatter, neato_no_op, quiet, engine, encoding)</span>
+<span class="ansi-green-fg ansi-bold">    146</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> encoding <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>:
+<span class="ansi-green-fg ansi-bold">    147</span>     <span style="font-weight:bold;color:rgb(0,135,0)">if</span> codecs<span style="color:rgb(98,98,98)">.</span>lookup(encoding) <span style="font-weight:bold;color:rgb(175,0,255)">is</span> codecs<span style="color:rgb(98,98,98)">.</span>lookup(<span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>encoding):
+<span class="ansi-green-fg ansi-bold">    148</span>         <span style="font-style:italic;color:rgb(95,135,135)"># common case: both stdin and stdout need the same encoding</span>
+<span class="ansi-green-fg">--&gt; 149</span>         <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_pipe_lines_string</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">encoding</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">encoding</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg ansi-bold">    150</span>     <span style="font-weight:bold;color:rgb(0,135,0)">try</span>:
+<span class="ansi-green-fg ansi-bold">    151</span>         raw <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>_pipe_lines(<span style="color:rgb(98,98,98)">*</span>args, input_encoding<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>encoding, <span style="color:rgb(98,98,98)">*</span><span style="color:rgb(98,98,98)">*</span>kwargs)
+
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/backend/piping.py:212</span>, in <span class="ansi-cyan-fg">pipe_lines_string</span><span class="ansi-blue-fg">(engine, format, input_lines, encoding, renderer, formatter, neato_no_op, quiet)</span>
+<span class="ansi-green-fg ansi-bold">    206</span> cmd <span style="color:rgb(98,98,98)">=</span> dot_command<span style="color:rgb(98,98,98)">.</span>command(engine, <span style="color:rgb(0,135,0)">format</span>,
+<span class="ansi-green-fg ansi-bold">    207</span>                           renderer<span style="color:rgb(98,98,98)">=</span>renderer,
+<span class="ansi-green-fg ansi-bold">    208</span>                           formatter<span style="color:rgb(98,98,98)">=</span>formatter,
+<span class="ansi-green-fg ansi-bold">    209</span>                           neato_no_op<span style="color:rgb(98,98,98)">=</span>neato_no_op)
+<span class="ansi-green-fg ansi-bold">    210</span> kwargs <span style="color:rgb(98,98,98)">=</span> {<span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">input_lines</span><span style="color:rgb(175,0,0)">'</span>: input_lines, <span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">encoding</span><span style="color:rgb(175,0,0)">'</span>: encoding}
+<span class="ansi-green-fg">--&gt; 212</span> proc <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">execute</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">run_check</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">cmd</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">capture_output</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span style="font-weight:bold;color:rgb(0,135,0)" class="ansi-yellow-bg">True</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">quiet</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">quiet</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg ansi-bold">    213</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> proc<span style="color:rgb(98,98,98)">.</span>stdout
+
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/backend/execute.py:81</span>, in <span class="ansi-cyan-fg">run_check</span><span class="ansi-blue-fg">(cmd, input_lines, encoding, quiet, **kwargs)</span>
+<span class="ansi-green-fg ansi-bold">     79</span> <span style="font-weight:bold;color:rgb(0,135,0)">except</span> <span style="font-weight:bold;color:rgb(215,95,95)">OSError</span> <span style="font-weight:bold;color:rgb(0,135,0)">as</span> e:
+<span class="ansi-green-fg ansi-bold">     80</span>     <span style="font-weight:bold;color:rgb(0,135,0)">if</span> e<span style="color:rgb(98,98,98)">.</span>errno <span style="color:rgb(98,98,98)">==</span> errno<span style="color:rgb(98,98,98)">.</span>ENOENT:
+<span class="ansi-green-fg">---&gt; 81</span>         <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> ExecutableNotFound(cmd) <span style="font-weight:bold;color:rgb(0,135,0)">from</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,0,255)">e</span>
+<span class="ansi-green-fg ansi-bold">     82</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span>
+<span class="ansi-green-fg ansi-bold">     84</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> quiet <span style="font-weight:bold;color:rgb(175,0,255)">and</span> proc<span style="color:rgb(98,98,98)">.</span>stderr:
+
+<span class="ansi-red-fg">ExecutableNotFound</span>: failed to execute PosixPath('dot'), make sure the Graphviz executables are on your systems' PATH</pre>
 </div>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>&lt;graphviz.graphs.Digraph at 0x7e49ccd2c6e0&gt;</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -312,15 +440,15 @@ Tip
 <blockquote class="blockquote">
 <p>The previous example only required a relatively small subset of the Cartesian <span class="math inline">\(X \times X\)</span>. When you a have too many elements in <span class="math inline">\(X\)</span> to deal with by hand, one quick Python script to make the pairs in a format suitable for <span class="math inline">\(\LaTeX\)</span> is the following:</p>
 </blockquote>
-<div id="53d2b6c3" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> product</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> <span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, <span class="st">'d'</span>, <span class="st">'e'</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>XxX <span class="op">=</span> [<span class="st">'('</span><span class="op">+</span><span class="st">', '</span>.join(i) <span class="op">+</span> <span class="st">')'</span> <span class="cf">for</span> i <span class="kw">in</span> product(X,X)]</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>XxX <span class="op">=</span> <span class="bu">sorted</span>(XxX)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>XxX <span class="op">=</span> <span class="bu">str</span>(XxX).replace(<span class="st">"'"</span>, <span class="st">""</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>XxX <span class="op">=</span> XxX.replace(<span class="st">"["</span>, <span class="st">"</span><span class="ch">\\\\</span><span class="st">{"</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>XxX <span class="op">=</span> XxX.replace(<span class="st">"]"</span>, <span class="st">"</span><span class="ch">\\\\</span><span class="st">}"</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(XxX)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="3b1d3726" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> product</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> <span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, <span class="st">'d'</span>, <span class="st">'e'</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>XxX <span class="op">=</span> [<span class="st">'('</span><span class="op">+</span><span class="st">', '</span>.join(i) <span class="op">+</span> <span class="st">')'</span> <span class="cf">for</span> i <span class="kw">in</span> product(X,X)]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>XxX <span class="op">=</span> <span class="bu">sorted</span>(XxX)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>XxX <span class="op">=</span> <span class="bu">str</span>(XxX).replace(<span class="st">"'"</span>, <span class="st">""</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>XxX <span class="op">=</span> XxX.replace(<span class="st">"["</span>, <span class="st">"</span><span class="ch">\\\\</span><span class="st">{"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>XxX <span class="op">=</span> XxX.replace(<span class="st">"]"</span>, <span class="st">"</span><span class="ch">\\\\</span><span class="st">}"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(XxX)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>\\{(a, a), (a, b), (a, c), (a, d), (a, e), (b, a), (b, b), (b, c), (b, d), (b, e), (c, a), (c, b), (c, c), (c, d), (c, e), (d, a), (d, b), (d, c), (d, d), (d, e), (e, a), (e, b), (e, c), (e, d), (e, e)\\}</code></pre>
 </div>
@@ -349,13 +477,13 @@ Tip
 <p>Suppose we have the strict partial order <span class="math inline">\(\\{(a,c), (a,e), (b,c), (b,d), (b,e), (d,e)\\}\)</span>, then its comparability graph would look like:</p>
 </blockquote>
 <div class="cell" data-layout-align="default">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>flowchart TB</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    a o--o c</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    a o--o e</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    b o--o c</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    b o--o d</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    b o--o e</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    d o--o e</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>flowchart TB</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    a o--o c</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    a o--o e</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    b o--o c</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    b o--o d</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    b o--o e</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    d o--o e</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
@@ -385,11 +513,11 @@ Tip
 <p><strong>Example</strong> Suppose we have the strict partial order <span class="math inline">\(\\{(a,c), (a,e), (b,c), (b,d), (b,e), (d,e)\\}\)</span>, then its incomparability graph (AKA cocomparability graph) would look like:</p>
 </blockquote>
 <div class="cell" data-layout-align="default">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>flowchart TB</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    a o--o b</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    a o--o d</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    c o--o d</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    c o--o e</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>flowchart TB</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    a o--o b</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    a o--o d</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    c o--o d</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    c o--o e</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
@@ -421,12 +549,12 @@ Tip
 <p><strong>Example</strong> Suppose we have the strict partial order <span class="math inline">\(\\{(a,c), (a,e), (b,c), (b,d), (b,e), (d,e)\\}\)</span>, then its cover graph would look like:</p>
 </blockquote>
 <div class="cell" data-layout-align="default">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>flowchart TB</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    a o--o c</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    a o--o e</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    b o--o c</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    b o--o d</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    d o--o e</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>flowchart TB</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    a o--o c</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    a o--o e</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    b o--o c</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    b o--o d</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    d o--o e</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
@@ -452,12 +580,12 @@ Tip
 <p>Suppose we have the strict partial order <span class="math inline">\(\\{(a,c), (a,e), (b,c), (b,d), (b,e), (d,e)\\}\)</span>, then its directed cover graph would look like:</p>
 </blockquote>
 <div class="cell" data-layout-align="default">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>flowchart TB</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    e --&gt; a</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    e --&gt; d</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    c --&gt; a</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    c --&gt; b</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    d --&gt; b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>flowchart TB</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    e --&gt; a</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    e --&gt; d</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    c --&gt; a</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    c --&gt; b</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    d --&gt; b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
@@ -482,28 +610,28 @@ Tip
 <p><strong>Example</strong></p>
 <p>Suppose we have the strict partial order <span class="math inline">\(\\{(a,c), (a,e), (b,c), (b,d), (b,e), (d,e)\\}\)</span>, then its cover diagram would look like:</p>
 </blockquote>
-<div id="42e2fb0b" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> nx.Graph()</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>g.add_edge(<span class="st">'a'</span>, <span class="st">'c'</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>g.add_edge(<span class="st">'a'</span>, <span class="st">'e'</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>g.add_edge(<span class="st">'b'</span>, <span class="st">'c'</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>g.add_edge(<span class="st">'b'</span>, <span class="st">'d'</span>)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>g.add_edge(<span class="st">'d'</span>, <span class="st">'e'</span>)</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>pos <span class="op">=</span> {<span class="st">'a'</span>:(<span class="dv">0</span>,<span class="dv">1</span>),</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>       <span class="st">'b'</span>:(<span class="dv">1</span>,<span class="dv">0</span>),</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>       <span class="st">'c'</span>:(<span class="dv">0</span>,<span class="dv">3</span>),</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>       <span class="st">'d'</span>:(<span class="dv">2</span>,<span class="dv">2</span>),</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>       <span class="st">'e'</span>:(<span class="dv">1</span>,<span class="dv">4</span>)}</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> warnings.catch_warnings():</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    nx.draw(g, pos<span class="op">=</span>pos, labels<span class="op">=</span>{i:i <span class="cf">for</span> i <span class="kw">in</span> g.nodes()}, node_color<span class="op">=</span>(<span class="fl">0.5</span>,)<span class="op">*</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="24f9e3b7" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> nx.Graph()</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>g.add_edge(<span class="st">'a'</span>, <span class="st">'c'</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>g.add_edge(<span class="st">'a'</span>, <span class="st">'e'</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>g.add_edge(<span class="st">'b'</span>, <span class="st">'c'</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>g.add_edge(<span class="st">'b'</span>, <span class="st">'d'</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>g.add_edge(<span class="st">'d'</span>, <span class="st">'e'</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>pos <span class="op">=</span> {<span class="st">'a'</span>:(<span class="dv">0</span>,<span class="dv">1</span>),</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>       <span class="st">'b'</span>:(<span class="dv">1</span>,<span class="dv">0</span>),</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>       <span class="st">'c'</span>:(<span class="dv">0</span>,<span class="dv">3</span>),</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>       <span class="st">'d'</span>:(<span class="dv">2</span>,<span class="dv">2</span>),</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>       <span class="st">'e'</span>:(<span class="dv">1</span>,<span class="dv">4</span>)}</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> warnings.catch_warnings():</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    nx.draw(g, pos<span class="op">=</span>pos, labels<span class="op">=</span>{i:i <span class="cf">for</span> i <span class="kw">in</span> g.nodes()}, node_color<span class="op">=</span>(<span class="fl">0.5</span>,)<span class="op">*</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -693,8 +821,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -805,7 +931,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

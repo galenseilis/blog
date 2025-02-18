@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-cc1e396cda9b4d77c81dfa867c1b72f5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -436,7 +436,7 @@ Figure&nbsp;8: In this visualization of a function it is non-injective because i
 <p>Transformations are not only for preparing variables to satisfy the assumptions of a general linear model. Indeed, transformations are how we construct the notion of general linear models! We can see this in the following example of a multiple linear regression equation:</p>
 <p><span class="math display">\[f(X,Z; \vec{\beta}) \triangleq \underbrace{\underbrace{\underbrace{\underbrace{\beta_1 X}_{\text{Scale }X} + \underbrace{\beta_2 Z}_{\text{Scale } Z}}_{\text{Sum}} + \beta_0}_{\text{Translate by } \beta_0} + \epsilon}_{\text{Sum}}\]</span></p>
 <p>Within the above equation I have underbraced multiple transformations of the random variables. The way I have pointed them out is not unique. I could have focused on linear combinations and their relation to linear transformations, for example. A fairly general way to look at the non-uniqueness is to think of an expression tree or computation graph which has a partial order on the operations. Here is an example of an expression tree for the linear regression above.</p>
-<div id="123b8b40" class="cell" data-execution_count="1">
+<div id="e7dc0e82" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">This script constructs the expression tree for a multiple linear</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">regression as shown earlier in this post.</span></span>
@@ -452,12 +452,140 @@ Figure&nbsp;8: In this visualization of a function it is non-injective because i
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> vec_beta <span class="op">@</span> vec_var <span class="op">+</span> sp.Symbol(<span class="st">'</span><span class="ch">\\</span><span class="st">epsilon'</span>)</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>Source(sp.dotprint(f))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-1.svg" class="img-fluid figure-img"></p>
-</figure>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">FileNotFoundError</span>                         Traceback (most recent call last)
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/backend/execute.py:76</span>, in <span class="ansi-cyan-fg">run_check</span><span class="ansi-blue-fg">(cmd, input_lines, encoding, quiet, **kwargs)</span>
+<span class="ansi-green-fg ansi-bold">     75</span>         kwargs[<span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">stdout</span><span style="color:rgb(175,0,0)">'</span>] <span style="color:rgb(98,98,98)">=</span> kwargs[<span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">stderr</span><span style="color:rgb(175,0,0)">'</span>] <span style="color:rgb(98,98,98)">=</span> subprocess<span style="color:rgb(98,98,98)">.</span>PIPE
+<span class="ansi-green-fg">---&gt; 76</span>     proc <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">_run_input_lines</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">cmd</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">input_lines</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">kwargs</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg ansi-bold">     77</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
+
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/backend/execute.py:96</span>, in <span class="ansi-cyan-fg">_run_input_lines</span><span class="ansi-blue-fg">(cmd, input_lines, kwargs)</span>
+<span class="ansi-green-fg ansi-bold">     95</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span><span style="color:rgb(188,188,188)"> </span><span style="color:rgb(0,0,255)">_run_input_lines</span>(cmd, input_lines, <span style="color:rgb(98,98,98)">*</span>, kwargs):
+<span class="ansi-green-fg">---&gt; 96</span>     popen <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">subprocess</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">Popen</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">cmd</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">stdin</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">subprocess</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">PIPE</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg ansi-bold">     98</span>     stdin_write <span style="color:rgb(98,98,98)">=</span> popen<span style="color:rgb(98,98,98)">.</span>stdin<span style="color:rgb(98,98,98)">.</span>write
+
+File <span class="ansi-green-fg">/usr/lib/python3.12/subprocess.py:1026</span>, in <span class="ansi-cyan-fg">Popen.__init__</span><span class="ansi-blue-fg">(self, args, bufsize, executable, stdin, stdout, stderr, preexec_fn, close_fds, shell, cwd, env, universal_newlines, startupinfo, creationflags, restore_signals, start_new_session, pass_fds, user, group, extra_groups, encoding, errors, text, umask, pipesize, process_group)</span>
+<span class="ansi-green-fg ansi-bold">   1023</span>             <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>stderr <span style="color:rgb(98,98,98)">=</span> io<span style="color:rgb(98,98,98)">.</span>TextIOWrapper(<span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>stderr,
+<span class="ansi-green-fg ansi-bold">   1024</span>                     encoding<span style="color:rgb(98,98,98)">=</span>encoding, errors<span style="color:rgb(98,98,98)">=</span>errors)
+<span class="ansi-green-fg">-&gt; 1026</span>     <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_execute_child</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">executable</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">preexec_fn</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">close_fds</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">   1027</span> <span class="ansi-yellow-bg">                        </span><span class="ansi-yellow-bg">pass_fds</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">cwd</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">env</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">   1028</span> <span class="ansi-yellow-bg">                        </span><span class="ansi-yellow-bg">startupinfo</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">creationflags</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">shell</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">   1029</span> <span class="ansi-yellow-bg">                        </span><span class="ansi-yellow-bg">p2cread</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">p2cwrite</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">   1030</span> <span class="ansi-yellow-bg">                        </span><span class="ansi-yellow-bg">c2pread</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">c2pwrite</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">   1031</span> <span class="ansi-yellow-bg">                        </span><span class="ansi-yellow-bg">errread</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">errwrite</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">   1032</span> <span class="ansi-yellow-bg">                        </span><span class="ansi-yellow-bg">restore_signals</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">   1033</span> <span class="ansi-yellow-bg">                        </span><span class="ansi-yellow-bg">gid</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">gids</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">uid</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">umask</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">   1034</span> <span class="ansi-yellow-bg">                        </span><span class="ansi-yellow-bg">start_new_session</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">process_group</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg ansi-bold">   1035</span> <span style="font-weight:bold;color:rgb(0,135,0)">except</span>:
+<span class="ansi-green-fg ansi-bold">   1036</span>     <span style="font-style:italic;color:rgb(95,135,135)"># Cleanup if the child failed starting.</span>
+
+File <span class="ansi-green-fg">/usr/lib/python3.12/subprocess.py:1955</span>, in <span class="ansi-cyan-fg">Popen._execute_child</span><span class="ansi-blue-fg">(self, args, executable, preexec_fn, close_fds, pass_fds, cwd, env, startupinfo, creationflags, shell, p2cread, p2cwrite, c2pread, c2pwrite, errread, errwrite, restore_signals, gid, gids, uid, umask, start_new_session, process_group)</span>
+<span class="ansi-green-fg ansi-bold">   1954</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> err_filename <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>:
+<span class="ansi-green-fg">-&gt; 1955</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> child_exception_type(errno_num, err_msg, err_filename)
+<span class="ansi-green-fg ansi-bold">   1956</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
+
+<span class="ansi-red-fg">FileNotFoundError</span>: [Errno 2] No such file or directory: PosixPath('dot')
+
+The above exception was the direct cause of the following exception:
+
+<span class="ansi-red-fg">ExecutableNotFound</span>                        Traceback (most recent call last)
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/IPython/core/formatters.py:1036</span>, in <span class="ansi-cyan-fg">MimeBundleFormatter.__call__</span><span class="ansi-blue-fg">(self, obj, include, exclude)</span>
+<span class="ansi-green-fg ansi-bold">   1033</span>     method <span style="color:rgb(98,98,98)">=</span> get_real_method(obj, <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>print_method)
+<span class="ansi-green-fg ansi-bold">   1035</span>     <span style="font-weight:bold;color:rgb(0,135,0)">if</span> method <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>:
+<span class="ansi-green-fg">-&gt; 1036</span>         <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">method</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">include</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">include</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">exclude</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">exclude</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg ansi-bold">   1037</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>
+<span class="ansi-green-fg ansi-bold">   1038</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
+
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/jupyter_integration.py:98</span>, in <span class="ansi-cyan-fg">JupyterIntegration._repr_mimebundle_</span><span class="ansi-blue-fg">(self, include, exclude, **_)</span>
+<span class="ansi-green-fg ansi-bold">     96</span> include <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(0,135,0)">set</span>(include) <span style="font-weight:bold;color:rgb(0,135,0)">if</span> include <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span> {<span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>_jupyter_mimetype}
+<span class="ansi-green-fg ansi-bold">     97</span> include <span style="color:rgb(98,98,98)">-</span><span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(0,135,0)">set</span>(exclude <span style="font-weight:bold;color:rgb(175,0,255)">or</span> [])
+<span class="ansi-green-fg">---&gt; 98</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> {mimetype: <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">getattr</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">method_name</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg ansi-bold">     99</span>         <span style="font-weight:bold;color:rgb(0,135,0)">for</span> mimetype, method_name <span style="font-weight:bold;color:rgb(175,0,255)">in</span> MIME_TYPES<span style="color:rgb(98,98,98)">.</span>items()
+<span class="ansi-green-fg ansi-bold">    100</span>         <span style="font-weight:bold;color:rgb(0,135,0)">if</span> mimetype <span style="font-weight:bold;color:rgb(175,0,255)">in</span> include}
+
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/jupyter_integration.py:112</span>, in <span class="ansi-cyan-fg">JupyterIntegration._repr_image_svg_xml</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-fg ansi-bold">    110</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span><span style="color:rgb(188,188,188)"> </span><span style="color:rgb(0,0,255)">_repr_image_svg_xml</span>(<span style="color:rgb(0,135,0)">self</span>) <span style="color:rgb(98,98,98)">-</span><span style="color:rgb(98,98,98)">&gt;</span> <span style="color:rgb(0,135,0)">str</span>:
+<span class="ansi-green-fg ansi-bold">    111</span> <span style="color:rgb(188,188,188)">    </span><span style="font-style:italic;color:rgb(175,0,0)">"""Return the rendered graph as SVG string."""</span>
+<span class="ansi-green-fg">--&gt; 112</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">pipe</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">format</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">'</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">svg</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">'</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">encoding</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">SVG_ENCODING</span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/piping.py:104</span>, in <span class="ansi-cyan-fg">Pipe.pipe</span><span class="ansi-blue-fg">(self, format, renderer, formatter, neato_no_op, quiet, engine, encoding)</span>
+<span class="ansi-green-fg ansi-bold">     55</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span><span style="color:rgb(188,188,188)"> </span><span style="color:rgb(0,0,255)">pipe</span>(<span style="color:rgb(0,135,0)">self</span>,
+<span class="ansi-green-fg ansi-bold">     56</span>          <span style="color:rgb(0,135,0)">format</span>: typing<span style="color:rgb(98,98,98)">.</span>Optional[<span style="color:rgb(0,135,0)">str</span>] <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>,
+<span class="ansi-green-fg ansi-bold">     57</span>          renderer: typing<span style="color:rgb(98,98,98)">.</span>Optional[<span style="color:rgb(0,135,0)">str</span>] <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>,
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-fg ansi-bold">     61</span>          engine: typing<span style="color:rgb(98,98,98)">.</span>Optional[<span style="color:rgb(0,135,0)">str</span>] <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>,
+<span class="ansi-green-fg ansi-bold">     62</span>          encoding: typing<span style="color:rgb(98,98,98)">.</span>Optional[<span style="color:rgb(0,135,0)">str</span>] <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>) <span style="color:rgb(98,98,98)">-</span><span style="color:rgb(98,98,98)">&gt;</span> typing<span style="color:rgb(98,98,98)">.</span>Union[<span style="color:rgb(0,135,0)">bytes</span>, <span style="color:rgb(0,135,0)">str</span>]:
+<span class="ansi-green-fg ansi-bold">     63</span> <span style="color:rgb(188,188,188)">    </span><span style="font-style:italic;color:rgb(175,0,0)">"""Return the source piped through the Graphviz layout command.</span>
+<span class="ansi-green-fg ansi-bold">     64</span> 
+<span class="ansi-green-fg ansi-bold">     65</span> <span style="font-style:italic;color:rgb(175,0,0)">    Args:</span>
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-fg ansi-bold">    102</span> <span style="font-style:italic;color:rgb(175,0,0)">        '&lt;?xml version='</span>
+<span class="ansi-green-fg ansi-bold">    103</span> <span style="font-style:italic;color:rgb(175,0,0)">    """</span>
+<span class="ansi-green-fg">--&gt; 104</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_pipe_legacy</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">format</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    105</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">renderer</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">renderer</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    106</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">formatter</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">formatter</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    107</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">neato_no_op</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">neato_no_op</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    108</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">quiet</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">quiet</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    109</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">engine</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">engine</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    110</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">encoding</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">encoding</span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/_tools.py:171</span>, in <span class="ansi-cyan-fg">deprecate_positional_args.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
+<span class="ansi-green-fg ansi-bold">    162</span>     wanted <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">, </span><span style="color:rgb(175,0,0)">'</span><span style="color:rgb(98,98,98)">.</span>join(<span style="color:rgb(175,0,0)">f</span><span style="color:rgb(175,0,0)">'</span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>name<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="color:rgb(175,0,0)">=</span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>value<span style="font-weight:bold;color:rgb(175,95,135)">!r}</span><span style="color:rgb(175,0,0)">'</span>
+<span class="ansi-green-fg ansi-bold">    163</span>                        <span style="font-weight:bold;color:rgb(0,135,0)">for</span> name, value <span style="font-weight:bold;color:rgb(175,0,255)">in</span> deprecated<span style="color:rgb(98,98,98)">.</span>items())
+<span class="ansi-green-fg ansi-bold">    164</span>     warnings<span style="color:rgb(98,98,98)">.</span>warn(<span style="color:rgb(175,0,0)">f</span><span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">The signature of </span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>func<span style="color:rgb(98,98,98)">.</span><span style="color:rgb(0,0,135)">__name__</span><span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="color:rgb(175,0,0)"> will be reduced</span><span style="color:rgb(175,0,0)">'</span>
+<span class="ansi-green-fg ansi-bold">    165</span>                   <span style="color:rgb(175,0,0)">f</span><span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)"> to </span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>supported_number<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="color:rgb(175,0,0)"> positional args</span><span style="color:rgb(175,0,0)">'</span>
+<span class="ansi-green-fg ansi-bold">    166</span>                   <span style="color:rgb(175,0,0)">f</span><span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)"> </span><span style="font-weight:bold;color:rgb(175,95,135)">{</span><span style="color:rgb(0,135,0)">list</span>(supported)<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="color:rgb(175,0,0)">: pass </span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>wanted<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="color:rgb(175,0,0)">'</span>
+<span class="ansi-green-fg ansi-bold">    167</span>                   <span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)"> as keyword arg(s)</span><span style="color:rgb(175,0,0)">'</span>,
+<span class="ansi-green-fg ansi-bold">    168</span>                   stacklevel<span style="color:rgb(98,98,98)">=</span>stacklevel,
+<span class="ansi-green-fg ansi-bold">    169</span>                   category<span style="color:rgb(98,98,98)">=</span>category)
+<span class="ansi-green-fg">--&gt; 171</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">func</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/piping.py:121</span>, in <span class="ansi-cyan-fg">Pipe._pipe_legacy</span><span class="ansi-blue-fg">(self, format, renderer, formatter, neato_no_op, quiet, engine, encoding)</span>
+<span class="ansi-green-fg ansi-bold">    112</span> <span style="color:rgb(175,0,255)">@_tools</span><span style="color:rgb(98,98,98)">.</span>deprecate_positional_args(supported_number<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(98,98,98)">2</span>)
+<span class="ansi-green-fg ansi-bold">    113</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span><span style="color:rgb(188,188,188)"> </span><span style="color:rgb(0,0,255)">_pipe_legacy</span>(<span style="color:rgb(0,135,0)">self</span>,
+<span class="ansi-green-fg ansi-bold">    114</span>                  <span style="color:rgb(0,135,0)">format</span>: typing<span style="color:rgb(98,98,98)">.</span>Optional[<span style="color:rgb(0,135,0)">str</span>] <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>,
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-fg ansi-bold">    119</span>                  engine: typing<span style="color:rgb(98,98,98)">.</span>Optional[<span style="color:rgb(0,135,0)">str</span>] <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>,
+<span class="ansi-green-fg ansi-bold">    120</span>                  encoding: typing<span style="color:rgb(98,98,98)">.</span>Optional[<span style="color:rgb(0,135,0)">str</span>] <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>) <span style="color:rgb(98,98,98)">-</span><span style="color:rgb(98,98,98)">&gt;</span> typing<span style="color:rgb(98,98,98)">.</span>Union[<span style="color:rgb(0,135,0)">bytes</span>, <span style="color:rgb(0,135,0)">str</span>]:
+<span class="ansi-green-fg">--&gt; 121</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_pipe_future</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">format</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    122</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">renderer</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">renderer</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    123</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">formatter</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">formatter</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    124</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">neato_no_op</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">neato_no_op</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    125</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">quiet</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">quiet</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    126</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">engine</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">engine</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg ansi-bold">    127</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">encoding</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">encoding</span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/piping.py:149</span>, in <span class="ansi-cyan-fg">Pipe._pipe_future</span><span class="ansi-blue-fg">(self, format, renderer, formatter, neato_no_op, quiet, engine, encoding)</span>
+<span class="ansi-green-fg ansi-bold">    146</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> encoding <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>:
+<span class="ansi-green-fg ansi-bold">    147</span>     <span style="font-weight:bold;color:rgb(0,135,0)">if</span> codecs<span style="color:rgb(98,98,98)">.</span>lookup(encoding) <span style="font-weight:bold;color:rgb(175,0,255)">is</span> codecs<span style="color:rgb(98,98,98)">.</span>lookup(<span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>encoding):
+<span class="ansi-green-fg ansi-bold">    148</span>         <span style="font-style:italic;color:rgb(95,135,135)"># common case: both stdin and stdout need the same encoding</span>
+<span class="ansi-green-fg">--&gt; 149</span>         <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_pipe_lines_string</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">encoding</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">encoding</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg ansi-bold">    150</span>     <span style="font-weight:bold;color:rgb(0,135,0)">try</span>:
+<span class="ansi-green-fg ansi-bold">    151</span>         raw <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>_pipe_lines(<span style="color:rgb(98,98,98)">*</span>args, input_encoding<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>encoding, <span style="color:rgb(98,98,98)">*</span><span style="color:rgb(98,98,98)">*</span>kwargs)
+
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/backend/piping.py:212</span>, in <span class="ansi-cyan-fg">pipe_lines_string</span><span class="ansi-blue-fg">(engine, format, input_lines, encoding, renderer, formatter, neato_no_op, quiet)</span>
+<span class="ansi-green-fg ansi-bold">    206</span> cmd <span style="color:rgb(98,98,98)">=</span> dot_command<span style="color:rgb(98,98,98)">.</span>command(engine, <span style="color:rgb(0,135,0)">format</span>,
+<span class="ansi-green-fg ansi-bold">    207</span>                           renderer<span style="color:rgb(98,98,98)">=</span>renderer,
+<span class="ansi-green-fg ansi-bold">    208</span>                           formatter<span style="color:rgb(98,98,98)">=</span>formatter,
+<span class="ansi-green-fg ansi-bold">    209</span>                           neato_no_op<span style="color:rgb(98,98,98)">=</span>neato_no_op)
+<span class="ansi-green-fg ansi-bold">    210</span> kwargs <span style="color:rgb(98,98,98)">=</span> {<span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">input_lines</span><span style="color:rgb(175,0,0)">'</span>: input_lines, <span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">encoding</span><span style="color:rgb(175,0,0)">'</span>: encoding}
+<span class="ansi-green-fg">--&gt; 212</span> proc <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">execute</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">run_check</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">cmd</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">capture_output</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span style="font-weight:bold;color:rgb(0,135,0)" class="ansi-yellow-bg">True</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">quiet</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">quiet</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg ansi-bold">    213</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> proc<span style="color:rgb(98,98,98)">.</span>stdout
+
+File <span class="ansi-green-fg">~/projects/blog/venv/lib/python3.12/site-packages/graphviz/backend/execute.py:81</span>, in <span class="ansi-cyan-fg">run_check</span><span class="ansi-blue-fg">(cmd, input_lines, encoding, quiet, **kwargs)</span>
+<span class="ansi-green-fg ansi-bold">     79</span> <span style="font-weight:bold;color:rgb(0,135,0)">except</span> <span style="font-weight:bold;color:rgb(215,95,95)">OSError</span> <span style="font-weight:bold;color:rgb(0,135,0)">as</span> e:
+<span class="ansi-green-fg ansi-bold">     80</span>     <span style="font-weight:bold;color:rgb(0,135,0)">if</span> e<span style="color:rgb(98,98,98)">.</span>errno <span style="color:rgb(98,98,98)">==</span> errno<span style="color:rgb(98,98,98)">.</span>ENOENT:
+<span class="ansi-green-fg">---&gt; 81</span>         <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> ExecutableNotFound(cmd) <span style="font-weight:bold;color:rgb(0,135,0)">from</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,0,255)">e</span>
+<span class="ansi-green-fg ansi-bold">     82</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span>
+<span class="ansi-green-fg ansi-bold">     84</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> quiet <span style="font-weight:bold;color:rgb(175,0,255)">and</span> proc<span style="color:rgb(98,98,98)">.</span>stderr:
+
+<span class="ansi-red-fg">ExecutableNotFound</span>: failed to execute PosixPath('dot'), make sure the Graphviz executables are on your systems' PATH</pre>
 </div>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>&lt;graphviz.sources.Source at 0x7423cf1b1f40&gt;</code></pre>
 </div>
 </div>
 <p>The point of this example is that transformations are often part of our models. What is the <code>&lt;blah blah blah&gt;</code> here? Why should we care about <span class="math inline">\(f(X,Z;\vec \beta)\)</span>? Often we are motivated by also having a third variable <span class="math inline">\(Y\)</span> so that <code>&lt;blah blah blah&gt;</code> is to achieve <span class="math inline">\(Y \approx f(X,Z; \vec{\beta})\)</span> by choosing <span class="math inline">\(\vec{\beta}\)</span> in an optimal way.</p>
@@ -468,7 +596,7 @@ Figure&nbsp;8: In this visualization of a function it is non-injective because i
 <h1>Some Models are More Expressive Than Others</h1>
 <p>I’ve spilled a lot of digital “ink” on where Dustin and I disagree. Let’s find some common ground.</p>
 <p>Let us consider an example to explain how some models capture more about a data generating process than others. Suppose we have a random variable <span class="math inline">\(X\)</span> and that we have seen that <span class="math inline">\(X\)</span> seems to vary over time. We collect measurements of <span class="math inline">\(X\)</span> at two time points and plot them as histograms</p>
-<div id="ff888bfd" class="cell" data-execution_count="2">
+<div id="c306afcc" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
@@ -496,57 +624,57 @@ Figure&nbsp;8: In this visualization of a function it is non-injective because i
 <tr class="even">
 <td data-quarto-table-cell-role="th">mean</td>
 <td>0.249500</td>
-<td>0.881857</td>
-<td>0.578441</td>
-<td>62.964460</td>
+<td>0.868677</td>
+<td>0.593301</td>
+<td>62.054320</td>
 <td>2.794000</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">std</td>
 <td>0.144482</td>
-<td>1.708056</td>
-<td>4.069267</td>
-<td>46.374890</td>
+<td>1.662305</td>
+<td>3.890496</td>
+<td>44.444209</td>
 <td>1.168887</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">min</td>
 <td>0.000000</td>
-<td>-2.291022</td>
-<td>-6.528380</td>
-<td>0.872754</td>
+<td>-2.191400</td>
+<td>-6.237804</td>
+<td>1.065229</td>
 <td>1.000000</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">25%</td>
 <td>0.124750</td>
-<td>-0.269403</td>
-<td>-2.550454</td>
-<td>4.706893</td>
+<td>-0.220465</td>
+<td>-2.350446</td>
+<td>5.778134</td>
 <td>2.000000</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">50%</td>
 <td>0.249500</td>
-<td>1.015963</td>
-<td>1.562527</td>
-<td>78.676857</td>
+<td>0.987743</td>
+<td>1.567423</td>
+<td>78.309216</td>
 <td>3.000000</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">75%</td>
 <td>0.374250</td>
-<td>1.876932</td>
-<td>3.938227</td>
-<td>106.476448</td>
+<td>1.860084</td>
+<td>3.751056</td>
+<td>103.316583</td>
 <td>4.000000</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">max</td>
 <td>0.499000</td>
-<td>4.146946</td>
-<td>6.946272</td>
-<td>133.826342</td>
+<td>4.025507</td>
+<td>6.681616</td>
+<td>127.837431</td>
 <td>4.000000</td>
 </tr>
 </tbody>
@@ -555,7 +683,7 @@ Figure&nbsp;8: In this visualization of a function it is non-injective because i
 </div>
 </div>
 </div>
-<div id="15284644" class="cell" data-execution_count="3">
+<div id="013f762a" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>timepoint
 1    Axes(0.125,0.11;0.775x0.77)
@@ -586,7 +714,7 @@ Warning
 </div>
 <p>Or maybe you just perform a non-parametric bootstrap. Maybe you goes with a Bayesian approach with some choice of priors and then procede in sampling posterior values of <span class="math inline">\(\frac{\bar X_{0.2} - \bar X_{0.1}}{S_{\Delta \bar X}}\)</span>. Whatever of these approach we go with, or others, we’re pretty limited <em>prima facie</em> with what we can do with a data set like this. One of the main takeaways of this analysis is that <span class="math inline">\(X\)</span> seems to have net-increased between the time points.</p>
 <p>Now let’s suppose we collect a third time point to make open up more types of analysis. We examine the data as boxplots shown in the next plot. If you’re from an earlier generation of statisticians you might think about setting up one of various choices of analysis of variance. And again, you might get concerned about equality of variances and do something like derive sampling distributions or bootstrap. Or even estimate the posterior of the F-scores. If you’re from a later generation of statisticians you might look at this from a linear model perspective and again consider various choices about the model. Whatever you do here, you can model a richer description with these three time points in comparison to when we had measurements at only two. You get a sense that <span class="math inline">\(X\)</span> seems to increase and then decrease, which is more complicated than the two-group analysis could show us</p>
-<div id="e71cab16" class="cell" data-execution_count="4">
+<div id="285a6300" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -596,15 +724,15 @@ Warning
 </div>
 </div>
 <p>Digging further into the matter, you discover there are two other variables <span class="math inline">\(Y\)</span> and <span class="math inline">\(Z\)</span> that seem to covary with <span class="math inline">\(X\)</span>! Fortunately your grad student collected paired measurements <span class="math inline">\((X,Y,Z)\)</span> for the three time points and plot them as a scatter. At this juncture you notice that there seems to be three elongate shapes in the data. Maybe you hop on using a linear mixed effect model to allow for different slopes and intercepts. Maybe you include polynomial predictors when you notice some bending (i.e.&nbsp;curvature) would help the testing error.</p>
-<div id="bc9b4700" class="cell" data-execution_count="5">
+<div id="d8e8f0d4" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_22923/2513081468.py:9: UserWarning: Tight layout not applied. The bottom and top margins cannot be made large enough to accommodate all Axes decorations.
+<pre><code>/tmp/ipykernel_57941/2513081468.py:9: UserWarning: Tight layout not applied. The bottom and top margins cannot be made large enough to accommodate all Axes decorations.
   plt.tight_layout()</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-6-output-2.png" width="410" height="9863" class="figure-img"></p>
+<p><img src="index_files/figure-html/cell-6-output-2.png" width="409" height="9863" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -629,90 +757,90 @@ Warning
 </blockquote>
 <p>All of the randomness in this simulation originated from normally-distributed initial conditions <span class="math display">\[[X_0, Y_0, Z_0]^T \sim \mathcal{N}\left(\vec 1_3, \frac{1}{20} I_{3 \times 3} \right)\]</span>. Because the initial conditions are random variables, so are the future states when we attempt to measure the system.</p>
 <p>In case you wish to tinker, here is the requisite code to reproduce the above results up to pseudorandom variation.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">This script simulates a system of ordinary differential</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">equations and saves the results to a file.</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> odeint</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Dynamical system definition</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>rho <span class="op">=</span> <span class="fl">28.0</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="fl">10.0</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> <span class="fl">8.0</span> <span class="op">/</span> <span class="fl">3.0</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.arange(<span class="fl">0.0</span>, <span class="fl">0.5</span>, <span class="fl">0.001</span>)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(state, t):</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    x, y, z <span class="op">=</span> state</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sigma <span class="op">*</span> (y <span class="op">-</span> x), x <span class="op">*</span> (rho <span class="op">-</span> z) <span class="op">-</span> y, beta <span class="op">*</span> x <span class="op">*</span> y <span class="op">*</span> z</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate random paths at selected timepoints</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> np.array((<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>)).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {}</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">100</span>):</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    state0 <span class="op">=</span> np.random.normal(<span class="dv">1</span>, <span class="fl">0.05</span>, size<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    states <span class="op">=</span> odeint(f, state0, t)</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    select_states <span class="op">=</span> states[(t<span class="op">==</span><span class="fl">0.1</span>)<span class="op">|</span>(t<span class="op">==</span><span class="fl">0.2</span>)<span class="op">|</span>(t<span class="op">==</span><span class="fl">0.3</span>)]</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    data[i] <span class="op">=</span> np.concatenate((times, select_states), axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.concatenate(<span class="bu">tuple</span>(data.values()))</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data, columns<span class="op">=</span>[<span class="st">'Time'</span>, <span class="st">'X'</span>, <span class="st">'Y'</span>, <span class="st">'Z'</span>])</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">'select_dynamics_data.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate mean path at many timepoints</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>states0 <span class="op">=</span> (<span class="dv">1</span>,)<span class="op">*</span><span class="dv">3</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>states <span class="op">=</span> odeint(f, state0, t)</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.concatenate((t.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>), states), axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data, columns<span class="op">=</span>[<span class="st">'Time'</span>, <span class="st">'X'</span>, <span class="st">'Y'</span>, <span class="st">'Z'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">This script loads the data generated in the previous script</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">and plots it.</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">This script simulates a system of ordinary differential</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">equations and saves the results to a file.</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> odeint</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'select_dynamics_data.csv'</span>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>all_df <span class="op">=</span> pd.read_csv(<span class="st">'all_dynamics_data.csv'</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Histogram</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> time, dfi <span class="kw">in</span> df.groupby(<span class="st">'Time'</span>):</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> time <span class="kw">in</span> (<span class="fl">0.1</span>, <span class="fl">0.2</span>):</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        plt.hist(dfi.X, label<span class="op">=</span><span class="ss">f'Time=</span><span class="sc">{</span>time<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'X'</span>)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Frequency'</span>)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Box Plot</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'Time'</span>, y<span class="op">=</span><span class="st">'X'</span>, hue<span class="op">=</span><span class="st">'Time'</span>, dodge<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co"># 3D Plot</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> fig.add_subplot(projection<span class="op">=</span><span class="st">'3d'</span>)</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> time, dfi <span class="kw">in</span> df.groupby(<span class="st">'Time'</span>):</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    ax.scatter(<span class="op">*</span>dfi[[<span class="st">'X'</span>, <span class="st">'Y'</span>, <span class="st">'Z'</span>]].to_numpy().T, label<span class="op">=</span><span class="ss">f'Time=</span><span class="sc">{</span>time<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'X'</span>)</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Y'</span>)</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>ax.set_zlabel(<span class="st">'Z'</span>)</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'dynamics_3D_scatter.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, transparent<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>ax.plot(<span class="op">*</span>all_df[[<span class="st">'X'</span>, <span class="st">'Y'</span>, <span class="st">'Z'</span>]].to_numpy().T, color<span class="op">=</span><span class="st">'k'</span>)</span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'dynamics_3D_all.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, transparent<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Dynamical system definition</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>rho <span class="op">=</span> <span class="fl">28.0</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="fl">10.0</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> <span class="fl">8.0</span> <span class="op">/</span> <span class="fl">3.0</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.arange(<span class="fl">0.0</span>, <span class="fl">0.5</span>, <span class="fl">0.001</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(state, t):</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    x, y, z <span class="op">=</span> state</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sigma <span class="op">*</span> (y <span class="op">-</span> x), x <span class="op">*</span> (rho <span class="op">-</span> z) <span class="op">-</span> y, beta <span class="op">*</span> x <span class="op">*</span> y <span class="op">*</span> z</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate random paths at selected timepoints</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> np.array((<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>)).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {}</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">100</span>):</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    state0 <span class="op">=</span> np.random.normal(<span class="dv">1</span>, <span class="fl">0.05</span>, size<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    states <span class="op">=</span> odeint(f, state0, t)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    select_states <span class="op">=</span> states[(t<span class="op">==</span><span class="fl">0.1</span>)<span class="op">|</span>(t<span class="op">==</span><span class="fl">0.2</span>)<span class="op">|</span>(t<span class="op">==</span><span class="fl">0.3</span>)]</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    data[i] <span class="op">=</span> np.concatenate((times, select_states), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.concatenate(<span class="bu">tuple</span>(data.values()))</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data, columns<span class="op">=</span>[<span class="st">'Time'</span>, <span class="st">'X'</span>, <span class="st">'Y'</span>, <span class="st">'Z'</span>])</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">'select_dynamics_data.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate mean path at many timepoints</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>states0 <span class="op">=</span> (<span class="dv">1</span>,)<span class="op">*</span><span class="dv">3</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>states <span class="op">=</span> odeint(f, state0, t)</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.concatenate((t.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>), states), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data, columns<span class="op">=</span>[<span class="st">'Time'</span>, <span class="st">'X'</span>, <span class="st">'Y'</span>, <span class="st">'Z'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">This script loads the data generated in the previous script</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">and plots it.</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'select_dynamics_data.csv'</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>all_df <span class="op">=</span> pd.read_csv(<span class="st">'all_dynamics_data.csv'</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Histogram</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> time, dfi <span class="kw">in</span> df.groupby(<span class="st">'Time'</span>):</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> time <span class="kw">in</span> (<span class="fl">0.1</span>, <span class="fl">0.2</span>):</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        plt.hist(dfi.X, label<span class="op">=</span><span class="ss">f'Time=</span><span class="sc">{</span>time<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'X'</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Frequency'</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Box Plot</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'Time'</span>, y<span class="op">=</span><span class="st">'X'</span>, hue<span class="op">=</span><span class="st">'Time'</span>, dodge<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co"># 3D Plot</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> fig.add_subplot(projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> time, dfi <span class="kw">in</span> df.groupby(<span class="st">'Time'</span>):</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    ax.scatter(<span class="op">*</span>dfi[[<span class="st">'X'</span>, <span class="st">'Y'</span>, <span class="st">'Z'</span>]].to_numpy().T, label<span class="op">=</span><span class="ss">f'Time=</span><span class="sc">{</span>time<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'X'</span>)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Y'</span>)</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>ax.set_zlabel(<span class="st">'Z'</span>)</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'dynamics_3D_scatter.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, transparent<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>ax.plot(<span class="op">*</span>all_df[[<span class="st">'X'</span>, <span class="st">'Y'</span>, <span class="st">'Z'</span>]].to_numpy().T, color<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'dynamics_3D_all.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, transparent<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -825,8 +953,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -937,7 +1063,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

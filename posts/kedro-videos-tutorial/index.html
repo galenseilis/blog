@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Galen Seilis">
-<meta name="dcterms.date" content="2023-05-12">
+<meta name="dcterms.date" content="2025-02-17">
 
 <title>Kedro Video Tutorial Notes – Galen Seilis</title>
 <style>
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-cc1e396cda9b4d77c81dfa867c1b72f5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -105,7 +105,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
 <script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
 <link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
-<meta name="quarto:status" content="draft">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -143,7 +142,7 @@ window.Quarto = {
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><div id="quarto-draft-alert" class="alert alert-warning"><i class="bi bi-pencil-square"></i>Draft</div>
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -218,6 +217,17 @@ window.Quarto = {
   <li><a href="#get-started-with-kedro---run-your-kedro-pipeline" id="toc-get-started-with-kedro---run-your-kedro-pipeline" class="nav-link" data-scroll-target="#get-started-with-kedro---run-your-kedro-pipeline">Get started with Kedro - Run your Kedro pipeline</a></li>
   <li><a href="#get-started-with-kedro---visualise-your-data-pipeline-with-kedro-viz" id="toc-get-started-with-kedro---visualise-your-data-pipeline-with-kedro-viz" class="nav-link" data-scroll-target="#get-started-with-kedro---visualise-your-data-pipeline-with-kedro-viz">Get started with Kedro - Visualise your data pipeline with Kedro-Viz</a></li>
   <li><a href="#make-complex-kedro-pipelines---merge-different-dataframes-in-kedro" id="toc-make-complex-kedro-pipelines---merge-different-dataframes-in-kedro" class="nav-link" data-scroll-target="#make-complex-kedro-pipelines---merge-different-dataframes-in-kedro">Make complex Kedro pipelines - Merge different dataframes in Kedro</a></li>
+  <li><a href="#make-complex-kedro-pipelines---master-parameters-in-kedro" id="toc-make-complex-kedro-pipelines---master-parameters-in-kedro" class="nav-link" data-scroll-target="#make-complex-kedro-pipelines---master-parameters-in-kedro">Make complex Kedro pipelines - Master parameters in Kedro</a></li>
+  <li><a href="#make-complex-kedro-pipelines---apply-versioning-to-datasets" id="toc-make-complex-kedro-pipelines---apply-versioning-to-datasets" class="nav-link" data-scroll-target="#make-complex-kedro-pipelines---apply-versioning-to-datasets">Make complex Kedro pipelines - Apply versioning to datasets</a></li>
+  <li><a href="#make-complex-kedro-pipelines---reuse-your-kedro-pipeline-using-namespaces" id="toc-make-complex-kedro-pipelines---reuse-your-kedro-pipeline-using-namespaces" class="nav-link" data-scroll-target="#make-complex-kedro-pipelines---reuse-your-kedro-pipeline-using-namespaces">make complex Kedro pipelines - Reuse your Kedro pipeline using namespaces</a></li>
+  <li><a href="#make-complex-kedro-pipelines---accelerate-your-kedro-pipeline-using-runners" id="toc-make-complex-kedro-pipelines---accelerate-your-kedro-pipeline-using-runners" class="nav-link" data-scroll-target="#make-complex-kedro-pipelines---accelerate-your-kedro-pipeline-using-runners">Make complex Kedro pipelines - Accelerate your Kedro pipeline using runners</a></li>
+  <li><a href="#make-complex-kedro-pipelines---create-kedro-datasets-dynamically-using-factories" id="toc-make-complex-kedro-pipelines---create-kedro-datasets-dynamically-using-factories" class="nav-link" data-scroll-target="#make-complex-kedro-pipelines---create-kedro-datasets-dynamically-using-factories">Make complex Kedro pipelines - Create Kedro datasets dynamically using factories</a></li>
+  <li><a href="#ship-your-kedro-project-to-production---define-your-own-kedro-environments" id="toc-ship-your-kedro-project-to-production---define-your-own-kedro-environments" class="nav-link" data-scroll-target="#ship-your-kedro-project-to-production---define-your-own-kedro-environments">Ship your Kedro project to production - Define your own Kedro environments</a></li>
+  <li><a href="#ship-your-kedro-project-to-production---use-s3-and-miniio-cloud-storages-with-kedro" id="toc-ship-your-kedro-project-to-production---use-s3-and-miniio-cloud-storages-with-kedro" class="nav-link" data-scroll-target="#ship-your-kedro-project-to-production---use-s3-and-miniio-cloud-storages-with-kedro">Ship your Kedro project to production - Use S3 and MiniIO cloud storages with Kedro</a></li>
+  <li><a href="#ship-your-kedro-project-to-production---package-your-kedro-project-into-a-python-wheel" id="toc-ship-your-kedro-project-to-production---package-your-kedro-project-into-a-python-wheel" class="nav-link" data-scroll-target="#ship-your-kedro-project-to-production---package-your-kedro-project-into-a-python-wheel">Ship your Kedro project to production - Package your Kedro project into a Python wheel</a></li>
+  <li><a href="#ship-your-kedro-project-to-production---turn-your-kedro-project-into-a-docker-container" id="toc-ship-your-kedro-project-to-production---turn-your-kedro-project-into-a-docker-container" class="nav-link" data-scroll-target="#ship-your-kedro-project-to-production---turn-your-kedro-project-into-a-docker-container">Ship your Kedro project to production - Turn your Kedro project into a Docker container</a></li>
+  <li><a href="#ship-your-kedro-project-to-production---deploy-your-kedro-project-to-apache-airflow" id="toc-ship-your-kedro-project-to-production---deploy-your-kedro-project-to-apache-airflow" class="nav-link" data-scroll-target="#ship-your-kedro-project-to-production---deploy-your-kedro-project-to-apache-airflow">Ship your Kedro project to production - Deploy your Kedro project to Apache Airflow</a></li>
+  <li><a href="#continue-your-kedro-journey" id="toc-continue-your-kedro-journey" class="nav-link" data-scroll-target="#continue-your-kedro-journey">Continue your Kedro journey</a></li>
   </ul>
 </nav>
     </div>
@@ -247,7 +257,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 12, 2023</p>
+      <p class="date">February 17, 2025</p>
     </div>
   </div>
   
@@ -2674,6 +2684,377 @@ Note
 <h2 class="anchored" data-anchor-id="make-complex-kedro-pipelines---merge-different-dataframes-in-kedro">Make complex Kedro pipelines - Merge different dataframes in Kedro</h2>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ctTFAeL4JgU?si=kCTOC9l9t37C66DX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
+<ul>
+<li>You can rewrite your notebook code into functions.</li>
+<li>For example:</li>
+</ul>
+<div class="sourceCode" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> split_data(df: pd.DataFrame, parameters: <span class="bu">dict</span>) <span class="op">-&gt;</span> <span class="bu">tuple</span>:</span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> df[parameters[<span class="st">"features"</span>]]</span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> df[<span class="st">"price"</span>]</span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>    (</span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a>        X_train,</span>
+<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a>        X_test,</span>
+<span id="cb69-9"><a href="#cb69-9" aria-hidden="true" tabindex="-1"></a>        y_train,</span>
+<span id="cb69-10"><a href="#cb69-10" aria-hidden="true" tabindex="-1"></a>        y_test</span>
+<span id="cb69-11"><a href="#cb69-11" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">=</span> train_test_split(</span>
+<span id="cb69-12"><a href="#cb69-12" aria-hidden="true" tabindex="-1"></a>        X,</span>
+<span id="cb69-13"><a href="#cb69-13" aria-hidden="true" tabindex="-1"></a>        y,</span>
+<span id="cb69-14"><a href="#cb69-14" aria-hidden="true" tabindex="-1"></a>        test_size<span class="op">=</span>parameters[<span class="st">"test_size"</span>]</span>
+<span id="cb69-15"><a href="#cb69-15" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb69-16"><a href="#cb69-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> X_train, X_test, y_train, y_test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can reload Kedro in an iPython session using <code>%reload_kedro</code> as an iPython magic command.</p>
+</div>
+</div>
+<p>You can load a Kedro project’s parameters using the following:</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>catalog.load(<span class="st">"params"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can further specify loading an entry in Kedro parameters using a colon:</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>catalog.load(<span class="st">"params:a"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This does assume that you have an instance of the catalog loaded. This will occur automatically in a Kedro Jpuyter notebook, but you may need to import and call some callables from Kedro when doing this from a script.</p>
+</section>
+<section id="make-complex-kedro-pipelines---master-parameters-in-kedro" class="level2">
+<h2 class="anchored" data-anchor-id="make-complex-kedro-pipelines---master-parameters-in-kedro">Make complex Kedro pipelines - Master parameters in Kedro</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/eIA12RQMlFY?si=Uuk7bUV8ErOAJJyX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+<ul>
+<li>Each pipelines will <em>de facto</em> have is own parameters file in YAML format.</li>
+</ul>
+<p>Suppose we have a parameters file like this:</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_options</span><span class="kw">:</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">test_size</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.2</span></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">random_state</span><span class="kw">:</span><span class="at"> </span><span class="dv">2018</span></span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">features</span><span class="kw">:</span></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> engines</span></span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> passenger_capacity</span></span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> crew</span></span>
+<span id="cb72-8"><a href="#cb72-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> d_check_complete</span></span>
+<span id="cb72-9"><a href="#cb72-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> noon_clearance_complete</span></span>
+<span id="cb72-10"><a href="#cb72-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> iata_approved</span></span>
+<span id="cb72-11"><a href="#cb72-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> company_rating</span></span>
+<span id="cb72-12"><a href="#cb72-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> review_scores_rating</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then in <code>nodes.py</code> for that pipeline we can put:</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> logging</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> test_train_split</span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> r2_score</span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a>logger <span class="op">=</span> logging.getLogger(<span class="va">__name__</span>)</span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> split_data(df: pd.DataFrame, parameters: <span class="bu">dict</span>) <span class="op">-&gt;</span> <span class="bu">tuple</span>:</span>
+<span id="cb73-11"><a href="#cb73-11" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> df[parameters[<span class="st">"features"</span>]]</span>
+<span id="cb73-12"><a href="#cb73-12" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> df[<span class="st">"price"</span>]</span>
+<span id="cb73-13"><a href="#cb73-13" aria-hidden="true" tabindex="-1"></a>    (</span>
+<span id="cb73-14"><a href="#cb73-14" aria-hidden="true" tabindex="-1"></a>        X_train,</span>
+<span id="cb73-15"><a href="#cb73-15" aria-hidden="true" tabindex="-1"></a>        X_test,</span>
+<span id="cb73-16"><a href="#cb73-16" aria-hidden="true" tabindex="-1"></a>        y_train,</span>
+<span id="cb73-17"><a href="#cb73-17" aria-hidden="true" tabindex="-1"></a>        y_test</span>
+<span id="cb73-18"><a href="#cb73-18" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">=</span> train_test_split(</span>
+<span id="cb73-19"><a href="#cb73-19" aria-hidden="true" tabindex="-1"></a>        X,</span>
+<span id="cb73-20"><a href="#cb73-20" aria-hidden="true" tabindex="-1"></a>        y,</span>
+<span id="cb73-21"><a href="#cb73-21" aria-hidden="true" tabindex="-1"></a>        test_size<span class="op">=</span>parameters[<span class="st">"test_size"</span>]</span>
+<span id="cb73-22"><a href="#cb73-22" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb73-23"><a href="#cb73-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> X_train, X_test, y_train, y_test</span>
+<span id="cb73-24"><a href="#cb73-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-25"><a href="#cb73-25" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_linear_model(X_train: pd.DataFrame, y_train: pd.Series) <span class="op">-&gt;</span> LinearRegression:</span>
+<span id="cb73-26"><a href="#cb73-26" aria-hidden="true" tabindex="-1"></a>    regressor <span class="op">=</span> LinearRegression()</span>
+<span id="cb73-27"><a href="#cb73-27" aria-hidden="true" tabindex="-1"></a>    regressor.fit(X_train, y_train)</span>
+<span id="cb73-28"><a href="#cb73-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> regressor</span>
+<span id="cb73-29"><a href="#cb73-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-30"><a href="#cb73-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> evaluate_model(</span>
+<span id="cb73-31"><a href="#cb73-31" aria-hidden="true" tabindex="-1"></a>    regressor: LinearRegression,</span>
+<span id="cb73-32"><a href="#cb73-32" aria-hidden="true" tabindex="-1"></a>    X_test: pd.DataFrame,</span>
+<span id="cb73-33"><a href="#cb73-33" aria-hidden="true" tabindex="-1"></a>    y_tests: pd.Series</span>
+<span id="cb73-34"><a href="#cb73-34" aria-hidden="true" tabindex="-1"></a>    ):</span>
+<span id="cb73-35"><a href="#cb73-35" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> regresor.predict(X_test)</span>
+<span id="cb73-36"><a href="#cb73-36" aria-hidden="true" tabindex="-1"></a>    score <span class="op">=</span> r2_score(y_test, y_pred)</span>
+<span id="cb73-37"><a href="#cb73-37" aria-hidden="true" tabindex="-1"></a>    logger.info(<span class="ss">f"Model has a coefficient $R^2$ of </span><span class="sc">{</span>score<span class="sc">}</span><span class="ss"> on test data."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Next we can define corresponding calls for these functions in our <code>pipeline.py</code> file for the given pipeline.</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> kedro.pipeline <span class="im">import</span> Pipeline, pipeline, node</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .nodes <span class="im">import</span> evaluate_model, train_model, split_data</span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_pipeline(<span class="op">**</span>kwargs) <span class="op">-&gt;</span> Pipeline:</span>
+<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pipeline([</span>
+<span id="cb74-7"><a href="#cb74-7" aria-hidden="true" tabindex="-1"></a>        node(</span>
+<span id="cb74-8"><a href="#cb74-8" aria-hidden="true" tabindex="-1"></a>         func<span class="op">=</span>split_data,</span>
+<span id="cb74-9"><a href="#cb74-9" aria-hidden="true" tabindex="-1"></a>         inputs<span class="op">=</span>[<span class="st">"model_input_table"</span>, <span class="st">"params:model_options"</span>],</span>
+<span id="cb74-10"><a href="#cb74-10" aria-hidden="true" tabindex="-1"></a>         outputs<span class="op">=</span>[<span class="st">"X_train"</span>, <span class="st">"X_test"</span>, <span class="st">"y_train"</span>, <span class="st">"y_test"</span>]</span>
+<span id="cb74-11"><a href="#cb74-11" aria-hidden="true" tabindex="-1"></a>         ),</span>
+<span id="cb74-12"><a href="#cb74-12" aria-hidden="true" tabindex="-1"></a>        node(</span>
+<span id="cb74-13"><a href="#cb74-13" aria-hidden="true" tabindex="-1"></a>         func<span class="op">=</span>train_model,</span>
+<span id="cb74-14"><a href="#cb74-14" aria-hidden="true" tabindex="-1"></a>         inputs<span class="op">=</span>[<span class="st">"X_train"</span>, <span class="st">"y_train"</span>],</span>
+<span id="cb74-15"><a href="#cb74-15" aria-hidden="true" tabindex="-1"></a>         outputs<span class="op">=</span>[<span class="st">"regressor"</span>],</span>
+<span id="cb74-16"><a href="#cb74-16" aria-hidden="true" tabindex="-1"></a>         ),</span>
+<span id="cb74-17"><a href="#cb74-17" aria-hidden="true" tabindex="-1"></a>        node(</span>
+<span id="cb74-18"><a href="#cb74-18" aria-hidden="true" tabindex="-1"></a>         func<span class="op">=</span>evaluate_model,</span>
+<span id="cb74-19"><a href="#cb74-19" aria-hidden="true" tabindex="-1"></a>         inputs<span class="op">=</span>[<span class="st">"regressor"</span>, <span class="st">"X_test"</span>, <span class="st">"y_test"</span>],</span>
+<span id="cb74-20"><a href="#cb74-20" aria-hidden="true" tabindex="-1"></a>         outputs<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb74-21"><a href="#cb74-21" aria-hidden="true" tabindex="-1"></a>         ),</span>
+<span id="cb74-22"><a href="#cb74-22" aria-hidden="true" tabindex="-1"></a>    ])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is only a toy example. What if you want to do some sort of model selection, feature selection, or some other aspect of optimization? This example should give you a sense of a basic setup.</p>
+</section>
+<section id="make-complex-kedro-pipelines---apply-versioning-to-datasets" class="level2">
+<h2 class="anchored" data-anchor-id="make-complex-kedro-pipelines---apply-versioning-to-datasets">Make complex Kedro pipelines - Apply versioning to datasets</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/iRwy-IStfPo?si=2LaTPvj1jR7KTFdF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+<ul>
+<li>Datasets can be versioned.</li>
+<li>Models can be saved as a serialized file:</li>
+</ul>
+<div class="sourceCode" id="cb75"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">regressor</span><span class="kw">:</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> pickle.PickleDataset</span></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">filepath</span><span class="kw">:</span><span class="at"> data/06_models/regressor.pkl</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We may want to version the model, which Kedro parameters allows us to do as a versioned dataset.</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">regressor</span><span class="kw">:</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> pickle.PickeDataset</span></span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">filepath</span><span class="kw">:</span><span class="at"> data/06_models/regressor.pkl</span></span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">versioned</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For the unversioned dataset we will find a <code>yaml</code> file <code>data/06_models/regressor.pkl</code> whereas for the versioned counterpart <code>data/06_models/regressor.pkl</code> is actually a directory. This is a potential source of confusion because the paths appear to be identical when they are not, leading to confusion between what is a folder file vs a non-folder file.</p>
+</div>
+</div>
+</section>
+<section id="make-complex-kedro-pipelines---reuse-your-kedro-pipeline-using-namespaces" class="level2">
+<h2 class="anchored" data-anchor-id="make-complex-kedro-pipelines---reuse-your-kedro-pipeline-using-namespaces">make complex Kedro pipelines - Reuse your Kedro pipeline using namespaces</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cYHHVAoWZ2E?si=LYgJEGAzjveTEXbi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+<p>We can use namespaces to adjust pipelines as desired.</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> kedro.pipeline <span class="im">import</span> Pipeline, pipeline, node</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .nodes <span class="im">import</span> evaluate_model, train_model, split_data</span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_pipeline(<span class="op">**</span>kwargs) <span class="op">-&gt;</span> Pipeline:</span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>    pipeline_instance <span class="op">=</span> pipeline([</span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a>        node(</span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a>         func<span class="op">=</span>split_data,</span>
+<span id="cb77-9"><a href="#cb77-9" aria-hidden="true" tabindex="-1"></a>         inputs<span class="op">=</span>[<span class="st">"model_input_table"</span>, <span class="st">"params:model_options"</span>],</span>
+<span id="cb77-10"><a href="#cb77-10" aria-hidden="true" tabindex="-1"></a>         outputs<span class="op">=</span>[<span class="st">"X_train"</span>, <span class="st">"X_test"</span>, <span class="st">"y_train"</span>, <span class="st">"y_test"</span>]</span>
+<span id="cb77-11"><a href="#cb77-11" aria-hidden="true" tabindex="-1"></a>         ),</span>
+<span id="cb77-12"><a href="#cb77-12" aria-hidden="true" tabindex="-1"></a>        node(</span>
+<span id="cb77-13"><a href="#cb77-13" aria-hidden="true" tabindex="-1"></a>         func<span class="op">=</span>train_model,</span>
+<span id="cb77-14"><a href="#cb77-14" aria-hidden="true" tabindex="-1"></a>         inputs<span class="op">=</span>[<span class="st">"X_train"</span>, <span class="st">"y_train"</span>],</span>
+<span id="cb77-15"><a href="#cb77-15" aria-hidden="true" tabindex="-1"></a>         outputs<span class="op">=</span>[<span class="st">"regressor"</span>],</span>
+<span id="cb77-16"><a href="#cb77-16" aria-hidden="true" tabindex="-1"></a>         ),</span>
+<span id="cb77-17"><a href="#cb77-17" aria-hidden="true" tabindex="-1"></a>        node(</span>
+<span id="cb77-18"><a href="#cb77-18" aria-hidden="true" tabindex="-1"></a>         func<span class="op">=</span>evaluate_model,</span>
+<span id="cb77-19"><a href="#cb77-19" aria-hidden="true" tabindex="-1"></a>         inputs<span class="op">=</span>[<span class="st">"regressor"</span>, <span class="st">"X_test"</span>, <span class="st">"y_test"</span>],</span>
+<span id="cb77-20"><a href="#cb77-20" aria-hidden="true" tabindex="-1"></a>         outputs<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb77-21"><a href="#cb77-21" aria-hidden="true" tabindex="-1"></a>         ),</span>
+<span id="cb77-22"><a href="#cb77-22" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb77-23"><a href="#cb77-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-24"><a href="#cb77-24" aria-hidden="true" tabindex="-1"></a>    ds_pipeline_1 <span class="op">=</span> pipeline(</span>
+<span id="cb77-25"><a href="#cb77-25" aria-hidden="true" tabindex="-1"></a>        pipe<span class="op">=</span>pipeline_instance,</span>
+<span id="cb77-26"><a href="#cb77-26" aria-hidden="true" tabindex="-1"></a>        inputs<span class="op">=</span><span class="st">"model_input_table"</span>,</span>
+<span id="cb77-27"><a href="#cb77-27" aria-hidden="true" tabindex="-1"></a>        namespace<span class="op">=</span><span class="st">"activate_modelling_pipeline"</span></span>
+<span id="cb77-28"><a href="#cb77-28" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb77-29"><a href="#cb77-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-30"><a href="#cb77-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-31"><a href="#cb77-31" aria-hidden="true" tabindex="-1"></a>    ds_pipeline_2 <span class="op">=</span> pipeline(</span>
+<span id="cb77-32"><a href="#cb77-32" aria-hidden="true" tabindex="-1"></a>        pipe<span class="op">=</span>pipeline_instance,</span>
+<span id="cb77-33"><a href="#cb77-33" aria-hidden="true" tabindex="-1"></a>        inputs<span class="op">=</span><span class="st">"model_input_table"</span>,</span>
+<span id="cb77-34"><a href="#cb77-34" aria-hidden="true" tabindex="-1"></a>        namespace<span class="op">=</span><span class="st">"candidate_modelling_pipeline"</span></span>
+<span id="cb77-35"><a href="#cb77-35" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb77-36"><a href="#cb77-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-37"><a href="#cb77-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ds_pipeline_1 <span class="op">+</span> ds_pipeline_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>These additional pipelines can have corresponding updates to the parameters file for the given Kedro pipeline.</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_science_parameters.yml</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">activate_modelling_pipeline</span><span class="kw">:</span></span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a><span class="at">  ...</span></span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a><span class="fu">candidate_modelling_pipeline</span><span class="kw">:</span></span>
+<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a><span class="at">  ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>While I just put <code>...</code> b/c I didn’t feel like adding the details, the point is you can specify different sets of parameters for each of these namespaces.</p>
+<p>You can also have separate catalog entries for the various datasets.</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># catalog.yml</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">namspaces_1.dataset_name</span><span class="kw">:</span></span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="at">  ...</span></span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="fu">namespace_2.dataset_name</span><span class="kw">:</span></span>
+<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a><span class="at">  ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Having multiple namespaces will be represented in Kedro viz.</li>
+</ul>
+<p>Namespaces are not strictly needed, but they may help you reuse some pipeline components.</p>
+</section>
+<section id="make-complex-kedro-pipelines---accelerate-your-kedro-pipeline-using-runners" class="level2">
+<h2 class="anchored" data-anchor-id="make-complex-kedro-pipelines---accelerate-your-kedro-pipeline-using-runners">Make complex Kedro pipelines - Accelerate your Kedro pipeline using runners</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_B6R2uOj3-s?si=Rb_WIpYbGTcpLVvr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+<ul>
+<li>Kedro uses a sequential runner by default.</li>
+<li>There are other runners.</li>
+<li>For example:
+<ul>
+<li>ParallelRunner: Good for CPU-bound problems.</li>
+<li>ThreadRunner: Good for IO-bound problems.</li>
+</ul></li>
+</ul>
+<p>Different runners can be specified using:</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> kedro run <span class="at">--runner</span><span class="op">=</span>SequentialRunner</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> kedro run <span class="at">--runner</span><span class="op">=</span>ParallelRunner</span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> kedro run <span class="at">--runner</span><span class="op">=</span>ThreadRunner</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="make-complex-kedro-pipelines---create-kedro-datasets-dynamically-using-factories" class="level2">
+<h2 class="anchored" data-anchor-id="make-complex-kedro-pipelines---create-kedro-datasets-dynamically-using-factories">Make complex Kedro pipelines - Create Kedro datasets dynamically using factories</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tNE-tdvHNP8?si=m5IX4ynt2RPO51tK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+<p>A Kedro dataset factory can look like this:</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># catalog.yml</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="fu">"{subtype}_modelling_pipeline.regressor"</span><span class="kw">:</span></span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> pickle.PickleDataset</span></span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">filepath</span><span class="kw">:</span><span class="at"> data/06_models/regressor_{subtype}.pkl</span></span>
+<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">versioned</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Specific datasets will be created from a combination of the dataset factory and the namespaces within a pipeline.</p>
+<p>Calling <code>kedro catalog rank</code> will tell you how many datasets a project has in total, not taking Kedro factories into account.</p>
+<p>Calling <code>kedro catalog resolve</code> will tell you what your datasets are, including the various different datasets implied by the data factories.</p>
+</section>
+<section id="ship-your-kedro-project-to-production---define-your-own-kedro-environments" class="level2">
+<h2 class="anchored" data-anchor-id="ship-your-kedro-project-to-production---define-your-own-kedro-environments">Ship your Kedro project to production - Define your own Kedro environments</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9quRBGDOFq8?si=nqJAbRosz8eRKs6O" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+<p>Kedro environments are basically distinct sets of configurations that you can have within a single Kedro project. By default you will see the <code>conf/</code> path contains <code>local/</code> and <code>base/</code>. You can add more configurations of your own.</p>
+<ol type="1">
+<li>Create a new subdirectrory of <code>conf/</code> named whatever you want. In this case we will call it <code>test/</code>, but you can call it other things too.</li>
+</ol>
+<div class="sourceCode" id="cb82"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mkdir conf/test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li>Add whatever catalog and parameter files you want within that new configuration path.</li>
+<li>When you wish, you can run your project with the new configuration using <code>kedro run --env=test</code>.</li>
+</ol>
+<p>When you run with a custom environment you do not need to specify ‘all’ the same information as in <code>base</code>. The <code>base</code> environment is privileged as the default configuration environment. It is possible to change the default configuration catalog, but let’s leave that topic for another occassion. When a non-default configuration is used it will add to the default configuration and also override the default configuration whenever there are name collisions.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There is an idea of there of defining <a href="https://github.com/kedro-org/kedro/discussions/3871">hierarchical configurations of environments</a>, but at the time of writing that has not been implemented.</p>
+</div>
+</div>
+</section>
+<section id="ship-your-kedro-project-to-production---use-s3-and-miniio-cloud-storages-with-kedro" class="level2">
+<h2 class="anchored" data-anchor-id="ship-your-kedro-project-to-production---use-s3-and-miniio-cloud-storages-with-kedro">Ship your Kedro project to production - Use S3 and MiniIO cloud storages with Kedro</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/TkoBEQIdHbA?si=Nsugj1WdknOI7R3z" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+<p>The <a href="https://filesystem-spec.readthedocs.io/en/latest/"><code>fsspec</code> library</a> allows for a unified interface to specify locations of files. This can be particularly handy if you have files that life on different computing systems. Kedro uses this library for this very purpose in its datasets so that you can specify file paths that are not on the local system.</p>
+<blockquote class="blockquote">
+<p><a href="https://min.io/">MinIO AIStor</a> is designed to allow enterprises to consolidate all of their data on a single, private cloud namespace. Architected using the same principles as the hyperscalers, AIStor delivers performance at scale at a fraction of the cost compared to the public cloud.</p>
+</blockquote>
+</section>
+<section id="ship-your-kedro-project-to-production---package-your-kedro-project-into-a-python-wheel" class="level2">
+<h2 class="anchored" data-anchor-id="ship-your-kedro-project-to-production---package-your-kedro-project-into-a-python-wheel">Ship your Kedro project to production - Package your Kedro project into a Python wheel</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/yaoAQVX0iM8?si=rpFYdNtcDsXRq4Pa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+<p>Kedro projects are a special case of Python projects, including being able to build the project as Python package. You build your Kedro project using <code>kedro package</code>. You will find the package files in the <code>dist/</code> directory after having run the command. You can use <code>pip</code> to locally install your package from these files.</p>
+<p>Once installed, you can run the Kedro project:</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python <span class="at">-m</span> spaceflights <span class="at">--conf-source</span><span class="op">=</span><span class="st">"path/to/dist/conf-spaceflights.tar.gz"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can further specify what environment that you want. Suppose you had a <code>production</code> environment, you could specify that here:</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python <span class="at">-m</span> spaceflights <span class="at">--conf-source</span><span class="op">=</span><span class="st">"path/to/dist/conf-spaceflights.tar.gz"</span> <span class="at">--env</span><span class="op">=</span>production</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="ship-your-kedro-project-to-production---turn-your-kedro-project-into-a-docker-container" class="level2">
+<h2 class="anchored" data-anchor-id="ship-your-kedro-project-to-production---turn-your-kedro-project-into-a-docker-container">Ship your Kedro project to production - Turn your Kedro project into a Docker container</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lA-Ivuxmakw?si=gsOnY9wJ1vRaHFJ0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+<p>The <a href="https://github.com/kedro-org/kedro-plugins/tree/main/kedro-docker"><code>kedro-docker</code></a> plugin is one of the officially supported Kedro plugins. It exists to help you deploy Kedro projects from Docker containers.</p>
+<p>You can install it with pip:</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install kedro-docker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You will also need to <a href="https://docs.docker.com/engine/install/">install Docker</a>.</p>
+<p>Next we can initialize using the plugin, which will put together a default dockerfile for you to use. It contains the information needed to put together the desired image. You can modify this file as you like.</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> kedro docker init</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can then run</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> kedro docker build <span class="at">--base-image</span> python:3.10-slim</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>to actually setup the environment.</p>
+<p>Finally, you can run</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> kedro docker run</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>which will launch the docker image. This will mount local directories used in the Kedro project. Beyond that it will look like an ordinary Kedro run.</p>
+</section>
+<section id="ship-your-kedro-project-to-production---deploy-your-kedro-project-to-apache-airflow" class="level2">
+<h2 class="anchored" data-anchor-id="ship-your-kedro-project-to-production---deploy-your-kedro-project-to-apache-airflow">Ship your Kedro project to production - Deploy your Kedro project to Apache Airflow</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/AhCcnJ1Au70?si=RVr5OmOAY8su29s0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+<p>The <a href="https://github.com/kedro-org/kedro-plugins/tree/main/kedro-airflow"><code>kedro-airflow</code></a> plugin is a Kedro plugin officially supported by the Kedro development team. It generates an airflow directed acyclic graph (DAG) which can be used to run as an Airflow pipeline.</p>
+<p>You can install this plugin using pip:</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install kedro-airflow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When you run <code>kedro catalog resolve</code> the resulting output is valid as a yaml string for a Kedro catalog. Thus in bash you can create an expanded Kedro catalog file like this:</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> kedro catalog resolve <span class="op">&gt;</span> /path/to/new/catalog.yml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Now you can use the Kedro Airflow plugin to generate a script:</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> kedro airflow create <span class="at">--target-dir</span><span class="op">=</span>dags/ <span class="at">--env</span><span class="op">=</span>airflow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the <code>dags/</code> path you’ll find a script such as <code>spaceflights_baseline_dag.py</code>. One of the classes defined in this script is <code>KedroOperator</code> which defines an Airflow operator which will runs components of the Kedro project within the Airflow environment.</p>
+<p>Now that you have this script, you can copy it into your <code>airflow/dags/</code> directory. One choice of path is <code>~/airflow/dags/</code> if you are on Linux.</p>
+</section>
+<section id="continue-your-kedro-journey" class="level2">
+<h2 class="anchored" data-anchor-id="continue-your-kedro-journey">Continue your Kedro journey</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/JvXhv8_0tlE?si=vzQ6UJCVc6wnuDvn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+<ul>
+<li>There are many ways to use Kedro.</li>
+<li>There is a Slack channel for Kedro.</li>
+</ul>
+<p>The current curriculum for the software envineering principles for data science:</p>
+<ul>
+<li>Why is software engineering necessary for data science?</li>
+<li>Writing Python functions and the refactoring cycle for Jupyter notebooks.</li>
+<li>Managing dependencies and working with virtual environments.</li>
+<li>Improving code maintainability and reproducibility with configuration.</li>
+<li>An introduction to Git, GitHub, and best practices for collaborative version control.</li>
+<li>Tools to optimize your workflows: IDE best-practices.</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>I suggest avoiding the term “best practice” when referring to practices. Knowing that a given practice is best implies that it is better than all other practices with respect to a set of objectives.</p>
+<p>Often the set of practices is indefinite or only partially defined, or discovered, leading to the usual <a href="https://plato.stanford.edu/entries/induction-problem/">problem of empirical induction</a>.</p>
+<p>For any given finite set of practices we can consider comparing them exhausitvely. It could still be the case that the requisite time, attention, energy and other resources required to actually decide which is the best practice among that set.</p>
+<p>Furthermore, there is a typical issue that arises even among relatively small sets of practices: the existence of tradeoffs. When we have tradeoffs we have a situation in which there is a set of mutually non-dominating options. This should not be confused with the notion of these options being equally good. Rather each non-dominated option being the best according to one objective will also be worse (but not necessarily ‘the worst’) in terms of another objective.</p>
+<p>When we restrict our thinking to a Pareto order on our objectives then the set of such mutually undominating options is called a <a href="https://en.wikipedia.org/wiki/Pareto_front">Pareto front</a>. Real-world objectivse may have a more complicated ordering, but the existence of tradeoffs remains a plausible possibility.</p>
+</div>
+</div>
 
 
 </section>
@@ -2761,8 +3142,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -2873,7 +3252,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

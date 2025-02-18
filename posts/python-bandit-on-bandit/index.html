@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-cc1e396cda9b4d77c81dfa867c1b72f5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -200,15 +200,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>Bandit is a Python package for checking for security issues in Python code. I have been thinking about using Bandit to check for security risks in my own sofware as well as 3rd party packages that I use. I couldn’t help but venture to the potentially ironic situation of Bandit evaluating that Bandit itself is insecure.</p>
 <p>We can find the version of Bandit we are using like this:</p>
-<div id="7bcb9b58" class="cell" data-execution_count="1">
+<div id="2413981c" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> bandit</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(bandit.__version__)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1.8.0</code></pre>
+<pre><code>1.8.3</code></pre>
 </div>
 </div>
 <p>The path that the <code>__init__.py</code> file for Bandit is located on your system can be found in <code>bandit.__file__</code>. We can call Bandit from the command line on itself.</p>
-<div id="10f7f59a" class="cell" data-execution_count="2">
+<div id="dfeac3b8" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -220,17 +220,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   0% -:--:--
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   0% -:--:--
 Working... ━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  21% -:--:--
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━  63% 0:00:01
+Working... ━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━  40% 0:00:01
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
-Run started:2025-02-17 16:46:01.282823
+Run started:2025-02-18 05:22:42.929864
 
 Test results:
 &gt;&gt; Issue: [B613:trojansource] A Python source file contains bidirectional control characters ('\u202e').
    Severity: High   Confidence: Medium
    CWE: CWE-838 (https://cwe.mitre.org/data/definitions/838.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.0/plugins/b613_trojansource.html
-   Location: /home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/plugins/trojansource.py:22:36
+   More Info: https://bandit.readthedocs.io/en/1.8.3/plugins/b613_trojansource.html
+   Location: /home/galen/projects/blog/venv/lib/python3.12/site-packages/bandit/plugins/trojansource.py:22:36
 21       3      access_level = "user"
 22       4      if access_level != 'none‮⁦': # Check if admin ⁩⁦' and access_level != 'user
 23       5          print("You are an admin.\n")
@@ -239,7 +239,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-    Total lines of code: 8446
+    Total lines of code: 8518
     Total lines skipped (#nosec): 0
     Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 10
 
@@ -260,19 +260,19 @@ Files skipped (0):
 </div>
 <p>At a quick glance you might misread the above output as saying that there are no issues. There actually are, but the authors of Bandit have disabled them using the <code>#nosec</code> comment. This is indicated by the <code>Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 10</code>. Why the output also says <code>Total lines skipped (#nosec): 0</code> I am not sure.</p>
 <p>We can find the locations of these lines.</p>
-<div id="fc44df8a" class="cell" data-execution_count="3">
+<div id="e1c4accb" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(subprocess.run([<span class="st">'grep'</span>, <span class="st">'-rin'</span>, <span class="st">'</span><span class="ch">\\</span><span class="st">#</span><span class="ch">\\</span><span class="st">snosec'</span>,  init_path], capture_output<span class="op">=</span><span class="va">True</span>, text<span class="op">=</span><span class="va">True</span>).stdout)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/plugins/general_hardcoded_tmp.py:62:        return {"tmp_dirs": ["/tmp", "/var/tmp", "/dev/shm"]}  # nosec: B108
-/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/plugins/general_hardcoded_tmp.py:72:        tmp_dirs = ["/tmp", "/var/tmp", "/dev/shm"]  # nosec: B108
-/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/plugins/general_bind_all_interfaces.py:46:    if context.string_val == "0.0.0.0":  # nosec: B104
-/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/core/utils.py:367:    except AttributeError:  # nosec(tkelsey): catching expected exception
-/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/core/manager.py:308:            # nosec_lines is a dict of line number -&gt; set of tests to ignore
-/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/cli/baseline.py:18:import subprocess  # nosec: B404
-/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/cli/baseline.py:107:                output = subprocess.check_output(bandit_command)  # nosec: B603
-/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/cli/main.py:332:        help="do not skip lines with # nosec comments",
-/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/cli/main.py:586:            "do not skip lines with # nosec",
-/home/seig/projects/blog/venv/lib/python3.12/site-packages/bandit/formatters/xml.py:38:from xml.etree import ElementTree as ET  # nosec: B405
+<pre><code>/home/galen/projects/blog/venv/lib/python3.12/site-packages/bandit/formatters/xml.py:38:from xml.etree import ElementTree as ET  # nosec: B405
+/home/galen/projects/blog/venv/lib/python3.12/site-packages/bandit/core/manager.py:308:            # nosec_lines is a dict of line number -&gt; set of tests to ignore
+/home/galen/projects/blog/venv/lib/python3.12/site-packages/bandit/core/utils.py:367:    except AttributeError:  # nosec(tkelsey): catching expected exception
+/home/galen/projects/blog/venv/lib/python3.12/site-packages/bandit/plugins/general_hardcoded_tmp.py:62:        return {"tmp_dirs": ["/tmp", "/var/tmp", "/dev/shm"]}  # nosec: B108
+/home/galen/projects/blog/venv/lib/python3.12/site-packages/bandit/plugins/general_hardcoded_tmp.py:72:        tmp_dirs = ["/tmp", "/var/tmp", "/dev/shm"]  # nosec: B108
+/home/galen/projects/blog/venv/lib/python3.12/site-packages/bandit/plugins/general_bind_all_interfaces.py:46:    if context.string_val == "0.0.0.0":  # nosec: B104
+/home/galen/projects/blog/venv/lib/python3.12/site-packages/bandit/cli/baseline.py:18:import subprocess  # nosec: B404
+/home/galen/projects/blog/venv/lib/python3.12/site-packages/bandit/cli/baseline.py:107:                output = subprocess.check_output(bandit_command)  # nosec: B603
+/home/galen/projects/blog/venv/lib/python3.12/site-packages/bandit/cli/main.py:332:        help="do not skip lines with # nosec comments",
+/home/galen/projects/blog/venv/lib/python3.12/site-packages/bandit/cli/main.py:586:            "do not skip lines with # nosec",
 </code></pre>
 </div>
 </div>
@@ -363,8 +363,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -475,7 +473,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
