@@ -288,4 +288,3 @@ display(Markdown(results.describe().to_markdown()))
 
 Overall it is clear that Rust is substantially faster than the Python-based implementations, which is no surprise. Rust is statically typed, and doesn't have a garbage collector.
 
-What is more surprising is that running the SimPy example with PyPy was substantially slower than running that sample example with the CPython interpreter. My guess from this is that the overhead for doing the just-in-time compilation is more of a slow down than a speedup on such a small example. I wouldn't rule out PyPy in general as a speedup for SimPy simulations, but clearly there are limitations on where it will be beneficial.
