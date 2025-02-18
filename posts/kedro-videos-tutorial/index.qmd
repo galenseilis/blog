@@ -4,7 +4,6 @@ author: "Galen Seilis"
 date: "2025-02-17"
 categories: [Python, Kedro]
 toc: true
-draft: true
 ---
 
 
@@ -2268,5 +2267,7 @@ Often the set of practices is indefinite or only partially defined, or discovere
 
 For any given finite set of practices we can consider comparing them exhausitvely. It could still be the case that the requisite time, attention, energy and other resources required to actually decide which is the best practice among that set.
 
-Furthermore, there is a typical issue that arises even among relatively small sets of practices: the existence of tradeoffs. When we have tradeoffs we have a situation in which there is a set of mutually non-dominating options. This should not be confi
+Furthermore, there is a typical issue that arises even among relatively small sets of practices: the existence of tradeoffs. When we have tradeoffs we have a situation in which there is a set of mutually non-dominating options. This should not be confused with the notion of these options being equally good. Rather each non-dominated option being the best according to one objective will also be worse (but not necessarily 'the worst') in terms of another objective.
+
+When we restrict our thinking to a Pareto order on our objectives then the set of such mutually undominating options is called a [Pareto front](https://en.wikipedia.org/wiki/Pareto_front). Real-world objectivse may have a more complicated ordering, but the existence of tradeoffs remains a plausible possibility.
 :::
