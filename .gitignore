@@ -163,6 +163,7 @@ cython_debug/
 
 /.quarto/
 _site/
+*.quarto_ipynb
 
 # Vim
 *.swp
