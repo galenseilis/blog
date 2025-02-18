@@ -208,6 +208,12 @@ import numpy as np
 import pandas as pd
 from scipy.integrate import odeint
 
+#################
+# CONFIGURATION #
+#################
+
+rng = np.random.default_rng(2018)
+
 # Dynamical system definition
 rho = 28.0
 sigma = 10.0
@@ -223,7 +229,7 @@ def f(state, t):
 times = np.array((0.1, 0.2, 0.3)).reshape(-1, 1)
 data = {}
 for i in range(100):
-    state0 = np.random.normal(1, 0.05, size=3)
+    state0 = rng.normal(1, 0.05, size=3)
 
     states = odeint(f, state0, t)
     select_states = states[(t==0.1)|(t==0.2)|(t==0.3)]

@@ -2,10 +2,11 @@
 title: "Kedro Video Tutorial Notes"
 author: "Galen Seilis"
 date: "2025-02-17"
-categories: [Python, Kedro, Docker, Data Science, ZenML, Cookiecutter, MLFlow, Intake, DVC, Pachyderm, dbt, plugins, Mamba, Jupyter, Notebooks, Pandas Vet, Pandas, Polars, Pipelines, Kedro Viz, Versioning, Data Versioning, `fsspec`, Deployment, Best Practices, Problem of Induction, Pareto Front, Tradeoffs]
+categories: [Python, Kedro, Docker, Data Science, ZenML, Cookiecutter, MLFlow, Intake, DVC, Pachyderm, dbt, plugins, Mamba, Jupyter, Notebooks, Pandas Vet, Pandas, Polars, Pipelines, Kedro Viz, Versioning, Data Versioning, fsspec, Deployment, Best Practices, Problem of Induction, Pareto Front, Tradeoffs]
 toc: true
 ---
 
+These are my notes on a video series released on Kedro. I started these notes quite a while ago, but I only just got around to finally finishing them.
 
 ## Introduction to Kedro - What is Kedro?
 
