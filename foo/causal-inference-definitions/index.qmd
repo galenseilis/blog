@@ -1,0 +1,57 @@
+---
+title: "Causalily Speedrun"
+author: "Galen Seilis"
+date: "2024-08-23"
+categories: [Causality, Causal-Inference]
+draft: true
+---
+
+## Introduction
+
+This post is a "speed run" through the definitions found in Judea Pearl's *Causality: Models, Reasoning, and Inference". I may have added or removed some topics subject to my prejudice.
+
+## Probability
+
+The common definitions and results in probability are worth knowing. 
+
+- Kolmogorov's axioms
+- Joint, conditional, and marginal probability.
+- Law of total probability,
+- Statistical independence
+- Conditional independence and its properties.
+
+It is also valuable to understand the expectation operator and the notion of a conditional expectation. Common results in the algebra of random variables are also helpful.
+
+Doesn't hurt to know the chain rule of probability.
+
+## Graph Theory
+
+Know the definition of a graph, and related terms such as *vertices*, *edges* and *paths*. Know that graphs can be directed or undirected, and that if there exists an adjacency homomorphism from a directed graph to an undirected graph up to the direction of the edges then the undirected graph is called a *skeleton* of the directed graph.
+
+- connected vs unconnected graphs
+- self-loops
+- cycles
+- directed acyclic graph (DAG)
+- A *family* in a graph is a set of nodes containing a node and all its parents. 
+- A node in a directed graph is called a *root* if it has no parents and a *sink* if it has no children.
+- A connected DAG in which every node has at-most one parent is called a *tree*.
+- A tree in which every node has at-most one child is called a *chain*.
+- A graph in which every pair of nodes is connected by an edge is called *complete.
+
+## Probability and Graphs
+
+> DEFINITION *Markovian Parents*: Let $V = \{X_1, \ldots, X_n \}$ be an ordered set of variables, and let $P(v)$ be the joint probability distribution on these variables. A set of variables $PA_j$ is said to be Markovian parents of $X_j$ if $PA_j$ is a minimal set of predecessors of $X_j$ that renders $X_j$ independent of all its other predecessors. In other words, $P(x_j \mid pa_j) = P(x_j | x_1, \ldots, x_{j-1}) and such that no proper subset of $PA_j$ satisfies the above expression.
+
+> DEFINITION *Markov Compatibility*: If a probability function $P$ admits the factorizatoin of $P(x_1, \ldots, x_n) = \prod_{i} P(x_j \mid pa_i)$ relate to a DAG $G$, we say that $G$ and $P$, or that $G$ represents $P$, or that $P$ is Markov relative to $G$.
+
+> DEFINITION *d-separation* A *path* $p$ is said to be d-separated by a set of nodes $Z$ if and only if:
+1. $p$ contains a chain $i \rightarrow m \rightarrow j$ or a fork $i \leftarrow m \rightarrow j$ such that the middle node $m \in Z$ or
+2. $p$ contains an inverted fork (or collider) $i \rightarrow m \leftarrow j$ such that the middle node $m$ is not in $Z$ and such that no descendent of $m$ is in $Z$.
+> A set $Z$ is said to d-separate $X$ from $Y$ IFF $Z$ blocks every path from a node in $X$ to a node in $Y$.
+
+
+> THEOREM: Probabilistic Implications of d-Separation
+>
+> If sets $X$ and $Y$ are d-separated by $Z$ ina DAG $G$, then $X$ is independent of $Y$ conditional on $Z$ in every distribution compatible with $G$. Conversely, if $X$ and $Y$ are not d-separated by $Z$ in a DAG G, then $X$ and $Y$ are dependent conditional on $Z$ in at least one distribution compatible with $G$.
+
+

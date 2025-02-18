@@ -1,0 +1,58 @@
+---
+title: "Hello World, in Asyncio"
+author: "Galen Seilis"
+date: "2024-07-30"
+categories: [Python, Asyncio, subprocess, Asynchronous Programming, Concurrent Programming]
+---
+
+We can define a "Hello, World" type of example using Asyncio as follows:
+
+```python
+import asyncio, time
+
+async def main():
+    print('Hello,')
+    await asyncio.sleep(0.2018)
+    print('World!')
+
+asyncio.run(main())
+```
+
+If you try to run the above Python code directly in a Quarto code block, it will give an error:
+
+`RuntimeError: asyncio.run() cannot be called from a running event loop`
+
+This error occurs because `run` expects that it will have control over the main process, but that is not the case if you are running a Jupyter notebook. That is the case if you are running Python in a Quarto block.
+
+So similar to what I have done with other languages, we can define a script which we can import into a given blog post in order to call other processes. When we run our asynchronous "Hello, World" script we will want to also capture its standard output in our interactive session.
+
+With Python this is pretty straightforward because we don't need to consider compiling code ourselves, much less linking object files. The following is a good start:
+
+```python
+import subprocess
+
+def run_python_file(file_path):
+    try:
+        result = subprocess.run(
+            ["python", file_path],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        return result.stdout
+    except subprocess.CalledProcessError as e:
+        return f"An error occurred while running the file: {e.stderr}"
+```
+
+Putting this code in `../../scripts/run_python.py`, we can call it like this:
+
+
+```{python}
+import sys
+sys.path.insert(1, '../../scripts')
+import run_python
+
+print(run_python.run_python_file('example.py'))
+```
+
+This setup is fine for simple and isolated blogging examples. Anyway, that's about as close as I think we'll get to a "Hello, World" script with Asyncio. As with similar scripts that I have written for Rust and other languages, Quarto's automatic freezing feature will only look for if the source of the QMD file has changed. Quarto will ignore any example Python files outside of that.

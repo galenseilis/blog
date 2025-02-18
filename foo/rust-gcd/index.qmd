@@ -1,0 +1,44 @@
+---
+title: "Calculating the Greatest Common Divisor in Rust"
+author: "Galen Seilis"
+date: "2024-08-09"
+categories: [Rust, Mathematics, Greatest Common Divisor]
+echo: true
+bibliography: references.bib
+---
+
+I recently learned that Rust does not have a greatest common divisor function. See @rust_gcd_forum to read some discussion about it.
+
+So if the GCD function is not implemented natively in Rust, how can we go about calculating it?
+
+One option is to use the implementation available in @programming_rust.
+
+```{rust}
+fn gcd(mut n: u64, mut m: u64) -> u64 {
+    assert!(n != 0 && m != 0);
+    while m != 0 {
+        if m < n {
+            let t = m;
+            m = n;
+            n = t;
+        }
+        m = m % n;
+    }
+    n
+}
+
+let x: u64 = 2024;
+let y: u64 = 748;
+println!("gcd({}, {}) = {}", x, y, gcd(x, y));
+```
+
+Another option is that we could use the `gcd` crate.
+
+```{rust}
+:dep gcd
+use gcd::Gcd;
+
+println!("gcd({}, {}) = {}", x, y, x.gcd(y));
+```
+
+Often I think going with the existing crate for work projects. There's no need to reinvent such a simple wheel, and it supports a wider variety of types than the example from @programming_rust. But it is also a great code example since calculating the GCD is a well-known, and relatively simple, task.

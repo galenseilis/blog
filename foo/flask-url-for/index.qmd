@@ -1,0 +1,49 @@
+---
+title: "Creating URL using `url_for` in Flask"
+author: "Galen Seilis"
+date: "2024-07-29"
+categories: [Python, Flask, Web Applications, URL]
+---
+
+In this post I quickly show how the `url_for` command allows us to generate URLs. It isn't a fundamental feature, but it can save you some boilerplate.
+
+```python
+import requests
+import io
+
+from flask import Flask, url_for
+
+app = Flask(__name__)
+
+@app.route('/card/<int:card_id>')
+def card(card_id):
+    return f'Card({card_id})'
+
+with app.test_request_context():
+    for i in range(10):
+        print(url_for('card', card_id=str(i)))
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+The function [`test_request_context`](https://flask.palletsprojects.com/en/3.0.x/api/#flask.Flask.test_request_context) is described in its API documentation as follows:
+
+> Create a RequestContext for a WSGI environment created from the given values. This is mostly useful during testing, where you may want to run a function that uses request data without dispatching a full request.
+
+Indeed, if you look at the CLI output from running the application you will see something like this:
+
+```bash
+/card/0
+/card/1
+/card/2
+/card/3
+/card/4
+/card/5
+/card/6
+/card/7
+/card/8
+/card/9
+```
+
+While this is a simple example. you can use `url_for` to create more complicated URLs and content.

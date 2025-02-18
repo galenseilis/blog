@@ -1,0 +1,70 @@
+---
+title: "My Quarto Blog"
+author: "Galen Seilis"
+date: "2024-07-21"
+categories: [blog, Quarto, Jekyll, Mermaid, Graphviz, dot]
+---
+
+I am switching to Quarto for my blog. My Jekyll blog is available [here](https://github.com/galenseilis/galenseilis.github.io), and I might move some of the posts over to the new blog over time.
+
+[Creating this blog](https://quarto.org/docs/websites/website-blog.html) was really easy. Was my Jekyll blog really complicated to setup? There were some technical hurdles around getting extra behaviour on my original blog, but overall it wasn’t extremely hard. Why am I switching to Quarto?
+
+What Quarto provides (that I want) is code execution followed by rendering the output of the code. I can put my code examples right into the blog post, and if something like a plot is produced then that plot will show on my blog.
+
+In constrast, with Jekyll, I needed to
+
+1. make the plot
+2. move the plot to an images folder
+3. reference to the plot’s path in the blog post.
+
+It wasn’t terrible, and it is possible that I just didn’t figure out how to make this easier with Jekyll, but it was quickly apparent to me that Quarto makes this easy.
+
+This includes mermaid diagrams:
+
+```{mermaid}
+%%| echo: false
+---
+title: Example Git diagram
+---
+gitGraph
+   commit
+   commit
+   branch develop
+   checkout develop
+   commit
+   commit
+   checkout main
+   merge develop
+   commit
+   commit
+```
+
+I can also easily prepare Graphiz diagrams provided that I supply some valid dot notation:
+
+```{dot}
+//| echo: true
+digraph finite_state_machine {
+    fontname="Helvetica,Arial,sans-serif"
+    node [fontname="Helvetica,Arial,sans-serif"]
+    edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    node [shape = doublecircle]; 0 3 4 8;
+    node [shape = circle];
+    0 -> 2 [label = "SS(B)"];
+    0 -> 1 [label = "SS(S)"];
+    1 -> 3 [label = "S($end)"];
+    2 -> 6 [label = "SS(b)"];
+    2 -> 5 [label = "SS(a)"];
+    2 -> 4 [label = "S(A)"];
+    5 -> 7 [label = "S(b)"];
+    5 -> 5 [label = "S(a)"];
+    6 -> 6 [label = "S(b)"];
+    6 -> 5 [label = "S(a)"];
+    7 -> 8 [label = "S(b)"];
+    7 -> 5 [label = "S(a)"];
+    8 -> 6 [label = "S(b)"];
+    8 -> 5 [label = "S(a)"];
+}
+```
+
+This is definitely desired behaviour.

@@ -1,0 +1,26 @@
+---
+title: "How to Set Keyboard Bindings to Programmer's Dvorak on Ubuntu Using `setxkbmap`"
+author: "Galen Seilis"
+date: "2024-12-11"
+categories: [Ubuntu, setxkbamp, Dvorak, Keyboard Layouts]
+---
+
+Changing over to programmer's Dvorak on Ubuntu is really easy:
+
+```bash
+setxkbmap -layout us -variant dvp
+```
+
+Note that if you want to switch back to US layout, you can just drop the variant:
+
+```bash
+setxkbmap -layout us
+```
+
+If you want to check what the current layout you are using is, you can run:
+
+```bash
+setxkbmap -query
+```
+
+That's it!

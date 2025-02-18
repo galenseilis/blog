@@ -1,0 +1,22 @@
+---
+title: "The No Road Fallacy of Mathematical Symmetries"
+author: "Galen Seilis"
+date: "2023-12-20"
+categories: [Mathematics, Symmetry]
+draft: true
+---
+
+Suppose we have two cities $A$ and $B$ which we represent as two vertices of a graph with two parallel edges representing two distinct roads between them.
+
+```{mermaid}
+flowchart LR
+
+A o--1--o B
+A o--2--o B
+```
+
+Let us also suppose that we have a space of metrics parametrized by the choice of edge (i.e. road taken) such that
+
+$$d(A, B; 1) = d(A, B; 2).$$
+
+Our symmetry here is that the distance between the two cities is invariant to the choice of edge

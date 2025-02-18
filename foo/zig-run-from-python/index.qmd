@@ -1,0 +1,117 @@
+---
+title: "Build and Run a Zig Project from Quarto Using Python"
+author: "Galen Seilis"
+date: "2024-08-09"
+categories: [Zig, Quarto, Python, subprocess]
+---
+
+In this post I share a way to compile and run a Zig file using Python, which in turn can be used to render the output of the Zig program in Quarto.
+
+## Python Script
+
+The Python script I developed is similar to the one I made for Rust, except that it does two phases. While Zig has a very powerful and flexible build system, I will only attempt to compile a single project file.
+
+```python
+import subprocess
+import os
+import stat
+
+def log_permissions(path):
+    st = os.stat(path)
+    permissions = stat.filemode(st.st_mode)
+    print(f"Permissions for {path}: {permissions}")
+
+def find_executable(bin_dir):
+    """Find the executable file in the given directory."""
+    for root, dirs, files in os.walk(bin_dir):
+        for file in files:
+            file_path = os.path.join(root, file)
+            if os.access(file_path, os.X_OK):
+                return file_path
+    raise FileNotFoundError("No executable found in the bin directory.")
+
+def build_and_run_zig(project_dir):
+    project_dir = os.path.abspath(project_dir)
+
+    # Build the Zig project
+    try:
+        build_process = subprocess.run(
+            ['zig', 'build'],
+            cwd=project_dir,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+    except subprocess.CalledProcessError as e:
+        print(f"Build Error: {e.stderr}")
+        return
+
+    # Find the executable in the zig-out/bin/ directory
+    bin_dir = os.path.join(project_dir, 'zig-out', 'bin')
+    if not os.path.exists(bin_dir):
+        raise FileNotFoundError("The bin directory does not exist after the build.")
+    
+    exe_path = find_executable(bin_dir)
+
+    # Set the executable permissions
+    try:
+        os.chmod(exe_path, stat.S_IRWXU | stat.S_IRGRP | stat.S_IXGRP | stat.S_IROTH | stat.S_IXOTH)
+    except PermissionError as e:
+        print(f"Error setting permissions: {e}")
+        return
+
+    # Run the compiled executable and print its output
+    try:
+        run_process = subprocess.run(
+            [exe_path],
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+        # print(run_process.stdout)  # Print the output from the Zig executable
+        # print(run_process.stderr)  # Print any error output
+        if run_process.stdout:
+            return run_process.stdout
+        else:
+            return run_process.stderr
+    except subprocess.CalledProcessError as e:
+        print(f"Execution Error: {e.stderr}")
+        return
+
+```
+
+Let's see it in action.
+
+## Single File Example
+
+Here I will define a simple "Hello, World" example. We can do this by creating a project folder `hello`, and calling `zig init` within it to create a default project. In the default `main.zig` I put the following Zig code.
+
+```rust
+const std = @import("std");
+
+pub fn main() void {
+    std.debug.print("Hello, World!\n", .{});
+}
+```
+
+::: {.callout-caution}
+I have used Rust's syntax highlighting for the above Zig code.
+:::
+
+
+Now we can build and run our Zig project by using the earlier Python script.
+
+```{python}
+import sys
+sys.path.insert(1, '../../scripts')
+
+from run_zig import build_and_run_zig
+
+print(build_and_run_zig('./hello'))
+```
+
+## Conclusion
+
+While Zig doesn't really have a REPL (that I'm aware of), you can include its standard output in Quarto blogs using Python's Subprocess library.
