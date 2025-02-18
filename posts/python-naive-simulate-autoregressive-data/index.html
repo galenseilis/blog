@@ -235,7 +235,7 @@ window.Quarto = {
 <p><span class="math display">\[\epsilon_t \sim \mathcal{N}(0,\sigma)\]</span></p>
 <p>for all <span class="math inline">\(t\)</span>.</p>
 <p>The following implementation is a generalization of the implementation provided in <a href="https://www.pymc.io/projects/examples/en/latest/time_series/Forecasting_with_structural_timeseries.html#generate-fake-autoregressive-data"><em>Generate Fake Autoregressive Data</em></a> in which I have allowed for any number of time lags. I have also allowed a user-provided random number generator to be passed.</p>
-<div id="1611331d" class="cell" data-execution_count="1">
+<div id="9a8f8775" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> List</span>
@@ -271,22 +271,22 @@ window.Quarto = {
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> draws[warmup:]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let us set a seed for reproducibility.</p>
-<div id="a94b3f16" class="cell" data-execution_count="2">
+<div id="14aaab8b" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>RANDOM_SEED <span class="op">=</span> <span class="dv">2018</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(RANDOM_SEED)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now let’s choose some parameters.</p>
-<div id="a5537031" class="cell" data-execution_count="3">
+<div id="bbbc548a" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># True parameters of the AR process</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>intercept <span class="op">=</span> <span class="dv">10</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>coefs <span class="op">=</span> [<span class="op">-</span><span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="op">-</span><span class="fl">0.3</span>]  <span class="co"># Example coefficients for AR process with 3 lags</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now let us simulate the AR process.</p>
-<div id="8a186650" class="cell" data-execution_count="4">
+<div id="724c544b" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ar_data <span class="op">=</span> simulate_ar(intercept, coefs, warmup<span class="op">=</span><span class="dv">2018</span>, steps<span class="op">=</span><span class="dv">200</span>, rng<span class="op">=</span>rng)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Finally, let us plot the simulated data using Matplotlib.</p>
-<div id="8a6fea1f" class="cell" data-execution_count="5">
+<div id="8a28f5f9" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>))</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Generated Autoregressive Timeseries"</span>, fontsize<span class="op">=</span><span class="dv">15</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>ax.plot(ar_data)</span>
@@ -304,7 +304,7 @@ window.Quarto = {
 <p>This implementation is not particularly efficient in terms of computing resources. Although performance is influenced by many things, a large factor is the presence of an ordinary <code>for</code> loop. Upon every iteration of the loop the Python interpreter will check that all types are still valid, which is a waste of computing resources when you can assume that they are. Perhaps I will write a more efficient function, but this example should be suitable for examples and tinkering for now.</p>
 <hr>
 <p>Here is the output data for the example:</p>
-<div id="ed6fb174" class="cell" data-execution_count="6">
+<div id="a7968d32" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ar_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>array([6.941708  , 6.3155875 , 6.79896769, 6.62115125, 6.64690478,

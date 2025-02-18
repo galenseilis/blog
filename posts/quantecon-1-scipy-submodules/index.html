@@ -237,7 +237,7 @@ window.Quarto = {
 <section id="bisection-method" class="level1">
 <h1>Bisection Method</h1>
 <p>The first method mentioned on QuantEcon is the bisection algorithm, which essentially treats finding solutions to a function as a binary search problem. There are two parameters that are needed to get started with the bisection algorithm, an initial lower bound and an initial upper bound on the search space. Not only do we need two such parameters, but our choice of these two numbers can change what solution is found. Let’s consider the following example where we look on the interval <span class="math inline">\([-10, 10]\)</span>.</p>
-<div id="d72122da" class="cell" data-execution_count="1">
+<div id="d042210f" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> bisect</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a single-variable function to find solutions in</span></span>
@@ -249,7 +249,7 @@ window.Quarto = {
 </div>
 </div>
 <p>We were looking for <span class="math inline">\(x = \pi\)</span>, but we got <span class="math inline">\(x = 0\)</span> instead. If there are multiple solutions within your search interval, the algorithm won’t necessarily converge on the one that you wanted, nor will it report to you there were multiple solutions. Knowing ahead of time that we’d like to calculate <span class="math inline">\(\pi\)</span>, and that <span class="math inline">\(3 &lt; \pi &lt; 4\)</span>, let’s rerun the bisection algorithm on <span class="math inline">\([3, 4]\)</span>.</p>
-<div id="9bb6d857" class="cell" data-execution_count="2">
+<div id="4fa818b4" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(bisect(f, <span class="dv">3</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>3.1415926535901235</code></pre>
@@ -260,7 +260,7 @@ window.Quarto = {
 <section id="newton-raphson-method" class="level1">
 <h1>Newton-Raphson method</h1>
 <p>The Newton-Raphson method is a calculus-based method that iteratively steps towards a solution. Like the bisection method, it requires a number decided ahead of time but this time this chosen number is an initial guess or starting point. Unlike the bisection method, the Newton-Raphson method does not have bounds set on the search so a continuous function over the real numbers can be searched indefinitely. To prevent the algorithm searching for too long, a hyperparameter limiting the number of iterations (steps) is included if a stable solution is not converged upon (default is <span class="math inline">\(50\)</span> steps).</p>
-<div id="b7c030f8" class="cell" data-execution_count="3">
+<div id="d579830b" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> newton</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a single-variable function to find solutions in</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># try out the Newton-Raphson algorithm</span></span>
@@ -270,7 +270,7 @@ window.Quarto = {
 </div>
 </div>
 <p>While <span class="math inline">\(x = 0.2\)</span> is not that far off from Pi, the local derivatives are going to point the steps to descend toward zero. Notice that the solution we got was not exactly zero, but rather the first solution found within a predefined tolerance of <span class="math inline">\(1.48 \times 10^{-8}\)</span>. What you don’t see from the code is the that shape of the curve, which if you plot our function you’ll see there is a local maxima between <span class="math inline">\(x = 0\)</span> and <span class="math inline">\(x = \pi\)</span> at <span class="math inline">\(x = \frac{\pi}{4}\)</span>. Relative to this <em>hill</em>, our estimate is analogous to a ball rolling in the direction of steepest descent. This analogy breaks down for solutions separated by a local minima as the method is not equivalent to steepest descent even though it is based on the local derivative. Another issue that can come about is picking an initial value close to an extrema because the results can be unstable, allowing incredibly large jumps across the domain. Therefore, we should be cautious about our choice of initial guess by doing some exploration of function’s properties before attempting to estimate the solution. Let’s retry with a more suitable initial value.</p>
-<div id="3b138926" class="cell" data-execution_count="4">
+<div id="f9ca706a" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># try out the Newton-Raphson algorithm</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(newton(f, np.pi <span class="op">/</span> <span class="dv">4</span> <span class="op">+</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -282,7 +282,7 @@ window.Quarto = {
 <section id="brents-method" class="level1">
 <h1>Brent’s method</h1>
 <p>The QuantEcon course points out that Bisection is more robust (stable) than Newton-Raphson’s method, but it is also slower. An alternative approach that balances this tradeoff is Brent’s method which includes bounds and garantees solutions for computable functions. Let’s give this approach a try on our function on <span class="math inline">\([3, 4]\)</span>.</p>
-<div id="19244144" class="cell" data-execution_count="5">
+<div id="72d78cce" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> brentq</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># try out the Brent's algorithm</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(brentq(f, <span class="dv">3</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -295,7 +295,7 @@ window.Quarto = {
 <section id="performance-comparison-with-timeit" class="level1">
 <h1>Performance comparison with timeit</h1>
 <p>Last of all, it would be interesting to compare the time performance of each of these solution-finding approaches. Let’s do that with timeit.</p>
-<div id="20f131c4" class="cell" data-execution_count="6">
+<div id="bdae94d7" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timeit <span class="im">import</span> timeit</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(timeit(stmt<span class="op">=</span><span class="st">'bisect(f, 3, 4)'</span>,<span class="op">\</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">globals</span><span class="op">=</span>{<span class="st">'bisect'</span>:bisect, <span class="st">'f'</span>:f},<span class="op">\</span></span>
@@ -307,9 +307,9 @@ window.Quarto = {
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">globals</span><span class="op">=</span>{<span class="st">'brentq'</span>:brentq, <span class="st">'f'</span>:f},<span class="op">\</span></span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    number<span class="op">=</span><span class="dv">100000</span>) <span class="op">/</span> <span class="dv">100000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>9.402411826000389e-05
-0.000197577011530002
-2.130047346000538e-05</code></pre>
+<pre><code>9.632542561999798e-05
+0.00021077231676999873
+2.1942674299998543e-05</code></pre>
 </div>
 </div>
 <p>We find under this setup that the slowest algorithm was the Newton-Raphson’s method, followed by the bisection method by a factor of <span class="math inline">\(\frac{1}{5}\)</span>, and final Brent’s method being about an order of magnitude faster! So Brent’s method gave us more accurate digits in the solution, at least for <span class="math inline">\(x = \pi\)</span>, and also performed faster than the other two methods. Does this mean that Brent’s method is always the best method? Not necessarily. We should be open to the possibility of tradeoffs not discussed on QuantEcon, as well as there being a panoply of algorithms out available in code repositories.</p>
