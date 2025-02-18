@@ -118,14 +118,14 @@ println!("Samples: {:?}", samples);
 
 And finally let's visualize the sample. In order to do this, let us define a chart using the `plotters` crate.
 
-```{rust}
+```rust
 :dep plotters
 use plotters::prelude::*;
 
 fn plot_histogram(samples: &[usize], filename: &str) {
     let max_value = *samples.iter().max().unwrap_or(&0);
     let frequencies = (0..=max_value)
-        .map(|value| samples.iter().filter(|&&x| x == value).count() as u32)
+        .map(|value| samples.iter().filter(|&x| x == value).count() as u32)
         .collect::<Vec<_>>();
 
     let root = BitMapBackend::new(filename, (1600, 1200)).into_drawing_area();
@@ -172,12 +172,12 @@ fn plot_histogram(samples: &[usize], filename: &str) {
 
 Let's make the plot.
 
-```{rust}
+```rust
 plot_histogram(&samples, "histogram.png");
 ```
 
 ::: {#fig-histogram}
-![](histogram.png)
+![to be remade](histogram.png)
 
 Sample frequencies from a Poisson binomial distribution.
 :::
