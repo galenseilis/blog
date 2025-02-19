@@ -11,3 +11,4 @@ scipy
 seaborn
 bandit
 pymc
+pygraphviz
