@@ -1,7 +1,7 @@
 ---
 title: "Word Adjacency Graph of Rolling Down to Rio"
 author: "Galen Seilis"
-date: "2025-02-17"
+date: "2025-02-19"
 categories: [Art, Music, Word Adjacency]
 ---
 
