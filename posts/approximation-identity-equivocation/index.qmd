@@ -1,0 +1,68 @@
+---
+title: "The Approximation-Identity Equivocation"
+author: "Galen Seilis"
+date: "2025-02-21"
+categories: [Math, Logic]
+draft: true
+---
+
+# Introduction
+
+I've heard that *to err is human*, or something like that. This post is about creating a brief description of a form of equivocation that I have seen on occassion.
+
+There are two notions that get equivocated. One is the notion of identity (i.e. 1 is 1, that tree is that tree, I am myself, etc). The other notion is that of approximation (i.e. "eh, close enough").
+
+::: {.callout-info}
+We could further bring in the notion of membership as yet another relation. One might say, "this cat is a mammal". That does not mean "this cat" and "mammal" are the same thing... obviously. Rather we are saying there is a collection called "mammal" and "this cat" is identical with an element in that collection.
+
+There's also the subset relation, i.e. all cats are mammals, but, oh nevermind!
+:::
+
+# What is Identity?
+
+*Things are what they are, and they are not what they're not.* This is the phrase I have most often heard when people describe the [law of identity](https://en.wikipedia.org/wiki/Law_of_identity) to me.
+
+[Wikipedia tersely puts it like this](https://en.wikipedia.org/wiki/Law_of_thought#Three_traditional_laws:_identity,_non-contradiction,_excluded_middle):
+
+$$\forall a: a = a.$$
+
+Where does $a$ come from? Well, from whatever makes sense in context. In mathematics we often define a set $S$ and would say that $a$ is an element of $S$, $a \in S$. [Clear as mud](https://www.merriam-webster.com/dictionary/as%20clear%20as%20mud)?
+
+# What is Approximation?
+
+Math.SE user Franklin Pezzuti Dyer gives a simple example in a [comment](https://math.stackexchange.com/questions/3437242/is-approx-an-equivalence-relation-if-approx-is-transitive-then-does-the#comment7066669_3437242):
+
+> The problem is that such sets (of "negligibly small" numbers) usually aren't closed under addition. In $\mathbb{R}$, for instance, for any $\epsilon > 0$ and any arbitrarily large $M$, there exists $N$ such that $$\overbrace{\epsilon + \epsilon + \dots + \epsilon}^{N} > M$$
+
+There is soemthing I want to emphasize from above: we can choose $\epsilon$ to be as small as we like! In some sense this is just basic math. A sufficiently large number of small numbers can still make a big number.
+
+This is not to harshly critique the notion of approximation. Approximation is sometimes required in order to obtain approximate solutions to problems.
+
+# How Does Identity Differ From Approximation?
+
+Identity is an [equivalence relation](https://en.wikipedia.org/wiki/Equivalence_relation), whereas a given notion of approximation may or may not be an equivalence relation. What's an equivalence relation, anyway?
+
+Although it is couched in mathematical jargon, I find the mathematical notion of an ["equivalence relation"](https://en.wikipedia.org/wiki/Equivalence_relation) to be a clear way to define what one could mean by "equivalent".
+
+An equivalence relation is, like many things in standard mathematics, a collection with some sort of structure. We will clarify what that structure is in a moment.
+
+So is an approximation relation also transitive? No, not in general.
+
+# The Approximation-Identity Fallacy
+
+The approximation-identity fallacy is the following argument:
+
+- Premise: $A$ is approximately-equal-to $B$.
+- Conclusion: $A$ is equal to $B$.
+
+It is a pretty simple fallacy. It involves one premise and one conclusion.
+
+# Practical Significance
+
+In my experience the distinction between approximation and identity most often becomes important in the context of numerical computing. Typical computers can represent binary number exactly. When we add two numbers it is not guaranteed that the sum will equal the correct value. In some cases this is ignorable, but sometimes it is not. When of the tricks I have learned, when it matters, is to add up smaller numbers together and aggregate up towards adding bigger numbres. The trick doesn't always work, but sometimes it helps you avoid the numerical problem that a small number plus a big number is the same big number you started with...
+
+That is, for two numbers $a$ and $b$ for which neither number is zero it is possible to obtain $a + b = b$. You might then be tempted to subtract $b$ from both sides to obtain $a = 0$. This reasoning works quite well for dealing.
+
+
+Example: Normal approximation in statistics.
+Example: Physical distances.
