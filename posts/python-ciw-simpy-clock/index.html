@@ -234,7 +234,7 @@ window.Quarto = {
 <section id="simpy-simulation" class="level2">
 <h2 class="anchored" data-anchor-id="simpy-simulation">SimPy Simulation</h2>
 <p>On the home page of the <a href="https://simpy.readthedocs.io/en/latest/">SimPy</a> documentation there is an example of a clock:</p>
-<div id="c374379e" class="cell" data-execution_count="1">
+<div id="b216c7a5" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> simpy</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> clock(env, name, tick):</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
@@ -261,7 +261,7 @@ fast 1.5</code></pre>
 <section id="ciw-simulation" class="level2">
 <h2 class="anchored" data-anchor-id="ciw-simulation">Ciw Simulation</h2>
 <p>Let’s do this in Ciw. First, we need to import Ciw, and I would also like Pandas for a later processing step.</p>
-<div id="f7c8849f" class="cell" data-execution_count="2">
+<div id="4d41f9a6" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> NoReturn</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ciw</span>
@@ -273,17 +273,17 @@ fast 1.5</code></pre>
 <p><span class="math display">\[R = \begin{bmatrix}0 &amp; 0 \\ 0 &amp; 0 \end{bmatrix}\]</span></p>
 <p>which means that packets that are used at a clock are never seen again. They leave, or are consumed, or… something. 👻</p>
 <p>Such a routing matrix can be tersely written in Python as a nested list:</p>
-<div id="2b5f68b7" class="cell" data-execution_count="3">
+<div id="5003d84f" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>routing <span class="op">=</span> [[<span class="fl">0.0</span>] <span class="op">*</span> <span class="dv">2</span>] <span class="op">*</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The servers at each clock are some component of the clock that make it tick, called a “ticker”. 😉 Each clock has only one ticker. For Ciw, this means that each node has only one server, which we can represent in a list:</p>
-<div id="856f5c45" class="cell" data-execution_count="4">
+<div id="f2aa689f" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>number_of_tickers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can treat each completed tick of these clocks as the completion of a service. Each clock completes a tick at an exact deterministic rate, so the inter-arrival times of ticks are <a href="https://en.wikipedia.org/wiki/Degenerate_distribution#Constant_random_variable">constant random variables</a>.We can think of these service times mathematically as</p>
 <p><span class="math display">\[T_{\text{service}} \sim \delta \left( s \right)\]</span></p>
 <p>where <span class="math inline">\(\delta\)</span> is the <a href="https://en.wikipedia.org/wiki/Dirac_delta_function">Dirac delta distribution</a> and <span class="math inline">\(s\)</span> the “speed parameter” for the clock’s ticks. We can store our clock speeds in a list:</p>
-<div id="daf48ee7" class="cell" data-execution_count="5">
+<div id="8c0327e3" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>clock_speeds <span class="op">=</span> [<span class="fl">0.5</span>, <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In order to ensure that each ticker has a correctly-timed packet we must consider the arrival times of packets onto the queue. If we provide too few packets then the clock won’t keep time; ticks will be delayed. If we provide more packets than necessary then we will start to have a queue filling up with packets which is a waste of memory. Instead we should have packets arrive at the same rate that they are needed. Thus the arrival rate will also equal:</p>
@@ -292,7 +292,7 @@ fast 1.5</code></pre>
 <p>Just because we have the rates of change correct doesn’t mean that we are starting in the correct state. The last, and trickiest, business of this exercise is to start the system with the correct number of packets. If it takes <span class="math inline">\(s\)</span> units of time for a packet to arrive and it takes another <span class="math inline">\(s\)</span> units of time for a packet to be processed into a tick, then each packet has a sojourn time of <span class="math inline">\(2s\)</span>. Which means that at the start of the simulation there will be a delay before the clocks start ticking. We could chalk this up to simulation <a href="https://ciw.readthedocs.io/en/latest/Tutorial-I/tutorial_iv.html">warm-up</a>, but let’s get this right. What we can do is have a distribution that</p>
 <p><span class="math display">\[f(t; s, c, \ell) = \begin{cases} \delta \left( 0 \right) &amp; t \leq 0 \land c &lt; \ell \\ \delta \left( s \right) &amp; \text{Otherwise} \end{cases}\]</span></p>
 <p>where <span class="math inline">\(t\)</span> is the simulation time, <span class="math inline">\(c \in \mathbb{N}_0\)</span> is a count of how many times the distribution has been used at or before <span class="math inline">\(t = 0\)</span>, and <span class="math inline">\(\ell \in \mathbb{N}_0\)</span> is the maximum number of times that we will allow this distribution to be used for <span class="math inline">\(t \leq 0\)</span>. Kinda weird, right? What it specifies is that we can pass packets into the system that take zero units of time to arrive and zero units of time to process. That will allow us to have a couple of packets run straight away! One implementation of Python for this looks like this:</p>
-<div id="62ae00e0" class="cell" data-execution_count="6">
+<div id="96c62888" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> IASDeterministic(ciw.dists.Distribution):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Represents an "instant at start" (IAS) deterministic distribution.</span></span>
@@ -356,13 +356,13 @@ fast 1.5</code></pre>
 <span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"IASDistribution(value=</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>value<span class="sc">}</span><span class="ss">, limit=</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>limit<span class="sc">}</span><span class="ss">)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Okay, that’s a decent chunk of code but it is mostly just docstrings. All it does is initialize the system as we discussed. We can make one of these for each node’s arrival and service distributions:</p>
-<div id="9fa5bdb9" class="cell" data-execution_count="7">
+<div id="273d116b" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>arrival_dists <span class="op">=</span> [IASDeterministic(speed, <span class="dv">2</span>) <span class="cf">for</span> speed <span class="kw">in</span> clock_speeds]</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>service_dists <span class="op">=</span> [IASDeterministic(speed) <span class="cf">for</span> speed <span class="kw">in</span> clock_speeds]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You may have noticed that for arrival distributions that we put the limit at two packets rather than 1. This is because we need one packet to be processed at <span class="math inline">\(t=0\)</span> but also have another ready at <span class="math inline">\(t=0\)</span> to begin service using the post-initialization rate.</p>
 <p>If you have not used Ciw before, you may be wondering how we put these pieces together. In Ciw everything about the design of the queueing network goes into the <code>ciw.create_network</code> function.</p>
-<div id="03117604" class="cell" data-execution_count="8">
+<div id="8c233e71" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>network <span class="op">=</span> ciw.create_network(</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    arrival_distributions <span class="op">=</span> arrival_dists,</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    service_distributions <span class="op">=</span> service_dists,</span>

@@ -282,7 +282,7 @@ window.Quarto = {
 <p>Next we assign the derivative to be zero, and solve for the optimal value of <span class="math inline">\(n\)</span>.</p>
 <p><span class="math display">\[\frac{df}{dn} := 0 \implies 0=\frac{1}{1+n_*} - 2 \epsilon^2 \iff n_* = \frac{1}{2 \epsilon^2} - 1\]</span></p>
 <p>Now let us consider the Taylor series of <span class="math inline">\(f\)</span> at <span class="math inline">\(n_*\)</span>.</p>
-<div id="3afdb3b4" class="cell" data-execution_count="1">
+<div id="6f5338ce" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sympy</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> sympy.Symbol(<span class="st">'n'</span>, real<span class="op">=</span><span class="va">True</span>, positive<span class="op">=</span><span class="va">True</span>)</span>

@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Galen Seilis">
-<meta name="dcterms.date" content="2023-12-20">
+<meta name="dcterms.date" content="2025-02-19">
 
-<title>Implementing a D/M/1 Queue in Ciw – Galen Seilis</title>
+<title>Word Adjacency Graph of Rossetti’s Silent Noon – Galen Seilis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -163,22 +163,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Implementing a D/M/1 Queue in Ciw</h1>
+<h1 class="title">Word Adjacency Graph of Rossetti’s <em>Silent Noon</em></h1>
   <div class="quarto-categories">
-    <div class="quarto-category">Python</div>
-    <div class="quarto-category">Discrete Event Simulation</div>
-    <div class="quarto-category">Ciw</div>
-    <div class="quarto-category">Queueing Network</div>
-    <div class="quarto-category">Queueing System</div>
-    <div class="quarto-category">Queueing Theory</div>
-    <div class="quarto-category">Exponential Distribution</div>
-    <div class="quarto-category">Statistics</div>
-    <div class="quarto-category">Operations Research</div>
-    <div class="quarto-category">Random Variables</div>
-    <div class="quarto-category">Inter-Arrival Times</div>
-    <div class="quarto-category">Service Times</div>
-    <div class="quarto-category">Random Number Generation</div>
-    <div class="quarto-category">Servers</div>
+    <div class="quarto-category">Art</div>
+    <div class="quarto-category">Music</div>
+    <div class="quarto-category">Word Adjacency</div>
   </div>
   </div>
 
@@ -196,7 +185,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 20, 2023</p>
+      <p class="date">February 19, 2025</p>
     </div>
   </div>
   
@@ -208,174 +197,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p><a href="https://ciw.readthedocs.io/en/latest/">Ciw</a> is a <a href="https://www.python.org/">Python</a> package for <a href="https://en.wikipedia.org/wiki/Discrete-event_simulation">simulating</a> <a href="https://en.wikipedia.org/wiki/Queueing_theory">queueing networks</a>.</p>
-</section>
-<section id="simulation" class="level2">
-<h2 class="anchored" data-anchor-id="simulation">Simulation</h2>
-<p>A <a href="https://en.wikipedia.org/wiki/D/M/1_queue">D/M/1 queue</a> can be implemented and simulated using Ciw in the following way.</p>
-<div id="97f90726" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ciw</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>ciw.seed(<span class="dv">2018</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>ARRIVAL_TIME <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>SERVICE_TIME <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>HORIZON <span class="op">=</span> <span class="dv">365</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>network <span class="op">=</span> ciw.create_network(</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    arrival_distributions <span class="op">=</span> [ciw.dists.Deterministic(ARRIVAL_TIME)],</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    service_distributions <span class="op">=</span> [ciw.dists.Exponential(SERVICE_TIME)],</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    number_of_servers <span class="op">=</span> [<span class="dv">1</span>]</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>simulation <span class="op">=</span> ciw.Simulation(network)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>simulation.simulate_until_max_time(HORIZON)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>records <span class="op">=</span> simulation.get_all_records()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here are the lyrics of silent noon with punctuation and capitalization ignored:</p>
+<div id="28846217" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>lyrics <span class="op">=</span> <span class="st">"""your hands lie open in the long fresh grass the finger points look through like rosy blooms your eyes smile peace the pasture gleams and glooms beneath billowing skies that scatter and amass all round our nest far as the eye can see are golden kingcup fields with silver edge where the cow parsley skirts the hawthorn hedge it is visible silence still as the hour glass deep in the sun searched growths the dragonfly hangs like a blue thread loosened from the sky so this winged hour is dropt to us from above oh clasp we to our hearts for deathless dower this close companioned inartciulate hour when two-fold silence was the song the song of love"""</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>lyrics <span class="op">=</span> lyrics.split(<span class="st">' '</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="results" class="level2">
-<h2 class="anchored" data-anchor-id="results">Results</h2>
-<p>We can tabulate the results.</p>
-<div id="d1819cc3" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown, display</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>records <span class="op">=</span> pd.DataFrame(records)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>display(</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    Markdown(</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        records</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        [[<span class="st">'waiting_time'</span>, <span class="st">'service_time'</span>, <span class="st">'queue_size_at_arrival'</span>, <span class="st">'queue_size_at_departure'</span>]]</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        .describe()</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        .to_markdown()</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 7%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 27%">
-<col style="width: 29%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: right;">waiting_time</th>
-<th style="text-align: right;">service_time</th>
-<th style="text-align: right;">queue_size_at_arrival</th>
-<th style="text-align: right;">queue_size_at_departure</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">count</td>
-<td style="text-align: right;">183</td>
-<td style="text-align: right;">183</td>
-<td style="text-align: right;">183</td>
-<td style="text-align: right;">183</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">mean</td>
-<td style="text-align: right;">71.9111</td>
-<td style="text-align: right;">1.96964</td>
-<td style="text-align: right;">36.8087</td>
-<td style="text-align: right;">73.3607</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">std</td>
-<td style="text-align: right;">51.243</td>
-<td style="text-align: right;">1.8815</td>
-<td style="text-align: right;">25.7219</td>
-<td style="text-align: right;">51.6083</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">min</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.0229044</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">25%</td>
-<td style="text-align: right;">19.1338</td>
-<td style="text-align: right;">0.676208</td>
-<td style="text-align: right;">13.5</td>
-<td style="text-align: right;">20</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">50%</td>
-<td style="text-align: right;">75.1552</td>
-<td style="text-align: right;">1.28472</td>
-<td style="text-align: right;">34</td>
-<td style="text-align: right;">76</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">75%</td>
-<td style="text-align: right;">111.045</td>
-<td style="text-align: right;">2.53828</td>
-<td style="text-align: right;">61</td>
-<td style="text-align: right;">112</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">max</td>
-<td style="text-align: right;">175.985</td>
-<td style="text-align: right;">9.49261</td>
-<td style="text-align: right;">80</td>
-<td style="text-align: right;">179</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>We can plot the arrival times against the waiting times.</p>
-<div id="3d854311" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>records.plot(x<span class="op">=</span><span class="st">'arrival_date'</span>, y<span class="op">=</span><span class="st">'waiting_time'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="9c060e91" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_graph(strings):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize a directed graph</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> nx.DiGraph()</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add each string as a node</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> s <span class="kw">in</span> strings:</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        G.add_node(s)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create edges based on adjacency (e.g., consecutive strings in the list)</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(strings) <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        G.add_edge(strings[i], strings[i <span class="op">+</span> <span class="dv">1</span>])</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> G</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_graph(G):</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generate positions for nodes</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    pos <span class="op">=</span> nx.nx_agraph.graphviz_layout(G)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    node_sizes <span class="op">=</span> [<span class="bu">len</span>(node) <span class="op">*</span> <span class="dv">100</span> <span class="cf">for</span> node <span class="kw">in</span> G.nodes()]  <span class="co"># Adjust 100 to change the scaling factor</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Draw the graph</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">30</span>))</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    nx.draw(G, pos, with_labels<span class="op">=</span><span class="va">True</span>, node_color<span class="op">=</span><span class="st">"lightblue"</span>, font_size<span class="op">=</span><span class="dv">10</span>, node_size<span class="op">=</span>node_sizes, font_weight<span class="op">=</span><span class="st">"bold"</span>, arrows<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">"Word Adjacency in Silent Noon"</span>, fontsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>graph <span class="op">=</span> create_graph(lyrics)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>plot_graph(graph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-4-output-1.png" width="575" height="429" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>We can plot the service start times against the service times.</p>
-<div id="98eeb629" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>records.plot(x<span class="op">=</span><span class="st">'service_start_date'</span>, y<span class="op">=</span><span class="st">'service_time'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-5-output-1.png" width="558" height="429" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>We can plot the arrival dates against the length of the queue when the customer arrived.</p>
-<div id="7e69082e" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>records.plot(x<span class="op">=</span><span class="st">'arrival_date'</span>, y<span class="op">=</span><span class="st">'queue_size_at_arrival'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-6-output-1.png" width="566" height="429" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>We can plot the departure dates against the length of the queue when the customer departed.</p>
-<div id="1cced5c8" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>records.plot(x<span class="op">=</span><span class="st">'exit_date'</span>, y<span class="op">=</span><span class="st">'queue_size_at_departure'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-7-output-1.png" width="575" height="429" class="figure-img"></p>
+<p><img src="index_files/figure-html/cell-3-output-1.png" width="787" height="2922" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

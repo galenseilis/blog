@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Galen Seilis">
-<meta name="dcterms.date" content="2023-12-20">
+<meta name="dcterms.date" content="2025-02-21">
 
-<title>Implementing a D/M/1 Queue in Ciw – Galen Seilis</title>
+<title>Notes on Demo of Deploying Kedro Pipelines to Databricks. – Galen Seilis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -102,15 +102,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<meta name="quarto:status" content="draft">
 
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top"><div id="quarto-draft-alert" class="alert alert-warning"><i class="bi bi-pencil-square"></i>Draft</div>
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -157,28 +158,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#demo" id="toc-demo" class="nav-link active" data-scroll-target="#demo">Demo</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Implementing a D/M/1 Queue in Ciw</h1>
+<h1 class="title">Notes on Demo of Deploying Kedro Pipelines to Databricks.</h1>
   <div class="quarto-categories">
     <div class="quarto-category">Python</div>
-    <div class="quarto-category">Discrete Event Simulation</div>
-    <div class="quarto-category">Ciw</div>
-    <div class="quarto-category">Queueing Network</div>
-    <div class="quarto-category">Queueing System</div>
-    <div class="quarto-category">Queueing Theory</div>
-    <div class="quarto-category">Exponential Distribution</div>
-    <div class="quarto-category">Statistics</div>
-    <div class="quarto-category">Operations Research</div>
-    <div class="quarto-category">Random Variables</div>
-    <div class="quarto-category">Inter-Arrival Times</div>
-    <div class="quarto-category">Service Times</div>
-    <div class="quarto-category">Random Number Generation</div>
-    <div class="quarto-category">Servers</div>
+    <div class="quarto-category">Kedro</div>
+    <div class="quarto-category">Data Science</div>
+    <div class="quarto-category">plugins</div>
+    <div class="quarto-category">Pipelines</div>
+    <div class="quarto-category">Databricks</div>
   </div>
   </div>
 
@@ -196,7 +197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 20, 2023</p>
+      <p class="date">February 21, 2025</p>
     </div>
   </div>
   
@@ -208,169 +209,89 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p><a href="https://ciw.readthedocs.io/en/latest/">Ciw</a> is a <a href="https://www.python.org/">Python</a> package for <a href="https://en.wikipedia.org/wiki/Discrete-event_simulation">simulating</a> <a href="https://en.wikipedia.org/wiki/Queueing_theory">queueing networks</a>.</p>
-</section>
-<section id="simulation" class="level2">
-<h2 class="anchored" data-anchor-id="simulation">Simulation</h2>
-<p>A <a href="https://en.wikipedia.org/wiki/D/M/1_queue">D/M/1 queue</a> can be implemented and simulated using Ciw in the following way.</p>
-<div id="97f90726" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ciw</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>ciw.seed(<span class="dv">2018</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>ARRIVAL_TIME <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>SERVICE_TIME <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>HORIZON <span class="op">=</span> <span class="dv">365</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>network <span class="op">=</span> ciw.create_network(</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    arrival_distributions <span class="op">=</span> [ciw.dists.Deterministic(ARRIVAL_TIME)],</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    service_distributions <span class="op">=</span> [ciw.dists.Exponential(SERVICE_TIME)],</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    number_of_servers <span class="op">=</span> [<span class="dv">1</span>]</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>simulation <span class="op">=</span> ciw.Simulation(network)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>simulation.simulate_until_max_time(HORIZON)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>records <span class="op">=</span> simulation.get_all_records()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This post is just my notes on the following video:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9ZttTN6zDM0?si=JQX7EFAUAa9-n51M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+<div class="callout-info">
+<p>There are some additional resources on integrating Kedro with databricks including:</p>
+<ul>
+<li>Blog: <a href="https://kedro.org/blog/how-to-integrate-kedro-and-databricks-connect">How to integrate Kedro and Databricks Connect</a>.</li>
+<li>Blog: <a href="https://kedro.org/blog/how-do-data-scientists-combine-kedro-and-databricks">How do data scientists combine Kedro and Databricks?</a>.</li>
+<li>Documentation: <a href="https://docs.kedro.org/en/stable/deployment/databricks/databricks_notebooks_development_workflow.html">Use a Databricks workspace to develop a Kedro project</a>.</li>
+</ul>
 </div>
-</section>
-<section id="results" class="level2">
-<h2 class="anchored" data-anchor-id="results">Results</h2>
-<p>We can tabulate the results.</p>
-<div id="d1819cc3" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown, display</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>records <span class="op">=</span> pd.DataFrame(records)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>display(</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    Markdown(</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        records</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        [[<span class="st">'waiting_time'</span>, <span class="st">'service_time'</span>, <span class="st">'queue_size_at_arrival'</span>, <span class="st">'queue_size_at_departure'</span>]]</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        .describe()</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        .to_markdown()</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 7%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 27%">
-<col style="width: 29%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: right;">waiting_time</th>
-<th style="text-align: right;">service_time</th>
-<th style="text-align: right;">queue_size_at_arrival</th>
-<th style="text-align: right;">queue_size_at_departure</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">count</td>
-<td style="text-align: right;">183</td>
-<td style="text-align: right;">183</td>
-<td style="text-align: right;">183</td>
-<td style="text-align: right;">183</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">mean</td>
-<td style="text-align: right;">71.9111</td>
-<td style="text-align: right;">1.96964</td>
-<td style="text-align: right;">36.8087</td>
-<td style="text-align: right;">73.3607</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">std</td>
-<td style="text-align: right;">51.243</td>
-<td style="text-align: right;">1.8815</td>
-<td style="text-align: right;">25.7219</td>
-<td style="text-align: right;">51.6083</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">min</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.0229044</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">25%</td>
-<td style="text-align: right;">19.1338</td>
-<td style="text-align: right;">0.676208</td>
-<td style="text-align: right;">13.5</td>
-<td style="text-align: right;">20</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">50%</td>
-<td style="text-align: right;">75.1552</td>
-<td style="text-align: right;">1.28472</td>
-<td style="text-align: right;">34</td>
-<td style="text-align: right;">76</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">75%</td>
-<td style="text-align: right;">111.045</td>
-<td style="text-align: right;">2.53828</td>
-<td style="text-align: right;">61</td>
-<td style="text-align: right;">112</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">max</td>
-<td style="text-align: right;">175.985</td>
-<td style="text-align: right;">9.49261</td>
-<td style="text-align: right;">80</td>
-<td style="text-align: right;">179</td>
-</tr>
-</tbody>
-</table>
+<ul>
+<li>Jens Peder developed the <a href="https://github.com/JenspederM/kedro-databricks"><code>kedro-databricks</code></a> plugin.</li>
+</ul>
+<section id="demo" class="level1">
+<h1>Demo</h1>
+<p>Create a virtual environment, and then activate it.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> uv venv</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> source ./venv/bin/activate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Next install Kedro.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> uv pip install kedro</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now create a suitable project. In this case we’ll use a starter:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> kedro new <span class="at">--starter</span><span class="op">=</span><span class="st">"databricks-iris"</span> <span class="at">--name</span> <span class="st">"iris"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It is important that <code>kedro-databricks</code> is added as a dependency. This can be done by adding it to the <code>dependencies</code> in your <code>pyproject.toml</code>.</p>
+<p>Now we can sync our dependencies:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> uv syncG</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once your dependencies are synced, you can run the databricks plugin for kedro:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> kedro databricks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>kedro-databricks</code> plugin provides three commands:</p>
+<ul>
+<li><code>init</code>: Initialize databricks asset bundle.</li>
+<li><code>bundle</code>: Convert kedro pipelines into Databricks assert bundle resources.</li>
+<li><code>deploy</code>: Deploy the asset bundle to Databricks.</li>
+</ul>
+<p>Let’s start by running the initialization command:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> kedro datasets init</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The above command will prompt you for your cloud provider. In the demo there were three options: Azure, AWS, and GCP. Once you enter your cloud provider and continue, a <code>databricks.yml</code> file will be created at the root of your Kedro project. The <code>databricks.yml</code> file is an asset bundle definition. You can read more about what this is at <a href="https://docs.databricks.com/aws/en/dev-tools/bundles"><em>What are Databricks Asset Bundles</em></a>. There will also be <code>databricks.yml</code> located at <code>/conf/base/databricks.yml</code>, which allow you to provide overrides to the <code>databricks.yml</code> bundle definition located at your project root.</p>
+<p>Now let’s run the next databricks plugin command: <code>bundle</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> kedro databricks bundle</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Running the <code>bundle</code> command will create yaml file in <code>resources/</code>. This file describes which files should be deployed, and which tasks should be in a job. For more information about the technical specification of these files you can erad the <a href="https://docs.databricks.com/api/workspace/introduction">Databricks API documentation</a>.</p>
+<p>Next you can deploy!</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> kedro databricks deploy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
 </div>
 </div>
-<p>We can plot the arrival times against the waiting times.</p>
-<div id="3d854311" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>records.plot(x<span class="op">=</span><span class="st">'arrival_date'</span>, y<span class="op">=</span><span class="st">'waiting_time'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-4-output-1.png" width="575" height="429" class="figure-img"></p>
-</figure>
+<div class="callout-body-container callout-body">
+<p>You may see some warning of the form:</p>
+<p><code>&lt;datetime&gt; -- Command -- ERROR -- Deploying to Databricks: &lt;message&gt;</code></p>
+<p>which are not necessarily due to the <code>kedro-databricks</code> plugin iteslf.</p>
 </div>
 </div>
+<p>You will need to be authenticated, which can be done with <code>databricks</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> databricks auth login <span class="at">--host</span> <span class="op">&lt;</span>workspace_url<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<p>We can plot the service start times against the service times.</p>
-<div id="98eeb629" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>records.plot(x<span class="op">=</span><span class="st">'service_start_date'</span>, y<span class="op">=</span><span class="st">'service_time'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-5-output-1.png" width="558" height="429" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>We can plot the arrival dates against the length of the queue when the customer arrived.</p>
-<div id="7e69082e" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>records.plot(x<span class="op">=</span><span class="st">'arrival_date'</span>, y<span class="op">=</span><span class="st">'queue_size_at_arrival'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-6-output-1.png" width="566" height="429" class="figure-img"></p>
-</figure>
+<div class="callout-title-container flex-fill">
+Warning
 </div>
 </div>
+<div class="callout-body-container callout-body">
+<p>The Kedro Databricks plugin may not be completely stable as it is relatively new, and it has also been continuously-adjusted due to changes in Databricks itself.</p>
 </div>
-<p>We can plot the departure dates against the length of the queue when the customer departed.</p>
-<div id="1cced5c8" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>records.plot(x<span class="op">=</span><span class="st">'exit_date'</span>, y<span class="op">=</span><span class="st">'queue_size_at_departure'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-7-output-1.png" width="575" height="429" class="figure-img"></p>
-</figure>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Kedro provides a databricks dataset. Sometimes it is beneficial to define your own databricks datasets for kedro to accomodate specific business requirements.</p>
 </div>
 </div>
 

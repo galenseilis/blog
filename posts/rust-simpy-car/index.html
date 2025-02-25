@@ -336,7 +336,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">// Run the simulation until max time</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>env<span class="op">.</span>run_until(<span class="dv">15.0</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="c2785810" class="cell" data-execution_count="1">
+<div id="3fb93d36" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-stdout">
 <pre><code>Start parking at 0
 Start driving at 5
@@ -352,7 +352,7 @@ Start parking at 14
 <section id="performance" class="level1">
 <h1>Performance</h1>
 <p>I am curious about the relative performance the simpy example compared to the Rust example. We can run each example a bunch of times to obtain distributions. Since this car example should be compatible with PyPy, a just in time compiled interpreter for a restriction implementation of Python, we will use that as well as the CPython interpreter. We’ll collect up a bunch of results for both Python and Rust.</p>
-<div id="17ba62d5" class="cell" data-execution_count="2">
+<div id="9647ff34" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> time <span class="im">import</span> perf_counter</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -364,7 +364,7 @@ Start parking at 14
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">100</span></span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>BINS<span class="op">=</span><span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="780555e3" class="cell" data-execution_count="3">
+<div id="618918dc" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cpython_results <span class="op">=</span> []</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(N):</span>
@@ -373,7 +373,7 @@ Start parking at 14
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    toc <span class="op">=</span> perf_counter()</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    cpython_results.append(toc <span class="op">-</span> tic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="d174cfe5" class="cell" data-execution_count="4">
+<div id="2debdefa" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pypy_results <span class="op">=</span> []</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(N):</span>
@@ -382,7 +382,7 @@ Start parking at 14
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    toc <span class="op">=</span> perf_counter()</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    pypy_results.append(toc <span class="op">-</span> tic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="d3f50d1d" class="cell" data-execution_count="5">
+<div id="8b7eddd1" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rust_results <span class="op">=</span> []</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(N):</span>
@@ -396,7 +396,7 @@ Start parking at 14
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    toc <span class="op">=</span> perf_counter()</span>
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    rust_results.append(toc <span class="op">-</span> tic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="0fcbc7e7" class="cell" data-execution_count="6">
+<div id="cb62cff3" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>counts, bin_edges <span class="op">=</span> np.histogram(cpython_results, bins<span class="op">=</span>BINS)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>normalized_counts <span class="op">=</span> counts <span class="op">/</span> counts.<span class="bu">sum</span>()</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>plt.bar(bin_edges[:<span class="op">-</span><span class="dv">1</span>], normalized_counts, width<span class="op">=</span>np.diff(bin_edges), label<span class="op">=</span><span class="st">'CPython'</span>)</span>
@@ -419,13 +419,13 @@ Start parking at 14
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-7-output-1.png" width="662" height="468" class="figure-img"></p>
+<p><img src="index_files/figure-html/cell-7-output-1.png" width="661" height="468" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Let’s also tabulate a basic statistical summary:</p>
-<div id="0def534d" class="cell" data-execution_count="7">
+<div id="6258e35c" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown, display</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -457,52 +457,51 @@ Start parking at 14
 </tr>
 <tr class="even">
 <td style="text-align: left;">mean</td>
-<td style="text-align: right;">0.000860885</td>
-<td style="text-align: right;">0.0564923</td>
-<td style="text-align: right;">0.0468944</td>
+<td style="text-align: right;">0.000860817</td>
+<td style="text-align: right;">0.0600811</td>
+<td style="text-align: right;">0.0461531</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">std</td>
-<td style="text-align: right;">0.000137085</td>
-<td style="text-align: right;">0.00139174</td>
-<td style="text-align: right;">0.00559354</td>
+<td style="text-align: right;">0.000114638</td>
+<td style="text-align: right;">0.00910548</td>
+<td style="text-align: right;">0.00099612</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">min</td>
-<td style="text-align: right;">0.000682733</td>
-<td style="text-align: right;">0.0542302</td>
-<td style="text-align: right;">0.0417394</td>
+<td style="text-align: right;">0.000693123</td>
+<td style="text-align: right;">0.0500393</td>
+<td style="text-align: right;">0.0446766</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">25%</td>
-<td style="text-align: right;">0.000785859</td>
-<td style="text-align: right;">0.0553831</td>
-<td style="text-align: right;">0.044622</td>
+<td style="text-align: right;">0.000824398</td>
+<td style="text-align: right;">0.0526718</td>
+<td style="text-align: right;">0.0453822</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">50%</td>
-<td style="text-align: right;">0.000831598</td>
-<td style="text-align: right;">0.0563031</td>
-<td style="text-align: right;">0.0457849</td>
+<td style="text-align: right;">0.000847789</td>
+<td style="text-align: right;">0.0567833</td>
+<td style="text-align: right;">0.0459099</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">75%</td>
-<td style="text-align: right;">0.000912677</td>
-<td style="text-align: right;">0.0572027</td>
-<td style="text-align: right;">0.0474686</td>
+<td style="text-align: right;">0.000882236</td>
+<td style="text-align: right;">0.0657087</td>
+<td style="text-align: right;">0.0467682</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">max</td>
-<td style="text-align: right;">0.00175316</td>
-<td style="text-align: right;">0.0605535</td>
-<td style="text-align: right;">0.096372</td>
+<td style="text-align: right;">0.00175735</td>
+<td style="text-align: right;">0.0822629</td>
+<td style="text-align: right;">0.0490235</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <p>Overall it is clear that Rust is substantially faster than the Python-based implementations, which is no surprise. Rust is statically typed, and doesn’t have a garbage collector.</p>
-<p>What is more surprising is that running the SimPy example with PyPy was substantially slower than running that sample example with the CPython interpreter. My guess from this is that the overhead for doing the just-in-time compilation is more of a slow down than a speedup on such a small example. I wouldn’t rule out PyPy in general as a speedup for SimPy simulations, but clearly there are limitations on where it will be beneficial.</p>
 
 
 </section>

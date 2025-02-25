@@ -223,8 +223,12 @@ Tip
 <p>Then use the binary to install the Jupyter tool.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">evcxr_jupyter</span> <span class="at">--install</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>At this point it should be installed. You’ll see a Rust kernel will be available when you use <code>jupyter notebook</code> and Quarto will similarly recognize Rust code in <code>{rust}</code> as being executable. Start with something like a “Hello, World” example. You’ll find that in the Rust REPL you will not need to specify <code>main {...}</code>.</p>
-<pre class="{rust}"><code>//| echo: true
-println!("Hello, World.");</code></pre>
+<div id="dddddfb4" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">println!</span>(<span class="st">"Hello, World."</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Hello, World.</code></pre>
+</div>
+</div>
 <p>You can control the code echo by using <code>//| echo: true</code> and <code>//| echo: false</code> near the beginning of the code block.</p>
 
 

@@ -203,24 +203,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>In this post I want to quickly showcase the use of the use of the Petgraph and Petgraph-evcxr packages. Petgraph is a popular graph data structures and algorithms crate available for Rust. Petgraph-evcxr is a tool that makes it possible to easily visualize graphs created using Petgraph within Jupyter notebooks. This in turn allows us to visualize such graphs within Quarto.</p>
 <p>This we need to include them as dependencies.</p>
-<pre class="{rust}"><code>:dep petgraph = "*"
-:dep petgraph-evcxr = "*"
-
-extern crate petgraph;
-use petgraph::graph::Graph;
-use petgraph::dot::Dot;
-use petgraph_evcxr::{draw_graph, draw_dot};</code></pre>
+<div id="eaa8a0fe" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">:</span>dep petgraph <span class="op">=</span> <span class="st">"*"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">:</span>dep petgraph<span class="op">-</span>evcxr <span class="op">=</span> <span class="st">"*"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">extern</span> <span class="kw">crate</span> petgraph<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">petgraph::graph::</span>Graph<span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">petgraph::dot::</span>Dot<span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">petgraph_evcxr::</span><span class="op">{</span>draw_graph<span class="op">,</span> draw_dot<span class="op">};</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>Then we define the graph.</p>
-<pre class="{rust}"><code>let mut g : Graph&lt;&amp;str, &amp;str&gt; = Graph::new();
-let rock = g.add_node("Rock");
-let paper = g.add_node("Paper");
-let scissors = g.add_node("Scissors");
-
-g.add_edge(rock, scissors, "beats");
-g.add_edge(paper, rock, "beats");
-g.add_edge(scissors, paper, "beats");</code></pre>
+<div id="ff6c511d" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="kw">mut</span> g <span class="op">:</span> Graph<span class="op">&lt;&amp;</span><span class="dt">str</span><span class="op">,</span> <span class="op">&amp;</span><span class="dt">str</span><span class="op">&gt;</span> <span class="op">=</span> <span class="pp">Graph::</span>new()<span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> rock <span class="op">=</span> g<span class="op">.</span>add_node(<span class="st">"Rock"</span>)<span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> paper <span class="op">=</span> g<span class="op">.</span>add_node(<span class="st">"Paper"</span>)<span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> scissors <span class="op">=</span> g<span class="op">.</span>add_node(<span class="st">"Scissors"</span>)<span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>g<span class="op">.</span>add_edge(rock<span class="op">,</span> scissors<span class="op">,</span> <span class="st">"beats"</span>)<span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>g<span class="op">.</span>add_edge(paper<span class="op">,</span> rock<span class="op">,</span> <span class="st">"beats"</span>)<span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>g<span class="op">.</span>add_edge(scissors<span class="op">,</span> paper<span class="op">,</span> <span class="st">"beats"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>Finally, we call draw the graph.</p>
-<pre class="{rust}"><code>draw_graph(&amp;g);</code></pre>
+<div id="c029edc8" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>draw_graph(<span class="op">&amp;</span>g)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
