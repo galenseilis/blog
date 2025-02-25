@@ -284,7 +284,7 @@ e \\
 \]</span></p>
 <p>Another representation is a directed graph (AKA a digraph):</p>
 </blockquote>
-<div id="061bdda6" class="cell" data-execution_count="1">
+<div id="2528bb68" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> graphviz <span class="im">import</span> Digraph</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>XxX <span class="op">=</span> <span class="st">'aa'</span>, <span class="st">'ac'</span>, <span class="st">'ae'</span>, <span class="st">'bb'</span>, <span class="st">'bc'</span>, <span class="st">'bd'</span>, <span class="st">'be'</span>, <span class="st">'cc'</span>, <span class="st">'dd'</span>, <span class="st">'de'</span>, <span class="st">'ee'</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> Digraph(<span class="st">'example_partial_order'</span>)</span>
@@ -312,7 +312,7 @@ Tip
 <blockquote class="blockquote">
 <p>The previous example only required a relatively small subset of the Cartesian <span class="math inline">\(X \times X\)</span>. When you a have too many elements in <span class="math inline">\(X\)</span> to deal with by hand, one quick Python script to make the pairs in a format suitable for <span class="math inline">\(\LaTeX\)</span> is the following:</p>
 </blockquote>
-<div id="c93d99e8" class="cell" data-execution_count="2">
+<div id="1e31f177" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> product</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> <span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, <span class="st">'d'</span>, <span class="st">'e'</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>XxX <span class="op">=</span> [<span class="st">'('</span><span class="op">+</span><span class="st">', '</span>.join(i) <span class="op">+</span> <span class="st">')'</span> <span class="cf">for</span> i <span class="kw">in</span> product(X,X)]</span>
@@ -482,7 +482,7 @@ Tip
 <p><strong>Example</strong></p>
 <p>Suppose we have the strict partial order <span class="math inline">\(\\{(a,c), (a,e), (b,c), (b,d), (b,e), (d,e)\\}\)</span>, then its cover diagram would look like:</p>
 </blockquote>
-<div id="573bdaed" class="cell" data-execution_count="3">
+<div id="b005a2d9" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>

@@ -436,7 +436,7 @@ Figure&nbsp;8: In this visualization of a function it is non-injective because i
 <p>Transformations are not only for preparing variables to satisfy the assumptions of a general linear model. Indeed, transformations are how we construct the notion of general linear models! We can see this in the following example of a multiple linear regression equation:</p>
 <p><span class="math display">\[f(X,Z; \vec{\beta}) \triangleq \underbrace{\underbrace{\underbrace{\underbrace{\beta_1 X}_{\text{Scale }X} + \underbrace{\beta_2 Z}_{\text{Scale } Z}}_{\text{Sum}} + \beta_0}_{\text{Translate by } \beta_0} + \epsilon}_{\text{Sum}}\]</span></p>
 <p>Within the above equation I have underbraced multiple transformations of the random variables. The way I have pointed them out is not unique. I could have focused on linear combinations and their relation to linear transformations, for example. A fairly general way to look at the non-uniqueness is to think of an expression tree or computation graph which has a partial order on the operations. Here is an example of an expression tree for the linear regression above.</p>
-<div id="10e09cd5" class="cell" data-execution_count="1">
+<div id="53faacf8" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">This script constructs the expression tree for a multiple linear</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">regression as shown earlier in this post.</span></span>
@@ -468,7 +468,7 @@ Figure&nbsp;8: In this visualization of a function it is non-injective because i
 <h1>Some Models are More Expressive Than Others</h1>
 <p>I’ve spilled a lot of digital “ink” on where Dustin and I disagree. Let’s find some common ground.</p>
 <p>Let us consider an example to explain how some models capture more about a data generating process than others. Suppose we have a random variable <span class="math inline">\(X\)</span> and that we have seen that <span class="math inline">\(X\)</span> seems to vary over time. We collect measurements of <span class="math inline">\(X\)</span> at two time points and plot them as histograms</p>
-<div id="4f3bee86" class="cell" data-execution_count="2">
+<div id="8454f2b7" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
@@ -555,7 +555,7 @@ Figure&nbsp;8: In this visualization of a function it is non-injective because i
 </div>
 </div>
 </div>
-<div id="db30e8af" class="cell" data-execution_count="3">
+<div id="2939b97e" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>timepoint
 1    Axes(0.125,0.11;0.775x0.77)
@@ -586,7 +586,7 @@ Warning
 </div>
 <p>Or maybe you just perform a non-parametric bootstrap. Maybe you goes with a Bayesian approach with some choice of priors and then procede in sampling posterior values of <span class="math inline">\(\frac{\bar X_{0.2} - \bar X_{0.1}}{S_{\Delta \bar X}}\)</span>. Whatever of these approach we go with, or others, we’re pretty limited <em>prima facie</em> with what we can do with a data set like this. One of the main takeaways of this analysis is that <span class="math inline">\(X\)</span> seems to have net-increased between the time points.</p>
 <p>Now let’s suppose we collect a third time point to make open up more types of analysis. We examine the data as boxplots shown in the next plot. If you’re from an earlier generation of statisticians you might think about setting up one of various choices of analysis of variance. And again, you might get concerned about equality of variances and do something like derive sampling distributions or bootstrap. Or even estimate the posterior of the F-scores. If you’re from a later generation of statisticians you might look at this from a linear model perspective and again consider various choices about the model. Whatever you do here, you can model a richer description with these three time points in comparison to when we had measurements at only two. You get a sense that <span class="math inline">\(X\)</span> seems to increase and then decrease, which is more complicated than the two-group analysis could show us</p>
-<div id="7654ef68" class="cell" data-execution_count="4">
+<div id="d11d9d7f" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -596,9 +596,9 @@ Warning
 </div>
 </div>
 <p>Digging further into the matter, you discover there are two other variables <span class="math inline">\(Y\)</span> and <span class="math inline">\(Z\)</span> that seem to covary with <span class="math inline">\(X\)</span>! Fortunately your grad student collected paired measurements <span class="math inline">\((X,Y,Z)\)</span> for the three time points and plot them as a scatter. At this juncture you notice that there seems to be three elongate shapes in the data. Maybe you hop on using a linear mixed effect model to allow for different slopes and intercepts. Maybe you include polynomial predictors when you notice some bending (i.e.&nbsp;curvature) would help the testing error.</p>
-<div id="c10b302b" class="cell" data-execution_count="5">
+<div id="b6ea125e" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_31543/2513081468.py:9: UserWarning: Tight layout not applied. The bottom and top margins cannot be made large enough to accommodate all Axes decorations.
+<pre><code>/tmp/ipykernel_46453/2513081468.py:9: UserWarning: Tight layout not applied. The bottom and top margins cannot be made large enough to accommodate all Axes decorations.
   plt.tight_layout()</code></pre>
 </div>
 <div class="cell-output cell-output-display">
