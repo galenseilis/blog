@@ -2,9 +2,15 @@
 title: "The Approximation-Identity Equivocation Fallacy"
 author: "Galen Seilis"
 date: "2025-02-21"
-categories: [Math, Logic]
+categories: [Math, Logic, Fallacy, Equivocation, Approximation]
 draft: true
 ---
+
+<!--
+- https://math.stackexchange.com/questions/3437242/is-approx-an-equivalence-relation-if-approx-is-transitive-then-does-the?rq=1
+
+https://math.stackexchange.com/questions/5038344/is-asymptotic-approximation-a-transitive-relation-for-real-valued-functions
+-->
 
 # Introduction
 
