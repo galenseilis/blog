@@ -1,5 +1,5 @@
 ---
-title: "The Approximation-Identity Equivocation"
+title: "The Approximation-Identity Equivocation Fallacy"
 author: "Galen Seilis"
 date: "2025-02-21"
 categories: [Math, Logic]
@@ -15,7 +15,7 @@ There are two notions that get equivocated. One is the notion of identity (i.e. 
 ::: {.callout-info}
 We could further bring in the notion of membership as yet another relation. One might say, "this cat is a mammal". That does not mean "this cat" and "mammal" are the same thing... obviously. Rather we are saying there is a collection called "mammal" and "this cat" is identical with an element in that collection.
 
-There's also the subset relation, i.e. all cats are mammals, but, oh nevermind!
+There's also the [subset relation](https://en.wikipedia.org/wiki/Subset), i.e. all cats are mammals, but, oh nevermind!
 :::
 
 # What is Identity?
@@ -26,17 +26,65 @@ There's also the subset relation, i.e. all cats are mammals, but, oh nevermind!
 
 $$\forall a: a = a.$$
 
-Where does $a$ come from? Well, from whatever makes sense in context. In mathematics we often define a set $S$ and would say that $a$ is an element of $S$, $a \in S$. [Clear as mud](https://www.merriam-webster.com/dictionary/as%20clear%20as%20mud)?
+Where does $a$ come from? Well, from whatever makes sense in context.
 
 # What is Approximation?
+
+The term *approximation* can mean different things, but loosely Wikipedia puts it this way:
+
+> An approximation is anything that is intentionally similar but not exactly equal to something else.
+
+Math.SE user Arnaud Mortier put it this way:
+
+> $\approx$ is not commonly used in mathematics, and it doesn't have a broadly accepted definition among mathematicians.
+
+It is difficult to find a definition of "approximation" that is both sufficiently general and yet also not vague. Instead of trying to find such a one-size-fits-all glove, let's instead examine some of the concepts that one may nominate as examples of this unspecified general notion of approximation.
+
+## "Binary Error Tolerance Relation"
 
 Math.SE user Franklin Pezzuti Dyer gives a simple example in a [comment](https://math.stackexchange.com/questions/3437242/is-approx-an-equivalence-relation-if-approx-is-transitive-then-does-the#comment7066669_3437242):
 
 > The problem is that such sets (of "negligibly small" numbers) usually aren't closed under addition. In $\mathbb{R}$, for instance, for any $\epsilon > 0$ and any arbitrarily large $M$, there exists $N$ such that $$\overbrace{\epsilon + \epsilon + \dots + \epsilon}^{N} > M$$
 
-There is soemthing I want to emphasize from above: we can choose $\epsilon$ to be as small as we like! In some sense this is just basic math. A sufficiently large number of small numbers can still make a big number.
+## Negligible Sets
 
-This is not to harshly critique the notion of approximation. Approximation is sometimes required in order to obtain approximate solutions to problems.
+A [negligible set](https://en.wikipedia.org/wiki/Negligible_set) is a set that can be ignored for some purpose. Note that "some purpose" here is usually meant in the context of mathematics rather than practical application.
+
+Consider the following mathematical fact. Given two sets $A$ and $B$ in some shared family of sets $\mathcal{F}$ in a measure space. Given a measure $\mu: \mathcal{F} \rightarrow \mathbb{R}_{\geq 0}$ it is possible to have $A \cap B \neq \emptyset$ and yet $\mu (A \cap B) = 0$. This is due to either concept of [almost everywhere](https://en.wikipedia.org/wiki/Almost_everywhere) or [almost surely](https://en.wikipedia.org/wiki/Almost_surely).
+
+## Limits
+
+[Limits](https://en.wikipedia.org/wiki/Limit_(mathematics)) in mathematics are one way to look at approximation.
+
+### Asymptotic Approximation
+
+Sometimes the limit of a difference or ratio is zero or unity respectively. That is, sometimes it is the case that
+
+$$\lim_{x \rightarrow \infty} [f(x) - g(x)] = 0$$
+
+or 
+
+$$\lim_{x \rightarrow \infty} \frac{f(x)}{g(x)} = 1.$$
+
+::: {.callout-note}
+Above I used limits going to infinity, but one could also take the limit to negative infinity.
+:::
+
+This captures notion that while two functions may be distinct, they eventually become arbitrarily close together.
+
+Limits of functions can have some nice properties One of them is that asymptotic approximation taken as a binary relation on functions induces an equivalence relation. We will come back to equivalence relations later.
+
+### Squeeze Theorem
+
+The [squeeze theorem](https://en.wikipedia.org/wiki/Squeeze_theorem) also uses the idea of limits, but unlike asymptotic approximation we are not necessarily considering infinite limits. Let's briefly describe it, and then relate it to the notion of approximation.
+
+Loosely speaking the squeeze theorem allows us to say something about the limit of a function at a point if we can provide a couple of other functions that have corresponding limits and bound the first function from above and below.
+
+Here is a formal description of the squeeze theorem.
+
+> Let $I$ be an interval containing the point $a$. Let $g,f$ and $h$ be functions defined on $I$, except possibly at $a$ itself. Suppose that for every $x$ in $I$ and $x \neq a$ we have $$g(x) \leq f(x) \leq h(x)$$ and also suppose that $$\lim_{x \rightarrow a} g(x) = \lim_{x \rightarrow a} = L,$$ then $$\lim_{x \rightarrow a} f(x) = L.$$
+
+So how is this an approximation? The reason has to do with what we mean by limit.
 
 # How Does Identity Differ From Approximation?
 
@@ -44,9 +92,17 @@ Identity is an [equivalence relation](https://en.wikipedia.org/wiki/Equivalence_
 
 Although it is couched in mathematical jargon, I find the mathematical notion of an ["equivalence relation"](https://en.wikipedia.org/wiki/Equivalence_relation) to be a clear way to define what one could mean by "equivalent".
 
-An equivalence relation is, like many things in standard mathematics, a collection with some sort of structure. We will clarify what that structure is in a moment.
+An equivalence relation is, like many things in standard mathematics, a collection with some sort of structure. We will clarify what that structure is in a moment. Begin with a set $S$. An homogenous binary relation $R$ on $S$ is a subset of the Cartesian product of $S$ with itself. The Cartesian product is the set of all ordered pairs $S \times S = \{ (a,b) \mid a \in S \land b \in S \}$ An equivalence relation is an homogenous binary relation which is reflexive, transitive, and symmetric. An homogenous binary relation $R$ on is reflexive if $(x,x) \in R$ for all $x$ in $S$. A homogenous binary relation is transitive if, for all $x,y,z \in S$, we have $(x,y) \in R \land (y,z) \in R implies (x,z) \in R$. Lastly, an homogenous binary relation is symmetric if, for all $x,y \in S$, it holds that $(x,y) \in R \implies (y,x) \in R$.
 
 So is an approximation relation also transitive? No, not in general.
+
+Suppose we say that a real number $a$ approximates a real number $b$ if $|a - b| < \epsilon$, where $\epsilon > 0$ is an *error tolerance*. Let's check if this definition satisfies transitivity. Suppose $|x - y| < 5$, and $|y - z| < 5$. Does that mean that $|x - z| < 5$? Can you think of a counterexample? Here is one. Suppose $x = 0$, $y = 4$, and $z = 7$. We would then have:
+
+$$|0 - 4| = 4 < 5$$
+$$|4 - 7| = 3 < 5$$
+$$|0 - 7| = 7 > 5$$
+
+This example shows that such approximations given a fixed error tolerance does not necessarily give transitivity. Indeed, given any error tolerance $\epsilon$ and we can always find three real numbers that will violate transitivity. So this sort of approximation, while useful in some contexts, does not give us an equivalence relation.
 
 # The Approximation-Identity Fallacy
 
@@ -57,6 +113,12 @@ The approximation-identity fallacy is the following argument:
 
 It is a pretty simple fallacy. It involves one premise and one conclusion.
 
+# Examples
+
+Example: Reporting time imprecisely.
+Example: Normal approximation in statistics.
+Example: Physical distances.
+
 # Practical Significance
 
 In my experience the distinction between approximation and identity most often becomes important in the context of numerical computing. Typical computers can represent binary number exactly. When we add two numbers it is not guaranteed that the sum will equal the correct value. In some cases this is ignorable, but sometimes it is not. When of the tricks I have learned, when it matters, is to add up smaller numbers together and aggregate up towards adding bigger numbres. The trick doesn't always work, but sometimes it helps you avoid the numerical problem that a small number plus a big number is the same big number you started with...
@@ -64,5 +126,8 @@ In my experience the distinction between approximation and identity most often b
 That is, for two numbers $a$ and $b$ for which neither number is zero it is possible to obtain $a + b = b$. You might then be tempted to subtract $b$ from both sides to obtain $a = 0$. This reasoning works quite well for dealing.
 
 
-Example: Normal approximation in statistics.
-Example: Physical distances.
+# The Brass Tax
+
+In practice I expect we get away with this fallacy a lot. Rather, it may just be "good enough" as a [heuristic](https://en.wikipedia.org/wiki/Heuristic) in most practical applicaitons. Perhaps we might similarly call it something like "the approximation-identity heuristic".
+
+I would liken it to using empirical induction. Empirical induction has its corresponding [problem of induction](https://en.wikipedia.org/wiki/Problem_of_induction), which loosely means that sometimes the inferences we make based on observation are wrong.

@@ -1,0 +1,109 @@
+---
+title: "Notes on Demo of Deploying Kedro Pipelines to Databricks."
+author: "Galen Seilis"
+date: "2025-02-21"
+categories: [Python, Kedro, Data Science, plugins, Pipelines, Databricks]
+toc: true
+draft: true
+---
+
+This post is just my notes on the following video:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9ZttTN6zDM0?si=JQX7EFAUAa9-n51M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+::: {.callout-info}
+There are some additional resources on integrating Kedro with databricks including:
+
+- Blog: [How to integrate Kedro and Databricks Connect](https://kedro.org/blog/how-to-integrate-kedro-and-databricks-connect).
+- Blog: [How do data scientists combine Kedro and Databricks?](https://kedro.org/blog/how-do-data-scientists-combine-kedro-and-databricks).
+- Documentation: [Use a Databricks workspace to develop a Kedro project](https://docs.kedro.org/en/stable/deployment/databricks/databricks_notebooks_development_workflow.html).
+:::
+
+- Jens Peder developed the [`kedro-databricks`](https://github.com/JenspederM/kedro-databricks) plugin.
+
+# Demo
+
+Create a virtual environment, and then activate it.
+
+```bash
+$ uv venv
+$ source ./venv/bin/activate
+```
+
+Next install Kedro.
+
+```bash
+$ uv pip install kedro
+```
+
+Now create a suitable project. In this case we'll use a starter:
+
+```bash
+$ kedro new --starter="databricks-iris" --name "iris"
+```
+
+It is important that `kedro-databricks` is added as a dependency. This can be done by adding it to the `dependencies` in your `pyproject.toml`.
+
+Now we can sync our dependencies:
+
+```bash
+$ uv syncG
+```
+
+Once your dependencies are synced, you can run the databricks plugin for kedro:
+
+```bash
+$ kedro databricks
+```
+
+The `kedro-databricks` plugin provides three commands:
+
+- `init`: Initialize databricks asset bundle.
+- `bundle`: Convert kedro pipelines into Databricks assert bundle resources.
+- `deploy`: Deploy the asset bundle to Databricks.
+
+Let's start by running the initialization command:
+
+```bash
+$ kedro datasets init
+```
+
+The above command will prompt you for your cloud provider. In the demo there were three options: Azure, AWS, and GCP. Once you enter your cloud provider and continue, a `databricks.yml` file will be created at the root of your Kedro project. The `databricks.yml` file is an asset bundle definition. You can read more about what this is at [*What are Databricks Asset Bundles*](https://docs.databricks.com/aws/en/dev-tools/bundles). There will also be `databricks.yml` located at `/conf/base/databricks.yml`, which allow you to provide overrides to the `databricks.yml` bundle definition located at your project root.
+
+Now let's run the next databricks plugin command: `bundle`.
+
+```bash
+$ kedro databricks bundle
+```
+
+Running the `bundle` command will create yaml file in `resources/`. This file describes which files should be deployed, and which tasks should be in a job. For more information about the technical specification of these files you can erad the [Databricks API documentation](https://docs.databricks.com/api/workspace/introduction).
+
+Next you can deploy!
+
+```bash
+$ kedro databricks deploy
+```
+
+::: {.callout-warning}
+You may see some warning of the form:
+
+`<datetime> -- Command -- ERROR -- Deploying to Databricks: <message>`
+
+which are not necessarily due to the `kedro-databricks` plugin iteslf.
+:::
+
+You will need to be authenticated, which can be done with `databricks`.
+
+```bash
+$ databricks auth login --host <workspace_url>
+```
+
+::: {.callout-warning}
+The Kedro Databricks plugin may not be completely stable as it is relatively new, and it has also been continuously-adjusted due to changes in Databricks itself.
+:::
+
+::: {.callout-tip}
+Kedro provides a databricks dataset. Sometimes it is beneficial to define your own databricks datasets for kedro to accomodate specific business requirements.
+:::
+
+
