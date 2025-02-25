@@ -220,7 +220,7 @@ div.csl-indent {
 <p>I recently learned that Rust does not have a greatest common divisor function. See <span class="citation" data-cites="rust_gcd_forum">Anonymous (<a href="#ref-rust_gcd_forum" role="doc-biblioref">2020</a>)</span> to read some discussion about it.</p>
 <p>So if the GCD function is not implemented natively in Rust, how can we go about calculating it?</p>
 <p>One option is to use the implementation available in <span class="citation" data-cites="programming_rust">Blandy and Orendorff (<a href="#ref-programming_rust" role="doc-biblioref">2021</a>)</span>.</p>
-<div id="f5cc2511" class="cell" data-execution_count="1">
+<div id="cdfeb506" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> gcd(<span class="kw">mut</span> n<span class="op">:</span> <span class="dt">u64</span><span class="op">,</span> <span class="kw">mut</span> m<span class="op">:</span> <span class="dt">u64</span>) <span class="op">-&gt;</span> <span class="dt">u64</span> <span class="op">{</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="pp">assert!</span>(n <span class="op">!=</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> m <span class="op">!=</span> <span class="dv">0</span>)<span class="op">;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> m <span class="op">!=</span> <span class="dv">0</span> <span class="op">{</span></span>
@@ -242,7 +242,7 @@ div.csl-indent {
 </div>
 </div>
 <p>Another option is that we could use the <code>gcd</code> crate.</p>
-<div id="2b137b14" class="cell" data-execution_count="2">
+<div id="29aa107b" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">:</span>dep gcd</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">gcd::</span>Gcd<span class="op">;</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
