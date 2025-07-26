@@ -1,6 +1,7 @@
 """Spaceflights Pandas file for ensuring the package is executable
 as `spaceflights-pandas` and `python -m spaceflights_pandas`
 """
+
 import importlib
 from pathlib import Path
 

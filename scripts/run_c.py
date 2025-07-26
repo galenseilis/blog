@@ -3,16 +3,18 @@ import os
 import glob
 import stat
 
+
 def log_permissions(path):
     st = os.stat(path)
     permissions = stat.filemode(st.st_mode)
     print(f"Permissions for {path}: {permissions}")
 
+
 def compile_and_run_c(project_dir):
     project_dir = os.path.abspath(project_dir)
-    
+
     # Find all .c files in the project directory
-    c_files = glob.glob(os.path.join(project_dir, '*.c'))
+    c_files = glob.glob(os.path.join(project_dir, "*.c"))
     if not c_files:
         raise FileNotFoundError("No C source files found in the project directory.")
 
@@ -20,14 +22,14 @@ def compile_and_run_c(project_dir):
 
     # Compile each .c file into an object file
     for c_file in c_files:
-        obj_file = os.path.splitext(c_file)[0] + '.o'
+        obj_file = os.path.splitext(c_file)[0] + ".o"
         try:
             compile_process = subprocess.run(
-                ['gcc', '-c', c_file, '-o', obj_file],
+                ["gcc", "-c", c_file, "-o", obj_file],
                 cwd=project_dir,
                 check=True,
                 capture_output=True,
-                text=True
+                text=True,
             )
             object_files.append(obj_file)
         except subprocess.CalledProcessError as e:
@@ -35,19 +37,19 @@ def compile_and_run_c(project_dir):
             return
 
     # Determine the name of the executable (assuming the file with main is called main.c)
-    exe_name = 'program'
-    main_file = os.path.join(project_dir, 'main.c')
+    exe_name = "program"
+    main_file = os.path.join(project_dir, "main.c")
     if os.path.exists(main_file):
         exe_name = os.path.splitext(os.path.basename(main_file))[0]
-    
+
     # Link all object files into a single executable
     try:
         link_process = subprocess.run(
-            ['gcc', '-o', exe_name] + object_files,
+            ["gcc", "-o", exe_name] + object_files,
             cwd=project_dir,
             check=True,
             capture_output=True,
-            text=True
+            text=True,
         )
     except subprocess.CalledProcessError as e:
         print(f"Linking Error: {e.stderr}")
@@ -61,7 +63,10 @@ def compile_and_run_c(project_dir):
 
     # Set the executable permissions
     try:
-        os.chmod(target_exe, stat.S_IRWXU | stat.S_IRGRP | stat.S_IXGRP | stat.S_IROTH | stat.S_IXOTH)
+        os.chmod(
+            target_exe,
+            stat.S_IRWXU | stat.S_IRGRP | stat.S_IXGRP | stat.S_IROTH | stat.S_IXOTH,
+        )
     except PermissionError as e:
         print(f"Error setting permissions: {e}")
         return
@@ -69,10 +74,7 @@ def compile_and_run_c(project_dir):
     # Run the compiled executable and capture its output
     try:
         run_process = subprocess.run(
-            [target_exe],
-            check=True,
-            capture_output=True,
-            text=True
+            [target_exe], check=True, capture_output=True, text=True
         )
         output = run_process.stdout
         return output
@@ -80,8 +82,8 @@ def compile_and_run_c(project_dir):
         print(f"Execution Error: {e.stderr}")
         return
 
+
 # Example usage
 if __name__ == "__main__":
-    output = compile_and_run_c('../posts/c-run-from-python/hello')
+    output = compile_and_run_c("../posts/c-run-from-python/hello")
     print(output)
-

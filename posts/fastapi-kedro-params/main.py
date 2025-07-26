@@ -7,16 +7,19 @@ import os
 
 app = FastAPI()
 
+
 class KedroParams(BaseModel):
     project_name: str
     params: Dict[str, str]
 
+
 def load_project_config(config_file: str = "projects.yaml") -> Dict[str, str]:
     if not os.path.exists(config_file):
         raise FileNotFoundError("Config file not found.")
-    with open(config_file, 'r') as file:
+    with open(config_file, "r") as file:
         config = yaml.safe_load(file)
     return config.get("projects", {})
+
 
 def run_kedro_command(project_path: str, params: Dict[str, str]) -> str:
     # Convert params dictionary to a Kedro CLI formatted string
@@ -25,10 +28,15 @@ def run_kedro_command(project_path: str, params: Dict[str, str]) -> str:
 
     try:
         # Running the command
-        result = subprocess.run(command, cwd=project_path, capture_output=True, text=True, check=True)
+        result = subprocess.run(
+            command, cwd=project_path, capture_output=True, text=True, check=True
+        )
         return result.stdout
     except subprocess.CalledProcessError as e:
-        raise HTTPException(status_code=500, detail=f"Error executing Kedro command: {e.stderr}")
+        raise HTTPException(
+            status_code=500, detail=f"Error executing Kedro command: {e.stderr}"
+        )
+
 
 @app.post("/run-kedro/")
 def run_kedro(params: KedroParams):
