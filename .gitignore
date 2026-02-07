@@ -167,3 +167,5 @@ _site/
 
 # Vim
 *.swp
+
+**/*.quarto_ipynb

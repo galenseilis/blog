@@ -1,6 +1,6 @@
 ---
 title: "Publications"
-image: profile.jpg
+image: ./assets/11385121.jpeg
 about:
   template: jolla
   links:
