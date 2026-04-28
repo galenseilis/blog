@@ -27,7 +27,7 @@ Now change directory into the project path.
 $ cd try-kedro-init/
 ```
 
-Add the `kedro-init` package to `try-kedro-init`'s packages, inlcuding Kedro itself.
+Add the `kedro-init` package to `try-kedro-init`'s packages, including Kedro itself.
 
 ```bash
 $ rye add kedro-init

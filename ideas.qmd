@@ -11,7 +11,7 @@ How to choose software tools with respect to development effort and the Turing t
 
 ---
 
-Asychronous programming is not required for DES, but is it better?
+Asynchronous programming is not required for DES, but is it better?
 
 ---
 
@@ -50,7 +50,7 @@ Asyncio example of file IO.
 
 ---
 
-Chaos isn't just about high sensitivty to initial conditions. It is also about topological transitivity and density of orbits. IMO, the topological transitivity might be the most important property. Topological mixing is a special case of topological transitivity which may be easier to explain.
+Chaos isn't just about high sensitivity to initial conditions. It is also about topological transitivity and density of orbits. IMO, the topological transitivity might be the most important property. Topological mixing is a special case of topological transitivity which may be easier to explain.
 
 ---
 
@@ -58,7 +58,7 @@ Quadrant rule in BC silviculture assumes a type of spatial homogeneity within a 
 
 ---
 
-There is/was a fixed percentage agreement required between a silviculture surveyor and an auditor. I recall a professional forester assuring me that this ensures a reasonable expectation of agreement bewteen surveyor and auditor because the percentages "scale up". They could be right, but I'm skeptical about this. 
+There is/was a fixed percentage agreement required between a silviculture surveyor and an auditor. I recall a professional forester assuring me that this ensures a reasonable expectation of agreement between surveyor and auditor because the percentages "scale up". They could be right, but I'm skeptical about this. 
 
 As the number of trees increases we should expect the variance of the counts to increase until even highly-skilled professionals will tend not to agree with each other within that fixed percentage agreement. Under an assumption of statistical independence we can easily show that this is true. Whether such a number of trees is counted in practice is not known to me, and mathematically it depends on the parameters.
 
@@ -66,9 +66,9 @@ As the number of trees increases we should expect the variance of the counts to 
 
 What distribution do the counts within a silviculture plot follow?
 
-I expect that the number of natural regen trees within an untreated area (i.e. not planted) follows an inhomogenous Poisson point process for the number of trees. Recently-planted trees should follow a probability distribution that is close to uniform (but not exactly uniform because it is more like a grid). 
+I expect that the number of natural regen trees within an untreated area (i.e. not planted) follows an inhomogeneous Poisson point process for the number of trees. Recently-planted trees should follow a probability distribution that is close to uniform (but not exactly uniform because it is more like a grid). 
 
-Regardless of the number of trees, the number of trees that a suveyor counts will count has both false positives and false negatives. A first approximation could be a binomial distribution with some probability of sucessfully counting each tree. But not all trees are equally easy to spot, motivating us towards something like a Poisson binomial distribution. This approach may be more realistic, but if we can get away with a binomial likelihood with a Beta distributed prior on the probability of detection that might be more feasible. Maybe we could even show that some operation like marginalization gives us the binomial distribution from the Poisson binomial.
+Regardless of the number of trees, the number of trees that a suveyor counts will count has both false positives and false negatives. A first approximation could be a binomial distribution with some probability of successfully counting each tree. But not all trees are equally easy to spot, motivating us towards something like a Poisson binomial distribution. This approach may be more realistic, but if we can get away with a binomial likelihood with a Beta distributed prior on the probability of detection that might be more feasible. Maybe we could even show that some operation like marginalization gives us the binomial distribution from the Poisson binomial.
 
 Once we have chosen a suitable mathematical model, we could show 
 
@@ -99,7 +99,7 @@ The fastest discrete event simulation are not those which are developed within a
 - Give an example of a FIFO M/M/1 queue implementation using a framework tool (e.g. Ciw) vs a minimumal implementation in Python.
 - Also show an implementation in Rust to further emphasize the point that being able to assume data types is an example of the overall notion that specialty can provide better performance.
 
-There are, of course, downsides to specialized softare. They can sometimes be less configurable out of the box. If what you need for a given project actually is a large multifeatured tool, then writing it yourself might only provide minor benefits.
+There are, of course, downsides to specialized software. They can sometimes be less configurable out of the box. If what you need for a given project actually is a large multifeatured tool, then writing it yourself might only provide minor benefits.
 
 I think that when you really have no idea what you need, which often happens when you're building a product the first time, going for a framework tool that is highly generalized and flexible makes sense for obtaining and MVP. But you're product will plausibly be slower, and possibly more complicated under the hood than needed. 
 
@@ -125,7 +125,7 @@ Kedro catalog can contain "metadata" which can be used to put any information yo
 
 Provide an example statistical model of service completion rate where the number of servers is an integer and the completion rates are statistically dependent. The purpose of this exercise is to provide a statistical model that allows servers to be cooperative or competitive in service completion rates, which "competition" could just mean negatively related rates, without modelling individual servers as data structures in a simulation.
 
-A first approximation could look like this. Suppose a total service comletion rate $\mu$, which can be decomposed into the rates for each server:
+A first approximation could look like this. Suppose a total service completion rate $\mu$, which can be decomposed into the rates for each server:
 
 $$\mu := \sum_i \mu_i$$
 
@@ -182,7 +182,7 @@ PyMC's largest downside on a given problem for which SciPy could also be used is
 
 SciPy is not well-suited to custom probability distributions. Its underlying fitting methods using inverse transform sampling which only works when the CDF is invertible. Furthermore, it will attempt to use the CDF in an optimization problem to find inverses numerically. That's smart from a math point of view, but it is computationally inefficient in practice.
 
-PyMC is a relatively easy win for mixed models. If you have various grouping in the data and you think each population is from the same family of distribution, differing only in the parametres, then PyMC's `coordinates` makes that easy. More complicated structures are also possible.
+PyMC is a relatively easy win for mixed models. If you have various grouping in the data and you think each population is from the same family of distribution, differing only in the parameters, then PyMC's `coordinates` makes that easy. More complicated structures are also possible.
 
 I tried to develop some more complicated models using SciPy's distributions combined with its optimization library. I found that mixtures of gamma distributions are particularly tricky, and it wasn't uncommon for the modelling approach to be revised multiple times.
 
@@ -190,7 +190,7 @@ PyMC models can sometimes sample poorly, and there is likewise a whole bag of tr
 
 SciPy being based on a maximum likelihood estimation (MLE) approach means that it assumes that the data was sampled from the likelihood distribution. In this approach the family of distributions is assumed and we take the view that it is just a matter of finding the specific parameters.
 
-PyMC being primarly based on full posterior inference means something very different. The data does not need to be seen as a sample from the likelihood at all! The posterior is defined via Baye's theorem to be proportional to the product of the likelihood of the data and the prior. That is, the likelihood refines the prior using the data.
+PyMC being primarily based on full posterior inference means something very different. The data does not need to be seen as a sample from the likelihood at all! The posterior is defined via Baye's theorem to be proportional to the product of the likelihood of the data and the prior. That is, the likelihood refines the prior using the data.
 
 ---
 
@@ -250,7 +250,7 @@ Discuss the usage of popularity as a measure of software quality.
 
 AFAIK the only context where the popularity might be invoked is to make an argument that a given tool should be used because it is popular, or at least more popular than some alternative.
 
-When you're in some kind of mode of work where you have to make rapid decisions it makes sense to use heuristics. I don't think that context usually applies for selecting software. Further, I don't think that using popularity as a heuristic is all that reliable and it would make the world of software pretty awful if we all just looked to the most popular tool as the tool to use. That's because the popularity itself would just be due to preferential attachement effects and not due to the quality of the software at all. 
+When you're in some kind of mode of work where you have to make rapid decisions it makes sense to use heuristics. I don't think that context usually applies for selecting software. Further, I don't think that using popularity as a heuristic is all that reliable and it would make the world of software pretty awful if we all just looked to the most popular tool as the tool to use. That's because the popularity itself would just be due to preferential attachment effects and not due to the quality of the software at all. 
 
 I will say that popular software has often gotten "something" right. Sometimes it is obvious what that is (e.g. Ruff's static analysis is fast). Sometimes it isn't obvious. Sometimes it isn't the software itself but rather that it arrived on the scene early enough to have a big adoption advantage.
 
@@ -267,7 +267,7 @@ Go over the mathematical formalism of DES. I think it might be Zeigler that is a
 
 ---
 
-Programmer have to practice building thing in order to learn how to build great things. But organizations often do not want you to build and rebuild the product multiple times to get it right. Iteratively rebuilding can be perceived as a source of unecessary cost. In there lays a trade off. If you don't allow your programmers to iteratively rebuild systems then they will not get the experience to build that particular system in a great way. But if you allo your programmers to iteratively rebuild systems then it will take more time and cost more. Prototyping can offer some compromise, but I expect that overall there is a Pareto front.
+Programmer have to practice building thing in order to learn how to build great things. But organizations often do not want you to build and rebuild the product multiple times to get it right. Iteratively rebuilding can be perceived as a source of unnecessary cost. In there lays a trade off. If you don't allow your programmers to iteratively rebuild systems then they will not get the experience to build that particular system in a great way. But if you allow your programmers to iteratively rebuild systems then it will take more time and cost more. Prototyping can offer some compromise, but I expect that overall there is a Pareto front.
 
 Programmers can learn skills and concepts that transfer to future projects, which alleviates some of this problem.
 

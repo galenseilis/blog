@@ -20,7 +20,7 @@ stateDiagram
 
 For something this simple we don't really need discrete event simulation software, but it can be helpful for the sake of illustration to do it anyway. Let's use idiomatic Ciw to make an equivalent simulation.
 
-Let our queueing network have two nodes, each representing either of the two states "Parked" or "Driving". The car will go between these two nodes. When the car arrives at a node that will repesent that it has begun the whatever process is involved, and when the car finishes service at that node we will interpret that to mean it is now changing state.
+Let our queueing network have two nodes, each representing either of the two states "Parked" or "Driving". The car will go between these two nodes. When the car arrives at a node that will represent that it has begun the whatever process is involved, and when the car finishes service at that node we will interpret that to mean it is now changing state.
 
 Since there will be only one car in the whole network, we do not need to give any consideration to service discipline. If the car is on the queue, then serve it. Otherwise, don't.
 

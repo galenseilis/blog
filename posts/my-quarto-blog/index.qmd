@@ -11,7 +11,7 @@ I am switching to Quarto for my blog. My Jekyll blog is available [here](https:/
 
 What Quarto provides (that I want) is code execution followed by rendering the output of the code. I can put my code examples right into the blog post, and if something like a plot is produced then that plot will show on my blog.
 
-In constrast, with Jekyll, I needed to
+In contrast, with Jekyll, I needed to
 
 1. make the plot
 2. move the plot to an images folder

@@ -187,6 +187,6 @@ print(run_c.compile_and_run_c('./hello2/'))
 
 ## Conclusions
 
-As long as the linking and compiled options are kept simple, this script allows you to compile simple C langauge programs. This may be suitable for ensuring that C code examples for blogging actually work. Expanding into autotools and make files is the way to go for more complicated builds.
+As long as the linking and compiled options are kept simple, this script allows you to compile simple C language programs. This may be suitable for ensuring that C code examples for blogging actually work. Expanding into autotools and make files is the way to go for more complicated builds.
 
 The same limitation as the corresponding script to run Rust code applies: if your `qmd` file does not change while Quarto's setting is `freeze: auto`, the page will not be rerendered if the C code changes even if the Quarto document is not changed.

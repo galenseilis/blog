@@ -318,7 +318,7 @@ This knowledge gap perpetuates reliance on averages because decision-makers aren
 
 ## Perceived Cost of Alternatives
 
-Even when organizations are aware of alternatives, they may shy away from them because of perceived costs or difficulties. Methods like probabilistic modelling, quantile regression, or conformal perdiction require specialized expertise, tools, and software that organizations may not have readily available.
+Even when organizations are aware of alternatives, they may shy away from them because of perceived costs or difficulties. Methods like probabilistic modelling, quantile regression, or conformal prediction require specialized expertise, tools, and software that organizations may not have readily available.
 
 These advanced techniques can feel intimidating, especially when teams are accustomed to simple, average-based forecasting. There’s often a sense that moving to more sophisticated approaches will require extensive training, new technology investments, and an overhaul of existing processes—leading to reluctance to adopt them.
 

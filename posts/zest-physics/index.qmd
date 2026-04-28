@@ -6,7 +6,7 @@ categories: [Physics, Zest Physics]
 draft: true
 ---
 
-This early stages of the post began when I [answered a question](https://stats.stackexchange.com/questions/533577/what-is-the-difference-between-the-dot-product-and-the-element-by-element-multip/533578#533578) on stats.se aobut the difference between the dot product and the element-wise multiplication. While I had certaintly used and thought about these notions before that post, I had not paid such close attention to how they are different.
+This early stages of the post began when I [answered a question](https://stats.stackexchange.com/questions/533577/what-is-the-difference-between-the-dot-product-and-the-element-by-element-multip/533578#533578) on stats.se about the difference between the dot product and the element-wise multiplication. While I had certainly used and thought about these notions before that post, I had not paid such close attention to how they are different.
 
 The kinetic energy of a classic object is given by
 

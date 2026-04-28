@@ -13,7 +13,7 @@ Let's get into how to use Numba -- hang on! Why not just use compiled languages 
 
 # JIT
 
-The first way we can use Numba to speed up our code is by compiling a function so that future executions can use the compiled version, removing the need to compile at runtime. Let's take a function that gives us the first *n* Fibonnacci numbers, and see how it performs.
+The first way we can use Numba to speed up our code is by compiling a function so that future executions can use the compiled version, removing the need to compile at runtime. Let's take a function that gives us the first *n* Fibonacci numbers, and see how it performs.
 
 ```{python}
 import numpy as np
@@ -53,7 +53,7 @@ def fib(n):
     ARGUMENTS:
     n: Max index to calculate Fibonacci numbers up to (int)
     RETURNS
-    x: Array of Fibonnacci numbers (numpy.ndarray)
+    x: Array of Fibonacci numbers (numpy.ndarray)
 
     NOTES:
     Adjusted from:

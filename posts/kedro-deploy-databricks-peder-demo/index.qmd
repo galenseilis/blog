@@ -103,7 +103,7 @@ The Kedro Databricks plugin may not be completely stable as it is relatively new
 :::
 
 ::: {.callout-tip}
-Kedro provides a databricks dataset. Sometimes it is beneficial to define your own databricks datasets for kedro to accomodate specific business requirements.
+Kedro provides a databricks dataset. Sometimes it is beneficial to define your own databricks datasets for kedro to accommodate specific business requirements.
 :::
 
 

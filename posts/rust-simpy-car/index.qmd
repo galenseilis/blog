@@ -104,7 +104,7 @@ struct Environment {
 
 Now just because the environment has an event schedule and a clock doesn't mean it knows what to do with these things, so I provide some implementations so that the environment knows what to do. The `new` implementation simply instantiates a new (empty) event schedule and begins with a clock set to zero.
 
-The `schedule_event` pushes an event (in reverse ordering in terms of how the data structre operates) to the event schedule. We're using a predefined data structure so we don't need to implement actually finding the right location to insert a new value.
+The `schedule_event` pushes an event (in reverse ordering in terms of how the data structure operates) to the event schedule. We're using a predefined data structure so we don't need to implement actually finding the right location to insert a new value.
 
 The `run_until` implementation is where the magic happens. We continually loop until either a maximum time has been reached or the event schedule is empty, whichever comes first. The logic involves iteratively getting the next event, updating the clock, and then executing the event. 
 

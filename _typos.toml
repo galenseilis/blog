@@ -1,0 +1,5 @@
+[default.extend-words]
+simpy = "simpy" # INFO: https://simpy.readthedocs.io/en/latest/
+Simpy = "Simpy" # INFO: https://simpy.readthedocs.io/en/latest/
+arange = "arange" # INFO: https://numpy.org/doc/stable/reference/generated/numpy.arange.html
+rin = "rin" # INFO: `grep -rin ...`

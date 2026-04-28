@@ -72,7 +72,7 @@ mindmap
       Run on a subset of the data
       Stacking individual chains
       Check for multimodality
-      Reparametrize
+      Reparameterize
       Plot intermediate quantities
       Add prior information
       Add more data

@@ -5,7 +5,7 @@ date: "2023-03-09"
 categories: [Python, Security, Information Security, Bandit]
 ---
 
-Bandit is a Python package for checking for security issues in Python code. I have been thinking about using Bandit to check for security risks in my own sofware as well as 3rd party packages that I use. I couldn't help but venture to the potentially ironic situation of Bandit evaluating that Bandit itself is insecure.
+Bandit is a Python package for checking for security issues in Python code. I have been thinking about using Bandit to check for security risks in my own software as well as 3rd party packages that I use. I couldn't help but venture to the potentially ironic situation of Bandit evaluating that Bandit itself is insecure.
 
 We can find the version of Bandit we are using like this:
 

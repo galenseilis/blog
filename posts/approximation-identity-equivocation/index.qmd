@@ -14,7 +14,7 @@ https://math.stackexchange.com/questions/5038344/is-asymptotic-approximation-a-t
 
 # Introduction
 
-I've heard that *to err is human*, or something like that. This post is about creating a brief description of a form of equivocation that I have seen on occassion.
+I've heard that *to err is human*, or something like that. This post is about creating a brief description of a form of equivocation that I have seen on occasion.
 
 There are two notions that get equivocated. One is the notion of identity (i.e. 1 is 1, that tree is that tree, I am myself, etc). The other notion is that of approximation (i.e. "eh, close enough").
 
@@ -127,13 +127,13 @@ Example: Physical distances.
 
 # Practical Significance
 
-In my experience the distinction between approximation and identity most often becomes important in the context of numerical computing. Typical computers can represent binary number exactly. When we add two numbers it is not guaranteed that the sum will equal the correct value. In some cases this is ignorable, but sometimes it is not. When of the tricks I have learned, when it matters, is to add up smaller numbers together and aggregate up towards adding bigger numbres. The trick doesn't always work, but sometimes it helps you avoid the numerical problem that a small number plus a big number is the same big number you started with...
+In my experience the distinction between approximation and identity most often becomes important in the context of numerical computing. Typical computers can represent binary number exactly. When we add two numbers it is not guaranteed that the sum will equal the correct value. In some cases this is ignorable, but sometimes it is not. When of the tricks I have learned, when it matters, is to add up smaller numbers together and aggregate up towards adding bigger numbers. The trick doesn't always work, but sometimes it helps you avoid the numerical problem that a small number plus a big number is the same big number you started with...
 
 That is, for two numbers $a$ and $b$ for which neither number is zero it is possible to obtain $a + b = b$. You might then be tempted to subtract $b$ from both sides to obtain $a = 0$. This reasoning works quite well for dealing.
 
 
 # The Brass Tax
 
-In practice I expect we get away with this fallacy a lot. Rather, it may just be "good enough" as a [heuristic](https://en.wikipedia.org/wiki/Heuristic) in most practical applicaitons. Perhaps we might similarly call it something like "the approximation-identity heuristic".
+In practice I expect we get away with this fallacy a lot. Rather, it may just be "good enough" as a [heuristic](https://en.wikipedia.org/wiki/Heuristic) in most practical applications. Perhaps we might similarly call it something like "the approximation-identity heuristic".
 
 I would liken it to using empirical induction. Empirical induction has its corresponding [problem of induction](https://en.wikipedia.org/wiki/Problem_of_induction), which loosely means that sometimes the inferences we make based on observation are wrong.

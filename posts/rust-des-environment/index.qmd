@@ -186,7 +186,7 @@ fn stop_at_max_time_factory(max_time: f64) -> Box<dyn Fn(&EventScheduler) -> boo
 }   
 ```
 
-You can see that the implementation of `run` above also includes a function which allows us to filter which events we wish to log. While this has some performance overhead, it can reduce the memory overhead when you are elapsing a large number of events but you're also only interesed in using data from a smaller subset of them.
+You can see that the implementation of `run` above also includes a function which allows us to filter which events we wish to log. While this has some performance overhead, it can reduce the memory overhead when you are elapsing a large number of events but you're also only interested in using data from a smaller subset of them.
 
 The conditions in which the simulation is stopped is also specified by a function that will be iteratively called on the instance of the event scheduler. I expect the most common use case is to simulate until a maximum time is completed, which I wrote a function factory for. Using function factories like this allows us to provide custom stop conditions which we might write and provide for our particular project but are not meant to be used in all projects. At least, that's the general idea anyway.
 

@@ -53,7 +53,7 @@ Claimed benefits of Using Kedro:
 			- The core declative IO abstraction layer.
 			- The data catalog in hard drive space is specified by one or more YAML files.
 		- Nodes + Pipelines
-			- Contructs which enable data-centric workflows.
+			- Constructs which enable data-centric workflows.
 			- The Pipelines at a mathematical level of abstraction are directed acyclic graphs where:
 				- the nodes are functions,
 				- the in-edges are inputs to the function,
@@ -216,7 +216,7 @@ flowchart LR
     0{Kedro}
 	style 0 fill:#F7CA00,stroke:#333,stroke-width:4px
 
-	subgraph "Commerical ML Platforms"
+	subgraph "Commercial ML Platforms"
 		1[AWS Batch]
 		2[Amazon EMR]
 		3[Amazon SageMaker]
@@ -1231,7 +1231,7 @@ Suppose that in the `companies` data we would like to:
 1. Convert `company_rating` to a single or double precision float format and
 2. Convert `iata_approved` to a [Boolean](https://en.wikipedia.org/wiki/Boolean_data_type) dtype.
 
-Let us start with the `iata_approved` column. This transformation is quite straighforward with the `==` comparator.
+Let us start with the `iata_approved` column. This transformation is quite straightforward with the `==` comparator.
 
 ```python
 (spaceflights310):JN> companies['iata_approved'] == 't'
@@ -1256,7 +1256,7 @@ There is a nice property here that `values == t` will be `True` and otherwise `F
 array(['f', 't', nan], dtype=object)
 ```
 
-The tutorial does not mention those `nan` values. Maybe there is a good reason for that, but in a real analysis we would persue this further.
+The tutorial does not mention those `nan` values. Maybe there is a good reason for that, but in a real analysis we would pursue this further.
 
 ::: {.callout-note}
 See [Working with missing data](https://pandas.pydata.org/docs/user_guide/missing_data.html) for a Pandas-oriented point of view.
@@ -1312,7 +1312,7 @@ You can see that there are also `NaN` values, but these are more general Pandas 
 The Pandas `NaN` should further not be confused with Pandas' `NA`. See [Experimental `NA` scalar to denote missing values](https://pandas.pydata.org/docs/user_guide/missing_data.html#missing-data-na)for more information.
 :::
 
-We can acheive this by replacing the string value `"%"` with an empty string `""`. This might seem like a [weird flex](https://www.dictionary.com/e/slang/weird-flex-but-okay/)to replace a string character with an empty string character if you're not used to programming, but it is a common practice that doesn't have any logical issues provided that you think carefully about what an [empty string](https://en.wikipedia.org/wiki/Empty_string) is.
+We can achieve this by replacing the string value `"%"` with an empty string `""`. This might seem like a [weird flex](https://www.dictionary.com/e/slang/weird-flex-but-okay/)to replace a string character with an empty string character if you're not used to programming, but it is a common practice that doesn't have any logical issues provided that you think carefully about what an [empty string](https://en.wikipedia.org/wiki/Empty_string) is.
 
 ```python
 (spaceflights310):JN> companies["company_rating"] = (
@@ -2084,7 +2084,7 @@ You can also have separate catalog entries for the various datasets.
 
 ```yaml
 # catalog.yml
-namspaces_1.dataset_name:
+namespaces_1.dataset_name:
   ...
 
 namespace_2.dataset_name:
@@ -2150,7 +2150,7 @@ $ mkdir conf/test
 2. Add whatever catalog and parameter files you want within that new configuration path.
 3. When you wish, you can run your project with the new configuration using `kedro run --env=test`. 
 
-When you run with a custom environment you do not need to specify 'all' the same information as in `base`. The `base` environment is privileged as the default configuration environment. It is possible to change the default configuration catalog, but let's leave that topic for another occassion. When a non-default configuration is used it will add to the default configuration and also override the default configuration whenever there are name collisions.
+When you run with a custom environment you do not need to specify 'all' the same information as in `base`. The `base` environment is privileged as the default configuration environment. It is possible to change the default configuration catalog, but let's leave that topic for another occasion. When a non-default configuration is used it will add to the default configuration and also override the default configuration whenever there are name collisions.
 
 ::: {.callout-note}
 There is an idea of there of defining [hierarchical configurations of environments](https://github.com/kedro-org/kedro/discussions/3871), but at the time of writing that has not been implemented.

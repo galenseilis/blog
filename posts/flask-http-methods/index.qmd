@@ -18,7 +18,7 @@ In this post we'll provide a simple example. We will embed the following video
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/vY1UkCPSKH8?si=mRB5eM30UmTUVfhv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-when `GET` is used. If the method is `POST`, then the page will render `"POST"`. Otheriwse the function implicitly returns `None`, which offhand I don't think does much of anything.
+when `GET` is used. If the method is `POST`, then the page will render `"POST"`. Otherwise the function implicitly returns `None`, which offhand I don't think does much of anything.
 
 ```python
 import getpass

@@ -5,9 +5,9 @@ date: "2019-03-28"
 categories: [Python, Scipy, NumPy, scipy.optimize, Newton Raphson method, Brents method, timeit, bisect method, optimization]
 ---
 
-As someone with previous background in Python, I've been blasting my way through the basics of the [Quantecon curricula](https://lectures.quantecon.org/py/). One of the joys of self-directed learning is that, with discipline, you can speed through familar material and really camp out with the new material. With that in mind, I've decided to further play with finding solutions (x-intercepts) of some single variable functions.
+As someone with previous background in Python, I've been blasting my way through the basics of the [Quantecon curricula](https://lectures.quantecon.org/py/). One of the joys of self-directed learning is that, with discipline, you can speed through familiar material and really camp out with the new material. With that in mind, I've decided to further play with finding solutions (x-intercepts) of some single variable functions.
 
-First of all, let's find ourselves an interesting function. I've chosen $f(x) = \sin(x) \exp(-x)$ because I've always enjoyed its degradating oscillations, but also because I expect this equation to have solutions. Since any integer multiple $k$ of $\pi$ will result in $\sin(x) = 0$ when $x = k \pi$, we know that $f(k \pi) = 0$ as well. While I'm quite late (or too early, depending on how you see it) for calculating $\pi$ on $\pi$ Day, let's take $k = 1$ to find $\pi$ anyway!
+First of all, let's find ourselves an interesting function. I've chosen $f(x) = \sin(x) \exp(-x)$ because I've always enjoyed its degradation oscillations, but also because I expect this equation to have solutions. Since any integer multiple $k$ of $\pi$ will result in $\sin(x) = 0$ when $x = k \pi$, we know that $f(k \pi) = 0$ as well. While I'm quite late (or too early, depending on how you see it) for calculating $\pi$ on $\pi$ Day, let's take $k = 1$ to find $\pi$ anyway!
 
 # Bisection Method
 The first method mentioned on QuantEcon is the bisection algorithm, which essentially treats finding solutions to a function as a binary search problem. There are two parameters that are needed to get started with the bisection algorithm, an initial lower bound and an initial upper bound on the search space. Not only do we need two such parameters, but our choice of these two numbers can change what solution is found. Let's consider the following example where we look on the interval $[-10, 10]$.
@@ -50,7 +50,7 @@ That is clearly closer to $\pi$ than $3.6499361606787994 \times 10^{-14}$, and b
 
 # Brent's method
 
-The QuantEcon course points out that Bisection is more robust (stable) than Newton-Raphson's method, but it is also slower. An alternative approach that balances this tradeoff is Brent's method which includes bounds and garantees solutions for computable functions. Let's give this approach a try on our function on $[3, 4]$.
+The QuantEcon course points out that Bisection is more robust (stable) than Newton-Raphson's method, but it is also slower. An alternative approach that balances this tradeoff is Brent's method which includes bounds and guarantees solutions for computable functions. Let's give this approach a try on our function on $[3, 4]$.
 
 ```{python}
 from scipy.optimize import brentq

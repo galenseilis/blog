@@ -15,7 +15,7 @@ In this post I give some critique of the scalability of Kedro. I happen to like 
 
 Suppose you want to a function `foo`, representing some arbitrary set of Python instructions, on a fixed input `x`.
 
-A straightfoward approach is to just call `foo`:
+A straightforward approach is to just call `foo`:
 
 ```python
 foo(x)
@@ -39,7 +39,7 @@ Kedro also does a lot of file IO. Having the
 
 I think that Kedro's visualization plugin (Kedro Viz) can improve the experience of a developer coming onto a new project who wants to get a bird's eye view. 
 
-[*"Graphical perception is the human capacity for visually interpreting information on graphs and charts."*](https://en.wikipedia.org/wiki/Graphical_perception). There are *many* rules and aphorisms that have been proposed for how to ensure good visualiations. What makes a visualization 'good' depends on your goals, such as the emphasis of being persuasive rather than highly informational. With Kedro Viz the use case I envision is primarily to be informative.
+[*"Graphical perception is the human capacity for visually interpreting information on graphs and charts."*](https://en.wikipedia.org/wiki/Graphical_perception). There are *many* rules and aphorisms that have been proposed for how to ensure good visualisations. What makes a visualization 'good' depends on your goals, such as the emphasis of being persuasive rather than highly informational. With Kedro Viz the use case I envision is primarily to be informative.
 
 One of the "golden rules" of visualizations is to keep them simple. That's where Kedro has an eventual scaling problem.
 

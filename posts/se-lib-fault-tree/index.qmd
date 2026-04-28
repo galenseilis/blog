@@ -8,7 +8,7 @@ bibliography: references.bib
 
 ## Introduction
 
-The `se-lib` (*Systems Engineering Library*) offers a variety of diagrams that simply take in tuples of strings and numbers. In this post I want to dicsuss their [quantitative fault tree](http://se-lib.org/examples.html#quantitative-fault-tree) diagrams.
+The `se-lib` (*Systems Engineering Library*) offers a variety of diagrams that simply take in tuples of strings and numbers. In this post I want to discuss their [quantitative fault tree](http://se-lib.org/examples.html#quantitative-fault-tree) diagrams.
 
 Since I work in healthcare, I put together a healthcare-related example. The overall points of discussion are about statistics, however. 
 
@@ -58,7 +58,7 @@ For the purposes of discussion, let us also assign labels to the events (which w
 | $E$ | Equipment Failure | 0.02 |
 | $H$ | Human Error | $0.015$ |
 | $O$ | Post-Operative Infection | 0.01 |
-| $Q$ | Hospital-Aquired Infection | 0.03 |
+| $Q$ | Hospital-Acquired Infection | 0.03 |
 
 I want to now discuss how this table of probabilities relates to certain assumptions about probabilities.
 
@@ -70,7 +70,7 @@ $$\Pr \left[ \bigcap_{i=1}^n E_i \right] = \prod_{i=1}^n \Pr [E_i]$$
 
 which is not an assumption we can always allow. Where it is used in the above quantitative fault tree pertains to the AND gates. There are two AND gates in the diagram. 
 
-The first AND gate (going from left-to-right) is the one which produces the probabiliy for a medication error. You'll note that the propositions
+The first AND gate (going from left-to-right) is the one which produces the probability for a medication error. You'll note that the propositions
 
 $$M = D \cap W$$
 
