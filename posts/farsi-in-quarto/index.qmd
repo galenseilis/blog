@@ -1,0 +1,14 @@
+---
+title: "Farsi in Quarto"
+author: "Galen Seilis"
+date: "2026-01-06"
+categories: [Farsi, Persian, languages]
+---
+
+Hello there. My name is Galen. I translated this text using Google translate, so you have my apologies for any errors.
+
+I just wanted to find out if Persian text shows up on my blog.
+
+سلام. اسم من گالن است. من این متن را با استفاده از گوگل ترنسلیت ترجمه کردم، بنابراین بابت هرگونه خطایی عذرخواهی می‌کنم.
+
+فقط می‌خواستم بدانم که آیا متن فارسی در وبلاگ من نمایش داده می‌شود یا خیر.
