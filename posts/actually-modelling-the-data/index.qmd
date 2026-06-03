@@ -26,7 +26,7 @@ Let us jump straight to the crux of the matter: what are models?
 
 # What are Models?
 
-Dustin has already said a bunch of things about modelling. I've embedded videos where he describes models, and put quotes below them that are relevant. Go ahead and watch the videos if you have time, otherwise these quotes are a sampling of his opinions.
+Dustin has made some claims about modelling. I've embedded videos where he describes models, and put quotes below them that are relevant. Watch the videos if you have time, otherwise these quotes are a sampling of his opinions.
 
 ::: {#fig-video-are-modern-robust-methods-useless}
 <iframe width="560" height="315" src="https://www.youtube.com/embed/guJ0wTxiky4?si=LC_FR2HW7mvHKP3n" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -34,7 +34,9 @@ Dustin has already said a bunch of things about modelling. I've embedded videos 
 
 > **Quotation** (Dustin Fife)
 >
-> If you're a modeler, robustifying taints your data and the "model" you fit isn't really a model anyone, because it's trying to fit data that do not represent reality.
+> If you're a modeler, robustifying taints your data and the "model" you fit isn't really a model anymore, because it's trying to fit data that do not represent reality.
+
+There are "robustifying" procedures, and some of them will make the modelling more difficult to interpret than a unrobustified counterpart. However, to extent that the data represents reality in some way, it is still the case that we're modelling something about reality through the data. For example, using a Huber loss term in an objective function to improve the resulting fit of a model is not necessarily turning the model into something that doesn't represent some aspect of reality; even though the Huber loss may have an effect on parametrization that is difficult to interpret.
 
 > **Quotation** (Dustin Fife)
 >
@@ -69,7 +71,7 @@ There is a metaphor I find helpful around this: the [map-territory relation](htt
 
 Because anything that represents the data in some way can be claimed to be a model of it, it is a criterion that adds little to the considerations that we make in theoretical or applied statistics. Since rank-based statistics refer to the data via random variables, they are models of the data in this representation sense. We might model more or less of something, but whether we are modelling at all is a very low bar to meet.
 
-It may be tempting to lean on the distinction that a model only represents the *essential* properties of something, but I don't find that helpful either. [Essentialism](https://en.wikipedia.org/wiki/Essentialism) looks at **all** the attributes necessary to specify the identity, but that is not what we're doing when we model. If I simulate a compartmental model of COVID-19 I am not keeping track of every [quantum number](https://en.wikipedia.org/wiki/Quantum_number) of every particle in the system. And yet such quantum numbers we be part of our best models based on something frameworks like [quantum mechanics](https://en.wikipedia.org/wiki/Quantum_mechanics) or [quantum field theory](https://en.wikipedia.org/wiki/Quantum_field_theory). When I think I am modelling something, I don't think everything real is in it. Rather, my model itself is a part of everything that is real. Even if we go for essentialism, we will get stuck on the myriad traps in ontology. While I enjoy thinking about ontology, I don't think it is a productive direction for deciding whether to use certain statistical procedures. If you'd like an entertaining crash course in ontology, this edutainment video by VSauce is absolute gold.
+It may be tempting to lean on the distinction that a model only represents the *essential* properties of something, but I don't find that helpful either. [Essentialism](https://en.wikipedia.org/wiki/Essentialism) looks at **all** the attributes necessary to specify the identity, but that is not what we're doing when we model. If I simulate a compartmental model of COVID-19 I am not keeping track of every [quantum number](https://en.wikipedia.org/wiki/Quantum_number) of every particle in the system. And yet such quantum numbers are part of our best models based on something frameworks like [quantum mechanics](https://en.wikipedia.org/wiki/Quantum_mechanics) or [quantum field theory](https://en.wikipedia.org/wiki/Quantum_field_theory). When I think I am modelling something, I don't think everything real is in it. Rather, my model itself is a part of everything that is real. Even if we go for essentialism, we will get stuck in the myriad traps in ontology. While I enjoy thinking about ontology, I don't think it is a productive direction for deciding whether to use certain statistical procedures. If you'd like an entertaining crash course in ontology, this edutainment video by VSauce is a whirlwind summary.
 
 ::: {#fig-video-do-chairs-exist}
 <iframe width="560" height="315" src="https://www.youtube.com/embed/fXW-QjBsruE?si=1jQj4MSwgoEabYfO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -87,7 +89,7 @@ One of the lexical barriers that exists between Dustin and I pertains to what we
 
 The most fundamental example I can think of in statistics is the notion of a random variable on a probability space. [Random variables](https://en.wikipedia.org/wiki/Random_variable) are [measurable functions](https://en.wikipedia.org/wiki/Measurable_function) of the [outcome space](https://en.wikipedia.org/wiki/Sample_space) of a [probability space](https://en.wikipedia.org/wiki/Probability_space), and are perhaps the most common and elementary statistical models that we use to represent data with. A random variable $X$ has some probability distribution $F_X$ associated with it.
 
-Simply declaring a random variable to represent a variable in our data set is usually only the beginning what we can consider. Often we calculate functions of random variables, called "statistics". Functions of random variables are themselves random variables. So given a function $g$ and a random variable $X$ it holds that $g(X)$ is also a random variable. This still holds for compositions of functions. If I have a sequence of functions $g_1, \cdots, g_k$ and a random variable $X$, then $(g_k \circ g_{k-1} \circ \cdots g_2 \circ g_1) (X)$ is also a random variable. In my view, all random variables are statistical models if they are intended to represent something.
+Simply declaring a random variable to represent a variable in our data set is usually only the beginning what we can consider. Often we calculate functions of random variables, called "statistics". Functions of random variables are themselves random variables. So given a function $g$ and a random variable $X$ it holds that $g(X)$ is also a random variable. This still holds for compositions of functions. If I have a sequence of functions $g_1, \cdots, g_k$ and a random variable $X$, then $(g_k \circ g_{k-1} \circ \cdots g_2 \circ g_1) (X)$ is also a random variable. All random variables are statistical models if they are intended to represent something.
 
 > This view is not restricted to random scalars. We could likewise think about random vectors, random matrices, random tensors, random graphs, random hypergraphs, random simplicial complexes, ..., random "things". The requirements of a random variable do not even include numbers, nor do mathematical functions have to even consider numbers. There is a lot more generality than some, perhaps Dustin or perhaps not, may realize.
 {: .prompt-tip}
@@ -144,7 +146,7 @@ Relevant to this discussion is Dustin's distinction between "model" and "transfo
 >
 > So all of these are just transforming your data into ranks. So its just sorting the people in terms of highest score to lowest score and then analyzing the sorted data. I don't like that idea because you have all the disadvantages of transformations. So you lose the original scale of the variable, and you're not actually modelling the data. You're modelling the ranks of the data. You should model the data.
 
-In my view, a *transformation* is just another word for a function. A function $f : \Omega \mapsto \Omega^{\prime}$ is a binary relation $f \subseteq \Omega \times \Omega^{\prime}$ which is right-unique and left-total.
+A *transformation* is just another word for a function. A function $f : \Omega \mapsto \Omega^{\prime}$ is a binary relation $f \subseteq \Omega \times \Omega^{\prime}$ which is right-unique and left-total.
 
 ::: {.callout-note}
 One can construct similar relations that are left-unique and right-total. Such maps can themselves be mapped back to functions as we have considered here using a permutation on the elements of the relation. Alternatively you could define respective "left" and "right" functions. We won't rely on any of that here.
@@ -239,7 +241,6 @@ for i in range(100):
 data = np.concatenate(tuple(data.values()))
 
 df = pd.DataFrame(data, columns=['Time', 'X', 'Y', 'Z'])
-df.to_csv('select_dynamics_data.csv', index=False)
 
 # Generate mean path at many timepoints
 states0 = (1,)*3
