@@ -1835,7 +1835,6 @@ In many cases you would want to include this additional package in your `require
 
 Now we can simply call `kedro viz`, which will ordinarily open a web browser to the local host `http://127.0.0.1:4141/`.
 
-![](/assets/images/kedro-viz-tutorial-example.png)
 
 ::: {.callout-note}
 The URL `http://127.0.0.1:4141/` is a specific web address that uses the HTTP protocol. Let's break down the components of this URL:
