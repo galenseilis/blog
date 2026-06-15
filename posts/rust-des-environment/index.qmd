@@ -19,7 +19,7 @@ There are always going to be implementation choices when it comes to converting 
 
 The clock is an important parameter for DES as it is the single source of truth on what position events get placed onto the event schedule. My implementation is agnostic to the choice of units of time. A simulated unit of time on the DES clock could be a nanosecond, an hours, a day, a year, or a billion years.
 
-The event schedule itself is the ordered collection of events that have yet to ellapse, and it is where new events get placed when we say that an event was "scheduled". The events on the event schedule are ordered by time primarily, and secondarily by the order in which they were added. Although it is not the case in my implementation, it is possible to have other priority rules for specifying the order of events that are scheduled for the same time. This can be important for some simulations where the events trigger state transitions that do not commute as operators on the simulation state.
+The event schedule itself is the ordered collection of events that have yet to elapse, and it is where new events get placed when we say that an event was "scheduled". The events on the event schedule are ordered by time primarily, and secondarily by the order in which they were added. Although it is not the case in my implementation, it is possible to have other priority rules for specifying the order of events that are scheduled for the same time. This can be important for some simulations where the events trigger state transitions that do not commute as operators on the simulation state.
 
 
 
@@ -56,7 +56,7 @@ The `action` attribute will point to a function which is responsible for some st
 
 The  `context` property is primarily used to attach any associated data to the event, which can be useful for logging and providing valuable data for downstream analysis.
 
-Lastly, every event contains the `active` property which is simply a true or false value. The role that it supplies is to control whether an event's `action` will run when an event elapses. This provides a general way of 'cancelling' the effect of an event on the state without removing it from the schedule, which can be useful for logging purposes. If an event is not active when it ellapses, then `action` will not be called.
+Lastly, every event contains the `active` property which is simply a true or false value. The role that it supplies is to control whether an event's `action` will run when an event elapses. This provides a general way of 'cancelling' the effect of an event on the state without removing it from the schedule, which can be useful for logging purposes. If an event is not active when it elapses, then `action` will not be called.
 
 I took an approach to creating new events such that they can be copied when needed. The `action` is given as a closure that simply returns `None` because it cannot be cloned directly, so `Box::new(|| None)` is just a placeholder. The other properties are just copied over to the new instance.
 
