@@ -4,6 +4,7 @@ set -euo pipefail
 # INFO: All Posts
 uvx ruff format posts
 uvx ruff check --select ALL --fix --unsafe-fixes
+uvx typos posts
 
 # INFO: $0001
 echo "Building files for post 0001"
