@@ -5,25 +5,24 @@ date: "2026-06-15"
 categories: [Python, Modules, Modular Programming, Programming, Ruff, Dependency, Language Server Protocol, LSP]
 ---
 
-This is kind of obvious, but I think it is often skipped over for more complicated solutions: you can pass data from module-to-module using imports. This approach to [modular design](https://en.wikipedia.org/wiki/Modular_design) via [modular programming](https://en.wikipedia.org/wiki/Modular_programming) allows us a lightweight way to selective execution of code.
+This is kind of obvious, but I think it is often skipped over for more complicated solutions: you can pass data from module-to-module using imports. This approach to [modular design](https://en.wikipedia.org/wiki/Modular_design) via [modular programming](https://en.wikipedia.org/wiki/Modular_programming) allows us a lightweight way to selective execution of code modelled as a directed acyclic graph (DAG).
 
 ## Toy Example
 
-Let's look a small example involving two module `foo` and `bar`. In this example we load data into `foo`.
+Let's look a small example involving two modules `foo` and `bar`. In this example we load data into `foo`.
 
 
 ```python
-{{< include foo.py >}}
+{{< include ./simple_example/foo.py >}}
 ```
 
 And let's define `bar` as a module which does some data processing.
 
 ```python
-{{< include bar.py >}}
+{{< include ./simple_example/bar.py >}}
 ```
 
-Although it is a bit of a toy example, this illustrates a way of building out a Python data science project using module imports. We could build out various modules to be responsible for different things, and pass data through imports accordingly.
-
+Although it is a toy example, this illustrates a way of building out a Python data science project using module imports. We could build out various modules to be responsible for different things, and pass data through imports accordingly.
 
 ## LSP
 
@@ -41,3 +40,7 @@ Imports form a dependency graph in the form of a directed acyclic graph. There a
 
 It can provide a bird's-eye view of how modules are related to each other via imports. There is also the `ruff analyze graph` which is currently experimental but released for use. If you're using ruff anyway, you can also use the [`include-dependencies`](https://docs.astral.sh/ruff/settings/#analyze_include-dependencies) to explicit map out dependencies that are *not* visible via imports.
 
+
+## Full(er) Example
+
+Let's look at a more involved example now using a design which will accomodate the project becoming large.
