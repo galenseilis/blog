@@ -3,17 +3,21 @@ set -euo pipefail
 
 # INFO: All Posts
 uvx ruff format posts
+
 uvx ruff check \
   --select ALL \
   --fix \
   --unsafe-fixes \
   --ignore INP001,D203,D213
+
 uvx typos posts
 
 # INFO: $0001
 echo "Building files for post 0001."
 uvx pydeps \
-  ./posts/0001-python-modules-can-pass-data-too/bar.py \
+  ./posts/0001-python-modules-can-pass-data-too/simple_example/bar.py \
   --no-output \
   --show-dot |
-  dot -Tpng -Gdpi=300 -o ./posts/0001-python-modules-can-pass-data-too/dependency_graph.png
+  dot -Tpng -Gdpi=300 -o ./posts/0001-python-modules-can-pass-data-too/simple_example/dependency_graph.png
+
+tree ./posts/0001-python-modules-can-pass-data-too/simple_example/ > ./posts/0001-python-modules-can-pass-data-too/simple_example/tree.txt

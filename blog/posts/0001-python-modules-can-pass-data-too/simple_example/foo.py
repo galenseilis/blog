@@ -1,6 +1,6 @@
 """Load the foo data."""
 
-# INFO: IMPORTS
+# INFO: Load dependencies
 import json
 import pathlib
 

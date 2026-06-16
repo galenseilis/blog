@@ -36,11 +36,11 @@ One of the extrinstic aspects of this approach that I enjoy is the opportunity t
 
 Imports form a dependency graph in the form of a directed acyclic graph. There are tools for extracting this structure. A project still being maintained for over a decade is the [`pydeps`](https://github.com/thebjorn/pydeps) Python package. 
 
-![A dependency graph created by the PyDeps Python package](./dependency_graph.png)
+![A dependency graph created by the PyDeps Python package](./simple_example/dependency_graph.png)
 
 It can provide a bird's-eye view of how modules are related to each other via imports. There is also the `ruff analyze graph` which is currently experimental but released for use. If you're using ruff anyway, you can also use the [`include-dependencies`](https://docs.astral.sh/ruff/settings/#analyze_include-dependencies) to explicit map out dependencies that are *not* visible via imports.
 
 
 ## Full(er) Example
 
-Let's look at a more involved example now using a design which will accomodate the project becoming large.
+Let's look at a more involved example now using a design which will accommodate the project becoming large.
