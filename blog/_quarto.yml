@@ -9,9 +9,9 @@ website:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
+        href: https://github.com/galenseilis
       - icon: bluesky
-        href: https://bsky.app/
+        href: https://bsky.app/profile/galen-seilis.bsky.social
 format:
   html:
     theme:
