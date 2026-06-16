@@ -9,10 +9,10 @@ about:
       href: https://bsky.app/
     - icon: linkedin
       text: LinkedIn
-      href: https://linkedin.com
+      href: https://www.linkedin.com/in/%F0%9F%A6%80galen-s-4208349b/
     - icon: github
       text: Github
-      href: https://github.com
+      href: https://github.com/galenseilis
 
 ---
 
