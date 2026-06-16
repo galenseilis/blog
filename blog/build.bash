@@ -24,3 +24,7 @@ echo "done"
 echo "$(date): 0001: Creating tree diagram of paths in simple import module example..."
 tree ./posts/0001-python-modules-can-pass-data-too/simple_example/ > ./posts/0001-python-modules-can-pass-data-too/analysis_simple_example/tree.txt
 echo "done"
+
+echo "$(date): 0001: Creating tree diagram of paths in spaceflights pandas example..."
+tree ./posts/0001-python-modules-can-pass-data-too/spaceflights_pandas/ > ./posts/0001-python-modules-can-pass-data-too/analysis_spaceflights_pandas/tree.txt
+echo "done"
