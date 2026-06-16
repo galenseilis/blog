@@ -1,0 +1,43 @@
+{
+  "datasetName": "User Profile Collection",
+  "version": 1.0,
+  "isActive": true,
+  "extractedAt": "2026-06-15T19:30:00Z",
+  "nullFieldExample": null,
+  "owner": {
+    "id": "USR-94821",
+    "firstName": "Alex",
+    "lastName": "Mercer",
+    "email": "alex.mercer@example.com"
+  },
+  "users": [
+    {
+      "id": 1,
+      "username": "johndoe",
+      "age": 28,
+      "isPremium": true,
+      "roles": ["admin", "moderator"],
+      "preferences": {
+        "theme": "dark",
+        "notifications": {
+          "email": true,
+          "sms": false
+        }
+      }
+    },
+    {
+      "id": 2,
+      "username": "janesmith",
+      "age": 34,
+      "isPremium": false,
+      "roles": ["user"],
+      "preferences": {
+        "theme": "light",
+        "notifications": {
+          "email": true,
+          "sms": true
+        }
+      }
+    }
+  ]
+}
