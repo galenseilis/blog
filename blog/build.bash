@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# INFO: All Posts
+uvx ruff format posts
+uvx ruff check --select ALL --fix --unsafe-fixes
+
 # INFO: $0001
 echo "Building files for post 0001"
 uvx pydeps \
