@@ -1,1 +1,1 @@
-Sitemap: https://galenseilis.github.io/blog/sitemap.xml
+Sitemap: https://your-website-url.example.com/sitemap.xml
