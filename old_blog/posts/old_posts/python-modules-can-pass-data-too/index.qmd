@@ -1,0 +1,33 @@
+---
+title: "Python Module Imports Can Pass Data Too"
+author: "Galen Seilis"
+date: "2026-06-15"
+categories: [Python, Modules, Modular-Programming]
+---
+
+This is kind of obvious, but I think it is often skipped over for more complicated solutions: you can pass data from module-to-module using imports. This approach to [modular design](https://en.wikipedia.org/wiki/Modular_design) via [modular programming](https://en.wikipedia.org/wiki/Modular_programming) allows us a lightweight way to selective execution of code.
+
+Let's look a small example involving two module `foo` and `bar`. In this example we load data into `foo`.
+
+```python
+# foo.py
+import pandas as pd
+
+foo_data = pd.read_csv("my_data.csv")
+
+# NOTE: We can put data validation right after loading for fail-fast data validation.
+```
+
+And let's define `bar` as a module which does some data processing.
+
+```python
+import foo
+
+bar_data = foo.groupby(by=["animal", "plant", "mineral"])["weight"].mean()
+```
+
+Although it is a bit of a toy example, this illustrates a way of building out a Python data science project using module imports. We could build out various modules to be responsible for different things, and pass data through imports accordingly.
+
+One of the extrinstic aspects of this approach that I enjoy is the opportunity to lean heavily into language server protocol (LSP) support in editors. Want to find where a Python variable came from in your project? Use LSP go to definition. Want to find, or look through, all the places where a Python variable is used? Use LSP go to reference. Want to rename a variable consistently throughout the code? Use LSP rename.
+
+Imports form a dependency graph in the form of a directed acyclic graph. There are tools for extracting this structure. A project still being maintained for over a decade is the [`pydeps`](https://github.com/thebjorn/pydeps) Python package. It can provide a bird's-eye view of how modules are related to each other via imports. There is also the `ruff analyze graph` which is currently experimental but released for use. If you're using ruff anyway, you can also use the [`include-dependencies`](https://docs.astral.sh/ruff/settings/#analyze_include-dependencies) to explicit map out dependencies that are *not* visible via imports.

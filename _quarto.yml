@@ -2,19 +2,22 @@ project:
   type: website
 
 website:
-  title: "Galen Seilis"
+  description: "A blog built with Quarto"
+  site-url: https://your-website-url.example.com # you must change this appropriately for RSS feeds to work properly
+  title: "Galen's Blog"
   navbar:
     right:
       - about.qmd
-      - presentations.qmd
-      - publications.qmd
       - icon: github
-        href: https://github.com/galenseilis
-      - icon: twitter
-        href: https://twitter.com/GSeilis
-  draft-mode: unlinked
+        href: https://github.com/
+      - icon: bluesky
+        href: https://bsky.app/
 format:
   html:
-    theme: darkly
+    theme:
+      - cosmo
+      - brand
     css: styles.css
+
+
 
