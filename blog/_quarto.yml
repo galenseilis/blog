@@ -2,7 +2,7 @@ project:
   type: website
 
 website:
-  description: "A blog built with Quarto"
+  description: "A blog by a technology and math enthusiast!" # Like we have not seen that before.
   site-url: https://galenseilis.github.io/blog/
   title: "Galen's Blog"
   navbar:
