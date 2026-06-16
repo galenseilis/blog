@@ -4,4 +4,6 @@ version = "0.1.0"
 description = "An example of module import DAG based on the [spaceflights Pandas Kedro starter.](https://github.com/kedro-org/kedro-starters/tree/main/spaceflights-pandas)"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "pandas>=3.0.3",
+]
