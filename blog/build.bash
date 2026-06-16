@@ -3,11 +3,15 @@ set -euo pipefail
 
 # INFO: All Posts
 uvx ruff format posts
-uvx ruff check --select ALL --fix --unsafe-fixes
+uvx ruff check \
+  --select ALL \
+  --fix \
+  --unsafe-fixes \
+  --ignore INP001,D203,D213
 uvx typos posts
 
 # INFO: $0001
-echo "Building files for post 0001"
+echo "Building files for post 0001."
 uvx pydeps \
   ./posts/0001-python-modules-can-pass-data-too/bar.py \
   --no-output \
