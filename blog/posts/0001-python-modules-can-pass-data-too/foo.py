@@ -1,13 +1,14 @@
 """Load the foo data."""
 
 import json
+import pathlib
 
 # Open the file safely using a context manager
-FILE_PATH = "data.json"
+FILE_PATH = pathlib.Path("data.json")
 MODE = "r"
 ENCODING = "utf-8"
 
-with open(FILE_PATH, MODE, encoding=ENCODING) as file:
+with FILE_PATH.open(MODE, encoding=ENCODING) as file:
     data = json.load(file)
 
 # NOTE: We can put data validation right after loading for fail-fast data validation.
