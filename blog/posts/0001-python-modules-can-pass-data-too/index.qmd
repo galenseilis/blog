@@ -3,6 +3,7 @@ title: "Python Module Imports Can Pass Data Too"
 author: "Galen Seilis"
 date: "2026-06-15"
 categories: [Python, Modules, Modular Programming, Programming, Ruff, Dependency, Language Server Protocol, LSP]
+draft: true
 ---
 
 This is kind of obvious, but I think it is often skipped over for more complicated solutions: you can pass data from module-to-module using imports. This approach to [modular design](https://en.wikipedia.org/wiki/Modular_design) via [modular programming](https://en.wikipedia.org/wiki/Modular_programming) allows us a lightweight way to selective execution of code modelled as a directed acyclic graph (DAG).
