@@ -1,0 +1,12 @@
+{
+  "hash": "b45f6162b782862c740fd2d35d44fcfe",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"Fault Trees in Se-Lib Are At Fault\"\nauthor: \"Galen Seilis\"\ndate: \"2024-07-21\"\ncategories: [Python, Systems Engineering, Se-Lib, Fault Tree, Probability]\n---\n\n::: {#925c9569 .cell execution_count=1}\n``` {.python .cell-code}\nimport selib as se\n\n# Healthcare computed fault tree given probabilities for basic events\nhealthcare_fault_tree = [\n    (\"Patient Adverse Event\", \"or\", '', [\"Medication Error\", \"Surgical Error\", \"Infection\"]),\n    ('Medication Error', 'and', '', ['Wrong Dosage', 'Wrong Medication']),\n    ('Surgical Error', 'and', '', [\"Equipment Failure\", \"Human Error\"]),\n    ('Infection', 'or', '', [\"Post-operative Infection\", \"Hospital Acquired Infection\"]),\n    ('Wrong Dosage', 'basic', .01),\n    ('Wrong Medication', 'basic', .005),\n    ('Equipment Failure', 'basic', .02),\n    ('Human Error', 'basic', .015),\n    ('Post-operative Infection', 'basic', .01),\n    ('Hospital Acquired Infection', 'basic', .03),\n]\n\ndot = se.draw_fault_tree_diagram_quantitative(healthcare_fault_tree, filename=\"healthcare_quantitative_fault_tree\", format=\"svg\")\n\nfrom IPython.display import SVG\n\nSVG('healthcare_quantitative_fault_tree.svg')\n```\n\n::: {.cell-output .cell-output-display execution_count=42}\n![](index_files/figure-html/cell-2-output-1.svg){}\n:::\n:::\n\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

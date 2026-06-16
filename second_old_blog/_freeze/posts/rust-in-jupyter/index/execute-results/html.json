@@ -1,0 +1,12 @@
+{
+  "hash": "0bed76bcd08b782c841e8a3332f57fe3",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"Trying Rust in Jupyter Notebook\"\nauthor: \"Galen Seilis\"\ndate: \"2024-07-28\"\ncategories: [Rust, Jupyter Notebook]\necho: false\n---\n\n\nIn a recent post I tried to write my own Lua filter for running Rust code.\n\n\n```{rust}\nfn main() {\n    eprintln!(\"Hello error\");\n    }\n```\n\n::: {#1813f446 .cell execution_count=1}\n\n::: {.cell-output .cell-output-stdout}\n```\nPython lol\n```\n:::\n:::\n\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

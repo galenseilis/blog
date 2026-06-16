@@ -1,0 +1,41 @@
+---
+title: "Installing Anki on Ubuntu 24.04.02"
+author: "Galen Seilis"
+date: "2025-02-24"
+categories: [Anki, Ubuntu, Linux, Installation]
+---
+
+This post quickly covers how to install Anki for Ubuntu.
+
+## A Wrong Way
+
+You may be tempted to install via `apt`, but there are unresolved issues around that.
+
+```bash
+$ sudo apt install anki
+```
+
+You might find that the installation "succeeds", but you will not be able to open it.
+
+## A Right Way
+
+1. First download the `tar.zst` from [https://apps.ankiweb.net/](https://apps.ankiweb.net/).
+2. Download `libxcb-cursor0` via `apt`.
+
+```bash
+$ sudo apt install libxcb-cursor0
+```
+
+3. Uncompress the installation media:
+
+```bash
+$ tar xaf /path/to/anki-2XXX-linux-qt6.tar.zst
+```
+
+4. Run installer script.
+
+```bash
+$ sudo /path/to/anki-2XXX-linux-qt6.tar.zst/install.sh
+```
+
+

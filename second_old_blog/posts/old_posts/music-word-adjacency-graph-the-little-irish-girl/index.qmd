@@ -1,0 +1,49 @@
+---
+title: "Word Adjacency Graph of *The Little Irish Girl*"
+author: "Galen Seilis"
+date: "2025-02-19"
+categories: [Art, Music, Word Adjacency]
+---
+
+Here are the lyrics of silent noon with punctuation and capitalization ignored:
+
+```{python}
+lyrics = """as i went out one evening from tiperary town i met a little colleen among the heather brown ah says i perhaps you are lonely she tossed her pretty curl well maybe i prefer it och the dear little girl says i perhaps you are married says she perhaps i am not says i i will be your gossoon says she i will not be caught oh your eyes are like the ocean and your heart is like a pearl says she well then i will keep it och the dear little girl says i i have got a cabin and pigs that number seven and oh with you mavourneen sure the place would be like heaven her eyes looked up in mine then my heart was in a whirl the little pigs had done it och the dear little girl"""
+lyrics = lyrics.split(' ')
+```
+
+```{python}
+import networkx as nx
+import matplotlib.pyplot as plt
+
+def create_graph(strings):
+    # Initialize a directed graph
+    G = nx.DiGraph()
+
+    # Add each string as a node
+    for s in strings:
+        G.add_node(s)
+
+    # Create edges based on adjacency (e.g., consecutive strings in the list)
+    for i in range(len(strings) - 1):
+        G.add_edge(strings[i], strings[i + 1])
+
+    return G
+
+def plot_graph(G):
+    # Generate positions for nodes
+    pos = nx.nx_agraph.graphviz_layout(G)
+
+    node_sizes = [len(node) * 100 for node in G.nodes()]  # Adjust 100 to change the scaling factor
+
+    # Draw the graph
+    plt.figure(figsize=(8, 30))
+    nx.draw(G, pos, with_labels=True, node_color="lightblue", font_size=10, node_size=node_sizes, font_weight="bold", arrows=True)
+    plt.title("Word Adjacency in The Little Irish Girl", fontsize=14)
+    plt.show()
+
+# Example usage
+graph = create_graph(lyrics)
+plot_graph(graph)
+```
+

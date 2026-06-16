@@ -1,0 +1,26 @@
+---
+title: "Hello World, in FastAPI"
+author: "Galen Seilis"
+date: "2024-08-21"
+categories: [Python, FastAPI]
+---
+
+This is a quick post showing how to create a "Hello, World" example in FastAPI.
+
+Similar to the example [*Hello World, In Flask*](https://galenseilis.github.io/blog/posts/hello-world-flask/index.html), with FastAPI we instantiate an app which contains methods that decorate other functions which will be used to returns responses. Finally, I used `uvicorn` to actually run the application at a given host and port.
+
+```python
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello, World!"}
+
+if __name__ == '__main__':
+    import uvcorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)
+```
+
+That's all there is for this minimum working example.

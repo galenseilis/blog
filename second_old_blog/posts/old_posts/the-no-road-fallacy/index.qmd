@@ -1,0 +1,27 @@
+---
+title: "The No Road Fallacy of Mathematical Symmetries"
+author: "Galen Seilis"
+date: "2025-02-21"
+categories: [Mathematics, Symmetry, Observational Equivalence, Philosophy, Philosophy of Science, Isometry, Logic, Fallacy, Logical Fallacy]
+---
+
+Suppose we have two cities $A$ and $B$ which we represent as two vertices of a graph with two parallel edges representing two distinct roads between them.
+
+```{mermaid}
+flowchart LR
+
+A o--1--o B
+A o--2--o B
+```
+
+Let us also suppose that we have a space of metrics parametrized by the choice of edge (i.e. road taken) such that
+
+$$d(A, B; 1) = d(A, B; 2).$$
+
+Our symmetry here is that the distance between the two cities is invariant to the choice of road (i.e. edge). This is an also called an *isometry*.
+
+*The no road fallacy* is the logical fallacy of a symmetry implying non-existence. Indeed, we needed to assume that the roads existed (at least mathematically) in order to construct the symmetry in the first place.
+
+The no road fallacy gets me wondering about physical laws and other contexts in which we find symmetries. Perhaps we are already assuming the existence of embedding spaces and other unusual things.
+
+Rather we can relate symmetries to [observational equivalence](https://en.wikipedia.org/wiki/Observational_equivalence). When we're considering the mathematical topic of symmetries we are not necessarily referring to observations. However, when we are referring to how an observation or an inference from data would not be different under two observationally equivalent ideas, we have identified a symmetry.

@@ -1,0 +1,49 @@
+---
+title: "Word Adjacency Graph of Rolling Down to Rio"
+author: "Galen Seilis"
+date: "2025-02-19"
+categories: [Art, Music, Word Adjacency]
+---
+
+Here are the lyrics of silent noon with punctuation and capitalization ignored:
+
+```{python}
+lyrics = """i have never sailed the amazon i have never reached brazil but the don and the magdalena they can go there when they will ah yes weekly from southampton great steams white and gold go rolling down to rio roll down roll down to rio and i would like to roll to rio some day before i am old to roll i would like to roll to rio some day before i am old i have never seen a jaguar nor yet an armadillo dillowing in his armour and i suppose i never will ah unless i go to rio these wonders to behold go rolling down to rio roll really down to rio oh i would like to roll to rio some day before i am old to roll i would love to roll to rio some day before i am old"""
+lyrics = lyrics.split(' ')
+```
+
+```{python}
+import networkx as nx
+import matplotlib.pyplot as plt
+
+def create_graph(strings):
+    # Initialize a directed graph
+    G = nx.DiGraph()
+
+    # Add each string as a node
+    for s in strings:
+        G.add_node(s)
+
+    # Create edges based on adjacency (e.g., consecutive strings in the list)
+    for i in range(len(strings) - 1):
+        G.add_edge(strings[i], strings[i + 1])
+
+    return G
+
+def plot_graph(G):
+    # Generate positions for nodes
+    pos = nx.nx_agraph.graphviz_layout(G)
+
+    node_sizes = [len(node) * 100 for node in G.nodes()]  # Adjust 100 to change the scaling factor
+
+    # Draw the graph
+    plt.figure(figsize=(8, 30))
+    nx.draw(G, pos, with_labels=True, node_color="lightblue", font_size=10, node_size=node_sizes, font_weight="bold", arrows=True)
+    plt.title("Word Adjacency in Rolling Down to Rio", fontsize=14)
+    plt.show()
+
+# Example usage
+graph = create_graph(lyrics)
+plot_graph(graph)
+```
+

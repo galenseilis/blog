@@ -1,0 +1,11 @@
+---
+title: "Software Testing in Rust"
+author: "Galen Seilis"
+date: "2024-08-26"
+categories: [Rust, Software Testing, Unit Test]
+echo: true
+draft: true
+---
+
+
+

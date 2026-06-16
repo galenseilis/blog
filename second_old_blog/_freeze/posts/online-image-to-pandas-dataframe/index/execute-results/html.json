@@ -1,0 +1,12 @@
+{
+  "hash": "43c6d7b05ff5181892477ea8eda7f2c7",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"My Quarto Blog\"\nauthor: \"Galen Seilis\"\ndate: \"2024-07-21\"\ncategories: [blog, Quarto, Jekyll, Mermaid, Graphviz, dot]\n---\n\n::: {#56c062dc .cell execution_count=1}\n``` {.python .cell-code}\nimport pytesseract\nfrom PIL import Image\nimport pandas as pd\nimport requests\nfrom io import BytesIO\n\n# URL of the image\nimage_url = \"https://i.sstatic.net/RJQvx.png\"\n\n# Download the image\nresponse = requests.get(image_url)\nimg = Image.open(BytesIO(response.content))\n\n# Use Tesseract to do OCR on the image\ntext = pytesseract.image_to_string(img)\n\n# Print the extracted text to understand its structure\nprint(text)\n\n# Assuming the extracted text has tabular format with lines for rows and spaces for columns\nlines = text.split('\\n')\n\n# Process the text to extract the table data\ndata = []\nfor line in lines:\n    # Split each line into columns based on spaces\n    columns = line.split()\n    if columns:\n        data.append(columns)\n\n# Convert the processed data into a pandas DataFrame\ndf = pd.DataFrame(data)\n\n# Display the DataFrame\nprint(df)\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n2014\n\n2016\n2017\n2018\n2019\n\n2021\n\n270000\n\n375000\n\n975000\n\n510000\n515000\n610000\n\n‘950000\n\n1000000\n910000\n\n‘908000\n\n1347000\n1480000\n1600000\n1650000\n1240000\n\n1000000\n1010500\n\n1705000\n1786000\n\n1780000\n1790000\n1478800\n1750000\n\n1267500\n\n1810000\n1875000\n\n2400000\n2310000\n\n2700000\n\f\n          0\n0      2014\n1      2016\n2      2017\n3      2018\n4      2019\n5      2021\n6    270000\n7    375000\n8    975000\n9    510000\n10   515000\n11   610000\n12  ‘950000\n13  1000000\n14   910000\n15  ‘908000\n16  1347000\n17  1480000\n18  1600000\n19  1650000\n20  1240000\n21  1000000\n22  1010500\n23  1705000\n24  1786000\n25  1780000\n26  1790000\n27  1478800\n28  1750000\n29  1267500\n30  1810000\n31  1875000\n32  2400000\n33  2310000\n34  2700000\n```\n:::\n:::\n\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

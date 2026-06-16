@@ -1,0 +1,27 @@
+---
+title: "Dynamic URLs in Flask"
+author: "Galen Seilis"
+date: "2024-07-29"
+categories: [Python, Flask, Web Applications, URL]
+---
+
+In a previous post I showed how to start the most basic Flask web application. In this post I show a dynamic URL which renders content that depends on using the URL as user input. The mathematical function known as *factorial* is defined as 
+
+$$n! \triangleq \prod_{i=1}^n i$$ when $i \geq 1$ and when $n=0$ then $0! \triangleq 1$. We will set a dynamic URL which takes an integer for which the factorial will be calculated and displayed. We can specify this by passing `'/factorial/<int:number>'`. The prefix `/factorial/` is just to remind us that we're calculating the factorial of a number. The angle brackets `<TYPE:...>` indicate that something is unspecified input in between the brackets with type `TYPE`. In this case we want `<int: ...>` because the factorial function (not to be confused with its generalizations, like the gamma function) is defined only for non-negative integers. It is natural to use `number` since we expect a number, but other names are possible for this.  
+
+```python
+from math import factorial
+
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/factorial/<int:number>')
+def calculate_factorial(number):
+    return str(factorial(number))
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+That's it. We're just taking the number, calculating its factorial, casting the result to a string, and returning it. Flask takes care of the rest.

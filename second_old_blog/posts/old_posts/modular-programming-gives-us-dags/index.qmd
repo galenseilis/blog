@@ -1,0 +1,57 @@
+---
+title: "Import DAGs In Python Gives Us Data DAGs Without Extra Frameworks"
+author: "Galen Seilis"
+date: "2026-06-03"
+categories: [pipelines]
+draft: true
+---
+
+In some sense this blog post isn't about a new technology, or even something non-obvious to many Python programmers, but I think it gets overlooked as a simple way to obtain data directed acyclic graphs (DAGs) without any using any external DAG frameworks. The goal of this approach is to exploit a simplicity that many frameworks miss out on, rather than trying to match every feature that other frameworks have.
+
+
+This one has some pros and cons that interest me.
+
+Importing one module into another as a way of passing data can facilite language server protocol support that I don't expect from DAG frameworks. One of the problems that people are sometimes trying address with DAGs is to create data lineage, which is sometimes described as "data flow" or even just "dependency". Often data flow is attempted to be related through some framework-specific abstractions defined in terms of functions and classes, but with passing data through imports we get a form of data lineage that is quite simple.
+
+
+Let's discuss a simple example involving only two modules `foo.py` and `bar.py` to start.
+
+```python
+# foo.py
+
+...
+
+data = load_data()
+
+...
+```
+
+```python
+# bar.py
+import cool_transforms
+import foo
+
+cool_data = cool_transforms.the_coolest_transform(foo.data)
+```
+
+
+What about naming conventions? Well, that's a matter of further choosing conventions.
+
+And what about having submodules? This can also be done in order to further organize code.
+
+What about using functions? Use functions for functionality that is being reused.
+
+## Visualizing the import DAG
+
+## Dynamic Import DAGs
+
+## Memory Management
+
+What about memory management? Won't the accumulation of variables result in a large consumption of memory? 
+
+## Logging
+
+## Hooks
+
+- Import hooks are a thing in Python.
+
