@@ -18,8 +18,7 @@ uvx pydeps \
   ./posts/0001-python-modules-can-pass-data-too/simple_example/bar.py \
   --no-output \
   --show-dot |
-  dot -Tpng -Gdpi=300 -o ./posts/0001-python-modules-can-pass-data-too/simple_example/dependency_graph.png
+  dot -Tpng -Gdpi=300 -o ./posts/0001-python-modules-can-pass-data-too/analysis_simple_example/dependency_graph.png
 
 tree ./posts/0001-python-modules-can-pass-data-too/simple_example/ |
-  sed '1d' > \
-  ./posts/0001-python-modules-can-pass-data-too/simple_example/tree.txt
+  ./posts/0001-python-modules-can-pass-data-too/analysis_simple_example/tree.txt

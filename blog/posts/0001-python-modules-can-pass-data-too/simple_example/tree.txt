@@ -1,6 +1,0 @@
-├── bar.py
-├── dependency_graph.png
-├── foo.py
-└── tree.txt
-
-1 directory, 4 files
