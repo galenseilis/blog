@@ -9,7 +9,13 @@ This is kind of obvious, but I think it is often skipped over for more complicat
 
 ## Toy Example
 
-Let's look a small example involving two modules `foo` and `bar`. In this example we load data into `foo`.
+Let's look a small example involving two modules `foo` and `bar`.
+
+```
+{{< include ./simple_example/tree.txt >}}
+```
+
+In this example we load data into `foo`.
 
 
 ```python

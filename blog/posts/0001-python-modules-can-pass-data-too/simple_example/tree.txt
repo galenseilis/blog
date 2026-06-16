@@ -1,4 +1,3 @@
-./posts/0001-python-modules-can-pass-data-too/simple_example/
 ├── bar.py
 ├── dependency_graph.png
 ├── foo.py
