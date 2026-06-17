@@ -40,5 +40,3 @@ for expected_column in EXPECTED_COLUMNS:
     if expected_column not in data.columns:
         msg = f"Expected column '{expected_column}' to be in columns of {data.columns=}"
         raise ValueError(msg)
-
-# TODO: Check expected types of expected columns.

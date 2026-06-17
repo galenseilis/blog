@@ -8,8 +8,6 @@ URL = "https://github.com/kedro-org/kedro-starters/raw/refs/heads/main/spaceflig
 
 # INFO: Load data
 data = pd.read_excel(URL)
-print(data.info())
-print(data.describe())
 
 if not isinstance(data, pd.DataFrame):
     msg = f"Expected {data=} to be of type {pd.DataFrame}, but got {type(data)=}"
