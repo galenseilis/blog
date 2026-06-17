@@ -1,0 +1,22 @@
+./posts/0001-python-modules-can-pass-data-too/spaceflights_pandas/
+├── pyproject.toml
+├── README.md
+├── src
+│   ├── spaceflights_pandas
+│   │   ├── config
+│   │   ├── datasets
+│   │   │   ├── companies.py
+│   │   │   ├── README.md
+│   │   │   └── reviews.py
+│   │   └── pipelines
+│   └── spaceflights_pandas.egg-info
+│       ├── dependency_links.txt
+│       ├── PKG-INFO
+│       ├── requires.txt
+│       ├── SOURCES.txt
+│       └── top_level.txt
+├── tests
+│   └── datasets
+└── uv.lock
+
+9 directories, 11 files

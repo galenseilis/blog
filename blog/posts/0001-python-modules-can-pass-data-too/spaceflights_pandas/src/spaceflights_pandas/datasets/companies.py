@@ -21,6 +21,7 @@ URL = (
     "01_raw/"
     "companies.csv"
 )
+
 data = pd.read_csv(URL)
 
 # INFO: Input validation
