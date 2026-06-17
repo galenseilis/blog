@@ -6,9 +6,15 @@
 │   │   ├── config
 │   │   ├── datasets
 │   │   │   ├── companies.py
+│   │   │   ├── __pycache__
+│   │   │   │   ├── companies.cpython-313.pyc
+│   │   │   │   ├── reviews.cpython-313.pyc
+│   │   │   │   └── shuttles.cpython-313.pyc
 │   │   │   ├── README.md
-│   │   │   └── reviews.py
+│   │   │   ├── reviews.py
+│   │   │   └── shuttles.py
 │   │   └── pipelines
+│   │       └── data_processing.py
 │   └── spaceflights_pandas.egg-info
 │       ├── dependency_links.txt
 │       ├── PKG-INFO
@@ -19,4 +25,4 @@
 │   └── datasets
 └── uv.lock
 
-9 directories, 11 files
+10 directories, 16 files
