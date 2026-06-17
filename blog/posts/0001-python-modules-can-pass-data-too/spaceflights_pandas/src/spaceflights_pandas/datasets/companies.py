@@ -22,6 +22,11 @@ URL = (
     "companies.csv"
 )
 
+EXPECTED_COLUMNS = (
+    "iata_approved",
+    "company_rating",
+)
+
 data = pd.read_csv(URL)
 
 # INFO: Input validation
@@ -30,3 +35,10 @@ data = pd.read_csv(URL)
 if not isinstance(data, pd.DataFrame):
     msg = f"{data=} must be of type {pd.DataFrame}"
     raise TypeError(msg)
+
+for expected_column in EXPECTED_COLUMNS:
+    if expected_column not in data.columns:
+        msg = f"Expected column '{expected_column}' to be in columns of {data.columns=}"
+        raise ValueError(msg)
+
+# TODO: Check expected types of expected columns.
