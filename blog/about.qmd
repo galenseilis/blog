@@ -17,3 +17,8 @@ about:
 ---
 
 This is Galen Seilis' blog.
+
+# TODO
+
+- Create template and command for making new posts.
+
