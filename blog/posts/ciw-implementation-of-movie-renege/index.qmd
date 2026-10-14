@@ -1,0 +1,12 @@
+---
+title: "A Ciw Implementation of SimPy's Movie Renege Example"
+author: "Galen Seilis"
+date: "2024-05-09"
+categories: [Simulation, Discrete-Event-Simulation, Python, Ciw]
+---
+
+This post provides an implementation of SimPy's [Movie Renege](https://simpy.readthedocs.io/en/latest/examples/movie_renege.html) example. In this implementation I subclassed three times. One class is `TicketArrivalNode` which replaces the ordinary `ciw.ArrivalNode` in order for individuals to be given tickets when they arrive in the simulation. The `TheatreNode` class keeps track of which movies there are and whether they are sold out. Lastly `RenegeAtServiceDist` is responsible for keeping track of the change in number of tickets and assigning whether a customer reneged.
+
+```python
+{{< include ./scripts/script_1.py >}}
+```

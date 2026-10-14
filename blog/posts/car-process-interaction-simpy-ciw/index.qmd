@@ -1,0 +1,41 @@
+---
+title: "A Ciw Implementation of SimPy's Car Example With a Process Interaction"
+author: "Galen Seilis"
+date: "2023-12-20"
+categories: [Simulation, Discrete-Event-Simulation, Python, Ciw]
+---
+
+This post is a continuation of [*A Ciw Implementation of SimPy's Car Example*](https://galenseilis.github.io/posts/car-simpy-ciw/), and may be considered a prerequisite for reading this post.
+
+The SimPy documentation extends the car example to have the cycling between driving and parking be interrupted. They introduce this `driver` Python generator:
+
+```python
+{{< include ./scripts/script_1.py >}}
+```
+
+And they upgrade their car process to a class definition:
+
+```python
+{{< include ./scripts/script_2.py >}}
+```
+
+The overall behavior of `Car` is not fundamentally different from before in terms of parking (with the added fluff of "charging"). The main thing that changes any of the consequent log of events is `self.action: Process = env.process(self.run())`. That is, at $t=3$ we need to print: `Was interrupted. Hope, the battery is full enough ...`.
+
+This isn't the most interesting example, and there are more interesting examples to get to in the SimPy docs, so let's make this quick. All we need to do is update the logic in `PrintDistWrapper.sample` from last time so that it prints the message. Here is the source with a sufficient edit:
+
+
+```python
+{{< include ./scripts/script_3.py >}}
+```
+
+And the output will be the desired
+
+```default
+Start parking at 0
+Was interrupted. Hope, the battery is full enough ...
+Start parking at 5
+Start driving at 10
+Start parking at 12
+```
+
+Onward! 🚀

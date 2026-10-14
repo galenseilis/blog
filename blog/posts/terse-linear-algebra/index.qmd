@@ -1,0 +1,8 @@
+---
+title: "A Terse Review of Linear Algebra"
+author: "Galen Seilis"
+date: "2023-12-13"
+categories: [Mathematics, Linear-Algebra]
+---
+
+The real numbers in $n$ dimensions $\mathbb{R}^n$ is a collection of $n$-tuples $(x_1, \ldots, x_n)$ formed by the Cartesian product of the real numbers $n-1$ times with itself.

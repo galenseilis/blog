@@ -1,0 +1,31 @@
+---
+title: "Is the Verhulst (logistic) growth function convex over its parameters?"
+author: "Galen Seilis"
+date: "2021-11-02"
+categories: [Math, Functions, Convex-Functions]
+---
+
+::: {.callout-info}
+[This question](https://math.stackexchange.com/questions/4294174/is-the-verhulst-logistic-growth-function-convex-over-its-parameters) was automatically deleted from `math.stackexchange.com`.
+:::
+# Question
+
+Considering the Verhulst growth model to be the following:
+$$p(t) = \frac{k}{1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}}$$
+
+I would like to know if $p(t)$ is non-convex with respect to $k, p_0$, and $r$ under the constraints that these parameters are themselves positive. I suspect that it isn't convex because of looking at plots of the graph of the function over single choices of parameters. I would like something more symbolic/algebraic.
+
+It has the following Hessian with respect to $k, p_0$, and $r$ is given by
+
+$$\left[\begin{matrix}\frac{k \left(- \frac{2 e^{- r t}}{p_{0}^{2}} - \frac{2 \left(k - p_{0}\right) e^{- r t}}{p_{0}^{3}}\right)}{\left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{2}} + \frac{k \left(\frac{e^{- r t}}{p_{0}} + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}^{2}}\right) \left(\frac{2 e^{- r t}}{p_{0}} + \frac{2 \left(k - p_{0}\right) e^{- r t}}{p_{0}^{2}}\right)}{\left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{3}} & - \frac{2 k \left(\frac{e^{- r t}}{p_{0}} + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}^{2}}\right) e^{- r t}}{p_{0} \left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{3}} + \frac{k e^{- r t}}{p_{0}^{2} \left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{2}} + \frac{\frac{e^{- r t}}{p_{0}} + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}^{2}}}{\left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{2}} & \frac{k \left(- \frac{t e^{- r t}}{p_{0}} - \frac{t \left(k - p_{0}\right) e^{- r t}}{p_{0}^{2}}\right)}{\left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{2}} + \frac{2 k t \left(k - p_{0}\right) \left(\frac{e^{- r t}}{p_{0}} + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}^{2}}\right) e^{- r t}}{p_{0} \left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{3}}\\- \frac{k \left(\frac{2 e^{- r t}}{p_{0}} + \frac{2 \left(k - p_{0}\right) e^{- r t}}{p_{0}^{2}}\right) e^{- r t}}{p_{0} \left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{3}} + \frac{k e^{- r t}}{p_{0}^{2} \left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{2}} + \frac{\frac{e^{- r t}}{p_{0}} + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}^{2}}}{\left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{2}} & \frac{2 k e^{- 2 r t}}{p_{0}^{2} \left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{3}} - \frac{2 e^{- r t}}{p_{0} \left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{2}} & \frac{k t e^{- r t}}{p_{0} \left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{2}} - \frac{2 k t \left(k - p_{0}\right) e^{- 2 r t}}{p_{0}^{2} \left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{3}} + \frac{t \left(k - p_{0}\right) e^{- r t}}{p_{0} \left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{2}}\\- \frac{k t e^{- r t}}{p_{0} \left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{2}} + \frac{k t \left(k - p_{0}\right) \left(\frac{2 e^{- r t}}{p_{0}} + \frac{2 \left(k - p_{0}\right) e^{- r t}}{p_{0}^{2}}\right) e^{- r t}}{p_{0} \left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{3}} - \frac{k t \left(k - p_{0}\right) e^{- r t}}{p_{0}^{2} \left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{2}} & \frac{k t e^{- r t}}{p_{0} \left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{2}} - \frac{2 k t \left(k - p_{0}\right) e^{- 2 r t}}{p_{0}^{2} \left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{3}} + \frac{t \left(k - p_{0}\right) e^{- r t}}{p_{0} \left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{2}} & - \frac{k t^{2} \left(k - p_{0}\right) e^{- r t}}{p_{0} \left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{2}} + \frac{2 k t^{2} \left(k - p_{0}\right)^{2} e^{- 2 r t}}{p_{0}^{2} \left(1 + \frac{\left(k - p_{0}\right) e^{- r t}}{p_{0}}\right)^{3}}\end{matrix}\right]$$
+
+Up until this point can be obtained readily with the following Python:
+```python
+{{< include ./scripts/script_1.py >}}
+```
+
+To get the eigenvalues one would simply need to additionally call:
+```python
+{{< include ./scripts/script_2.py >}}
+```
+which seems to work... except that output is enormous. While I might just throw a bunch of randomly-selected values along with the usual corner cases (zero, $\pm$one, $\pm$infinity) into the eigenfunctions to look for negative values, I am hoping that asking here yields something more elegant.

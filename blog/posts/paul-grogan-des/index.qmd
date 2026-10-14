@@ -1,0 +1,30 @@
+---
+title: "Paul Grogan's DES Example and Its Implementation in Ciw"
+author: "Galen Seilis"
+date: "2024-06-13"
+categories: [Simulation, Discrete-Event-Simulation, Python, Ciw]
+---
+
+I watched a YouTube video over a year ago that showed an implementation of a specific discrete event simulation. Here is the video:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/oJyf8Q0KLRY?si=-xRxMyPWZn8guR6x" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+I typed out the implementation in that video, and added some docstrings and type annotations.
+
+```python
+{{< include ./scripts/script_1.py >}}
+```
+
+We can then initialize the simulation and run it for discrete units of times like this:
+
+```python
+{{< include ./scripts/script_2.py >}}
+```
+
+Grogan's implementation is a pedagogical example that can be quickly coded and explained. What can we use for prototyping and using something more flushed out?
+
+The [Ciw package](https://ciw.readthedocs.io/en/latest/) is a ready-to-use discrete event simulation package for queueing networks. It covers a variety of cases, including a similar simulation:
+
+```python
+{{< include ./scripts/script_3.py >}}
+```

@@ -1,0 +1,16 @@
+---
+title: "Implementing a Kelly Network in Ciw"
+author: "Galen Seilis"
+date: "2023-12-20"
+categories: [Simulation, Discrete-Event-Simulation, Queueing-Networks, Ciw]
+---
+
+[Ciw](https://ciw.readthedocs.io/en/latest/) is a [Python](https://www.python.org/) package for [simulating](https://en.wikipedia.org/wiki/Discrete-event_simulation) [queueing networks](https://en.wikipedia.org/wiki/Queueing_theory). 
+
+Suppose there are two classes of patient, "Baby" and "Child", and three service nodes. Both are registered at a receptionist's desk where a single receptionist works. Babies arrived every hour on average and children arrive every half of an hour on average at the receptionist's desk. It takes 15 minutes on average for babies to get registered, and an average of 10 minutes for children to get registered. Once registered, babies and children go into separate waiting clinics where they wait to be seen by separate specialists. It takes an average of an hour for either babies or children to complete their appointments with their respective specialists. There are two specialists in the babies' room, and three specialists in the childrens' room. Each specialist has their own working room where they serve their patient.
+
+An example of a [Kelly network](https://en.wikipedia.org/wiki/Kelly_network) can be implemented and simulated for 9 hours using Ciw in the following way.
+
+```python
+{{< include ./scripts/script_1.py >}}
+```

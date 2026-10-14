@@ -1,0 +1,14 @@
+---
+title: "External Schedule of Ciw Simulations"
+author: "Galen Seilis"
+date: "2023-10-25"
+categories: [Discrete-Event-Simulation, Queueing-Networks, Ciw]
+---
+
+It would be desirable to make arbitrary changes to the state of a simulation according to a schedule. This is useful to simulating emergencies and disasters where the system has a change point where its behaviour changes substantially.
+
+```python
+{{< include ./scripts/script_1.py >}}
+```
+
+The above is a rough prototype. It assumes that the time-to-events are constants fixed ahead of time, but I could see extension to this where the time-to-events change depending on what has happened in the simulation so far. Likewise, control flow to change the events that occur depending on the state might also be beneficial.

@@ -1,0 +1,174 @@
+---
+title: "Exponential Decay"
+author: "Galen Seilis"
+date: "2024-06-13"
+draft: true
+---
+
+I have a speculation about where empirical distributions come from which has been a topic of personal rumination for me since the first year of my MSc thesis (*circa* 2020). It isn't scientific as far as I know, but it is the kind of thing that entertains me over a glass of beer.
+
+The basic idea is to come up with a mathematical relationship between a hypothetical deterministic data generating process and empirical distributions. I'll focus on examples using differential equations.
+
+## Exponential Decay
+
+$$\frac{dx}{dt} = -kx$$
+
+```python
+{{< include ./scripts/script_1.py >}}
+```
+
+## Lotka-Volterra
+
+This is a classic example of a predator-prey system.
+
+$$\frac{dx}{dt} = ax - bxy$$
+$$\frac{dy}{dt} = -cy + dxy$$
+
+```python
+{{< include ./scripts/script_2.py >}}
+```
+
+## Lorenz System
+
+This is a classic system in chaos theory.
+
+$$\frac{dx}{dt} = \sigma (y - x)$$
+$$\frac{dy}{dt} = x (\rho - z) - y$$
+$$\frac{dz}{dt} = xy - \beta z$$
+
+```python
+{{< include ./scripts/script_3.py >}}
+```
+
+## SIR Model
+
+This model has three state variables known as compartments:
+- S: Susceptible
+- I: Infected
+- R: Recovered
+
+$$\frac{dS}{dt} = - \beta SI$$
+$$\frac{dI}{dt} = \beta SI - \gamma I$$
+$$\frac{dR}{dt} = \gamma I$$
+
+```python
+{{< include ./scripts/script_4.py >}}
+```
+
+## Van der Pol Oscillator
+
+The Van der Pol oscillator is a non-conservative oscillator with non-linear damping.
+
+$$\frac{d^2x}{dt^2} = \mu (1 - x^2) \frac{dx}{dt} + x = 0$$
+
+
+This can be written as a system of first-order differential equations:
+
+$$\frac{dx}{dt} = y$$
+$$\frac{dy}{dt} = \mu (1 - x^2) y - x$$
+
+```python
+{{< include ./scripts/script_5.py >}}
+```
+
+## Brusselator (Chemical Oscillator)
+
+The Brusselator model is a model for a type of autocatalytic reaction.
+
+$$\frac{dx}{dt} = A + x^2y - (B+1) x$$
+$$\frac{dy}{dt} = Bx - x^2 y$$
+
+```python
+{{< include ./scripts/script_6.py >}}
+```
+
+## FitzHugh-Nagumo Model (Neuroscience)
+
+The FitzHugh-Nagumo model is a simplification of the Hodgkin-Huxley model of neuron activation.
+
+$$\frac{dv}{dt} = v - \frac{v^3}{3} - w + I$$
+$$\frac{dw}{dt} = \frac{1}{\tau} (v + a - bw)$$
+
+```python
+{{< include ./scripts/script_7.py >}}
+```
+
+## Simple Harmonic Oscillator
+
+A simple harmonic oscillator describes the motion of a mass-spring system without damping.
+
+```python
+{{< include ./scripts/script_8.py >}}
+```
+
+## Hodgkin-Huxley Model (Neuroscience)
+
+The Hodgkin-Huxley model describes how action potentials in neurons are initiated and propagated. This is a simplified version for demonstration purposes.
+
+$$C_m \frac{dV}{dt} = I - g_{Na} m^3 h (V - V_{Na}) - g_Kn^4(V-V_K)-g_L(V-V_L)$$
+$$\frac{dm}{dt} = \alpha_m (1-m) - \beta_mm$$
+$$\frac{dh}{dt} = \alpha_h (1 - h) - \beta_hh$$
+$$\frac{dn}{dt} = \alpha_n (1 - n) - \beta_n n$$
+
+```python
+{{< include ./scripts/script_9.py >}}
+```
+
+## Double Pendulum
+
+A double pendulum exhibits complex dynamic behavior and is described by a system of second-order differential equations. Here I converted it to a system of first-order differential equations.
+
+$$\frac{\theta_1}{dt} = \omega_1$$
+$$\frac{\theta_2}{dt} = \omega_2$$
+$$\frac{\omega_1}{dt} = \frac{-g(2m_1+m_2)\sin (\theta_1) - m_2 g \sin (\theta_1 - 2 \theta_2) - 2 \sin (\theta_1 - \theta_2) m_2 (\omega_2^2 L_2 + \omega_1^2 L_1 \cos (\theta_1 - \theta_2)}{L1 (2m_1 + m_2 - m_2 \cos(2 \theta_1 - 2 \theta_2))}$$
+$$\frac{d\omega_2}{dt} = \frac{2 \sin (\theta_1 - \theta_2) (\omega_1^2 L_1 (m_1 + m_2) + g(m_1 + m_2) \cos (\theta_1) + \omega_2^2 L_2 m_2 \cos (\theta_1 - \theta_2))}{L_2 (2 m_1 + m_2 - m_2 \cos (2 \theta_1 - 2 \theta_2))}$$
+
+```python
+{{< include ./scripts/script_10.py >}}
+```
+
+## Rössler Attractor
+
+The Rössler attractor is another system that exhibits chaotic dynamics.
+
+$$\frac{dx}{dt} = -y - x$$
+$$\frac{dy}{dt} = x + ay$$
+$$\frac{dz}{dt} = b + z (x - c)$$
+
+```python
+{{< include ./scripts/script_11.py >}}
+```
+
+## SEIR Model (Epidemiology)
+
+The SEIR model is an extension of the SIR model, including an Exposed (E) compartment.
+
+$$\frac{dS}{dt} = - \beta S I$$
+
+$$\frac{dE}{dt} = \beta S I - \sigma E$$
+
+$$\frac{dI}{dt} = \sigma E - \gamma I$$
+
+$$\frac{dR}{dt} = \gamma I$$
+
+```python
+{{< include ./scripts/script_12.py >}}
+```
+
+## Chua's Circuit
+
+Chua's circuit is a well-known example of a chaotic system. It is an electronic circuit that exhibits chaotic behavior and can be described by a system of three coupled nonlinear differential equations.
+
+The equations for Chua's circuit are:
+
+$$\frac{dx}{dt} = \alpha (y - x - h(x))$$
+$$\frac{dy}{dt} = x - y + z$$
+$$\frac{dz}{dt} = \beta z$$
+
+where $h(x)$ is the piecewise linear function representing Chua's diode:
+
+$$h(x) = m_1 x + \frac{1}{2} (m_0 - m_1) (|x+1| - |x- 1|)$$
+
+```python
+{{< include ./scripts/script_13.py >}}
+```

@@ -1,0 +1,31 @@
+---
+title: "Bayesian Rank-1 Non-Negative Canonical Polyadic Decomposition In PyMC"
+author: "Galen Seilis"
+date: "2023-08-29"
+categories: [Statistics, Bayesian-Statistics, Bayesian-Canonical-Polyadic-Decomposition, Bayesian-Non-Negative-Canonical-Polyadic-Decomposition]
+---
+
+This post is just a quick example of how to perform Bayesian non-negative [canonical polyadic decomposition](https://en.wikipedia.org/wiki/Tensor_rank_decomposition) in PyMC. Here we will only perform a rank 1 decomposition with unit coefficients.
+
+Let us suppose that we have a sequence of random vectors
+
+$$\vec u_1, \ldots, \vec u_k$$
+
+$$\vec u_i \sim \text{Exponential}(\vec \lambda_i)$$
+
+then their outer product makes
+
+$$\mathcal{L} = \bigotimes_{i=1}^k \vec u_i$$
+
+and we'll suppose that 
+
+$$\mathcal{X} \sim \text{Exponential}(\mathcal{L})$$
+
+is our observed random variable.
+
+
+```python
+{{< include ./scripts/script_1.py >}}
+```
+
+The more general cases of finite rank-$r$ decomposition should be built with a function or class that constructs it. One option is [`pymc_experimental.model_builder.ModelBuilder`](https://www.pymc.io/projects/experimental/en/latest/generated/pymc_experimental.model_builder.ModelBuilder.html). I imagine such a class should have a parameter for the rank, a parameter for distribution(S) for the random vectors, and also a parameter for the distribution of the observations. A complicated case would be to specify the distribution of every random variable, but then the config alone for the model would be complicated. A possible partial solution for that is to default to assume that the input specifies a distribution family for all the random vectors, or if a dict is passed specifying modes then those distributions are used over the mode. I think specifying the distribution of every coefficient parameter and every element of every vector is sufficiently "custom" that one might as well use the default PyMC model construction class in a context wrapper.

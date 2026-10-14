@@ -1,0 +1,31 @@
+---
+title: "A Ciw Implementation of SimPy's Machine Shop Example"
+author: "Galen Seilis"
+date: "2024-02-20"
+categories: [Simulation, Discrete-Event-Simulation, Python, Ciw]
+---
+
+The following is an implementation of the [machine shop example](https://simpy.readthedocs.io/en/latest/examples/machine_shop.html) from the Simpy documention using Ciw. Parts of this implementation came from [this post](https://github.com/CiwPython/Ciw/issues/213#issuecomment-1781036391).
+
+```python
+{{< include ./scripts/script_1.py >}}
+```
+
+
+When we use the `run` method on an instance of the `CiwMachineShop`  we obtain similar counts as the SimPy machine shop.
+
+```default
+>>> CiwMachineShop().run()
+id_number
+1     3304
+2     3208
+3     3317
+4     3276
+5     3277
+6     3376
+7     3267
+8     3254
+9     3356
+10    3262
+Name: service_time, dtype: int64
+```
