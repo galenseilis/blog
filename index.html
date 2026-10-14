@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -41,10 +44,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-891dd20211b014a5cfa403d31056117a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-55617497126496852ff9f5a59253c640.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -82,9 +85,10 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-categories"],
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      page: 25,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -103,7 +107,7 @@ ul.task-list li input[type="checkbox"] {
   </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -153,6 +157,14 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
+    <a class="nav-link" href="./presentations.html"> 
+<span class="menu-text">Presentations</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
@@ -195,7 +207,7 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(0)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(60)</span></div><div class="category" data-category="QWxtb3N0LVN1cmUlMjBQYWlyd2lzZSUyMERpc2pvaW50JTIwU2V0cw==">Almost-Sure Pairwise Disjoint Sets <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QW5raQ==">Anki <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QW50aXN5bW1ldHJpYyUyMFJlbGF0aW9ucw==">Antisymmetric Relations <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QXJyaXZhbCUyMERpc3RyaWJ1dGlvbnM=">Arrival Distributions <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QXJ0">Art <span class="quarto-category-count">(5)</span></div><div class="category" data-category="QXJ2aXo=">Arviz <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QXNzdW1wdGlvbnM=">Assumptions <span class="quarto-category-count">(2)</span></div><div class="category" data-category="QXN5bW1ldHJpYyUyMFJlbGF0aW9ucw==">Asymmetric Relations <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QXN5bmNocm9ub3VzJTIwUHJvZ3JhbW1pbmc=">Asynchronous Programming <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QXN5bmNpbw==">Asyncio <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QXV0b21vcnBoaXNtJTIwT3JiaXRz">Automorphism Orbits <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QXV0b21vcnBoaXNtJTIwT3JiaXRzJTIwb2YlMjBHcmFwaGxldHM=">Automorphism Orbits of Graphlets <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QXV0b21vcnBoaXNtcw==">Automorphisms <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QXV0b3JlZ3Jlc3NpdmU=">Autoregressive <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QmFuZGl0">Bandit <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QkFTSA==">BASH <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QmF5ZXNpYW4lMjBJbmZlcmVuY2U=">Bayesian Inference <span class="quarto-category-count">(2)</span></div><div class="category" data-category="QmF5ZXNpYW4lMjBNb2RlbGxpbmc=">Bayesian Modelling <span class="quarto-category-count">(2)</span></div><div class="category" data-category="QmF5ZXNpYW4lMjBQcm9iYWJpbGl0eQ==">Bayesian Probability <span class="quarto-category-count">(2)</span></div><div class="category" data-category="QmF5ZXNpYW4lMjBTdGF0aXN0aWNz">Bayesian Statistics <span class="quarto-category-count">(2)</span></div><div class="category" data-category="QmF5ZXNpYW4lMjBXb3JrZmxvdw==">Bayesian Workflow <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QmVzdCUyMFByYWN0aWNlcw==">Best Practices <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QmlqZWN0aXZlJTIwRnVuY3Rpb25z">Bijective Functions <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QmluYXJ5JTIwUmVsYXRpb25z">Binary Relations <span class="quarto-category-count">(2)</span></div><div class="category" data-category="YmlzZWN0JTIwbWV0aG9k">bisect method <span class="quarto-category-count">(1)</span></div><div class="category" data-category="YmxvZw==">blog <span class="quarto-category-count">(1)</span></div><div class="category" data-category="QnJlbnRzJTIwbWV0aG9k">Brents method <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Qw==">C <span class="quarto-category-count">(3)</span></div><div class="category" data-category="QyUyQiUyQg==">C++ <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q2FyZ28=">Cargo <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q2FydGVzaWFuJTIwUHJvZHVjdHM=">Cartesian Products <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Q2hhbmdlJTIwb2YlMjBWYXJpYWJsZXM=">Change of Variables <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q2l0aXplbiUyMFNjaWVuY2U=">Citizen Science <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Q2l3">Ciw <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Q0xJ">CLI <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y29tcGlsYXRpb24=">compilation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q29tcHV0ZXIlMjBQcm9ncmFtbWluZw==">Computer Programming <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q29uY3VycmVudCUyMFByb2dyYW1taW5n">Concurrent Programming <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q29uZGl0aW9uYWwlMjBFeHBlY3RhdGlvbg==">Conditional Expectation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q29uc3RhbnQlMjBSYW5kb20lMjBWYXJpYWJsZXM=">Constant Random Variables <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q29udm9sdXRpb24=">Convolution <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q29udm9sdXRpb24lMjBUaGVvcmVt">Convolution Theorem <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q29va2llY3V0dGVy">Cookiecutter <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q1B5dGhvbg==">CPython <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Q3JheW9u">Crayon <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q3VtdWxhdGl2ZSUyMERpc3RyaWJ1dGlvbiUyMEZ1bmN0aW9u">Cumulative Distribution Function <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGF0YQ==">Data <span class="quarto-category-count">(2)</span></div><div class="category" data-category="RGF0YSUyMFNjaWVuY2U=">Data Science <span class="quarto-category-count">(2)</span></div><div class="category" data-category="RGF0YSUyMFZlcnNpb25pbmc=">Data Versioning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGJ0">dbt <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGViaWFu">Debian <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGVwZW5kZW5jeQ==">Dependency <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGVwbG95bWVudA==">Deployment <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGVyaXZhdGlvbg==">Derivation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGlmZmVyZW50aWFsJTIwRm9ybXM=">Differential Forms <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGlncmFwaHM=">Digraphs <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGlyYWMlMjBEZWx0YSUyMERpc3RyaWJ1dGlvbg==">Dirac Delta Distribution <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGlyZWN0ZWQlMjBBY3ljbGljJTIwR3JhcGhz">Directed Acyclic Graphs <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGlyZWN0ZWQlMjBHcmFwaHM=">directed Graphs <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGlyaWNobGV0JTIwRGlzdHJpYnV0aW9u">Dirichlet Distribution <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGlzY3JldGUlMjBFdmVudCUyMFNpbXVsYXRpb24=">Discrete Event Simulation <span class="quarto-category-count">(6)</span></div><div class="category" data-category="RGlzam9pbnQlMjBTZXRz">Disjoint Sets <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RG9ja2Vy">Docker <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RG90">Dot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZG90">dot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RFZD">DVC <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RHZvcmFr">Dvorak <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RWRnZXM=">Edges <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RXF1aXZhbGVuY2UlMjBDbGFzc2Vz">Equivalence Classes <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RXF1aXZhbGVuY2UlMjBSZWxhdGlvbnM=">Equivalence Relations <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RXJyb3IlMjBIYW5kbGluZw==">Error Handling <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZXZjeHI=">evcxr <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZXZjeHJfanVweXRlcg==">evcxr_jupyter <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RXhwZWN0ZWQlMjBWYWx1ZQ==">Expected Value <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RXhwb25lbnRpYWwlMjBEaXN0cmlidXRpb24=">Exponential Distribution <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RmFsbGFjeQ==">Fallacy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RmFyc2k=">Farsi <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RmFzdEFQSQ==">FastAPI <span class="quarto-category-count">(2)</span></div><div class="category" data-category="RmF1bHQlMjBUcmVl">Fault Tree <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Rmxhc2s=">Flask <span class="quarto-category-count">(7)</span></div><div class="category" data-category="Rm91cmllciUyMFRyYW5zZm9ybQ==">Fourier Transform <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZnNzcGVj">fsspec <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RnVuY3Rpb25z">Functions <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R2FtbWElMjBEaXN0cmlidXRpb24=">Gamma Distribution <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R3JhcGglMjBBdXRvbW9ycGhpc21z">Graph Automorphisms <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R3JhcGglMjBJc29tb3JwaGlzbQ==">Graph Isomorphism <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R3JhcGglMjBUaGVvcnk=">Graph Theory <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R3JhcGhsZXRz">Graphlets <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R3JhcGhz">Graphs <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R3JhcGh2aXo=">Graphviz <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R3JlYXRlc3QlMjBDb21tb24lMjBEaXZpc29y">Greatest Common Divisor <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SGVhbHRoY2FyZQ==">Healthcare <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SFRNTCUyMFRlbXBsYXRlcw==">HTML Templates <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SFRUUA==">HTTP <span class="quarto-category-count">(2)</span></div><div class="category" data-category="SFRUUCUyME1ldGhvZHM=">HTTP Methods <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SFRUUCUyMFJlcXVlc3Rz">HTTP Requests <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SHlwZXJleHBvbmVudGlhbCUyMERpc3RyaWJ1dGlvbg==">Hyperexponential Distribution <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SWRlbnRpY2FsJTIwYW5kJTIwSW5kZXBlbmRlbnRseSUyMERpc3RyaWJ1dGVk">Identical and Independently Distributed <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SW1hZ2Vz">Images <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aU5hdHVyYWxpc3Q=">iNaturalist <span class="quarto-category-count">(2)</span></div><div class="category" data-category="SW5mb3JtYXRpb24lMjBTZWN1cml0eQ==">Information Security <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SW5pdGlhbGl6YXRpb24=">Initialization <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SW5qZWN0aXZlJTIwRnVuY3Rpb25z">Injective Functions <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SW5zdGFsbGF0aW9u">Installation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SW50YWtl">Intake <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SW50ZXItQXJyaXZhbCUyMFRpbWVz">Inter-Arrival Times <span class="quarto-category-count">(2)</span></div><div class="category" data-category="SXNvbWV0cnk=">Isometry <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SXNvbW9ycGhpc21z">Isomorphisms <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SmVreWxs">Jekyll <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SnVweXRlcg==">Jupyter <span class="quarto-category-count">(2)</span></div><div class="category" data-category="SnVweXRlciUyME5vdGVib29rcw==">Jupyter Notebooks <span class="quarto-category-count">(1)</span></div><div class="category" data-category="S2Vkcm8=">Kedro <span class="quarto-category-count">(3)</span></div><div class="category" data-category="S2Vkcm8lMjBWaXo=">Kedro Viz <span class="quarto-category-count">(1)</span></div><div class="category" data-category="S2V5Ym9hcmQlMjBMYXlvdXRz">Keyboard Layouts <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TGFuZ3VhZ2UlMjBTZXJ2ZXIlMjBQcm90b2NvbA==">Language Server Protocol <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGFuZ3VhZ2Vz">languages <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TGFUZVg=">LaTeX <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TGludXg=">Linux <span class="quarto-category-count">(3)</span></div><div class="category" data-category="TG9naWM=">Logic <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TG9naWNhbCUyMEZhbGxhY3k=">Logical Fallacy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TFNQ">LSP <span class="quarto-category-count">(1)</span></div><div class="category" data-category="THVh">Lua <span class="quarto-category-count">(3)</span></div><div class="category" data-category="TWFjaGluZSUyMExlYXJuaW5n">Machine Learning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bWFrZQ==">make <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TWFtYmE=">Mamba <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TWF0aA==">Math <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TWF0aGVtYXRpY3M=">Mathematics <span class="quarto-category-count">(4)</span></div><div class="category" data-category="TWF0cGxvdGxpYg==">Matplotlib <span class="quarto-category-count">(3)</span></div><div class="category" data-category="TWF4aW11bQ==">Maximum <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TWVybWFpZA==">Mermaid <span class="quarto-category-count">(3)</span></div><div class="category" data-category="TWluaW11bQ==">Minimum <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TWl4dHVyZSUyMERpc3RyaWJ1dGlvbnM=">Mixture Distributions <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TUxGbG93">MLFlow <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TW9kZWwlMjBEZXZlbG9wbWVudA==">Model Development <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TW9kZWxsaW5n">Modelling <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TW9kdWxhciUyMFByb2dyYW1taW5n">Modular Programming <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TW9kdWxlcw==">Modules <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TXVzaWM=">Music <span class="quarto-category-count">(3)</span></div><div class="category" data-category="TmV0d29ya3M=">Networks <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TmV1cmFsJTIwTmV0d29ya3M=">Neural Networks <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TmV3dG9uJTIwUmFwaHNvbiUyMG1ldGhvZA==">Newton Raphson method <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Tm90ZWJvb2tz">Notebooks <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TnVtYmE=">Numba <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TnVtUHk=">NumPy <span class="quarto-category-count">(5)</span></div><div class="category" data-category="T2JzZXJ2YXRpb25hbCUyMEVxdWl2YWxlbmNl">Observational Equivalence <span class="quarto-category-count">(1)</span></div><div class="category" data-category="T2lsJTIwUGFpbnRpbmc=">Oil Painting <span class="quarto-category-count">(1)</span></div><div class="category" data-category="T3BlcmF0aW9ucyUyMFJlc2VhcmNo">Operations Research <span class="quarto-category-count">(2)</span></div><div class="category" data-category="b3B0aW1pemF0aW9u">optimization <span class="quarto-category-count">(2)</span></div><div class="category" data-category="T3JkZXIlMjBTdGF0aXN0aWNz">Order Statistics <span class="quarto-category-count">(1)</span></div><div class="category" data-category="T3JkZXIlMjBUaGVvcnk=">Order Theory <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UGFjaHlkZXJt">Pachyderm <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UGFja2FnZSUyME1hbmFnZW1lbnQ=">Package Management <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UGFpbnRpbmc=">Painting <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UGFpcndpc2UlMjBEaXNqb2ludCUyMFNldHM=">Pairwise Disjoint Sets <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UGFuZGFz">Pandas <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UGFuZGFzJTIwVmV0">Pandas Vet <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UGFuZG9j">Pandoc <span class="quarto-category-count">(3)</span></div><div class="category" data-category="UGFyZXRvJTIwRnJvbnQ=">Pareto Front <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UGFydGlhbCUyME9yZGVycw==">Partial Orders <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UGVybXV0YXRpb24lMjBHcm91cHM=">Permutation Groups <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UGVyc2lhbg==">Persian <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UGV0Z3JhcGg=">Petgraph <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UGV0Z3JhcGgtZXZjeHI=">Petgraph-evcxr <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UGhpbG9zb3BoeQ==">Philosophy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UGhpbG9zb3BoeSUyMG9mJTIwU2NpZW5jZQ==">Philosophy of Science <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UGlwZWxpbmVz">Pipelines <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UGxvdHRpbmc=">Plotting <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cGx1Z2lucw==">plugins <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UG9pc3NvbiUyMEJpbm9taWFsJTIwRGlzdHJpYnV0aW9u">Poisson Binomial Distribution <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UG9pc3NvbiUyMERpc3RyaWJ1dGlvbg==">Poisson Distribution <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UG9sYXJz">Polars <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UG9zdGVyaW9yJTIwUHJvYmFiaWxpdHk=">Posterior Probability <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHJlZGljdGl2ZSUyME1vZGVsbGluZw==">Predictive Modelling <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHJpb3IlMjBQcm9iYWJpbGl0eQ==">Prior Probability <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHJvYmFiaWxpdHk=">Probability <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UHJvYmFiaWxpdHklMjBEaXN0cmlidXRpb25z">Probability Distributions <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHJvYmFiaWxpdHklMjBNYXNzJTIwRnVuY3Rpb24=">Probability Mass Function <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHJvYmxlbSUyMG9mJTIwSW5kdWN0aW9u">Problem of Induction <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHJvY2Vzcy1CYXNlZCUyMFNpbXVsYXRpb24=">Process-Based Simulation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHJvZ3JhbW1pbmc=">Programming <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHJvamVjdCUyME1hbmFnZW1lbnQ=">Project Management <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHJvdG90eXBpbmc=">Prototyping <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UHlNQw==">PyMC <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHlQeQ==">PyPy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHl0aG9u">Python <span class="quarto-category-count">(32)</span></div><div class="category" data-category="UXVhcnRv">Quarto <span class="quarto-category-count">(8)</span></div><div class="category" data-category="UXVldWVpbmclMjBOZXR3b3Jr">Queueing Network <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UXVldWVpbmclMjBTeXN0ZW0=">Queueing System <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UXVldWVpbmclMjBTeXN0ZW1z">Queueing Systems <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UXVldWVpbmclMjBUaGVvcnk=">Queueing Theory <span class="quarto-category-count">(3)</span></div><div class="category" data-category="UmFuZG9tJTIwTnVtYmVyJTIwR2VuZXJhdGlvbg==">Random Number Generation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UmFuZG9tJTIwVmFyaWFibGVz">Random Variables <span class="quarto-category-count">(4)</span></div><div class="category" data-category="UmFuay1CYXNlZCUyMFN0YXRpc3RpY3M=">Rank-Based Statistics <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UmFua3M=">Ranks <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UmVmbGV4aXZlJTIwUmVsYXRpb25z">Reflexive Relations <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UmVsYXRpb25z">Relations <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UmVxdWVzdHM=">Requests <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Um91dGluZw==">Routing <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UnVmZg==">Ruff <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UnVzdA==">Rust <span class="quarto-category-count">(8)</span></div><div class="category" data-category="cnVzdGM=">rustc <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Unll">Rye <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U2NpcHk=">Scipy <span class="quarto-category-count">(2)</span></div><div class="category" data-category="c2NpcHkub3B0aW1pemU=">scipy.optimize <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U2NyaXB0aW5n">Scripting <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U2UtTGli">Se-Lib <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U2VjdXJpdHk=">Security <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U2VydmVycw==">Servers <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U2VydmljZSUyMERpc3RyaWJ1dGlvbnM=">Service Distributions <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U2VydmljZSUyMFRpbWVz">Service Times <span class="quarto-category-count">(2)</span></div><div class="category" data-category="U2V0cw==">Sets <span class="quarto-category-count">(1)</span></div><div class="category" data-category="c2V0eGtiYW1w">setxkbamp <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U2lnbmVkJTIwR3JhcGhz">Signed Graphs <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U2ltcGxlJTIwR3JhcGhz">Simple Graphs <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U2ltUHk=">SimPy <span class="quarto-category-count">(3)</span></div><div class="category" data-category="U2ltdWxhdGlvbg==">Simulation <span class="quarto-category-count">(4)</span></div><div class="category" data-category="U21vb3RoJTIwRnVuY3Rpb25z">Smooth Functions <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U29mdHdhcmUlMjBEZXNpZ24=">Software Design <span class="quarto-category-count">(2)</span></div><div class="category" data-category="U3RhdGlzdGljYWwlMjBJbmRlcGVuZGVuY2U=">Statistical Independence <span class="quarto-category-count">(3)</span></div><div class="category" data-category="U3RhdGlzdGljcw==">Statistics <span class="quarto-category-count">(9)</span></div><div class="category" data-category="U3RvY2hhc3RpYyUyME9yZGVycw==">Stochastic Orders <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U3RvY2hhc3RpYyUyMFByb2Nlc3Nlcw==">Stochastic Processes <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U3RyaWN0JTIwUGFydGlhbCUyME9yZGVycw==">Strict Partial Orders <span class="quarto-category-count">(1)</span></div><div class="category" data-category="c3VicHJvY2Vzcw==">subprocess <span class="quarto-category-count">(3)</span></div><div class="category" data-category="U3Vic2V0cw==">Subsets <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U3VyamVjdGl2ZSUyMEZ1bmN0aW9ucw==">Surjective Functions <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U3ltbWV0cmljJTIwUmVsYXRpb25z">Symmetric Relations <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U3ltbWV0cnk=">Symmetry <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U3lzdGVtcyUyMEVuZ2luZWVyaW5n">Systems Engineering <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VGltZSUyMFNlcmllcw==">Time Series <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dGltZWl0">timeit <span class="quarto-category-count">(2)</span></div><div class="category" data-category="VGltaW5n">Timing <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VHJhY2luZw==">Tracing <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VHJhZGVvZmZz">Tradeoffs <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VHJhbnNmb3JtYXRpb25z">Transformations <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VHJhbnNpdGl2ZSUyMFJlbGF0aW9ucw==">Transitive Relations <span class="quarto-category-count">(2)</span></div><div class="category" data-category="VWJ1bnR1">Ubuntu <span class="quarto-category-count">(3)</span></div><div class="category" data-category="VVJM">URL <span class="quarto-category-count">(5)</span></div><div class="category" data-category="VmVyc2lvbmluZw==">Versioning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VmVydGV4JTIwT3JiaXQlMjBBdXRvbW9ycGhpc21z">Vertex Orbit Automorphisms <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VmVydGljZXM=">Vertices <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Vm9sdW50ZWVy">Volunteer <span class="quarto-category-count">(2)</span></div><div class="category" data-category="V2ViJTIwQXBwbGljYXRpb25z">Web Applications <span class="quarto-category-count">(7)</span></div><div class="category" data-category="V2VpZ2h0ZWQlMjBHcmFwaHM=">Weighted Graphs <span class="quarto-category-count">(1)</span></div><div class="category" data-category="V2V0LU9uLVdldCUyMFRlY2huaXF1ZQ==">Wet-On-Wet Technique <span class="quarto-category-count">(1)</span></div><div class="category" data-category="V29yZCUyMEFkamFjZW5jeQ==">Word Adjacency <span class="quarto-category-count">(3)</span></div><div class="category" data-category="WmVuTUw=">ZenML <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Wmln">Zig <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -209,9 +221,2497 @@ window.Quarto = {
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="UHl0aG9uJTJDTW9kdWxlcyUyQ01vZHVsYXIlMjBQcm9ncmFtbWluZyUyQ1Byb2dyYW1taW5nJTJDUnVmZiUyQ0RlcGVuZGVuY3klMkNMYW5ndWFnZSUyMFNlcnZlciUyMFByb3RvY29sJTJDTFNQ" data-listing-date-sort="1781481600000" data-listing-file-modified-sort="1791953455733" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="418">
+<div class="thumbnail"><a href="./posts/0001-python-modules-can-pass-data-too/index.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' src="posts/0001-python-modules-can-pass-data-too/analysis_simple_example/dependency_graph.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/0001-python-modules-can-pass-data-too/index.html" class="no-external">Python Module Imports Can Pass Data Too</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TW9kdWxlcw=='); return false;">Modules</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TW9kdWxhciUyMFByb2dyYW1taW5n'); return false;">Modular Programming</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHJvZ3JhbW1pbmc='); return false;">Programming</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UnVmZg=='); return false;">Ruff</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGVwZW5kZW5jeQ=='); return false;">Dependency</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TGFuZ3VhZ2UlMjBTZXJ2ZXIlMjBQcm90b2NvbA=='); return false;">Language Server Protocol</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TFNQ'); return false;">LSP</div>
 
 </div>
+<div class="delink listing-description"><a href="./posts/0001-python-modules-can-pass-data-too/index.html" class="no-external">
+This is kind of obvious, but I think it is often skipped over for more complicated solutions: you can pass data from module-to-module using imports. This approach to modular…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/0001-python-modules-can-pass-data-too/index.html" class="no-external">
+<div class="listing-date">
+Jun 15, 2026
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="RmFyc2klMkNQZXJzaWFuJTJDbGFuZ3VhZ2Vz" data-listing-date-sort="1767657600000" data-listing-file-modified-sort="1791953455741" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="69">
+<div class="thumbnail"><a href="./posts/farsi-in-quarto/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/farsi-in-quarto/index.html" class="no-external">Farsi in Quarto</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('RmFyc2k='); return false;">Farsi</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGVyc2lhbg=='); return false;">Persian</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bGFuZ3VhZ2Vz'); return false;">languages</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/farsi-in-quarto/index.html" class="no-external">
+Hello there. My name is Galen. I translated this text using Google translate, so you have my apologies for any errors.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/farsi-in-quarto/index.html" class="no-external">
+<div class="listing-date">
+Jan 6, 2026
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="QW5raSUyQ1VidW50dSUyQ0xpbnV4JTJDSW5zdGFsbGF0aW9u" data-listing-date-sort="1740355200000" data-listing-file-modified-sort="1791953455738" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="72">
+<div class="thumbnail"><a href="./posts/anki-install-ubuntu-24-04/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/anki-install-ubuntu-24-04/index.html" class="no-external">Installing Anki on Ubuntu 24.04.02</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('QW5raQ=='); return false;">Anki</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('VWJ1bnR1'); return false;">Ubuntu</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TGludXg='); return false;">Linux</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SW5zdGFsbGF0aW9u'); return false;">Installation</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/anki-install-ubuntu-24-04/index.html" class="no-external">
+This post quickly covers how to install Anki for Ubuntu.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/anki-install-ubuntu-24-04/index.html" class="no-external">
+<div class="listing-date">
+Feb 24, 2025
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-categories="TWF0aGVtYXRpY3MlMkNTeW1tZXRyeSUyQ09ic2VydmF0aW9uYWwlMjBFcXVpdmFsZW5jZSUyQ1BoaWxvc29waHklMkNQaGlsb3NvcGh5JTIwb2YlMjBTY2llbmNlJTJDSXNvbWV0cnklMkNMb2dpYyUyQ0ZhbGxhY3klMkNMb2dpY2FsJTIwRmFsbGFjeQ==" data-listing-date-sort="1740096000000" data-listing-file-modified-sort="1791953455807" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="200">
+<div class="thumbnail"><a href="./posts/the-no-road-fallacy/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/the-no-road-fallacy/index.html" class="no-external">The No Road Fallacy of Mathematical Symmetries</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('TWF0aGVtYXRpY3M='); return false;">Mathematics</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3ltbWV0cnk='); return false;">Symmetry</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('T2JzZXJ2YXRpb25hbCUyMEVxdWl2YWxlbmNl'); return false;">Observational Equivalence</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGhpbG9zb3BoeQ=='); return false;">Philosophy</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGhpbG9zb3BoeSUyMG9mJTIwU2NpZW5jZQ=='); return false;">Philosophy of Science</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SXNvbWV0cnk='); return false;">Isometry</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TG9naWM='); return false;">Logic</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RmFsbGFjeQ=='); return false;">Fallacy</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TG9naWNhbCUyMEZhbGxhY3k='); return false;">Logical Fallacy</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/the-no-road-fallacy/index.html" class="no-external">
+Suppose we have two cities <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> which we represent as two vertices of a graph with two parallel edges representing two distinct roads between them.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/the-no-road-fallacy/index.html" class="no-external">
+<div class="listing-date">
+Feb 21, 2025
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="4" data-categories="QXJ0JTJDTXVzaWMlMkNXb3JkJTIwQWRqYWNlbmN5" data-listing-date-sort="1739923200000" data-listing-file-modified-sort="1791953455757" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="22">
+<div class="thumbnail"><a href="./posts/music-word-adjacency-graph-silent-noon/index.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' src="posts/music-word-adjacency-graph-silent-noon/figures/word-adjacency.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/music-word-adjacency-graph-silent-noon/index.html" class="no-external">Word Adjacency Graph of Rossetti’s <em>Silent Noon</em></a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('QXJ0'); return false;">Art</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TXVzaWM='); return false;">Music</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('V29yZCUyMEFkamFjZW5jeQ=='); return false;">Word Adjacency</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/music-word-adjacency-graph-silent-noon/index.html" class="no-external">
+Here are the lyrics of silent noon with punctuation and capitalization ignored:
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/music-word-adjacency-graph-silent-noon/index.html" class="no-external">
+<div class="listing-date">
+Feb 19, 2025
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="5" data-categories="QXJ0JTJDTXVzaWMlMkNXb3JkJTIwQWRqYWNlbmN5" data-listing-date-sort="1739923200000" data-listing-file-modified-sort="1791953455753" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="24">
+<div class="thumbnail"><a href="./posts/music-word-adjacency-graph-rolling-down-to-rio/index.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' src="posts/music-word-adjacency-graph-rolling-down-to-rio/figures/word-adjacency.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/music-word-adjacency-graph-rolling-down-to-rio/index.html" class="no-external">Word Adjacency Graph of Rolling Down to Rio</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('QXJ0'); return false;">Art</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TXVzaWM='); return false;">Music</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('V29yZCUyMEFkamFjZW5jeQ=='); return false;">Word Adjacency</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/music-word-adjacency-graph-rolling-down-to-rio/index.html" class="no-external">
+Here are the lyrics of silent noon with punctuation and capitalization ignored:
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/music-word-adjacency-graph-rolling-down-to-rio/index.html" class="no-external">
+<div class="listing-date">
+Feb 19, 2025
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="6" data-categories="QXJ0JTJDTXVzaWMlMkNXb3JkJTIwQWRqYWNlbmN5" data-listing-date-sort="1739923200000" data-listing-file-modified-sort="1791953455763" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="24">
+<div class="thumbnail"><a href="./posts/music-word-adjacency-graph-the-little-irish-girl/index.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' src="posts/music-word-adjacency-graph-the-little-irish-girl/figures/word-adjacency.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/music-word-adjacency-graph-the-little-irish-girl/index.html" class="no-external">Word Adjacency Graph of <em>The Little Irish Girl</em></a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('QXJ0'); return false;">Art</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TXVzaWM='); return false;">Music</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('V29yZCUyMEFkamFjZW5jeQ=='); return false;">Word Adjacency</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/music-word-adjacency-graph-the-little-irish-girl/index.html" class="no-external">
+Here are the lyrics of silent noon with punctuation and capitalization ignored:
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/music-word-adjacency-graph-the-little-irish-girl/index.html" class="no-external">
+<div class="listing-date">
+Feb 19, 2025
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="7" data-categories="UHl0aG9uJTJDS2Vkcm8lMkNEb2NrZXIlMkNEYXRhJTIwU2NpZW5jZSUyQ1plbk1MJTJDQ29va2llY3V0dGVyJTJDTUxGbG93JTJDSW50YWtlJTJDRFZDJTJDUGFjaHlkZXJtJTJDZGJ0JTJDcGx1Z2lucyUyQ01hbWJhJTJDSnVweXRlciUyQ05vdGVib29rcyUyQ1BhbmRhcyUyMFZldCUyQ1BhbmRhcyUyQ1BvbGFycyUyQ1BpcGVsaW5lcyUyQ0tlZHJvJTIwVml6JTJDVmVyc2lvbmluZyUyQ0RhdGElMjBWZXJzaW9uaW5nJTJDZnNzcGVjJTJDRGVwbG95bWVudCUyQ0Jlc3QlMjBQcmFjdGljZXMlMkNQcm9ibGVtJTIwb2YlMjBJbmR1Y3Rpb24lMkNQYXJldG8lMjBGcm9udCUyQ1RyYWRlb2Zmcw==" data-listing-date-sort="1739750400000" data-listing-file-modified-sort="1791953455749" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="65" data-listing-word-count-sort="12803">
+<div class="thumbnail"><a href="./posts/kedro-videos-tutorial/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/kedro-videos-tutorial/index.html" class="no-external">Kedro Video Tutorial Notes</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('S2Vkcm8='); return false;">Kedro</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RG9ja2Vy'); return false;">Docker</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGF0YSUyMFNjaWVuY2U='); return false;">Data Science</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('WmVuTUw='); return false;">ZenML</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q29va2llY3V0dGVy'); return false;">Cookiecutter</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TUxGbG93'); return false;">MLFlow</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SW50YWtl'); return false;">Intake</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RFZD'); return false;">DVC</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGFjaHlkZXJt'); return false;">Pachyderm</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZGJ0'); return false;">dbt</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('cGx1Z2lucw=='); return false;">plugins</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TWFtYmE='); return false;">Mamba</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SnVweXRlcg=='); return false;">Jupyter</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Tm90ZWJvb2tz'); return false;">Notebooks</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGFuZGFzJTIwVmV0'); return false;">Pandas Vet</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGFuZGFz'); return false;">Pandas</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UG9sYXJz'); return false;">Polars</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGlwZWxpbmVz'); return false;">Pipelines</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('S2Vkcm8lMjBWaXo='); return false;">Kedro Viz</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('VmVyc2lvbmluZw=='); return false;">Versioning</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGF0YSUyMFZlcnNpb25pbmc='); return false;">Data Versioning</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZnNzcGVj'); return false;">fsspec</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGVwbG95bWVudA=='); return false;">Deployment</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QmVzdCUyMFByYWN0aWNlcw=='); return false;">Best Practices</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHJvYmxlbSUyMG9mJTIwSW5kdWN0aW9u'); return false;">Problem of Induction</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGFyZXRvJTIwRnJvbnQ='); return false;">Pareto Front</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('VHJhZGVvZmZz'); return false;">Tradeoffs</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/kedro-videos-tutorial/index.html" class="no-external">
+These are my notes on a video series released on Kedro. I started these notes quite a while ago, but I only just got around to finally finishing them.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/kedro-videos-tutorial/index.html" class="no-external">
+<div class="listing-date">
+Feb 17, 2025
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="8" data-categories="VWJ1bnR1JTJDc2V0eGtiYW1wJTJDRHZvcmFrJTJDS2V5Ym9hcmQlMjBMYXlvdXRz" data-listing-date-sort="1733875200000" data-listing-file-modified-sort="1791953455807" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="49">
+<div class="thumbnail"><a href="./posts/ubuntu-setxkbmap-dvorak/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/ubuntu-setxkbmap-dvorak/index.html" class="no-external">How to Set Keyboard Bindings to Programmer’s Dvorak on Ubuntu Using <code>setxkbmap</code></a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('VWJ1bnR1'); return false;">Ubuntu</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('c2V0eGtiYW1w'); return false;">setxkbamp</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RHZvcmFr'); return false;">Dvorak</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('S2V5Ym9hcmQlMjBMYXlvdXRz'); return false;">Keyboard Layouts</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/ubuntu-setxkbmap-dvorak/index.html" class="no-external">
+Changing over to programmer’s Dvorak on Ubuntu is really easy:
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/ubuntu-setxkbmap-dvorak/index.html" class="no-external">
+<div class="listing-date">
+Dec 11, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="9" data-categories="U3RhdGlzdGljcyUyQ1BvaXNzb24lMjBEaXN0cmlidXRpb24lMkNFeHBlY3RlZCUyMFZhbHVl" data-listing-date-sort="1726272000000" data-listing-file-modified-sort="1791953455791" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="19" data-listing-word-count-sort="3707">
+<div class="thumbnail"><a href="./posts/poisson-probability-less-than-average/index.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' src="posts/poisson-probability-less-than-average/figures/confidence_vs_prediction_intervals.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/poisson-probability-less-than-average/index.html" class="no-external">Why Averages Can Be Bad For Resource Allocation</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3RhdGlzdGljcw=='); return false;">Statistics</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UG9pc3NvbiUyMERpc3RyaWJ1dGlvbg=='); return false;">Poisson Distribution</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RXhwZWN0ZWQlMjBWYWx1ZQ=='); return false;">Expected Value</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/poisson-probability-less-than-average/index.html" class="no-external">
+There are some upsides to using averages for resource allocation, but in this post I want to focus on some of the often-ignored or discounted downsides of using averages for…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/poisson-probability-less-than-average/index.html" class="no-external">
+<div class="listing-date">
+Sep 14, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="10" data-categories="UnVzdCUyQ0Rpc2NyZXRlJTIwRXZlbnQlMjBTaW11bGF0aW9uJTJDU2ltdWxhdGlvbiUyQ1NvZnR3YXJlJTIwRGVzaWduJTJDUHJvdG90eXBpbmc=" data-listing-date-sort="1725148800000" data-listing-file-modified-sort="1791953455805" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2456">
+<div class="thumbnail"><a href="./posts/rust-des-environment/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/rust-des-environment/index.html" class="no-external">A First Prototype of A Simple DES Environment in Rust</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UnVzdA=='); return false;">Rust</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGlzY3JldGUlMjBFdmVudCUyMFNpbXVsYXRpb24='); return false;">Discrete Event Simulation</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2ltdWxhdGlvbg=='); return false;">Simulation</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U29mdHdhcmUlMjBEZXNpZ24='); return false;">Software Design</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHJvdG90eXBpbmc='); return false;">Prototyping</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/rust-des-environment/index.html" class="no-external">
+In this post I explain the current state of prototype for discrete event simulation (DES) environment I created in Rust.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/rust-des-environment/index.html" class="no-external">
+<div class="listing-date">
+Sep 1, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="11" data-categories="UHl0aG9uJTJDRmFzdEFQSSUyQ0tlZHJvJTJDSFRUUCUyQ0hUVFAlMjBSZXF1ZXN0cw==" data-listing-date-sort="1724198400000" data-listing-file-modified-sort="1791953455741" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="21" data-listing-word-count-sort="4168">
+<div class="thumbnail"><a href="./posts/fastapi-kedro-params/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/fastapi-kedro-params/index.html" class="no-external">Running A Kedro Project With An HTTP Request Via FastAPI</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RmFzdEFQSQ=='); return false;">FastAPI</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('S2Vkcm8='); return false;">Kedro</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SFRUUA=='); return false;">HTTP</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SFRUUCUyMFJlcXVlc3Rz'); return false;">HTTP Requests</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/fastapi-kedro-params/index.html" class="no-external">
+This post gives a minimal (but not production-ready) example of using FastAPI to run Kedro projects with parameters specified by HTTP requests. Although in this example I…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/fastapi-kedro-params/index.html" class="no-external">
+<div class="listing-date">
+Aug 21, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="12" data-categories="UHl0aG9uJTJDRmFzdEFQSQ==" data-listing-date-sort="1724198400000" data-listing-file-modified-sort="1791953455741" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="92">
+<div class="thumbnail"><a href="./posts/fastapi-hello-world/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/fastapi-hello-world/index.html" class="no-external">Hello World, in FastAPI</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RmFzdEFQSQ=='); return false;">FastAPI</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/fastapi-hello-world/index.html" class="no-external">
+This is a quick post showing how to create a “Hello, World” example in FastAPI.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/fastapi-hello-world/index.html" class="no-external">
+<div class="listing-date">
+Aug 21, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="13" data-categories="TWVybWFpZCUyQ0hlYWx0aGNhcmUlMkNRdWV1ZWluZyUyMFN5c3RlbXM=" data-listing-date-sort="1723248000000" data-listing-file-modified-sort="1791953455749" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="138">
+<div class="thumbnail"><a href="./posts/mermaid-healthcare-service-diagram/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/mermaid-healthcare-service-diagram/index.html" class="no-external">A State Diagram of a Simple Healthcare Service Using Mermaid</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('TWVybWFpZA=='); return false;">Mermaid</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SGVhbHRoY2FyZQ=='); return false;">Healthcare</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UXVldWVpbmclMjBTeXN0ZW1z'); return false;">Queueing Systems</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/mermaid-healthcare-service-diagram/index.html" class="no-external">
+Here is a simple diagram representing a healthcare service. This diagram can be used for communicating with clients about the basic structure of queueing systems.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/mermaid-healthcare-service-diagram/index.html" class="no-external">
+<div class="listing-date">
+Aug 10, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="14" data-categories="WmlnJTJDUXVhcnRvJTJDUHl0aG9uJTJDc3VicHJvY2Vzcw==" data-listing-date-sort="1723161600000" data-listing-file-modified-sort="1791953455993" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="186">
+<div class="thumbnail"><a href="./posts/zig-run-from-python/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/zig-run-from-python/index.html" class="no-external">Build and Run a Zig Project from Quarto Using Python</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('Wmln'); return false;">Zig</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UXVhcnRv'); return false;">Quarto</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('c3VicHJvY2Vzcw=='); return false;">subprocess</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/zig-run-from-python/index.html" class="no-external">
+In this post I share a way to compile and run a Zig file using Python, which in turn can be used to render the output of the Zig program in Quarto.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/zig-run-from-python/index.html" class="no-external">
+<div class="listing-date">
+Aug 9, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="15" data-categories="UnVzdCUyQ01hdGhlbWF0aWNzJTJDR3JlYXRlc3QlMjBDb21tb24lMjBEaXZpc29y" data-listing-date-sort="1723161600000" data-listing-file-modified-sort="1791953455805" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="119">
+<div class="thumbnail"><a href="./posts/rust-gcd/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/rust-gcd/index.html" class="no-external">Calculating the Greatest Common Divisor in Rust</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UnVzdA=='); return false;">Rust</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TWF0aGVtYXRpY3M='); return false;">Mathematics</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('R3JlYXRlc3QlMjBDb21tb24lMjBEaXZpc29y'); return false;">Greatest Common Divisor</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/rust-gcd/index.html" class="no-external">
+I recently learned that Rust does not have a greatest common divisor function. See <span class="citation" data-cites="rust_gcd_forum">Anonymous (2020)</span> to read some discussion about it.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/rust-gcd/index.html" class="no-external">
+<div class="listing-date">
+Aug 9, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="16" data-categories="UnVzdCUyQ1N0YXRpc3RpY3MlMkNQb2lzc29uJTIwQmlub21pYWwlMjBEaXN0cmlidXRpb24lMkNQcm9iYWJpbGl0eSUyME1hc3MlMjBGdW5jdGlvbiUyQ0N1bXVsYXRpdmUlMjBEaXN0cmlidXRpb24lMjBGdW5jdGlvbg==" data-listing-date-sort="1723075200000" data-listing-file-modified-sort="1791953455805" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="166">
+<div class="thumbnail"><a href="./posts/rust-poisson-binomial-pmf-implementation/index.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' src="posts/rust-poisson-binomial-pmf-implementation/figures/histogram.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/rust-poisson-binomial-pmf-implementation/index.html" class="no-external">A Rust Implementation of the Poisson Binomial Probability Distribution</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UnVzdA=='); return false;">Rust</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3RhdGlzdGljcw=='); return false;">Statistics</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UG9pc3NvbiUyMEJpbm9taWFsJTIwRGlzdHJpYnV0aW9u'); return false;">Poisson Binomial Distribution</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHJvYmFiaWxpdHklMjBNYXNzJTIwRnVuY3Rpb24='); return false;">Probability Mass Function</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q3VtdWxhdGl2ZSUyMERpc3RyaWJ1dGlvbiUyMEZ1bmN0aW9u'); return false;">Cumulative Distribution Function</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/rust-poisson-binomial-pmf-implementation/index.html" class="no-external">
+The probability mass function of the Poisson binomial distribution is given by
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/rust-poisson-binomial-pmf-implementation/index.html" class="no-external">
+<div class="listing-date">
+Aug 8, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="17" data-categories="UXVhcnRvJTJDUnVzdCUyQ2V2Y3hyJTJDZXZjeHJfanVweXRlciUyQ0p1cHl0ZXIlMkNKdXB5dGVyJTIwTm90ZWJvb2tz" data-listing-date-sort="1723075200000" data-listing-file-modified-sort="1791953455805" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="172">
+<div class="thumbnail"><a href="./posts/rust-execution-quarto-evcxr-jupyter/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/rust-execution-quarto-evcxr-jupyter/index.html" class="no-external"><code>evcxr_jupyter</code> provides Rust execution in Quarto</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UXVhcnRv'); return false;">Quarto</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UnVzdA=='); return false;">Rust</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZXZjeHI='); return false;">evcxr</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZXZjeHJfanVweXRlcg=='); return false;">evcxr_jupyter</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SnVweXRlcg=='); return false;">Jupyter</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SnVweXRlciUyME5vdGVib29rcw=='); return false;">Jupyter Notebooks</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/rust-execution-quarto-evcxr-jupyter/index.html" class="no-external">
+I recently learned that setting up Rust execution in Quarto is easy via <code>evcxr_jupyter</code>.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/rust-execution-quarto-evcxr-jupyter/index.html" class="no-external">
+<div class="listing-date">
+Aug 8, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="18" data-categories="UnVzdCUyQ1BldGdyYXBoJTJDUGV0Z3JhcGgtZXZjeHIlMkNEb3Q=" data-listing-date-sort="1723075200000" data-listing-file-modified-sort="1791953455805" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="165">
+<div class="thumbnail"><a href="./posts/rust-petgraph-dot-example/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/rust-petgraph-dot-example/index.html" class="no-external">Rendering a Dot Representation of a Graph in Quarto Using Petgraph and Petgraph-evcxr</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UnVzdA=='); return false;">Rust</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGV0Z3JhcGg='); return false;">Petgraph</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGV0Z3JhcGgtZXZjeHI='); return false;">Petgraph-evcxr</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RG90'); return false;">Dot</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/rust-petgraph-dot-example/index.html" class="no-external">
+In this post I want to quickly showcase the use of the use of the Petgraph and Petgraph-evcxr packages. Petgraph is a popular graph data structures and algorithms crate…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/rust-petgraph-dot-example/index.html" class="no-external">
+<div class="listing-date">
+Aug 8, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="19" data-categories="UHl0aG9uJTJDU3RhdGlzdGljcyUyQ1N0b2NoYXN0aWMlMjBQcm9jZXNzZXMlMkNBdXRvcmVncmVzc2l2ZSUyQ1RpbWUlMjBTZXJpZXMlMkNNYXRwbG90bGliJTJDTnVtUHk=" data-listing-date-sort="1722384000000" data-listing-file-modified-sort="1791953455803" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="505">
+<div class="thumbnail"><a href="./posts/python-naive-simulate-autoregressive-data/index.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' src="posts/python-naive-simulate-autoregressive-data/figures/autoregressive_timeseries.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/python-naive-simulate-autoregressive-data/index.html" class="no-external">How to Naïvely Generate Autoregressive Time Series Data in Python</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3RhdGlzdGljcw=='); return false;">Statistics</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3RvY2hhc3RpYyUyMFByb2Nlc3Nlcw=='); return false;">Stochastic Processes</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QXV0b3JlZ3Jlc3NpdmU='); return false;">Autoregressive</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('VGltZSUyMFNlcmllcw=='); return false;">Time Series</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TWF0cGxvdGxpYg=='); return false;">Matplotlib</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TnVtUHk='); return false;">NumPy</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/python-naive-simulate-autoregressive-data/index.html" class="no-external">
+In this post I will show you how to simulate an autoregressive (AR) process using Matplotlib and NumPy.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/python-naive-simulate-autoregressive-data/index.html" class="no-external">
+<div class="listing-date">
+Jul 31, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="20" data-categories="TWVybWFpZCUyQ0JheWVzaWFuJTIwV29ya2Zsb3clMkNCYXllc2lhbiUyMFN0YXRpc3RpY3MlMkNCYXllc2lhbiUyMEluZmVyZW5jZSUyQ0JheWVzaWFuJTIwUHJvYmFiaWxpdHklMkNCYXllc2lhbiUyME1vZGVsbGluZyUyQ1ByaW9yJTIwUHJvYmFiaWxpdHklMkNQb3N0ZXJpb3IlMjBQcm9iYWJpbGl0eSUyQ01vZGVsbGluZyUyQ01vZGVsJTIwRGV2ZWxvcG1lbnQ=" data-listing-date-sort="1722297600000" data-listing-file-modified-sort="1791953455739" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="391">
+<div class="thumbnail"><a href="./posts/bayesian-workflow-diagram-mermaid/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/bayesian-workflow-diagram-mermaid/index.html" class="no-external">A Mermaid Diagram of Bayesian Workflow</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('TWVybWFpZA=='); return false;">Mermaid</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QmF5ZXNpYW4lMjBXb3JrZmxvdw=='); return false;">Bayesian Workflow</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QmF5ZXNpYW4lMjBTdGF0aXN0aWNz'); return false;">Bayesian Statistics</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QmF5ZXNpYW4lMjBJbmZlcmVuY2U='); return false;">Bayesian Inference</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QmF5ZXNpYW4lMjBQcm9iYWJpbGl0eQ=='); return false;">Bayesian Probability</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QmF5ZXNpYW4lMjBNb2RlbGxpbmc='); return false;">Bayesian Modelling</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHJpb3IlMjBQcm9iYWJpbGl0eQ=='); return false;">Prior Probability</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UG9zdGVyaW9yJTIwUHJvYmFiaWxpdHk='); return false;">Posterior Probability</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TW9kZWxsaW5n'); return false;">Modelling</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TW9kZWwlMjBEZXZlbG9wbWVudA=='); return false;">Model Development</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/bayesian-workflow-diagram-mermaid/index.html" class="no-external">
+In this post I visualize the Bayesian workflow introduced by <span class="citation" data-cites="2011.01808">Gelman et al. (2020)</span>.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/bayesian-workflow-diagram-mermaid/index.html" class="no-external">
+<div class="listing-date">
+Jul 30, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="21" data-categories="UHl0aG9uJTJDU3lzdGVtcyUyMEVuZ2luZWVyaW5nJTJDU2UtTGliJTJDRmF1bHQlMjBUcmVlJTJDUHJvYmFiaWxpdHklMkNBc3N1bXB0aW9ucyUyQ1N0YXRpc3RpY2FsJTIwSW5kZXBlbmRlbmNlJTJDRGlzam9pbnQlMjBTZXRzJTJDUGFpcndpc2UlMjBEaXNqb2ludCUyMFNldHMlMkNBbG1vc3QtU3VyZSUyMFBhaXJ3aXNlJTIwRGlzam9pbnQlMjBTZXRz" data-listing-date-sort="1722297600000" data-listing-file-modified-sort="1791953455806" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="873">
+<div class="thumbnail"><a href="./posts/se-lib-fault-tree/index.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' src="posts/se-lib-fault-tree/example.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/se-lib-fault-tree/index.html" class="no-external">The Statistical Assumptions of Quantitative Fault Trees in Se-Lib</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3lzdGVtcyUyMEVuZ2luZWVyaW5n'); return false;">Systems Engineering</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2UtTGli'); return false;">Se-Lib</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RmF1bHQlMjBUcmVl'); return false;">Fault Tree</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHJvYmFiaWxpdHk='); return false;">Probability</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QXNzdW1wdGlvbnM='); return false;">Assumptions</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3RhdGlzdGljYWwlMjBJbmRlcGVuZGVuY2U='); return false;">Statistical Independence</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGlzam9pbnQlMjBTZXRz'); return false;">Disjoint Sets</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGFpcndpc2UlMjBEaXNqb2ludCUyMFNldHM='); return false;">Pairwise Disjoint Sets</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QWxtb3N0LVN1cmUlMjBQYWlyd2lzZSUyMERpc2pvaW50JTIwU2V0cw=='); return false;">Almost-Sure Pairwise Disjoint Sets</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/se-lib-fault-tree/index.html" class="no-external">
+The <code>se-lib</code> (<em>Systems Engineering Library</em>) offers a variety of diagrams that simply take in tuples of strings and numbers. In this post I want to discuss their quantitative…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/se-lib-fault-tree/index.html" class="no-external">
+<div class="listing-date">
+Jul 30, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="22" data-categories="QyUyQ1F1YXJ0byUyQ1B5dGhvbiUyQ3N1YnByb2Nlc3M=" data-listing-date-sort="1722297600000" data-listing-file-modified-sort="1791953455739" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="378">
+<div class="thumbnail"><a href="./posts/c-run-from-python/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/c-run-from-python/index.html" class="no-external">Build and Run a C Project from Quarto Using Python</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('Qw=='); return false;">C</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UXVhcnRv'); return false;">Quarto</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('c3VicHJvY2Vzcw=='); return false;">subprocess</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/c-run-from-python/index.html" class="no-external">
+In this post I share a way to compile and run a C file using Python, which in turn can be used to render the output of the C program in Quarto.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/c-run-from-python/index.html" class="no-external">
+<div class="listing-date">
+Jul 30, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="23" data-categories="UHl0aG9uJTJDQXN5bmNpbyUyQ3N1YnByb2Nlc3MlMkNBc3luY2hyb25vdXMlMjBQcm9ncmFtbWluZyUyQ0NvbmN1cnJlbnQlMjBQcm9ncmFtbWluZw==" data-listing-date-sort="1722297600000" data-listing-file-modified-sort="1791953455738" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="241">
+<div class="thumbnail"><a href="./posts/asyncio-hello-world/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/asyncio-hello-world/index.html" class="no-external">Hello World, in Asyncio</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QXN5bmNpbw=='); return false;">Asyncio</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('c3VicHJvY2Vzcw=='); return false;">subprocess</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QXN5bmNocm9ub3VzJTIwUHJvZ3JhbW1pbmc='); return false;">Asynchronous Programming</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q29uY3VycmVudCUyMFByb2dyYW1taW5n'); return false;">Concurrent Programming</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/asyncio-hello-world/index.html" class="no-external">
+We can define a “Hello, World” type of example using Asyncio as follows:
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/asyncio-hello-world/index.html" class="no-external">
+<div class="listing-date">
+Jul 30, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="24" data-categories="UHl0aG9uJTJDRmxhc2slMkNXZWIlMjBBcHBsaWNhdGlvbnMlMkNVUkw=" data-listing-date-sort="1722211200000" data-listing-file-modified-sort="1791953455749" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="211">
+<div class="thumbnail"><a href="./posts/flask-dynamic-url/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/flask-dynamic-url/index.html" class="no-external">Dynamic URLs in Flask</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Rmxhc2s='); return false;">Flask</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('V2ViJTIwQXBwbGljYXRpb25z'); return false;">Web Applications</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('VVJM'); return false;">URL</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/flask-dynamic-url/index.html" class="no-external">
+In a previous post I showed how to start the most basic Flask web application. In this post I show a dynamic URL which renders content that depends on using the URL as user…<em></em>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/flask-dynamic-url/index.html" class="no-external">
+<div class="listing-date">
+Jul 29, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="25" data-categories="UHl0aG9uJTJDRmxhc2slMkNXZWIlMjBBcHBsaWNhdGlvbnMlMkNFcnJvciUyMEhhbmRsaW5n" data-listing-date-sort="1722211200000" data-listing-file-modified-sort="1791953455749" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="99">
+<div class="thumbnail"><a href="./posts/flask-basic-error-handling/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/flask-basic-error-handling/index.html" class="no-external">Basic Error Handling In Flask</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Rmxhc2s='); return false;">Flask</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('V2ViJTIwQXBwbGljYXRpb25z'); return false;">Web Applications</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RXJyb3IlMjBIYW5kbGluZw=='); return false;">Error Handling</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/flask-basic-error-handling/index.html" class="no-external">
+Flask provides support for error handling, including defining custom errors. When an error occurs which is not otherwise defined, the default error code is 500 (internal…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/flask-basic-error-handling/index.html" class="no-external">
+<div class="listing-date">
+Jul 29, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="26" data-categories="UHl0aG9uJTJDRmxhc2slMkNXZWIlMjBBcHBsaWNhdGlvbnMlMkNVUkwlMkNIVFRQJTJDSFRUUCUyME1ldGhvZHM=" data-listing-date-sort="1722211200000" data-listing-file-modified-sort="1791953455749" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="202">
+<div class="thumbnail"><a href="./posts/flask-http-methods/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/flask-http-methods/index.html" class="no-external">HTTP Methods in Flask</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Rmxhc2s='); return false;">Flask</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('V2ViJTIwQXBwbGljYXRpb25z'); return false;">Web Applications</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('VVJM'); return false;">URL</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SFRUUA=='); return false;">HTTP</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SFRUUCUyME1ldGhvZHM='); return false;">HTTP Methods</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/flask-http-methods/index.html" class="no-external">
+The hypertext transfer protocol (HTTP) is a way for a web application to respond to requests.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/flask-http-methods/index.html" class="no-external">
+<div class="listing-date">
+Jul 29, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="27" data-categories="UHl0aG9uJTJDRmxhc2slMkNXZWIlMjBBcHBsaWNhdGlvbnMlMkNVUkw=" data-listing-date-sort="1722211200000" data-listing-file-modified-sort="1791953455749" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="143">
+<div class="thumbnail"><a href="./posts/flask-url-for/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/flask-url-for/index.html" class="no-external">Creating URL using <code>url_for</code> in Flask</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Rmxhc2s='); return false;">Flask</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('V2ViJTIwQXBwbGljYXRpb25z'); return false;">Web Applications</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('VVJM'); return false;">URL</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/flask-url-for/index.html" class="no-external">
+In this post I quickly show how the <code>url_for</code> command allows us to generate URLs. It isn’t a fundamental feature, but it can save you some boilerplate.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/flask-url-for/index.html" class="no-external">
+<div class="listing-date">
+Jul 29, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="28" data-categories="UHl0aG9uJTJDRmxhc2slMkNXZWIlMjBBcHBsaWNhdGlvbnMlMkNVUkwlMkNIVE1MJTIwVGVtcGxhdGVz" data-listing-date-sort="1722211200000" data-listing-file-modified-sort="1791953455749" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="377">
+<div class="thumbnail"><a href="./posts/flask-html-templates/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/flask-html-templates/index.html" class="no-external">HTML Templates in Flask</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Rmxhc2s='); return false;">Flask</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('V2ViJTIwQXBwbGljYXRpb25z'); return false;">Web Applications</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('VVJM'); return false;">URL</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SFRNTCUyMFRlbXBsYXRlcw=='); return false;">HTML Templates</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/flask-html-templates/index.html" class="no-external">
+In this post we will not only have dynamic URLs, but start loading HTML templates. In the last post I wrote on Flask I used the factorial function. In this post we’ll take a…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/flask-html-templates/index.html" class="no-external">
+<div class="listing-date">
+Jul 29, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="29" data-categories="UHl0aG9uJTJDRmxhc2slMkNXZWIlMjBBcHBsaWNhdGlvbnM=" data-listing-date-sort="1722211200000" data-listing-file-modified-sort="1791953455749" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="236">
+<div class="thumbnail"><a href="./posts/hello-world-flask/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/hello-world-flask/index.html" class="no-external">Hello World, In Flask</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Rmxhc2s='); return false;">Flask</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('V2ViJTIwQXBwbGljYXRpb25z'); return false;">Web Applications</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/hello-world-flask/index.html" class="no-external">
+Ths post shows a relatively minimal example of using Flask to develop of web application. This application will only run locally, but it is otherwise a bona fide web…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/hello-world-flask/index.html" class="no-external">
+<div class="listing-date">
+Jul 29, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="30" data-categories="UnVzdCUyQ1F1YXJ0byUyQ1B5dGhvbiUyQ0NhcmdvJTJDcnVzdGM=" data-listing-date-sort="1722211200000" data-listing-file-modified-sort="1791953455806" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="548">
+<div class="thumbnail"><a href="./posts/rust-run-from-python/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/rust-run-from-python/index.html" class="no-external">Build and Run a Rust Project from Quarto Using Python</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UnVzdA=='); return false;">Rust</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UXVhcnRv'); return false;">Quarto</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q2FyZ28='); return false;">Cargo</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('cnVzdGM='); return false;">rustc</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/rust-run-from-python/index.html" class="no-external">
+In a previous post I used a Lua extension to compile a Rust file using the <code>rustc</code> compiler. I ran into multiple problems.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/rust-run-from-python/index.html" class="no-external">
+<div class="listing-date">
+Jul 29, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="31" data-categories="UHl0aG9uJTJDRmxhc2slMkNXZWIlMjBBcHBsaWNhdGlvbnMlMkNVUkwlMkNSZXF1ZXN0cyUyQ0ltYWdlcw==" data-listing-date-sort="1722211200000" data-listing-file-modified-sort="1791953455749" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="278">
+<div class="thumbnail"><a href="./posts/flask-display-image/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/flask-display-image/index.html" class="no-external">Fetching from a URL and Displaying an Image Using Flask</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Rmxhc2s='); return false;">Flask</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('V2ViJTIwQXBwbGljYXRpb25z'); return false;">Web Applications</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('VVJM'); return false;">URL</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UmVxdWVzdHM='); return false;">Requests</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SW1hZ2Vz'); return false;">Images</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/flask-display-image/index.html" class="no-external">
+In this post I am going to show a Flask application which takes an integer and searches the Magic the Gathering database for an image of a corresponding card whose…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/flask-display-image/index.html" class="no-external">
+<div class="listing-date">
+Jul 29, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="32" data-categories="UXVhcnRvJTJDQyUyQiUyQiUyQ0x1YSUyQ1BhbmRvYw==" data-listing-date-sort="1722124800000" data-listing-file-modified-sort="1791953455739" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="558">
+<div class="thumbnail"><a href="./posts/cpp-execution-for-quarto/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/cpp-execution-for-quarto/index.html" class="no-external">Executable C++ Code in Quarto</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UXVhcnRv'); return false;">Quarto</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QyUyQiUyQg=='); return false;">C++</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('THVh'); return false;">Lua</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGFuZG9j'); return false;">Pandoc</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/cpp-execution-for-quarto/index.html" class="no-external">
+I have turned off the Lua filter discussed in this post. It was running everytime I rendered/published the blog. I have copy-pasted the original output for reference.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/cpp-execution-for-quarto/index.html" class="no-external">
+<div class="listing-date">
+Jul 28, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="33" data-categories="UXVhcnRvJTJDQyUyQ0x1YSUyQ1BhbmRvYw==" data-listing-date-sort="1722124800000" data-listing-file-modified-sort="1791953455739" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="554">
+<div class="thumbnail"><a href="./posts/c-execution-for-quarto/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/c-execution-for-quarto/index.html" class="no-external">Executable C Code in Quarto</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UXVhcnRv'); return false;">Quarto</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Qw=='); return false;">C</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('THVh'); return false;">Lua</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGFuZG9j'); return false;">Pandoc</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/c-execution-for-quarto/index.html" class="no-external">
+I have turned off the Lua filter discussed in this post. It was running everytime I rendered/published the blog. I have copy-pasted the original output for reference.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/c-execution-for-quarto/index.html" class="no-external">
+<div class="listing-date">
+Jul 28, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="34" data-categories="UXVhcnRvJTJDUnVzdCUyQ0x1YSUyQ1BhbmRvYw==" data-listing-date-sort="1721952000000" data-listing-file-modified-sort="1791953455805" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="937">
+<div class="thumbnail"><a href="./posts/rust-execution-for-quarto/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/rust-execution-for-quarto/index.html" class="no-external">Executable Rust Code in Quarto</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UXVhcnRv'); return false;">Quarto</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UnVzdA=='); return false;">Rust</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('THVh'); return false;">Lua</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGFuZG9j'); return false;">Pandoc</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/rust-execution-for-quarto/index.html" class="no-external">
+I have turned off the Lua filter discussed in this post. It was running everytime I rendered/published the blog. I have copy-pasted the original output for reference.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/rust-execution-for-quarto/index.html" class="no-external">
+<div class="listing-date">
+Jul 26, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="35" data-categories="UHl0aG9uJTJDQ1B5dGhvbiUyQ0MlMkNjb21waWxhdGlvbiUyQ21ha2UlMkNEZWJpYW4lMkNMaW51eA==" data-listing-date-sort="1721865600000" data-listing-file-modified-sort="1791953455749" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="480">
+<div class="thumbnail"><a href="./posts/how-to-compile-python-on-linux/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/how-to-compile-python-on-linux/index.html" class="no-external">How to Compile CPython on Debian-Based Linux</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q1B5dGhvbg=='); return false;">CPython</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Qw=='); return false;">C</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Y29tcGlsYXRpb24='); return false;">compilation</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWFrZQ=='); return false;">make</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGViaWFu'); return false;">Debian</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TGludXg='); return false;">Linux</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/how-to-compile-python-on-linux/index.html" class="no-external">
+This is a short blog post to remind myself how to compile CPython from its source.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/how-to-compile-python-on-linux/index.html" class="no-external">
+<div class="listing-date">
+Jul 25, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="36" data-categories="YmxvZyUyQ1F1YXJ0byUyQ0pla3lsbCUyQ01lcm1haWQlMkNHcmFwaHZpeiUyQ2RvdA==" data-listing-date-sort="1721520000000" data-listing-file-modified-sort="1791953455765" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="392">
+<div class="thumbnail"><a href="./posts/my-quarto-blog/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/my-quarto-blog/index.html" class="no-external">My Quarto Blog</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('YmxvZw=='); return false;">blog</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UXVhcnRv'); return false;">Quarto</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SmVreWxs'); return false;">Jekyll</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TWVybWFpZA=='); return false;">Mermaid</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('R3JhcGh2aXo='); return false;">Graphviz</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZG90'); return false;">dot</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/my-quarto-blog/index.html" class="no-external">
+I am switching to Quarto for my blog. My Jekyll blog is available here, and I might move some of the posts over to the new blog over time.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/my-quarto-blog/index.html" class="no-external">
+<div class="listing-date">
+Jul 21, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="37" data-categories="S2Vkcm8lMkNSeWUlMkNQeXRob24lMkNQcm9qZWN0JTIwTWFuYWdlbWVudCUyQ1BhY2thZ2UlMjBNYW5hZ2VtZW50" data-listing-date-sort="1719792000000" data-listing-file-modified-sort="1791953455739" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2744">
+<div class="thumbnail"><a href="./posts/combining-kedro-with-rye/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/combining-kedro-with-rye/index.html" class="no-external">Combining Kedro with Rye</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('S2Vkcm8='); return false;">Kedro</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Unll'); return false;">Rye</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHJvamVjdCUyME1hbmFnZW1lbnQ='); return false;">Project Management</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGFja2FnZSUyME1hbmFnZW1lbnQ='); return false;">Package Management</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/combining-kedro-with-rye/index.html" class="no-external">
+I recently asked on the Kedro Slack channel about what experience people have had with combining Kedro with package management tools in Python such as PDM, Poetry, Hatch or…<code></code><code></code>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/combining-kedro-with-rye/index.html" class="no-external">
+<div class="listing-date">
+Jul 1, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="38" data-categories="U3RhdGlzdGljcyUyQ1Byb2JhYmlsaXR5JTIwRGlzdHJpYnV0aW9ucyUyQ0Rlcml2YXRpb24lMkNDaGFuZ2UlMjBvZiUyMFZhcmlhYmxlcyUyQ1RyYW5zZm9ybWF0aW9ucyUyQ1N0b2NoYXN0aWMlMjBPcmRlcnMlMkNJZGVudGljYWwlMjBhbmQlMjBJbmRlcGVuZGVudGx5JTIwRGlzdHJpYnV0ZWQlMkNSYW5kb20lMjBWYXJpYWJsZXMlMkNTdGF0aXN0aWNhbCUyMEluZGVwZW5kZW5jZSUyQ1Ntb290aCUyMEZ1bmN0aW9ucyUyQ01pbmltdW0lMkNNYXhpbXVtJTJDUHJvYmFiaWxpdHklMkNPcmRlciUyMFN0YXRpc3RpY3MlMkNDb252b2x1dGlvbiUyQ0NvbnZvbHV0aW9uJTIwVGhlb3JlbSUyQ0ZvdXJpZXIlMjBUcmFuc2Zvcm0=" data-listing-date-sort="1709337600000" data-listing-file-modified-sort="1791953455749" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="340">
+<div class="thumbnail"><a href="./posts/math-distribution-independent-max-greater-than-min/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/math-distribution-independent-max-greater-than-min/index.html" class="no-external">The Probability of the Minimum of X Being Greater than the Maximum of Y</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3RhdGlzdGljcw=='); return false;">Statistics</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHJvYmFiaWxpdHklMjBEaXN0cmlidXRpb25z'); return false;">Probability Distributions</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGVyaXZhdGlvbg=='); return false;">Derivation</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q2hhbmdlJTIwb2YlMjBWYXJpYWJsZXM='); return false;">Change of Variables</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('VHJhbnNmb3JtYXRpb25z'); return false;">Transformations</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3RvY2hhc3RpYyUyME9yZGVycw=='); return false;">Stochastic Orders</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SWRlbnRpY2FsJTIwYW5kJTIwSW5kZXBlbmRlbnRseSUyMERpc3RyaWJ1dGVk'); return false;">Identical and Independently Distributed</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UmFuZG9tJTIwVmFyaWFibGVz'); return false;">Random Variables</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3RhdGlzdGljYWwlMjBJbmRlcGVuZGVuY2U='); return false;">Statistical Independence</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U21vb3RoJTIwRnVuY3Rpb25z'); return false;">Smooth Functions</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TWluaW11bQ=='); return false;">Minimum</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TWF4aW11bQ=='); return false;">Maximum</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHJvYmFiaWxpdHk='); return false;">Probability</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('T3JkZXIlMjBTdGF0aXN0aWNz'); return false;">Order Statistics</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q29udm9sdXRpb24='); return false;">Convolution</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q29udm9sdXRpb24lMjBUaGVvcmVt'); return false;">Convolution Theorem</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Rm91cmllciUyMFRyYW5zZm9ybQ=='); return false;">Fourier Transform</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/math-distribution-independent-max-greater-than-min/index.html" class="no-external">
+Suppose we have a collection of IID random variables <span class="math inline">\(\{ X_1, \ldots, X_n \}\)</span>, and we also have a second collection of IID random variables <span class="math inline">\(\{ Y_1, \ldots, Y_m \}\)</span>. Each <span class="math inline">…</span><span class="math inline"></span><span class="math inline"></span><span class="math inline"></span><span class="math inline"></span>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/math-distribution-independent-max-greater-than-min/index.html" class="no-external">
+<div class="listing-date">
+Mar 2, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="39" data-categories="Q29tcHV0ZXIlMjBQcm9ncmFtbWluZyUyQ1B5dGhvbiUyQ1RyYWNpbmclMkNTY3JpcHRpbmclMkNDTEk=" data-listing-date-sort="1706659200000" data-listing-file-modified-sort="1791953455803" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="361">
+<div class="thumbnail"><a href="./posts/python-clie-log-trace/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/python-clie-log-trace/index.html" class="no-external">A Python CLI Example to Log the Execution Trace</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q29tcHV0ZXIlMjBQcm9ncmFtbWluZw=='); return false;">Computer Programming</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('VHJhY2luZw=='); return false;">Tracing</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2NyaXB0aW5n'); return false;">Scripting</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q0xJ'); return false;">CLI</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/python-clie-log-trace/index.html" class="no-external">
+This is just a short script implementing a logger of the trace of a Python program’s execution.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/python-clie-log-trace/index.html" class="no-external">
+<div class="listing-date">
+Jan 31, 2024
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="40" data-categories="UnVzdCUyQ0Rpc2NyZXRlJTIwRXZlbnQlMjBTaW11bGF0aW9uJTJDUHl0aG9uJTJDU2ltUHklMkNTaW11bGF0aW9uJTJDU29mdHdhcmUlMjBEZXNpZ24lMkNQcm90b3R5cGluZyUyQ0NQeXRob24lMkNQeVB5" data-listing-date-sort="1703030400000" data-listing-file-modified-sort="1791953455806" data-listing-date-modified-sort="1723248000000" data-listing-reading-time-sort="8" data-listing-word-count-sort="1568">
+<div class="thumbnail"><a href="./posts/rust-simpy-car/index.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' data-src="posts/rust-simpy-car/figures/performance_histogram.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/rust-simpy-car/index.html" class="no-external">A Rust Implementation of SimPy’s Simple Car DES</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UnVzdA=='); return false;">Rust</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGlzY3JldGUlMjBFdmVudCUyMFNpbXVsYXRpb24='); return false;">Discrete Event Simulation</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2ltUHk='); return false;">SimPy</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2ltdWxhdGlvbg=='); return false;">Simulation</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U29mdHdhcmUlMjBEZXNpZ24='); return false;">Software Design</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHJvdG90eXBpbmc='); return false;">Prototyping</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q1B5dGhvbg=='); return false;">CPython</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHlQeQ=='); return false;">PyPy</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/rust-simpy-car/index.html" class="no-external">
+This post gives an implementation of this example from the SimPy documentation:
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/rust-simpy-car/index.html" class="no-external">
+<div class="listing-date">
+Dec 20, 2023
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="41" data-categories="UHl0aG9uJTJDRGlzY3JldGUlMjBFdmVudCUyMFNpbXVsYXRpb24lMkNDaXclMkNRdWV1ZWluZyUyME5ldHdvcmslMkNRdWV1ZWluZyUyMFN5c3RlbSUyQ1F1ZXVlaW5nJTIwVGhlb3J5JTJDRXhwb25lbnRpYWwlMjBEaXN0cmlidXRpb24lMkNTdGF0aXN0aWNzJTJDT3BlcmF0aW9ucyUyMFJlc2VhcmNoJTJDUmFuZG9tJTIwVmFyaWFibGVzJTJDSW50ZXItQXJyaXZhbCUyMFRpbWVzJTJDU2VydmljZSUyMFRpbWVzJTJDUmFuZG9tJTIwTnVtYmVyJTIwR2VuZXJhdGlvbiUyQ1NlcnZlcnM=" data-listing-date-sort="1703030400000" data-listing-file-modified-sort="1791953455799" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="697">
+<div class="thumbnail"><a href="./posts/python-ciw-d-m-1-queue/index.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' data-src="posts/python-ciw-d-m-1-queue/figures/arrival_vs_waiting.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/python-ciw-d-m-1-queue/index.html" class="no-external">Implementing a D/M/1 Queue in Ciw</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGlzY3JldGUlMjBFdmVudCUyMFNpbXVsYXRpb24='); return false;">Discrete Event Simulation</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q2l3'); return false;">Ciw</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UXVldWVpbmclMjBOZXR3b3Jr'); return false;">Queueing Network</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UXVldWVpbmclMjBTeXN0ZW0='); return false;">Queueing System</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UXVldWVpbmclMjBUaGVvcnk='); return false;">Queueing Theory</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RXhwb25lbnRpYWwlMjBEaXN0cmlidXRpb24='); return false;">Exponential Distribution</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3RhdGlzdGljcw=='); return false;">Statistics</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('T3BlcmF0aW9ucyUyMFJlc2VhcmNo'); return false;">Operations Research</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UmFuZG9tJTIwVmFyaWFibGVz'); return false;">Random Variables</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SW50ZXItQXJyaXZhbCUyMFRpbWVz'); return false;">Inter-Arrival Times</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2VydmljZSUyMFRpbWVz'); return false;">Service Times</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UmFuZG9tJTIwTnVtYmVyJTIwR2VuZXJhdGlvbg=='); return false;">Random Number Generation</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2VydmVycw=='); return false;">Servers</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/python-ciw-d-m-1-queue/index.html" class="no-external">
+Ciw is a Python package for simulating queueing networks.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/python-ciw-d-m-1-queue/index.html" class="no-external">
+<div class="listing-date">
+Dec 20, 2023
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="42" data-categories="UHl0aG9uJTJDRGlzY3JldGUlMjBFdmVudCUyMFNpbXVsYXRpb24lMkNDaXclMkNTaW11bGF0aW9uJTJDUXVldWVpbmclMjBTeXN0ZW1zJTJDUXVldWVpbmclMjBUaGVvcnklMkNIeXBlcmV4cG9uZW50aWFsJTIwRGlzdHJpYnV0aW9uJTJDR2FtbWElMjBEaXN0cmlidXRpb24lMkNTdGF0aXN0aWNzJTJDT3BlcmF0aW9ucyUyMFJlc2VhcmNoJTJDUmFuZG9tJTIwVmFyaWFibGVzJTJDSW50ZXItQXJyaXZhbCUyMFRpbWVzJTJDU2VydmljZSUyMFRpbWVz" data-listing-date-sort="1703030400000" data-listing-file-modified-sort="1791953455801" data-listing-date-modified-sort="1723161600000" data-listing-reading-time-sort="5" data-listing-word-count-sort="860">
+<div class="thumbnail"><a href="./posts/python-ciw-g-g-1-queue/index.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' data-src="posts/python-ciw-g-g-1-queue/figures/arrival_vs_waiting.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/python-ciw-g-g-1-queue/index.html" class="no-external">Implementing a G/G/1 Queue in Ciw</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGlzY3JldGUlMjBFdmVudCUyMFNpbXVsYXRpb24='); return false;">Discrete Event Simulation</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q2l3'); return false;">Ciw</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2ltdWxhdGlvbg=='); return false;">Simulation</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UXVldWVpbmclMjBTeXN0ZW1z'); return false;">Queueing Systems</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UXVldWVpbmclMjBUaGVvcnk='); return false;">Queueing Theory</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SHlwZXJleHBvbmVudGlhbCUyMERpc3RyaWJ1dGlvbg=='); return false;">Hyperexponential Distribution</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('R2FtbWElMjBEaXN0cmlidXRpb24='); return false;">Gamma Distribution</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3RhdGlzdGljcw=='); return false;">Statistics</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('T3BlcmF0aW9ucyUyMFJlc2VhcmNo'); return false;">Operations Research</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UmFuZG9tJTIwVmFyaWFibGVz'); return false;">Random Variables</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SW50ZXItQXJyaXZhbCUyMFRpbWVz'); return false;">Inter-Arrival Times</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2VydmljZSUyMFRpbWVz'); return false;">Service Times</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/python-ciw-g-g-1-queue/index.html" class="no-external">
+Ciw is a Python package for simulating queueing networks.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/python-ciw-g-g-1-queue/index.html" class="no-external">
+<div class="listing-date">
+Dec 20, 2023
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="43" data-categories="UHl0aG9uJTJDU2ltdWxhdGlvbiUyQ1F1ZXVlaW5nJTIwU3lzdGVtJTJDUXVldWVpbmclMjBOZXR3b3JrJTJDUXVldWVpbmclMjBUaGVvcnklMkNSb3V0aW5nJTJDUHJvY2Vzcy1CYXNlZCUyMFNpbXVsYXRpb24lMkNSYW5kb20lMjBWYXJpYWJsZXMlMkNDb25zdGFudCUyMFJhbmRvbSUyMFZhcmlhYmxlcyUyQ0Fycml2YWwlMjBEaXN0cmlidXRpb25zJTJDU2VydmljZSUyMERpc3RyaWJ1dGlvbnMlMkNUaW1pbmclMkNJbml0aWFsaXphdGlvbiUyQ0Rpc2NyZXRlJTIwRXZlbnQlMjBTaW11bGF0aW9uJTJDQ2l3JTJDU2ltUHk=" data-listing-date-sort="1703030400000" data-listing-file-modified-sort="1791953455803" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="608">
+<div class="thumbnail"><a href="./posts/python-ciw-simpy-car/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/python-ciw-simpy-car/index.html" class="no-external">A Ciw Implementation of SimPy’s Car Example</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2ltdWxhdGlvbg=='); return false;">Simulation</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UXVldWVpbmclMjBTeXN0ZW0='); return false;">Queueing System</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UXVldWVpbmclMjBOZXR3b3Jr'); return false;">Queueing Network</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UXVldWVpbmclMjBUaGVvcnk='); return false;">Queueing Theory</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Um91dGluZw=='); return false;">Routing</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHJvY2Vzcy1CYXNlZCUyMFNpbXVsYXRpb24='); return false;">Process-Based Simulation</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UmFuZG9tJTIwVmFyaWFibGVz'); return false;">Random Variables</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q29uc3RhbnQlMjBSYW5kb20lMjBWYXJpYWJsZXM='); return false;">Constant Random Variables</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QXJyaXZhbCUyMERpc3RyaWJ1dGlvbnM='); return false;">Arrival Distributions</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2VydmljZSUyMERpc3RyaWJ1dGlvbnM='); return false;">Service Distributions</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('VGltaW5n'); return false;">Timing</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SW5pdGlhbGl6YXRpb24='); return false;">Initialization</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGlzY3JldGUlMjBFdmVudCUyMFNpbXVsYXRpb24='); return false;">Discrete Event Simulation</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q2l3'); return false;">Ciw</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2ltUHk='); return false;">SimPy</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/python-ciw-simpy-car/index.html" class="no-external">
+In the SimPy documentation they describe a car process which involves a car which transitions between parking and driving. From being parked it takes 5 units of time to…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/python-ciw-simpy-car/index.html" class="no-external">
+<div class="listing-date">
+Dec 20, 2023
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="44" data-categories="UHl0aG9uJTJDRGlzY3JldGUlMjBFdmVudCUyMFNpbXVsYXRpb24lMkNDaXclMkNTaW1QeQ==" data-listing-date-sort="1702944000000" data-listing-file-modified-sort="1791953455803" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1123">
+<div class="thumbnail"><a href="./posts/python-ciw-simpy-clock/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/python-ciw-simpy-clock/index.html" class="no-external">A Ciw Implementation of SimPy’s Clock Example</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGlzY3JldGUlMjBFdmVudCUyMFNpbXVsYXRpb24='); return false;">Discrete Event Simulation</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q2l3'); return false;">Ciw</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2ltUHk='); return false;">SimPy</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/python-ciw-simpy-clock/index.html" class="no-external">
+This post looks at implementing a simple simulation described in the SImPy documentation using the Ciw Python package.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/python-ciw-simpy-clock/index.html" class="no-external">
+<div class="listing-date">
+Dec 19, 2023
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="45" data-categories="UHl0aG9uJTJDU2VjdXJpdHklMkNJbmZvcm1hdGlvbiUyMFNlY3VyaXR5JTJDQmFuZGl0" data-listing-date-sort="1678320000000" data-listing-file-modified-sort="1791953455798" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="206">
+<div class="thumbnail"><a href="./posts/python-bandit-on-bandit/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/python-bandit-on-bandit/index.html" class="no-external">Bandit On Bandit</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2VjdXJpdHk='); return false;">Security</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SW5mb3JtYXRpb24lMjBTZWN1cml0eQ=='); return false;">Information Security</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QmFuZGl0'); return false;">Bandit</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/python-bandit-on-bandit/index.html" class="no-external">
+Bandit is a Python package for checking for security issues in Python code. I have been thinking about using Bandit to check for security risks in my own software as well as…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/python-bandit-on-bandit/index.html" class="no-external">
+<div class="listing-date">
+Mar 9, 2023
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="46" data-categories="U3RhdGlzdGljcyUyQ1N0YXRpc3RpY2FsJTIwSW5kZXBlbmRlbmNlJTJDUHJlZGljdGl2ZSUyME1vZGVsbGluZyUyQ0Fzc3VtcHRpb25zJTJDQ29uZGl0aW9uYWwlMjBFeHBlY3RhdGlvbiUyQ1B5dGhvbiUyQ051bVB5" data-listing-date-sort="1678060800000" data-listing-file-modified-sort="1791953455806" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="501">
+<div class="thumbnail"><a href="./posts/statistics-train-predict-assume-statistical-dependence/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/statistics-train-predict-assume-statistical-dependence/index.html" class="no-external">Training Predictive Models Does Not Assume Statistical Dependence</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3RhdGlzdGljcw=='); return false;">Statistics</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3RhdGlzdGljYWwlMjBJbmRlcGVuZGVuY2U='); return false;">Statistical Independence</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHJlZGljdGl2ZSUyME1vZGVsbGluZw=='); return false;">Predictive Modelling</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QXNzdW1wdGlvbnM='); return false;">Assumptions</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q29uZGl0aW9uYWwlMjBFeHBlY3RhdGlvbg=='); return false;">Conditional Expectation</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TnVtUHk='); return false;">NumPy</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/statistics-train-predict-assume-statistical-dependence/index.html" class="no-external">
+It was suggested to me recently that to fit a predictive model supposes that the domain variables cause the image variables. This is not the case.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/statistics-train-predict-assume-statistical-dependence/index.html" class="no-external">
+<div class="listing-date">
+Mar 6, 2023
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="47" data-categories="QXJ0JTJDQ3JheW9u" data-listing-date-sort="1677974400000" data-listing-file-modified-sort="1791953455740" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="235">
+<div class="thumbnail"><a href="./posts/crayon-drawing-1/index.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' data-src="posts/crayon-drawing-1/crayon_drawing_1.jpg"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/crayon-drawing-1/index.html" class="no-external">Crayon 1</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('QXJ0'); return false;">Art</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q3JheW9u'); return false;">Crayon</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/crayon-drawing-1/index.html" class="no-external">
+I tried googling “what is a picture made with crayon called” and I consistently got suggestions for crayon etching, which is a more specific usage of crayons. I asked…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/crayon-drawing-1/index.html" class="no-external">
+<div class="listing-date">
+Mar 5, 2023
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="48" data-categories="TWFjaGluZSUyMExlYXJuaW5nJTJDTmV1cmFsJTIwTmV0d29ya3M=" data-listing-date-sort="1677974400000" data-listing-file-modified-sort="1791953455770" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1384">
+<div class="thumbnail"><a href="./posts/neural-networks-simple-functions/index.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' data-src="posts/neural-networks-simple-functions/sine_training_history.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/neural-networks-simple-functions/index.html" class="no-external">How Expressive Are Simple Neural Networks?</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('TWFjaGluZSUyMExlYXJuaW5n'); return false;">Machine Learning</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TmV1cmFsJTIwTmV0d29ya3M='); return false;">Neural Networks</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/neural-networks-simple-functions/index.html" class="no-external">
+It is well-known that neural networks are universal function approximators under mild assumptions. Such theorems proving arbitrary bounds on the empirical risk and similar…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/neural-networks-simple-functions/index.html" class="no-external">
+<div class="listing-date">
+Mar 5, 2023
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="49" data-categories="TWF0aCUyQ0dyYXBoJTIwVGhlb3J5JTJDR3JhcGhsZXRzJTJDQXV0b21vcnBoaXNtcyUyQ0F1dG9tb3JwaGlzbSUyME9yYml0cyUyQ0F1dG9tb3JwaGlzbSUyME9yYml0cyUyMG9mJTIwR3JhcGhsZXRzJTJDSXNvbW9ycGhpc21zJTJDR3JhcGhzJTJDUmVsYXRpb25zJTJDQmluYXJ5JTIwUmVsYXRpb25zJTJDU2V0cyUyQ1ZlcnRpY2VzJTJDRWRnZXMlMkNTdWJzZXRzJTJDQ2FydGVzaWFuJTIwUHJvZHVjdHMlMkNOZXR3b3JrcyUyQ2RpcmVjdGVkJTIwR3JhcGhzJTJDRGlncmFwaHMlMkNTaWduZWQlMjBHcmFwaHMlMkNXZWlnaHRlZCUyMEdyYXBocyUyQ1NpbXBsZSUyMEdyYXBocyUyQ0Z1bmN0aW9ucyUyQ0luamVjdGl2ZSUyMEZ1bmN0aW9ucyUyQ1N1cmplY3RpdmUlMjBGdW5jdGlvbnMlMkNCaWplY3RpdmUlMjBGdW5jdGlvbnMlMkNHcmFwaCUyMElzb21vcnBoaXNtJTJDR3JhcGglMjBBdXRvbW9ycGhpc21zJTJDRXF1aXZhbGVuY2UlMjBSZWxhdGlvbnMlMkNSZWZsZXhpdmUlMjBSZWxhdGlvbnMlMkNTeW1tZXRyaWMlMjBSZWxhdGlvbnMlMkNUcmFuc2l0aXZlJTIwUmVsYXRpb25zJTJDRXF1aXZhbGVuY2UlMjBDbGFzc2VzJTJDVmVydGV4JTIwT3JiaXQlMjBBdXRvbW9ycGhpc21zJTJDUGVybXV0YXRpb24lMjBHcm91cHM=" data-listing-date-sort="1677801600000" data-listing-file-modified-sort="1791953455739" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="695">
+<div class="thumbnail"><a href="./posts/automorphism-orbits-of-graphlets/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/automorphism-orbits-of-graphlets/index.html" class="no-external">Automorphism Orbits of Graphlets</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('TWF0aA=='); return false;">Math</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('R3JhcGglMjBUaGVvcnk='); return false;">Graph Theory</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('R3JhcGhsZXRz'); return false;">Graphlets</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QXV0b21vcnBoaXNtcw=='); return false;">Automorphisms</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QXV0b21vcnBoaXNtJTIwT3JiaXRz'); return false;">Automorphism Orbits</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QXV0b21vcnBoaXNtJTIwT3JiaXRzJTIwb2YlMjBHcmFwaGxldHM='); return false;">Automorphism Orbits of Graphlets</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SXNvbW9ycGhpc21z'); return false;">Isomorphisms</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('R3JhcGhz'); return false;">Graphs</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UmVsYXRpb25z'); return false;">Relations</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QmluYXJ5JTIwUmVsYXRpb25z'); return false;">Binary Relations</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2V0cw=='); return false;">Sets</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('VmVydGljZXM='); return false;">Vertices</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RWRnZXM='); return false;">Edges</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3Vic2V0cw=='); return false;">Subsets</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q2FydGVzaWFuJTIwUHJvZHVjdHM='); return false;">Cartesian Products</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TmV0d29ya3M='); return false;">Networks</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZGlyZWN0ZWQlMjBHcmFwaHM='); return false;">directed Graphs</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGlncmFwaHM='); return false;">Digraphs</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2lnbmVkJTIwR3JhcGhz'); return false;">Signed Graphs</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('V2VpZ2h0ZWQlMjBHcmFwaHM='); return false;">Weighted Graphs</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2ltcGxlJTIwR3JhcGhz'); return false;">Simple Graphs</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RnVuY3Rpb25z'); return false;">Functions</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('SW5qZWN0aXZlJTIwRnVuY3Rpb25z'); return false;">Injective Functions</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3VyamVjdGl2ZSUyMEZ1bmN0aW9ucw=='); return false;">Surjective Functions</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QmlqZWN0aXZlJTIwRnVuY3Rpb25z'); return false;">Bijective Functions</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('R3JhcGglMjBJc29tb3JwaGlzbQ=='); return false;">Graph Isomorphism</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('R3JhcGglMjBBdXRvbW9ycGhpc21z'); return false;">Graph Automorphisms</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RXF1aXZhbGVuY2UlMjBSZWxhdGlvbnM='); return false;">Equivalence Relations</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UmVmbGV4aXZlJTIwUmVsYXRpb25z'); return false;">Reflexive Relations</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3ltbWV0cmljJTIwUmVsYXRpb25z'); return false;">Symmetric Relations</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('VHJhbnNpdGl2ZSUyMFJlbGF0aW9ucw=='); return false;">Transitive Relations</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RXF1aXZhbGVuY2UlMjBDbGFzc2Vz'); return false;">Equivalence Classes</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('VmVydGV4JTIwT3JiaXQlMjBBdXRvbW9ycGhpc21z'); return false;">Vertex Orbit Automorphisms</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGVybXV0YXRpb24lMjBHcm91cHM='); return false;">Permutation Groups</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/automorphism-orbits-of-graphlets/index.html" class="no-external">
+Back in May 2020 I released a video on YouTube for the HackSeq event:
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/automorphism-orbits-of-graphlets/index.html" class="no-external">
+<div class="listing-date">
+Mar 3, 2023
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="50" data-categories="QXJ0JTJDUGFpbnRpbmclMkNXZXQtT24tV2V0JTIwVGVjaG5pcXVlJTJDT2lsJTIwUGFpbnRpbmc=" data-listing-date-sort="1677801600000" data-listing-file-modified-sort="1791953455782" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="275">
+<div class="thumbnail"><a href="./posts/painting-7/index.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' data-src="posts/painting-7/painting_7.jpg"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/painting-7/index.html" class="no-external">Painting 7</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('QXJ0'); return false;">Art</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGFpbnRpbmc='); return false;">Painting</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('V2V0LU9uLVdldCUyMFRlY2huaXF1ZQ=='); return false;">Wet-On-Wet Technique</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('T2lsJTIwUGFpbnRpbmc='); return false;">Oil Painting</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/painting-7/index.html" class="no-external">
+I finished my 7th painting!
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/painting-7/index.html" class="no-external">
+<div class="listing-date">
+Mar 3, 2023
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="51" data-categories="U3RhdGlzdGljcyUyQ0RpcmFjJTIwRGVsdGElMjBEaXN0cmlidXRpb24lMkNQeXRob24lMkNQeU1DJTJDQXJ2aXolMkNNYXRwbG90bGliJTJDTnVtUHklMkNNaXh0dXJlJTIwRGlzdHJpYnV0aW9ucyUyQ1BvaXNzb24lMjBEaXN0cmlidXRpb24lMkNEaXJpY2hsZXQlMjBEaXN0cmlidXRpb24lMkNCYXllc2lhbiUyMEluZmVyZW5jZSUyQ0JheWVzaWFuJTIwTW9kZWxsaW5nJTJDQmF5ZXNpYW4lMjBQcm9iYWJpbGl0eSUyQ0JheWVzaWFuJTIwU3RhdGlzdGljcw==" data-listing-date-sort="1677628800000" data-listing-file-modified-sort="1791953455794" data-listing-date-modified-sort="1723248000000" data-listing-reading-time-sort="3" data-listing-word-count-sort="563">
+<div class="thumbnail"><a href="./posts/pymc-mixtures-of-dirac-delta-distributions/index.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' data-src="posts/pymc-mixtures-of-dirac-delta-distributions/figures/dirac_mixture_trace.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/pymc-mixtures-of-dirac-delta-distributions/index.html" class="no-external">Mixtures of Dirac Delta Distributions in PyMC</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3RhdGlzdGljcw=='); return false;">Statistics</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGlyYWMlMjBEZWx0YSUyMERpc3RyaWJ1dGlvbg=='); return false;">Dirac Delta Distribution</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHlNQw=='); return false;">PyMC</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QXJ2aXo='); return false;">Arviz</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TWF0cGxvdGxpYg=='); return false;">Matplotlib</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TnVtUHk='); return false;">NumPy</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TWl4dHVyZSUyMERpc3RyaWJ1dGlvbnM='); return false;">Mixture Distributions</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UG9pc3NvbiUyMERpc3RyaWJ1dGlvbg=='); return false;">Poisson Distribution</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGlyaWNobGV0JTIwRGlzdHJpYnV0aW9u'); return false;">Dirichlet Distribution</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QmF5ZXNpYW4lMjBJbmZlcmVuY2U='); return false;">Bayesian Inference</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QmF5ZXNpYW4lMjBNb2RlbGxpbmc='); return false;">Bayesian Modelling</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QmF5ZXNpYW4lMjBQcm9iYWJpbGl0eQ=='); return false;">Bayesian Probability</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QmF5ZXNpYW4lMjBTdGF0aXN0aWNz'); return false;">Bayesian Statistics</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/pymc-mixtures-of-dirac-delta-distributions/index.html" class="no-external">
+This post just shows what a Dirac delta distribution is and how to make a mixture of Dirac delta distributions in PyMC.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/pymc-mixtures-of-dirac-delta-distributions/index.html" class="no-external">
+<div class="listing-date">
+Mar 1, 2023
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="52" data-categories="U3RhdGlzdGljcyUyQ1JhbmtzJTJDUmFuay1CYXNlZCUyMFN0YXRpc3RpY3M=" data-listing-date-sort="1677369600000" data-listing-file-modified-sort="1791953455807" data-listing-date-modified-sort="1723248000000" data-listing-reading-time-sort="10" data-listing-word-count-sort="1913">
+<div class="thumbnail"><a href="./posts/what-are-ranks/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/what-are-ranks/index.html" class="no-external">What are Ranks?</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3RhdGlzdGljcw=='); return false;">Statistics</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UmFua3M='); return false;">Ranks</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UmFuay1CYXNlZCUyMFN0YXRpc3RpY3M='); return false;">Rank-Based Statistics</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/what-are-ranks/index.html" class="no-external">
+This post looks at the notion of ranking data or variables. Broadly, ranks are numbers used to describe something about the order-like properties on the elements of a set.…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/what-are-ranks/index.html" class="no-external">
+<div class="listing-date">
+Feb 26, 2023
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="53" data-categories="TWF0aGVtYXRpY3MlMkNEaWZmZXJlbnRpYWwlMjBGb3Jtcw==" data-listing-date-sort="1677283200000" data-listing-file-modified-sort="1791953455780" data-listing-date-modified-sort="1723248000000" data-listing-reading-time-sort="4" data-listing-word-count-sort="739">
+<div class="thumbnail"><a href="./posts/notes-differential-forms/index.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' data-src="posts/notes-differential-forms/figures/tangent_space_cubic.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/notes-differential-forms/index.html" class="no-external">Notes on Differential Forms</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('TWF0aGVtYXRpY3M='); return false;">Mathematics</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGlmZmVyZW50aWFsJTIwRm9ybXM='); return false;">Differential Forms</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/notes-differential-forms/index.html" class="no-external">
+Suppose <span class="math inline">\(C \subseteq \mathbb{R}^2\)</span> is a curve and <span class="math inline">\(p \in C\)</span>. The <strong>tangent space to <span class="math inline">\(C\)</span> at <span class="math inline">\(p\)</span>, <span class="math inline">\(T_pC\)</span></strong> is the set of all vectors tangent to <span class="math inline">\(C\)</span> at <span class="math inline">\(p\)</span>.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/notes-differential-forms/index.html" class="no-external">
+<div class="listing-date">
+Feb 25, 2023
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="54" data-categories="TWF0aGVtYXRpY3MlMkNPcmRlciUyMFRoZW9yeSUyQ1BhcnRpYWwlMjBPcmRlcnMlMkNSZWZsZXhpdmUlMjBSZWxhdGlvbnMlMkNUcmFuc2l0aXZlJTIwUmVsYXRpb25zJTJDQW50aXN5bW1ldHJpYyUyMFJlbGF0aW9ucyUyQ0FzeW1tZXRyaWMlMjBSZWxhdGlvbnMlMkNDYXJ0ZXNpYW4lMjBQcm9kdWN0cyUyQ0JpbmFyeSUyMFJlbGF0aW9ucyUyQ1JlbGF0aW9ucyUyQ1B5dGhvbiUyQ0xhVGVYJTJDRGlyZWN0ZWQlMjBBY3ljbGljJTIwR3JhcGhzJTJDU3RyaWN0JTIwUGFydGlhbCUyME9yZGVycw==" data-listing-date-sort="1676764800000" data-listing-file-modified-sort="1791953455782" data-listing-date-modified-sort="1723248000000" data-listing-reading-time-sort="8" data-listing-word-count-sort="1559">
+<div class="thumbnail"><a href="./posts/notes-order-theory/index.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' data-src="posts/notes-order-theory/figures/cover_diagram.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/notes-order-theory/index.html" class="no-external">Notes on Order Theory</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('TWF0aGVtYXRpY3M='); return false;">Mathematics</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('T3JkZXIlMjBUaGVvcnk='); return false;">Order Theory</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGFydGlhbCUyME9yZGVycw=='); return false;">Partial Orders</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UmVmbGV4aXZlJTIwUmVsYXRpb25z'); return false;">Reflexive Relations</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('VHJhbnNpdGl2ZSUyMFJlbGF0aW9ucw=='); return false;">Transitive Relations</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QW50aXN5bW1ldHJpYyUyMFJlbGF0aW9ucw=='); return false;">Antisymmetric Relations</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QXN5bW1ldHJpYyUyMFJlbGF0aW9ucw=='); return false;">Asymmetric Relations</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q2FydGVzaWFuJTIwUHJvZHVjdHM='); return false;">Cartesian Products</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QmluYXJ5JTIwUmVsYXRpb25z'); return false;">Binary Relations</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UmVsYXRpb25z'); return false;">Relations</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TGFUZVg='); return false;">LaTeX</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGlyZWN0ZWQlMjBBY3ljbGljJTIwR3JhcGhz'); return false;">Directed Acyclic Graphs</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3RyaWN0JTIwUGFydGlhbCUyME9yZGVycw=='); return false;">Strict Partial Orders</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/notes-order-theory/index.html" class="no-external">
+This section provides an overview of some fundamental concepts in order theory.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/notes-order-theory/index.html" class="no-external">
+<div class="listing-date">
+Feb 19, 2023
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="55" data-categories="QkFTSCUyQ1ZvbHVudGVlciUyQ2lOYXR1cmFsaXN0JTJDRGF0YSUyQ0NpdGl6ZW4lMjBTY2llbmNlJTJDTGludXglMkNVYnVudHU=" data-listing-date-sort="1647388800000" data-listing-file-modified-sort="1791953455807" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="87">
+<div class="thumbnail"><a href="./posts/unzip-inaturalist-observations-ubuntu/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/unzip-inaturalist-observations-ubuntu/index.html" class="no-external">Unzip Your iNaturalist Observations On A Ubuntu System</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('QkFTSA=='); return false;">BASH</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Vm9sdW50ZWVy'); return false;">Volunteer</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('aU5hdHVyYWxpc3Q='); return false;">iNaturalist</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGF0YQ=='); return false;">Data</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q2l0aXplbiUyMFNjaWVuY2U='); return false;">Citizen Science</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TGludXg='); return false;">Linux</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('VWJ1bnR1'); return false;">Ubuntu</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/unzip-inaturalist-observations-ubuntu/index.html" class="no-external">
+This post was migrated from my iNaturalist journal to my Jekyll blog on 2023-02-26. It was then migrated to my Quarto blog on 2024-07-27.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/unzip-inaturalist-observations-ubuntu/index.html" class="no-external">
+<div class="listing-date">
+Mar 16, 2022
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="56" data-categories="UHl0aG9uJTJDVm9sdW50ZWVyJTJDaU5hdHVyYWxpc3QlMkNEYXRhJTJDUGxvdHRpbmclMkNNYXRwbG90bGliJTJDUGFuZGFzJTJDQ2l0aXplbiUyMFNjaWVuY2U=" data-listing-date-sort="1647388800000" data-listing-file-modified-sort="1791953455788" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="584">
+<div class="thumbnail"><a href="./posts/pie-chart-inaturalist/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/pie-chart-inaturalist/index.html" class="no-external">How to Plot a Basic Pie Chart Of Taxa At A Given Taxonomic Rank Using Pandas And Matplotlib</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Vm9sdW50ZWVy'); return false;">Volunteer</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('aU5hdHVyYWxpc3Q='); return false;">iNaturalist</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGF0YQ=='); return false;">Data</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGxvdHRpbmc='); return false;">Plotting</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TWF0cGxvdGxpYg=='); return false;">Matplotlib</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UGFuZGFz'); return false;">Pandas</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q2l0aXplbiUyMFNjaWVuY2U='); return false;">Citizen Science</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/pie-chart-inaturalist/index.html" class="no-external">
+This post was migrated from my iNaturalist journal to my Jekyll blog on 2023-02-26. It was then migrated to my Quarto blog on 2024-07-27.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/pie-chart-inaturalist/index.html" class="no-external">
+<div class="listing-date">
+Mar 16, 2022
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="57" data-categories="UHl0aG9uJTJDU2NpcHklMkNOdW1QeSUyQ3RpbWVpdCUyQ29wdGltaXphdGlvbiUyQ051bWJh" data-listing-date-sort="1554768000000" data-listing-file-modified-sort="1791953455805" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="656">
+<div class="thumbnail"><a href="./posts/quantecon-2-numba/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/quantecon-2-numba/index.html" class="no-external">QuantEcon 1 Numba</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2NpcHk='); return false;">Scipy</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TnVtUHk='); return false;">NumPy</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('dGltZWl0'); return false;">timeit</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('b3B0aW1pemF0aW9u'); return false;">optimization</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TnVtYmE='); return false;">Numba</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/quantecon-2-numba/index.html" class="no-external">
+Numba is a Python library that provides an open source just-in-time compiler that allows a coder to mark selected parts of their code to be compiled for faster execution. As…<span class="math inline"></span><em></em>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/quantecon-2-numba/index.html" class="no-external">
+<div class="listing-date">
+Apr 9, 2019
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="58" data-categories="UHl0aG9uJTJDU2NpcHklMkNOdW1QeSUyQ3NjaXB5Lm9wdGltaXplJTJDTmV3dG9uJTIwUmFwaHNvbiUyMG1ldGhvZCUyQ0JyZW50cyUyMG1ldGhvZCUyQ3RpbWVpdCUyQ2Jpc2VjdCUyMG1ldGhvZCUyQ29wdGltaXphdGlvbg==" data-listing-date-sort="1553731200000" data-listing-file-modified-sort="1791953455804" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="847">
+<div class="thumbnail"><a href="./posts/quantecon-1-scipy-submodules/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/quantecon-1-scipy-submodules/index.html" class="no-external">QuantEcon 1 Scipy Submodules</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2NpcHk='); return false;">Scipy</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TnVtUHk='); return false;">NumPy</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('c2NpcHkub3B0aW1pemU='); return false;">scipy.optimize</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TmV3dG9uJTIwUmFwaHNvbiUyMG1ldGhvZA=='); return false;">Newton Raphson method</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('QnJlbnRzJTIwbWV0aG9k'); return false;">Brents method</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('dGltZWl0'); return false;">timeit</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('YmlzZWN0JTIwbWV0aG9k'); return false;">bisect method</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('b3B0aW1pemF0aW9u'); return false;">optimization</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/quantecon-1-scipy-submodules/index.html" class="no-external">
+As someone with previous background in Python, I’ve been blasting my way through the basics of the Quantecon curricula. One of the joys of self-directed learning is that…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/quantecon-1-scipy-submodules/index.html" class="no-external">
+<div class="listing-date">
+Mar 28, 2019
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="59" data-categories="RGF0YSUyMFNjaWVuY2U=" data-listing-date-sort="1553299200000" data-listing-file-modified-sort="1791953455806" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="127">
+<div class="thumbnail"><a href="./posts/starting-data-science/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/starting-data-science/index.html" class="no-external">Starting Data Science</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGF0YSUyMFNjaWVuY2U='); return false;">Data Science</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/starting-data-science/index.html" class="no-external">
+I’ve been thinking about Data Science lately, and I recently watched a YouTube video describing how to get started learning prerequisite knowledge for this field. While I am…<em></em>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/starting-data-science/index.html" class="no-external">
+<div class="listing-date">
+Mar 23, 2019
+</div>
+<div class="listing-author">
+Galen Seilis
+</div>
+</a>
+</div>
+</div>
+</div>
 <div class="listing-no-matching d-none">No matching items</div>
+<nav id="listing-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
