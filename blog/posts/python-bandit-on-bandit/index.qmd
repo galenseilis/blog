@@ -1,0 +1,30 @@
+---
+title: "Bandit On Bandit"
+author: "Galen Seilis"
+date: "2023-03-09"
+categories: [Python, Security, Information Security, Bandit]
+---
+
+Bandit is a Python package for checking for security issues in Python code. I have been thinking about using Bandit to check for security risks in my own software as well as 3rd party packages that I use. I couldn't help but venture to the potentially ironic situation of Bandit evaluating that Bandit itself is insecure.
+
+We can find the version of Bandit we are using like this:
+
+```python
+{{< include ./scripts/check_bandit_version.py >}}
+```
+
+The path that the `__init__.py` file for Bandit is located on your system can be found in `bandit.__file__`. We can call Bandit from the command line on itself.
+
+```python
+{{< include ./scripts/run_bandit_on_self.py >}}
+```
+
+At a quick glance you might misread the above output as saying that there are no issues. There actually are, but the authors of Bandit have disabled them using the `#nosec` comment. This is indicated by the `Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 10`. Why the output also says `Total lines skipped (#nosec): 0` I am not sure.
+
+We can find the locations of these lines.
+
+```python
+{{< include ./scripts/find_nosec.py >}}
+```
+
+This is always something important to keep in mind about Bandit. It can tell you about potential security issues, but it also reports when it has been told to ignore some line of code.

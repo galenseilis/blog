@@ -1,0 +1,49 @@
+---
+title: "Build and Run a Zig Project from Quarto Using Python"
+author: "Galen Seilis"
+date: "2024-08-09"
+categories: [Zig, Quarto, Python, subprocess]
+---
+
+In this post I share a way to compile and run a Zig file using Python, which in turn can be used to render the output of the Zig program in Quarto.
+
+## Python Script
+
+The Python script I developed is similar to the one I made for Rust, except that it does two phases. While Zig has a very powerful and flexible build system, I will only attempt to compile a single project file.
+
+```python
+{{< include ./scripts/run_zig.py >}}
+```
+
+Let's see it in action.
+
+## Single File Example
+
+Here I will define a simple "Hello, World" example. We can do this by creating a project folder `hello`, and calling `zig init` within it to create a default project. In the default `main.zig` I put the following Zig code.
+
+```rust
+const std = @import("std");
+
+pub fn main() void {
+    std.debug.print("Hello, World!\n", .{});
+}
+```
+
+::: {.callout-caution}
+I have used Rust's syntax highlighting for the above Zig code.
+:::
+
+
+Now we can build and run our Zig project by using the earlier Python script.
+
+```python
+{{< include ./scripts/run_zig_hello.py >}}
+```
+
+```default
+Hello, World!
+```
+
+## Conclusion
+
+While Zig doesn't really have a REPL (that I'm aware of), you can include its standard output in Quarto blogs using Python's Subprocess library.

@@ -7,6 +7,8 @@ website:
   title: "Galen's Blog"
   navbar:
     right:
+      - presentations.qmd
+      - publications.qmd
       - about.qmd
       - icon: github
         href: https://github.com/galenseilis

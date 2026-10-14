@@ -1,0 +1,19 @@
+---
+title: "Word Adjacency Graph of Rossetti's *Silent Noon*"
+author: "Galen Seilis"
+date: "2025-02-19"
+categories: [Art, Music, Word Adjacency]
+---
+
+Here are the lyrics of silent noon with punctuation and capitalization ignored:
+
+```python
+{{< include ./scripts/lyrics.py >}}
+```
+
+```python
+{{< include ./scripts/plot_word_adjacency.py >}}
+```
+
+![Word Adjacency in Silent Noon](./figures/word-adjacency.png)
+

@@ -1,0 +1,9 @@
+arviz
+beautifulsoup4
+graphviz
+matplotlib
+numpy
+pandas
+pymc
+requests
+tabulate
