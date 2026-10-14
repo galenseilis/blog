@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Galen Seilis">
+<meta name="dcterms.date" content="2023-11-12">
+
+<title>A Permutative Generalization of the Cross Product Is Just the Cross Product – Galen’s Blog</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-55617497126496852ff9f5a59253c640.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Galen’s Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../presentations.html"> 
+<span class="menu-text">Presentations</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/galenseilis"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://bsky.app/profile/galen-seilis.bsky.social"> <i class="bi bi-bluesky" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">A Permutative Generalization of the Cross Product Is Just the Cross Product</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Mathematics</div>
+                <div class="quarto-category">Linear-Algebra</div>
+                <div class="quarto-category">Cross-Product</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Galen Seilis </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 12, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>The goal of this post is to present a minimal description of a generalization of the cross product between two vectors.</p>
+<p>The cross product for vectors <span class="math inline">\(\vec a, \vec b \in \mathbb{R}^3\)</span> is given by</p>
+<p><span class="math display">\[\vec a \times \vec b = \begin{bmatrix} a_2b_3 - a_3b_2 \\ a_3b_1 - a_1b_3 \\ a_1b_2 - a_2b_1 \end{bmatrix}.\]</span></p>
+</section>
+<section id="the-generalization" class="level2">
+<h2 class="anchored" data-anchor-id="the-generalization">The Generalization</h2>
+<p>The approach I took to this generalization is to start with the cross product and re-express it in terms of other operations:</p>
+<p><span class="math display">\[\begin{align} \vec a \times \vec b =&amp; \begin{bmatrix} a_2b_3 - a_3b_2 \\ a_3b_1 - a_1b_3 \\ a_1b_2 - a_2b_1 \end{bmatrix} \\ =&amp; \begin{bmatrix} a_2b_3\\ a_3b_1 \\ a_1b_2 \end{bmatrix} - \begin{bmatrix} a_3b_2 \\  a_1b_3 \\  a_2b_1 \end{bmatrix} \\ =&amp; \begin{bmatrix} a_2\\ a_3 \\ a_1 \end{bmatrix} \odot \begin{bmatrix} b_3\\ b_1 \\ b_2 \end{bmatrix} - \begin{bmatrix} a_3 \\  a_1 \\  a_2 \end{bmatrix} \odot \begin{bmatrix} b_2 \\  b_3 \\  b_1 \end{bmatrix} \\ =&amp; \begin{bmatrix} 0 &amp; 1 &amp; 0\\ 0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0 \end{bmatrix} \begin{bmatrix} a_1\\ a_2 \\ a_3 \end{bmatrix} \odot \begin{bmatrix} 0 &amp; 0 &amp; 1\\ 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \end{bmatrix} \begin{bmatrix} b_1\\ b_2 \\ b_3 \end{bmatrix} - \begin{bmatrix} 0 &amp; 0 &amp; 1\\ 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \end{bmatrix} \begin{bmatrix} a_1 \\  a_2 \\  a_3 \end{bmatrix} \odot \begin{bmatrix} 0 &amp; 1 &amp; 0\\ 0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0 \end{bmatrix} \begin{bmatrix} b_1 \\  b_2 \\  b_3 \end{bmatrix} \\ =&amp; \begin{bmatrix} 0 &amp; 1 &amp; 0\\ 0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0 \end{bmatrix} \begin{bmatrix} a_1\\ a_2 \\ a_3 \end{bmatrix} \odot \begin{bmatrix} 0 &amp; 1 &amp; 0\\ 0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0 \end{bmatrix}^T \begin{bmatrix} b_1\\ b_2 \\ b_3 \end{bmatrix} - \begin{bmatrix} 0 &amp; 1 &amp; 0\\ 0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0 \end{bmatrix}^T \begin{bmatrix} a_1 \\  a_2 \\  a_3 \end{bmatrix} \odot \begin{bmatrix} 0 &amp; 1 &amp; 0\\ 0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0 \end{bmatrix} \begin{bmatrix} b_1 \\  b_2 \\  b_3 \end{bmatrix}  \end{align}\]</span></p>
+<p>The <span class="math inline">\(\odot\)</span> operator is the <a href="https://stats.stackexchange.com/questions/533577/what-is-the-difference-between-the-dot-product-and-the-element-by-element-multip/533578#533578">Hadamard product</a>. So the above expansion of the cross product is pretty busy, especially with all the matrices and operators. Notice that we’re actually using a single permutation matrix and its transpose. We can readily generalize from this particular <span class="math inline">\(3 \times 3\)</span> permutation matrix to <span class="math inline">\(n \times n\)</span> permutation matrices acting on <span class="math inline">\(\vec a, \vec b \in \mathbb{R}^n\)</span> producing what I’ll term the <em>permutive cross-product</em>. This cross product, <span class="math inline">\(\times_P : \mathbb{R}^n \times \mathbb{R}^n \mapsto \mathbb{R}^n\)</span> is defined as follows:</p>
+<p><span class="math display">\[\vec a \times_P \vec b \triangleq P \vec a \odot P^T\vec b - P^T \vec a \odot P \vec b\]</span></p>
+<p>For a given dimension <span class="math inline">\(n\)</span>, there are <span class="math inline">\(n!\)</span> permutations to choose from to construct permutation matrices <span class="math inline">\(P\)</span>. While we have achieved a generalization of the cross product, perhaps we would like to find special cases of it that are more natural to the original cross product.</p>
+<section id="signatures" class="level3">
+<h3 class="anchored" data-anchor-id="signatures">Signatures</h3>
+<p>For example, the permutation matrix</p>
+<p><span class="math display">\[\begin{bmatrix} 0 &amp; 1 &amp; 0\\ 0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0 \end{bmatrix}\]</span></p>
+<p>used above to obtain the ordinary cross product represents an even permutation. For any permutation matrix <span class="math inline">\(P_{\sigma}\)</span> representing permutation <span class="math inline">\(\sigma\)</span> we know that</p>
+<p><span class="math display">\[\text{sign} \left( \det (P_{\sigma}) \right) = \text{sgn}(\sigma)\]</span></p>
+<p>where <span class="math inline">\(\text{sign}\)</span> on the left-hand-side is the <a href="https://en.wikipedia.org/wiki/Sign_function">sign function</a> and the <span class="math inline">\(\text{sgn}\)</span> on the right-hand-side (RHS) is the <a href="https://en.wikipedia.org/wiki/Parity_of_a_permutation">permutation signature</a>. It is regrettable that these functions have the same name so I dropped an “i” in the RHS just to make them distinct for our denotation. When <span class="math inline">\(\text{sgn}(\sigma) = 1\)</span> the permutation is even, and when <span class="math inline">\(\text{sgn}(\sigma) = -1\)</span> it is an odd permutation. The permutation matrix for the ordinary cross product is even, and we can rely on the property that</p>
+<p><span class="math display">\[\det (A) = \det (A^T)\]</span></p>
+<p>for any square matrix <span class="math inline">\(A\)</span> to know that the transpose is also an even permutation. So if you wanted to, you could restrict yourself to even permutations.</p>
+<p>If you wanted to match your generalization even more closely with the original cross product, you could further restrict your permutation to have exactly two inversions. That is the permutation signature satisfies the equality</p>
+<p><span class="math display">\[\text{sgn}(\sigma) = (-1)^{N(\sigma)}\]</span></p>
+<p>where <span class="math inline">\(N(\sigma)\)</span> is the number of <a href="https://en.wikipedia.org/wiki/Inversion_(discrete_mathematics)">inversions</a> in <span class="math inline">\(\sigma\)</span>. The permutation matrix for the ordinary cross product has exactly two inversions. But to me this feels too restrictive since it means we can only flip the order in two components, which is not really a restriction that I care about.</p>
+</section>
+<section id="orthogonality" class="level3">
+<h3 class="anchored" data-anchor-id="orthogonality">Orthogonality</h3>
+<p>A more interesting property, to me, is that the cross product gives a vector which is orthogonal to either of the input vectors. Using the following Python code I searched over all permutation matrices in 3D that where orthogonal to the original vectors <strong>and</strong> were not the zero vector. (The zero vector is not particularly interesting here and is orthogonal to all vectors in <span class="math inline">\(\mathbb{R}^n\)</span>.)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> itertools</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sympy <span class="im">as</span> sp</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>dim <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> sp.Matrix([sp.Symbol(<span class="ss">f'a</span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(dim)])</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> sp.Matrix([sp.Symbol(<span class="ss">f'b</span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(dim)])</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>zero_vec <span class="op">=</span> sp.Matrix([[<span class="dv">0</span>]]<span class="op">*</span>dim)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> perm <span class="kw">in</span> itertools.permutations(<span class="bu">range</span>(dim)):</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    P <span class="op">=</span> sp.eye(dim)[perm,:]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    cross <span class="op">=</span> (P <span class="op">*</span> a).multiply_elementwise(P.T <span class="op">*</span> b) <span class="op">-\</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>            (P.T <span class="op">*</span> a).multiply_elementwise(P <span class="op">*</span> b)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> cross.dot(a).simplify() <span class="op">==</span> <span class="dv">0</span> <span class="kw">and</span> cross.dot(b).simplify() <span class="op">==</span> <span class="dv">0</span> <span class="kw">and</span> cross <span class="op">!=</span> zero_vec:</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(sp.latex(cross))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We obtain only two non-trivial vectors:</p>
+<p><span class="math display">\[\left[\begin{matrix}a_{2} b_{3} - a_{3} b_{2}\\- a_{1} b_{3} + a_{3} b_{1}\\a_{1} b_{2} - a_{2} b_{1}\end{matrix}\right]\]</span></p>
+<p><span class="math display">\[\left[\begin{matrix}- a_{2} b_{3} + a_{3} b_{2}\\a_{1} b_{3} - a_{3} b_{1}\\- a_{1} b_{2} + a_{2} b_{1}\end{matrix}\right]\]</span></p>
+<p>One of these is the original cross product as we introduced it, and the other is just a reflection of it obtained by multiplying by negative one. This just indicates that there are two directions an orthogonal vector could point. So nothing really new is found from our generalization when we search in 3D. Let’s go to 4D.</p>
+<p>Using the same code as above, except we assign <span class="math inline">\(dim=4\)</span>, we find the following vectors are non-trivial examples of the generalization:</p>
+<p><span class="math display">\[\left[\begin{matrix}0\\a_{3} b_{4} - a_{4} b_{3}\\- a_{2} b_{4} + a_{4} b_{2}\\a_{2} b_{3} - a_{3} b_{2}\end{matrix}\right]\]</span></p>
+<p><span class="math display">\[\left[\begin{matrix}0\\- a_{3} b_{4} + a_{4} b_{3}\\a_{2} b_{4} - a_{4} b_{2}\\- a_{2} b_{3} + a_{3} b_{2}\end{matrix}\right]
+\]</span></p>
+<p><span class="math display">\[\left[\begin{matrix}a_{2} b_{3} - a_{3} b_{2}\\- a_{1} b_{3} + a_{3} b_{1}\\a_{1} b_{2} - a_{2} b_{1}\\0\end{matrix}\right]
+\]</span></p>
+<p><span class="math display">\[\left[\begin{matrix}a_{2} b_{4} - a_{4} b_{2}\\- a_{1} b_{4} + a_{4} b_{1}\\0\\a_{1} b_{2} - a_{2} b_{1}\end{matrix}\right]
+\]</span></p>
+<p><span class="math display">\[\left[\begin{matrix}- a_{2} b_{3} + a_{3} b_{2}\\a_{1} b_{3} - a_{3} b_{1}\\- a_{1} b_{2} + a_{2} b_{1}\\0\end{matrix}\right]
+\]</span></p>
+<p><span class="math display">\[\left[\begin{matrix}a_{3} b_{4} - a_{4} b_{3}\\0\\- a_{1} b_{4} + a_{4} b_{1}\\a_{1} b_{3} - a_{3} b_{1}\end{matrix}\right]
+\]</span></p>
+<p><span class="math display">\[\left[\begin{matrix}- a_{2} b_{4} + a_{4} b_{2}\\a_{1} b_{4} - a_{4} b_{1}\\0\\- a_{1} b_{2} + a_{2} b_{1}\end{matrix}\right]
+\]</span></p>
+<p><span class="math display">\[\left[\begin{matrix}- a_{3} b_{4} + a_{4} b_{3}\\0\\a_{1} b_{4} - a_{4} b_{1}\\- a_{1} b_{3} + a_{3} b_{1}\end{matrix}\right]
+\]</span></p>
+<p>Look at that, we found 8 cross products in 4D! But notice that they are not so different than the two we found in 3D. You’ll see that 4 of them are just the ordinary cross product for certain choices of variables, which is embedded in 4D where one of the components is always zero. The remaining four are again just reflections that point in the opposite direction.</p>
+<p>So not only did we find a generalization of the cross product for n-dimensional space, but we also learned that the generalization really just provides either trivial examples, examples that are just the ordinary cross product embedded in higher dimensions or their reflections. Personally, I’m satisfied with this generalization because it helped me better understand that there are limited options for what one might mean by a non-trivial vector being orthogonal to two other vectors (or likewise the plane that they span but I did not discuss that).</p>
+<p>But let’s get perverse by generalizing further (just for fun).</p>
+</section>
+</section>
+<section id="getting-perverse" class="level2">
+<h2 class="anchored" data-anchor-id="getting-perverse">Getting Perverse</h2>
+<p>Let’s taking a further generalization from what we have seen so far. The operator</p>
+<p><span class="math display">\[\vec a \times_P \vec b \triangleq P \vec a \odot P^T\vec b - P^T \vec a \odot P \vec b\]</span></p>
+<p>gives us a generalization of the cross product using a given permutation matrix <span class="math inline">\(P\)</span>. Let’s see if we find anything new if we generalize to</p>
+<p><span class="math display">\[P_1 \vec a \odot  P_2 \vec b - P_3 \vec a \odot P_4 \vec b\]</span></p>
+<p>where <span class="math inline">\(P_1,P_2,P_3,P_4\)</span> are independent choices of permutation matrices. Yup, we’re going to try a lot of permutation matrices. Here is some updated code to look through all these possible permutation matrices:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> itertools</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sympy <span class="im">as</span> sp</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sympy <span class="im">import</span> latex</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>dim <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> sp.Matrix([sp.Symbol(<span class="ss">f'a</span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(dim)])</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> sp.Matrix([sp.Symbol(<span class="ss">f'b</span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(dim)])</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>zero_vec <span class="op">=</span> sp.Matrix([[<span class="dv">0</span>]]<span class="op">*</span>dim)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> []</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> perm1 <span class="kw">in</span> itertools.permutations(<span class="bu">range</span>(dim)):</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> perm2 <span class="kw">in</span> itertools.permutations(<span class="bu">range</span>(dim)):</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> perm3 <span class="kw">in</span> itertools.permutations(<span class="bu">range</span>(dim)):</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> perm4 <span class="kw">in</span> itertools.permutations(<span class="bu">range</span>(dim)):</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                P1 <span class="op">=</span> sp.eye(dim)[perm1,:]</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                P2 <span class="op">=</span> sp.eye(dim)[perm2,:]</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>                P3 <span class="op">=</span> sp.eye(dim)[perm3,:]</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                P4 <span class="op">=</span> sp.eye(dim)[perm4,:]</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>                cross <span class="op">=</span> (P1 <span class="op">*</span> a).multiply_elementwise(P2 <span class="op">*</span> b) <span class="op">-\</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>                        (P3 <span class="op">*</span> a).multiply_elementwise(P4 <span class="op">*</span> b)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> cross.dot(a).simplify() <span class="op">==</span> <span class="dv">0</span> <span class="kw">and</span> cross.dot(b).simplify() <span class="op">==</span> <span class="dv">0</span> <span class="kw">and</span> cross <span class="op">!=</span> zero_vec:</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>                    results.append(</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>                        [</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>                            <span class="ss">f'$</span><span class="sc">{</span>latex(P1)<span class="sc">}</span><span class="ss">$'</span>,</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>                            <span class="ss">f'$</span><span class="sc">{</span>latex(P2)<span class="sc">}</span><span class="ss">$'</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>                            <span class="ss">f'$</span><span class="sc">{</span>latex(P3)<span class="sc">}</span><span class="ss">$'</span>,</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>                            <span class="ss">f'$</span><span class="sc">{</span>latex(P4)<span class="sc">}</span><span class="ss">$'</span>,</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>                            <span class="ss">f'$</span><span class="sc">{</span>latex(cross)<span class="sc">}</span><span class="ss">$'</span>,</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>                            <span class="ss">f'$</span><span class="sc">{</span>latex(cross.dot(a).simplify())<span class="sc">}</span><span class="ss">$'</span>,</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>                            <span class="ss">f'$</span><span class="sc">{</span>latex(cross.dot(b).simplify())<span class="sc">}</span><span class="ss">$'</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>                            ]</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>                        )</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>result_markdown <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>                              results,</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>                              columns<span class="op">=</span>[<span class="st">'P1'</span>, <span class="st">'P2'</span>, <span class="st">'P3'</span>, <span class="st">'P4'</span>, <span class="st">'cross'</span>, <span class="st">'cross_dot_a'</span>, <span class="st">'cross_dot_b'</span>]</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>                              ).to_markdown()</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result_markdown)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And here are the results.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 27%">
+<col style="width: 3%">
+<col style="width: 3%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;"></th>
+<th style="text-align: left;">P1</th>
+<th style="text-align: left;">P2</th>
+<th style="text-align: left;">P3</th>
+<th style="text-align: left;">P4</th>
+<th style="text-align: left;">cross</th>
+<th style="text-align: left;">cross_dot_a</th>
+<th style="text-align: left;">cross_dot_b</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: left;"><span class="math display">\[\left[\begin{matrix}0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1\\1 &amp; 0 &amp; 0\end{matrix}\right]\]</span></td>
+<td style="text-align: left;"><span class="math display">\[\left[\begin{matrix}0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0\end{matrix}\right]\]</span></td>
+<td style="text-align: left;"><span class="math display">\[\left[\begin{matrix}0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0\end{matrix}\right]\]</span></td>
+<td style="text-align: left;"><span class="math display">\[\left[\begin{matrix}0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0\end{matrix}\right]\]</span></td>
+<td style="text-align: left;"><span class="math display">\[\left[\begin{matrix}a_{2} b_{3} - a_{3} b_{2} \\ - a_{1} b_{3} + a_{3} b_{1} \\ a_{1} b_{2} - a_{2} b_{1}\end{matrix}\right]\]</span></td>
+<td style="text-align: left;"><span class="math display">\[0\]</span></td>
+<td style="text-align: left;"><span class="math display">\[0\]</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;"><span class="math display">\[\left[\begin{matrix}0 &amp; 0 &amp; 1\\ 1 &amp; 0 &amp; 0\\ 0 &amp; 1 &amp; 0\end{matrix}\right]\]</span></td>
+<td style="text-align: left;"><span class="math display">\[\left[\begin{matrix}0 &amp; 1 &amp; 0\\ 0 &amp; 0 &amp; 1\\ 1 &amp; 0 &amp; 0\end{matrix}\right]\]</span></td>
+<td style="text-align: left;"><span class="math display">\[\left[\begin{matrix}0 &amp; 1 &amp; 0\\ 0 &amp; 0 &amp; 1\\ 1 &amp; 0 &amp; 0\end{matrix}\right]\]</span></td>
+<td style="text-align: left;"><span class="math display">\[\left[\begin{matrix}0 &amp; 0 &amp; 1\\ 1 &amp; 0 &amp; 0\\ 0 &amp; 1 &amp; 0\end{matrix}\right]\]</span></td>
+<td style="text-align: left;"><span class="math display">\[\left[\begin{matrix}- a_{2} b_{3} + a_{3} b_{2}\\ a_{1} b_{3} - a_{3} b_{1}\\ - a_{1} b_{2} + a_{2} b_{1}\end{matrix}\right]\]</span></td>
+<td style="text-align: left;"><span class="math display">\[0\]</span></td>
+<td style="text-align: left;"><span class="math display">\[0\]</span></td>
+</tr>
+</tbody>
+</table>
+<p>That’s right. Opening up to a wider pool of permutation matrices did not add any new cross products. If anything actually using only one permutation matrix (and its transpose) substantially reduces the size of the search space. And if we were smart and not lazy then we could further take advantage of the reflections by not enumerating them. There are <span class="math inline">\((4!)^4=331776\)</span> arrangements of permutations if you have the patience to search through them.</p>
+<p>One could imagine exploring</p>
+<p><span class="math display">\[O_1 \vec a \odot  O_2 \vec b - O_3 \vec a \odot O_4 \vec b\]</span></p>
+<p>where <span class="math inline">\(O_1, O_2, O_3, O_4\)</span> are orthogonal matrices… but that’s not going to happen. A more limited case would be to look at <a href="https://en.wikipedia.org/wiki/Rotation_matrix">rotation matrices</a> which are orthonormal (meaning their transpose is equal to their inverse):</p>
+<p><span class="math display">\[\begin{bmatrix} \cos \theta &amp; - \sin \theta \\ \sin \theta &amp; \cos \theta \end{bmatrix} \begin{bmatrix} a_1 \\ a_2 \end{bmatrix} \odot \begin{bmatrix} \cos \theta &amp; - \sin \theta \\ \sin \theta &amp; \cos \theta \end{bmatrix}^T \begin{bmatrix} b_1 \\ b_2 \end{bmatrix} - \begin{bmatrix} \cos \theta &amp; - \sin \theta \\ \sin \theta &amp; \cos \theta \end{bmatrix}^T \begin{bmatrix} a_1 \\ a_2 \end{bmatrix} \odot \begin{bmatrix} \cos \theta &amp; - \sin \theta \\ \sin \theta &amp; \cos \theta \end{bmatrix} \begin{bmatrix} b_1 \\ b_2 \end{bmatrix}\]</span></p>
+<p>Evaluating this case gives us:</p>
+<p><span class="math display">\[\left(a_{1} b_{2} - a_{2} b_{1}\right) \sin\left(2 t \right) \begin{bmatrix} 1 \\ 1 \end{bmatrix}\]</span></p>
+<p>which is not in general orthogonal to the original vectors.</p>
+<p>There are 3 rotation matrices in 3D which can be composed together as linear transformations. I’ll leave it to the reader to evaluate those cases. One can further consider <a href="https://en.wikipedia.org/wiki/N-sphere#Spherical_volume_and_area_elements"><span class="math inline">\(n\)</span>-dimensional rotations</a> via a Jacobian matrix, but I will also leave that subject alone in this post.</p>
+</section>
+<section id="concluding-thoughts" class="level2">
+<h2 class="anchored" data-anchor-id="concluding-thoughts">Concluding Thoughts</h2>
+<p>While there are <a href="https://en.wikipedia.org/wiki/Cross_product#Generalizations">known generalizations</a>of the cross product, which I would like to learn more about at some point, I thought I would give it a shot on my own. Actually, the <a href="https://en.wikipedia.org/wiki/Cross_product#Multilinear_algebra">multilinear approach</a>looks quite comprehensible as a sort of determinant:</p>
+<p><span class="math display">\[\bigwedge_{i=0}^{n-1}\vec v_i = \det \left(
+\begin{bmatrix}
+v_1^1 &amp; \cdots &amp; v_1^n \\
+\vdots &amp; \ddots &amp; \vdots \\
+v_{n-1}^1 &amp; \cdots &amp; v_{n-1}^n \\
+\vec e_1 &amp; \cdots &amp; \vec e_n
+\end{bmatrix} \right)
+\]</span></p>
+<p>But let’s not dig further than that in this post.</p>
+<p>What I came up with in this post is basically a way of getting any of the possible combinations of cross products embedded in <span class="math inline">\(n \geq 3\)</span> dimensions and their reflections. A cross product will only ever utilize up to three components in these higher dimensional cases. There others are discarded. It was also a reminder to me that the zero vector is orthogonal to all vectors including to itself. Much of what I have explored holds immediately for the <a href="https://en.wikipedia.org/wiki/Curl_(mathematics)">curl</a> as well.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/galenseilis\.github\.io\/blog\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

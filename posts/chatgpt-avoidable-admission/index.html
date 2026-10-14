@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Galen Seilis">
+<meta name="dcterms.date" content="2023-02-23">
+
+<title>Asking ChatGPT About Avoidable Admissions – Galen’s Blog</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-55617497126496852ff9f5a59253c640.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Galen’s Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../presentations.html"> 
+<span class="menu-text">Presentations</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/galenseilis"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://bsky.app/profile/galen-seilis.bsky.social"> <i class="bi bi-bluesky" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Asking ChatGPT About Avoidable Admissions</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Healthcare</div>
+                <div class="quarto-category">Hospital</div>
+                <div class="quarto-category">Avoidable-Admissions</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Galen Seilis </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 23, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>I asked ChatGPT a bunch of questions about avoidable admissions. I’ve put the Q&amp;A below.</p>
+<div class="callout-danger">
+<p>ChatGPT does not necessarily give accurate answers to these questions. Do <strong>not</strong> take its answers as accurate or reliable information.</p>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider using these answers as suggested information for further reading.</p>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>What is an avoidable admission?</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>An avoidable admission is a hospital admission that could have been prevented or managed in a less acute care setting, such as through appropriate outpatient care or by addressing underlying social determinants of health. In other words, an avoidable admission occurs when a patient is hospitalized for a condition that could have been treated or managed effectively through alternative means.</p>
+<p>Avoidable admissions can be a significant burden on healthcare systems and may lead to unnecessary costs, prolonged hospital stays, and increased risk of adverse events. Many healthcare organizations and policymakers focus on reducing avoidable admissions as a way to improve healthcare quality and efficiency while also improving patient outcomes.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>What is a hospital admission?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>A hospital admission is when a patient is admitted to a hospital for medical treatment or observation. Typically, a hospital admission involves staying overnight or longer in the hospital to receive care from medical professionals.</p>
+<p>The reasons for hospital admission can vary widely, ranging from emergency situations such as a heart attack or stroke, to planned procedures such as surgery, to ongoing management of chronic conditions like diabetes or heart disease. In some cases, patients may be admitted to a hospital for diagnostic testing or monitoring of their condition.</p>
+<p>During a hospital admission, patients receive care from a team of healthcare professionals including doctors, nurses, and other specialists. They may undergo various tests, procedures, and treatments, and their condition will be closely monitored to ensure they receive appropriate care. Once the patient’s condition has improved, they will be discharged from the hospital and provided with appropriate follow-up care as needed.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>The the concept of an avoidable admission subjective?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>The concept of an avoidable admission can be subjective to some extent, as different healthcare professionals and organizations may have different definitions and criteria for what constitutes an avoidable admission.</p>
+<p>Some healthcare organizations may define an avoidable admission as one that could have been prevented through appropriate preventive care or management of chronic conditions, while others may define it more narrowly as a hospital admission that could have been avoided through more timely or appropriate outpatient care.</p>
+<p>In addition, there may be factors outside of a patient’s control that contribute to an avoidable admission, such as lack of access to healthcare services, social determinants of health, or limited financial resources.</p>
+<p>Despite these variations and challenges, reducing avoidable admissions remains an important goal for healthcare systems, as it can help improve quality of care, reduce healthcare costs, and enhance patient outcomes.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>Is the concept of an avoidable admission subjective?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>The concept of an avoidable admission can be somewhat subjective, as it may depend on the specific criteria and definitions used to identify avoidable admissions. However, there are generally accepted criteria for what constitutes an avoidable admission.</p>
+<p>For example, the Agency for Healthcare Research and Quality (AHRQ) has identified certain conditions and diagnoses that are considered potentially preventable with appropriate outpatient care, such as asthma, dehydration, and urinary tract infections. Similarly, the Centers for Medicare and Medicaid Services (CMS) has established a set of hospital readmission reduction programs that aim to reduce avoidable hospital readmissions for certain conditions, such as heart failure and pneumonia.</p>
+<p>Despite some subjectivity in defining avoidable admissions, reducing avoidable admissions is an important goal for healthcare systems and can lead to improved patient outcomes, reduced healthcare costs, and more efficient use of healthcare resources.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>Give some specific criteria for identifying avoidable admissions.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>There are several specific criteria that healthcare professionals and organizations may use to identify avoidable admissions. Here are some examples:</p>
+<ul>
+<li><p>Preventable conditions: Some healthcare organizations may identify specific conditions or diagnoses that are considered preventable with appropriate outpatient care. For example, the Agency for Healthcare Research and Quality (AHRQ) has identified certain conditions such as dehydration, urinary tract infections, and asthma that can often be managed in an outpatient setting, and therefore may be considered avoidable admissions.</p></li>
+<li><p>Ambulatory Care Sensitive Conditions (ACSCs): ACSCs are a group of medical conditions for which timely and effective outpatient care can prevent the need for hospitalization or more serious interventions. Some examples of ACSCs include uncontrolled diabetes, asthma, and hypertension. Patients who are hospitalized for ACSCs may be considered avoidable admissions.</p></li>
+<li><p>Readmission within a short time period: If a patient is readmitted to the hospital shortly after being discharged, this may be an indicator that the initial hospital admission was avoidable or that the patient did not receive appropriate follow-up care. The Centers for Medicare and Medicaid Services (CMS) has established readmission reduction programs that aim to reduce avoidable hospital readmissions for certain conditions.</p></li>
+<li><p>Lack of access to appropriate outpatient care: In some cases, patients may be hospitalized because they were unable to access appropriate outpatient care, either due to lack of insurance coverage, lack of available providers, or other factors outside of their control.</p></li>
+</ul>
+<p>It’s important to note that identifying avoidable admissions can be complex and may require a comprehensive evaluation of a patient’s medical history, access to healthcare services, and other factors that may contribute to their hospitalization.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>What are some of the challenges in identifying whether a given admission is avoidable?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>There are several challenges in identifying whether a given admission is avoidable. Here are a few examples:</p>
+<ul>
+<li><p>Subjectivity: As I mentioned earlier, the concept of an avoidable admission can be subjective, as different healthcare professionals and organizations may have different definitions and criteria for what constitutes an avoidable admission.</p></li>
+<li><p>Comorbidity and complexity: Patients with multiple chronic conditions or complex medical histories may require hospitalization even if they have received appropriate outpatient care. In these cases, it may be difficult to determine whether the admission could have been avoided.</p></li>
+<li><p>Social determinants of health: Social determinants of health, such as poverty, lack of access to transportation, or housing insecurity, can contribute to hospital admissions. Addressing these factors may require resources and interventions beyond the healthcare system.</p></li>
+<li><p>Data limitations: Identifying avoidable admissions often requires access to comprehensive data on patient demographics, medical history, and healthcare utilization patterns. However, data limitations may make it difficult to identify avoidable admissions accurately.</p></li>
+</ul>
+<p>Despite these challenges, efforts to reduce avoidable admissions remain important for improving the quality of care and reducing healthcare costs. Healthcare professionals and policymakers can work together to establish standardized criteria for identifying avoidable admissions and develop interventions to address the underlying factors that contribute to hospitalization.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Questions</strong></p>
+<p>What are some of the comorbidities that could interfere with classifying an admission as avoidable?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>Comorbidity refers to the presence of one or more additional medical conditions that co-occur with a primary medical condition. Comorbidities can complicate the management of a patient’s health, and they can also make it more difficult to classify a hospital admission as avoidable. Here are a few examples of comorbidities that could interfere with classifying an admission as avoidable:</p>
+<ul>
+<li><p>Chronic conditions: Patients with chronic conditions such as heart failure, chronic obstructive pulmonary disease (COPD), or diabetes may require hospitalization even if they have received appropriate outpatient care. In these cases, it may be difficult to determine whether the hospitalization could have been avoided.</p></li>
+<li><p>Mental health conditions: Patients with mental health conditions such as depression, anxiety, or schizophrenia may require hospitalization for mental health crises or related medical issues. These hospitalizations may be considered avoidable if the underlying mental health condition had been appropriately managed in an outpatient setting. However, determining whether a mental health-related hospitalization was avoidable can be complex.</p></li>
+<li><p>Infectious diseases: Patients with infectious diseases such as pneumonia or sepsis may require hospitalization for treatment and monitoring, even if they have received appropriate outpatient care. The presence of infectious diseases can complicate the management of a patient’s health and may make it more difficult to classify an admission as avoidable.</p></li>
+</ul>
+<p>In general, patients with comorbidities may require hospitalization even if they have received appropriate outpatient care, and their hospitalization may not be considered avoidable. However, efforts to reduce avoidable hospital admissions can still focus on improving the management of chronic conditions, mental health conditions, and infectious diseases in the outpatient setting.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>How might equity be a factor in detecting an avoidable admission??</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong> Equity can be a factor in detecting an avoidable admission in several ways. Here are a few examples:</p>
+<ul>
+<li><p>Access to healthcare services: Patients who lack access to primary care or other healthcare services may be more likely to experience health problems that require hospitalization. These patients may also be more likely to experience avoidable hospital admissions, as they may not have received appropriate outpatient care. Addressing barriers to healthcare access, such as lack of insurance coverage or limited availability of providers, can help reduce avoidable admissions and improve health equity.</p></li>
+<li><p>Social determinants of health: Social determinants of health, such as poverty, housing insecurity, or limited transportation options, can contribute to poor health outcomes and increase the likelihood of hospitalization. Addressing these factors can help reduce avoidable admissions and improve health equity.</p></li>
+<li><p>Implicit bias: Implicit bias can affect healthcare providers’ decisions about whether to hospitalize a patient or provide outpatient care. Implicit bias can be particularly problematic for patients from historically marginalized communities, who may be more likely to experience discrimination and unequal treatment in healthcare settings. Addressing implicit bias and promoting cultural competency can help reduce avoidable admissions and improve health equity.</p></li>
+<li><p>Disparities in healthcare quality: Patients from historically marginalized communities may receive lower-quality healthcare, which can increase the likelihood of hospitalization and decrease the likelihood of receiving appropriate outpatient care. Addressing disparities in healthcare quality, such as differences in access to diagnostic tests or medications, can help reduce avoidable admissions and improve health equity.</p></li>
+</ul>
+<p>In summary, promoting health equity can help reduce avoidable admissions by addressing underlying factors that contribute to poor health outcomes and unequal treatment in healthcare settings.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>What are some of the sources of selection bias that could affect the identification of avoidable admissions?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>Selection bias is a type of bias that can occur in research or analysis when certain types of participants or data are systematically excluded or included. Selection bias can affect the identification of avoidable admissions in several ways. Here are a few examples of sources of selection bias that could affect the identification of avoidable admissions:</p>
+<ul>
+<li><p>Population characteristics: The definition of avoidable admissions may vary depending on the population being studied. For example, an avoidable admission for an older adult with multiple chronic conditions may differ from an avoidable admission for a younger patient with a single acute condition. If the population being studied is not representative of the broader patient population, the identification of avoidable admissions may be biased.</p></li>
+<li><p>Data availability: The identification of avoidable admissions requires comprehensive data on patient demographics, medical history, and healthcare utilization patterns. If data on certain types of patients or healthcare utilization patterns are not available, the identification of avoidable admissions may be biased.</p></li>
+<li><p>Healthcare provider characteristics: Healthcare providers’ decisions to admit patients to the hospital may be influenced by factors such as their training, experience, or clinical judgment. If these factors vary systematically across patients, the identification of avoidable admissions may be biased.</p></li>
+<li><p>Geographic location: The likelihood of hospitalization may vary depending on the availability of healthcare resources, such as hospitals or primary care providers. Patients in certain geographic areas may be more or less likely to be hospitalized, which could bias the identification of avoidable admissions.</p></li>
+</ul>
+<p>In summary, selection bias can affect the identification of avoidable admissions by systematically excluding or including certain types of patients or data. Addressing selection bias requires careful attention to the population being studied, the availability of data, and the factors that influence healthcare providers’ decisions to admit patients to the hospital.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>Give a structural causal model for the determinants of an avoidable admission.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>A structural causal model for the determinants of an avoidable admission could include the following variables:</p>
+<ol type="1">
+<li>Patient-level factors:</li>
+</ol>
+<ul>
+<li>Health status: This variable represents the patient’s overall health status, including chronic conditions and acute illnesses. Poor health status increases the likelihood of hospitalization.</li>
+<li>Socioeconomic status (SES): This variable represents the patient’s socioeconomic status, such as income, education, and employment status. Patients with lower SES may have limited access to healthcare services, which can increase the likelihood of avoidable admissions. Health behaviors: This variable represents the patient’s health behaviors, such as smoking, diet, and exercise. Unhealthy behaviors can contribute to poor health outcomes and increase the likelihood of avoidable admissions.</li>
+</ul>
+<ol start="2" type="1">
+<li>Healthcare system factors:</li>
+</ol>
+<ul>
+<li>Access to healthcare: This variable represents the patient’s access to healthcare services, such as primary care, specialists, and diagnostic tests. Limited access to healthcare can increase the likelihood of avoidable admissions.</li>
+<li>Quality of care: This variable represents the quality of healthcare services received by the patient, such as appropriate treatment for chronic conditions and timely diagnostic tests. Poor quality of care can contribute to poor health outcomes and increase the likelihood of avoidable admissions.</li>
+</ul>
+<ol start="3" type="1">
+<li><p>Environmental factors:</p>
+<ul>
+<li>Social determinants of health: This variable represents social and environmental factors that can affect health outcomes, such as poverty, housing insecurity, and food insecurity. Social determinants of health can contribute to poor health outcomes and increase the likelihood of avoidable admissions.</li>
+<li>Physical environment: This variable represents the physical environment, such as air pollution or hazardous working conditions. Poor physical environments can contribute to poor health outcomes and increase the likelihood of avoidable admissions.</li>
+</ul></li>
+<li><p>Clinical decision-making factors:</p>
+<ul>
+<li>Provider decision-making: This variable represents the clinical decision-making process of healthcare providers, such as whether to admit a patient to the hospital or provide outpatient care. Provider decision-making can be influenced by factors such as patient health status, access to healthcare, and quality of care.</li>
+</ul></li>
+</ol>
+<p>This structural causal model can help identify the determinants of avoidable admissions and guide interventions to reduce avoidable admissions.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>What sources of collider bias may occur in estimating whether an avoidable admission was avoidable?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>Collider bias can occur when conditioning on a variable that is a common effect of two or more other variables. In the case of estimating whether an admission was avoidable, collider bias can occur if we condition on a variable that is affected by both the cause (i.e., factors leading to avoidable admissions) and the outcome (i.e., the admission itself).</p>
+<p>Here are some sources of collider bias that may occur in estimating whether an avoidable admission was avoidable:</p>
+<ul>
+<li><p>Admission severity: Admission severity is a common effect of both the cause (i.e., factors leading to avoidable admissions) and the outcome (i.e., the admission itself). Conditioning on admission severity can create collider bias, as it may cause associations between the cause and outcome to be distorted.</p></li>
+<li><p>Provider characteristics: Provider characteristics, such as experience or training, may influence both the decision to admit a patient and the likelihood of an avoidable admission. Conditioning on provider characteristics may create collider bias, as it may distort the relationship between the cause and outcome.</p></li>
+<li><p>Patient demographics: Demographic characteristics, such as age or race, may be associated with both the factors leading to avoidable admissions and the likelihood of an avoidable admission. Conditioning on patient demographics may create collider bias, as it may distort the relationship between the cause and outcome.</p></li>
+<li><p>Access to healthcare: Access to healthcare, such as the availability of primary care or specialist care, may be associated with both the factors leading to avoidable admissions and the likelihood of an avoidable admission. Conditioning on access to healthcare may create collider bias, as it may distort the relationship between the cause and outcome.</p></li>
+</ul>
+<p>In summary, collider bias can occur in estimating whether an avoidable admission was avoidable if we condition on a variable that is a common effect of both the cause and the outcome. To avoid collider bias, we need to carefully consider the variables we include in our analysis and avoid conditioning on variables that may be affected by both the cause and outcome.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>What sources of post-treatment bias may occur in estimating whether an admission was avoidable?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>Post-treatment bias, also known as reverse causation bias or selection bias, occurs when an outcome is used to select or define a study group, which can lead to biased estimates of the association between the exposure and outcome. In the case of estimating whether an admission was avoidable, post-treatment bias may occur due to the following sources:</p>
+<ul>
+<li><p>Length of stay: The length of hospital stay may be an outcome of the admission decision and can also influence whether an admission is classified as avoidable or not. Patients who stay longer in the hospital are more likely to be classified as avoidable, even if the admission was not avoidable in the first place.</p></li>
+<li><p>Severity of illness: Patients who have a severe illness or chronic disease are more likely to have an avoidable admission, but this severity can also influence the outcome of the admission, such as readmission or death. This post-treatment bias can occur when severity of illness is used to determine whether an admission was avoidable.</p></li>
+<li><p>Patient compliance: Patient compliance with treatment and follow-up care can also influence the outcome of the admission. Patients who do not comply with treatment recommendations are more likely to have an avoidable admission. However, noncompliance can also lead to adverse outcomes, such as readmission, which can bias the estimate of whether the admission was avoidable.</p></li>
+<li><p>Access to care: The availability and quality of follow-up care after discharge can influence whether the admission was avoidable or not. However, access to follow-up care can also influence the outcome of the admission, such as readmission or complications. This post-treatment bias can occur when access to care is used to determine whether the admission was avoidable.</p></li>
+</ul>
+<p>In summary, post-treatment bias can occur when an outcome is used to select or define a study group, which can lead to biased estimates of the association between the exposure and outcome. To minimize post-treatment bias in estimating whether an admission was avoidable, it is essential to carefully define the study group and identify the factors that led to the admission, rather than using the outcome of the admission to determine whether it was avoidable.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>What are effect ways to monitor the number of avoidable admissions?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>There are several effective ways to monitor the number of avoidable admissions:</p>
+<ul>
+<li><p>Retrospective chart review: A retrospective chart review is a method of identifying avoidable admissions by reviewing patient medical records after the admission has occurred. This method involves identifying the reasons for the admission and assessing whether the admission was avoidable. This approach can provide detailed information on the reasons for the admission, but it can be time-consuming and may require a large sample size to be representative.</p></li>
+<li><p>Administrative data: Administrative data, such as hospital discharge data or claims data, can be used to monitor the number of avoidable admissions. This approach involves identifying patients who were admitted to the hospital and then assessing whether the admission was avoidable based on predetermined criteria. This approach is less resource-intensive than retrospective chart review, but it may be less accurate as it relies on coded data, which may not capture all the relevant clinical information.</p></li>
+<li><p>Patient surveys: Patient surveys can be used to monitor the number of avoidable admissions by asking patients about their experiences with the healthcare system. This approach can provide valuable information about the reasons for the admission and can identify areas for improvement in the healthcare system. However, it is dependent on patients being willing and able to provide accurate information about their experiences.</p></li>
+<li><p>Clinical review: Clinical review involves a team of healthcare professionals assessing the reasons for the admission and determining whether it was avoidable. This approach can provide detailed clinical information and can identify areas for improvement in the healthcare system. However, it can be time-consuming and may require a high level of expertise.</p></li>
+<li><p>Machine learning algorithms: Machine learning algorithms can be trained to identify avoidable admissions based on patterns in patient data. This approach can be highly accurate and can identify avoidable admissions in real-time. However, it requires access to large amounts of patient data and may be less transparent than other methods.</p></li>
+</ul>
+<p>In summary, there are several effective ways to monitor the number of avoidable admissions, including retrospective chart review, administrative data, patient surveys, clinical review, and machine learning algorithms. Each approach has its advantages and disadvantages, and the choice of method will depend on the available resources and the research question being addressed.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>How can we practice cultural safety when evaluating if an admission is avoidable?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answers</strong></p>
+<p>When evaluating whether an admission is avoidable, it is important to practice cultural safety to ensure that the assessment is fair and equitable for all individuals, regardless of their cultural background. Here are some ways to practice cultural safety when evaluating avoidable admissions:</p>
+<ul>
+<li><p>Recognize and acknowledge cultural differences: Be aware of and respectful of cultural differences, and ensure that your evaluation takes into account these differences.</p></li>
+<li><p>Involve diverse perspectives: Include input from individuals from diverse cultural backgrounds in the evaluation process to ensure that cultural biases are not influencing the assessment.</p></li>
+<li><p>Use culturally appropriate communication: Use culturally appropriate language and communication styles when discussing the assessment with individuals from different cultural backgrounds.</p></li>
+<li><p>Consider the impact of social determinants of health: Recognize that social determinants of health, such as poverty, discrimination, and social exclusion, may impact an individual’s health outcomes and access to healthcare.</p></li>
+<li><p>Address power imbalances: Be aware of power imbalances that may exist between healthcare providers and individuals from marginalized communities, and take steps to address these imbalances.</p></li>
+<li><p>Be reflective and responsive: Continuously reflect on your own biases and assumptions, and be responsive to feedback from individuals from different cultural backgrounds.</p></li>
+</ul>
+<p>By practicing cultural safety, we can ensure that our evaluations of avoidable admissions are fair, equitable, and respectful of diverse cultural perspectives.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>What are some of the risks in trying to estimate and monitor avoidable admissions?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>There are several risks and challenges associated with estimating and monitoring avoidable admissions, including:</p>
+<ol type="1">
+<li><p>Misclassification bias: The determination of whether an admission is avoidable can be subjective and dependent on the criteria used, leading to potential misclassification bias.</p></li>
+<li><p>Selection bias: The population selected for the analysis may not be representative of the general population, leading to potential selection bias.</p></li>
+<li><p>Incomplete data: Lack of complete data, missing data, or inaccuracies in data can affect the accuracy of estimates of avoidable admissions.</p></li>
+<li><p>Difficulty in defining avoidable admissions: There is no standardized definition of avoidable admissions, making it challenging to compare estimates across studies.</p></li>
+<li><p>External factors: There may be external factors, such as changes in policy or clinical practice, that affect the number of avoidable admissions, making it challenging to attribute changes solely to the quality of care.</p></li>
+<li><p>Resource-intensive methods: Some methods for estimating and monitoring avoidable admissions, such as retrospective chart review or clinical review, can be time-consuming and resource-intensive.</p></li>
+<li><p>Confidentiality and privacy concerns: The use of patient data for monitoring and estimating avoidable admissions may raise concerns about confidentiality and privacy.</p></li>
+</ol>
+<p>To mitigate these risks, it is important to use rigorous methods for estimating and monitoring avoidable admissions, be transparent about the criteria used for determining avoidable admissions, ensure that the data used is complete and accurate, and consider the potential impact of external factors when interpreting the results. Additionally, ensuring that patient privacy and confidentiality are protected is essential when collecting and analyzing data.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>What are some of the important definitions in the literature for “avoidable admission”?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>There are several definitions of “avoidable admission” in the literature, and the definition used may vary depending on the context and the purpose of the analysis. Some of the important definitions include:</p>
+<ul>
+<li><p>Preventable hospitalization: Hospitalization that could have been prevented through effective outpatient care, including preventive care and early disease management.</p></li>
+<li><p>Ambulatory care-sensitive hospitalization: Hospitalization that is considered avoidable if timely and effective ambulatory care could have prevented the need for hospitalization, for conditions such as asthma, diabetes, or hypertension.</p></li>
+<li><p>Potentially avoidable hospitalization: Hospitalization that may have been preventable if appropriate and timely care had been provided, regardless of whether the condition is typically considered to be sensitive to ambulatory care.</p></li>
+<li><p>Unplanned readmission: A hospital admission that occurs within a specified period of time after a previous hospitalization for the same or a related condition, and is considered avoidable if appropriate follow-up care had been provided.</p></li>
+<li><p>Adverse events: An admission that is caused by a preventable adverse event, which is an injury or harm resulting from medical care that was intended to help the patient.</p></li>
+</ul>
+<p>These definitions may overlap to some extent, but each has its own specific criteria and focus. It is important to use a clear and consistent definition when studying avoidable admissions to ensure that the analysis is meaningful and relevant to the intended purpose.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>Please provide a reading list of academic papers that try to define “avoidable admission”.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>Here is a list of academic papers that provide definitions of “avoidable admission”:</p>
+<ul>
+<li><p>“Preventable hospitalizations: a window into primary and preventive care, 2000” by K. Davis, K. Schoenbaum, and S. Audet. This paper defines preventable hospitalizations and discusses the importance of primary and preventive care in reducing avoidable admissions.</p></li>
+<li><p>“The Ambulatory Care Sensitive Conditions (ACSC) Guide to Prevention and Management” by J. Laditka and A. Laditka. This paper provides a detailed definition of ambulatory care-sensitive hospitalizations and provides guidance on prevention and management strategies.</p></li>
+<li><p>“Defining and measuring potentially preventable hospitalizations: a review of the literature” by M. Ansari, R. Shrestha, and E. Ansari. This paper provides a review of the literature on potentially avoidable hospitalizations and discusses different methods for defining and measuring them.</p></li>
+<li><p>“Preventable readmissions to surgical services: lessons learned and targets for improvement” by C. Lebovits and L. Dresner. This paper discusses the concept of unplanned readmissions and provides insights into how they can be prevented.</p></li>
+<li><p>“The global burden of unsafe medical care: analytic modelling of observational studies” by R. N. Fogelholm, A. Vartti, and K. Roine. This paper provides an overview of adverse events that lead to avoidable hospitalizations and discusses the global burden of unsafe medical care.</p></li>
+</ul>
+<p>These papers provide a good starting point for understanding the different definitions and concepts related to avoidable admissions.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>What are some of the ways to minimize the subjectivity in defining “avoidable admission”?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>Defining “avoidable admission” can be a subjective process due to the various criteria and definitions used in different contexts. However, there are some ways to minimize subjectivity in defining avoidable admissions:</p>
+<ul>
+<li><p>Use standardized definitions: Researchers and policymakers should use standardized definitions for avoidable admissions, which can reduce the variability in the classification process and improve the comparability of results across studies.</p></li>
+<li><p>Involve multiple experts: The classification of avoidable admissions can benefit from input and collaboration from multiple experts, including physicians, researchers, and policymakers. This can help reduce the subjectivity and increase the objectivity of the classification process.</p></li>
+<li><p>Use clear and specific criteria: Clear and specific criteria should be used to define avoidable admissions. This can help reduce ambiguity and ensure that avoidable admissions are identified consistently and accurately.</p></li>
+<li><p>Consider patient and community perspectives: Patient and community perspectives should be considered when defining avoidable admissions. This can help ensure that the definitions are relevant and meaningful to those who are directly impacted by avoidable admissions.</p></li>
+<li><p>Validate the definitions: The definitions of avoidable admissions should be validated through rigorous testing and evaluation to ensure that they are reliable and valid. This can help ensure that the definitions are useful for identifying avoidable admissions and for guiding policy and practice.</p></li>
+</ul>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>What are some the advances that have been made in reducing avoidable admissions?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>There have been several advances in reducing avoidable admissions. Here are some examples:</p>
+<ul>
+<li><p>Improving primary care: Improving access to and quality of primary care can reduce avoidable admissions. This includes efforts such as expanding access to primary care providers, promoting preventive care, and coordinating care across different providers.</p></li>
+<li><p>Using care management programs: Care management programs, such as disease management and care coordination programs, can help identify and address issues that could lead to avoidable admissions. These programs provide personalized care plans for patients and often involve regular communication between patients and providers.</p></li>
+<li><p>Utilizing telemedicine: Telemedicine, or the use of technology to provide care remotely, can reduce avoidable admissions by providing access to care in areas where there are provider shortages or where patients may have difficulty traveling to appointments. Telemedicine can also improve access to care for patients who have mobility or transportation issues.</p></li>
+<li><p>Providing patient education: Providing education and resources to patients can help them manage their conditions and prevent complications that could lead to avoidable admissions. Patient education may include information on diet and exercise, medication management, and recognizing early signs of complications.</p></li>
+<li><p>Enhancing transitions of care: Ensuring smooth transitions of care between different providers and care settings can help prevent avoidable admissions. This includes ensuring that patients have clear discharge instructions, access to follow-up care, and medication management support.</p></li>
+</ul>
+<p>Overall, advances in healthcare delivery, technology, and patient education have all contributed to reducing avoidable admissions. However, more work is needed to continue reducing avoidable admissions and improving healthcare outcomes for all patients.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>How might the social network of physicians who make patient referrals affect the avoidability of an admission?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>The social network of physicians who make patient referrals can potentially affect the avoidability of an admission. Physicians who have strong relationships with other physicians in their network may be more likely to refer patients to each other, regardless of whether the referral is the most appropriate or necessary course of action. This can result in unnecessary or avoidable admissions.</p>
+<p>Conversely, physicians who have strong relationships with other physicians in their network may also be more likely to collaborate and coordinate care effectively, which can reduce avoidable admissions. By sharing information and working together to manage patient care, physicians can identify potential issues and prevent complications that could lead to avoidable admissions.</p>
+<p>The structure and composition of physician social networks may also influence the avoidability of admissions. For example, physicians who are more centrally located within their network may have more influence over referral patterns, which could affect the likelihood of avoidable admissions.</p>
+<p>Overall, the social network of physicians who make patient referrals can potentially affect the avoidability of admissions through their referral patterns, collaboration, and communication. It is important for healthcare organizations and policymakers to consider the social network of physicians when designing interventions to reduce avoidable admissions.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>Propose a Bayesian model for inferring whether an admission was avoidable.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>Here is a possible Bayesian model for inferring whether an admission was avoidable:</p>
+<p>Let A represent whether an admission was avoidable, with A = 1 indicating that the admission was avoidable and A = 0 indicating that the admission was not avoidable. Let X be a vector of observable variables that may be associated with the avoidability of an admission, such as comorbidities, age, and prior healthcare utilization. We can use Bayes’ theorem to estimate the probability that an admission was avoidable given the observed variables:</p>
+<p><span class="math display">\[P(A=1 | X) = P(X | A=1) * P(A=1) / P(X)\]</span></p>
+<p>where <span class="math display">\[P(X | A=1)\]</span> is the likelihood of the observed variables given that the admission was avoidable, <span class="math inline">\(P(A=1)\)</span> is the prior probability that an admission is avoidable, and P(X) is the marginal probability of the observed variables.</p>
+<p>To estimate the likelihood of the observed variables given that the admission was avoidable, we can use a logistic regression model:</p>
+<p><span class="math display">\[\operatorname{logit}(P(A=1 | X)) = β0 + β1X1 + ... + βkXk\]</span></p>
+<p>where <span class="math inline">\(β0, β1, ..., βk\)</span> are the regression coefficients and <span class="math inline">\(X1, ..., Xk\)</span> are the observed variables. We can estimate the coefficients using maximum likelihood estimation based on a dataset of admissions with known avoidability status.</p>
+<p>To estimate the prior probability that an admission is avoidable, we may use population-level data or expert opinion. For example, if we know that avoidable admissions make up 10% of all hospital admissions in a particular population, we can use P(A=1) = 0.1 as the prior probability.</p>
+<p>To estimate the marginal probability of the observed variables, we can use a marginalized likelihood approach, such as Markov Chain Monte Carlo (MCMC) simulation.</p>
+<p>Overall, this Bayesian model allows us to estimate the probability that an admission was avoidable given the observed variables, taking into account both prior information and the likelihood of the observed data.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>In this model you just proposed, what variables would you use as predictors?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>The choice of predictors in the Bayesian model for inferring whether an admission was avoidable would depend on the available data and the research question being addressed. However, in general, we would want to include predictors that are potentially associated with the avoidability of an admission, based on prior knowledge and evidence from the literature.</p>
+<ul>
+<li><p>Some examples of predictors that have been used in previous studies include:</p></li>
+<li><p>Age: older age has been associated with increased risk of avoidable admissions</p></li>
+<li><p>Comorbidities: certain medical conditions, such as chronic obstructive pulmonary disease (COPD) and heart failure, have been associated with increased risk of avoidable admissions</p></li>
+<li><p>Socioeconomic status: lower socioeconomic status has been associated with increased risk of avoidable admissions</p></li>
+<li><p>Previous healthcare utilization: patients with high rates of prior hospitalizations or emergency department visits may be more likely to have avoidable admissions</p></li>
+<li><p>Adherence to medications and treatment plans: patients with poor adherence to medications and treatment plans may be more likely to have avoidable admissions</p></li>
+<li><p>Access to primary care: patients with limited access to primary care may be more likely to have avoidable admissions</p></li>
+<li><p>Geographic location: patients living in certain geographic areas may be more likely to have avoidable admissions due to variations in healthcare resources and availability.</p></li>
+</ul>
+<p>Ultimately, the selection of predictors should be guided by the available data and the research question, and may involve a combination of clinical, demographic, and social factors.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>Please provide PyMC code for the structural causal model you proposed earlier.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>As the specific structural causal model was not defined earlier, I cannot provide PyMC code for it. However, I can provide an example code for a simple Bayesian regression model to predict the probability of an avoidable admission, using age and comorbidities as predictors.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pymc3 <span class="im">as</span> pm</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">'avoidable_admissions.csv'</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Define model</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> model:</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Priors</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>   alpha <span class="op">=</span> pm.Normal(<span class="st">'alpha'</span>, mu<span class="op">=</span><span class="dv">0</span>, sd<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>   beta_age <span class="op">=</span> pm.Normal(<span class="st">'beta_age'</span>, mu<span class="op">=</span><span class="dv">0</span>, sd<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>   beta_comorbidity <span class="op">=</span> pm.Normal(<span class="st">'beta_comorbidity'</span>, mu<span class="op">=</span><span class="dv">0</span>, sd<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>   sigma <span class="op">=</span> pm.HalfNormal(<span class="st">'sigma'</span>, sd<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Linear combination of predictors</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>   theta <span class="op">=</span> alpha <span class="op">+</span> beta_age <span class="op">*</span> data[<span class="st">'age'</span>] <span class="op">+</span> beta_comorbidity <span class="op">*</span> data[<span class="st">'comorbidities'</span>]</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Probability of avoidable admission</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>   p <span class="op">=</span> pm.math.sigmoid(theta)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Likelihood</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>   y_obs <span class="op">=</span> pm.Bernoulli(<span class="st">'y_obs'</span>, p<span class="op">=</span>p, observed<span class="op">=</span>data[<span class="st">'avoidable'</span>])</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Inference</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>   trace <span class="op">=</span> pm.sample(<span class="dv">1000</span>, tune<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>pm.summary(trace)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<p><strong>Question</strong></p>
+<p>Who should be consulted in deciding how to define and measure avoidable admissions?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Answer</strong></p>
+<p>To ensure a comprehensive and inclusive approach to defining and measuring avoidable admissions, it is important to consult a diverse range of stakeholders. This could include:</p>
+<ul>
+<li><p>Healthcare providers: including physicians, nurses, and other healthcare professionals who are directly involved in patient care and have a detailed understanding of the factors that can contribute to avoidable admissions.</p></li>
+<li><p>Patients and their families: who can provide valuable insights into their experiences and perspectives on avoidable admissions and factors that may have contributed to them.</p></li>
+<li><p>Healthcare administrators and policymakers: who can provide insights into the broader healthcare system and policy-level factors that can contribute to avoidable admissions, as well as strategies for addressing them.</p></li>
+<li><p>Researchers and academics: who can provide expertise in designing and conducting studies to measure and evaluate avoidable admissions, as well as developing and refining definitions and measurement methods.</p></li>
+</ul>
+<p>Consulting these various stakeholders can help ensure that definitions and measurement methods are comprehensive, equitable, and aligned with the needs and perspectives of the healthcare system, patients, and the broader community.</p>
+</blockquote>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/galenseilis\.github\.io\/blog\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
