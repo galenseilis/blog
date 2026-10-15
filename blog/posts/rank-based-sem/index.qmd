@@ -3,15 +3,16 @@ title: "Rank-Based Structural Equation Modelling"
 author: "Galen Seilis"
 date: "2023-09-09"
 categories: [Statistics, Rank-Based-Statistics, Rank-Based-Sem]
+bibliography: references.bib
 ---
 
-When I listen to what people are describing as patterns in the data I rarely find that linearity itself is of any core interest. Rather, many tools and educational resources are oriented around linear models. That itself I think has to do with path-dependence of historical developments and the computational feasibility of fitting linear models. But when pressed I find that most people don't actualy give any special preference to linearity being scientifically plausible.
+When I listen to what people are describing as patterns in the data I rarely find that linearity itself is of any core interest. Rather, many tools and educational resources are oriented around linear models. That itself I think has to do with path-dependence of historical developments and the computational feasibility of fitting linear models. But when pressed I find that most people don't actually give any special preference to linearity being scientifically plausible.
 
 
-Now what is going to seem like a weird flex for many people is the notion of being able to do structural equation models on ranks. For other people, who were told from on-high "thou shalt not regress on ranks", will see this approach as invalid. But it is valid. Its math.
+Now what is going to seem like a weird flex for many people is the notion of being able to do structural equation models [@bollen1989] on ranks. For other people, who were told from on-high "thou shalt not regress on ranks", will see this approach as invalid. But it is valid. It's math.
 
 # Structural Model
-First, I used a naive algorithm to choose a structural model at random. Here it is in R-like (specifically [Lavaan](https://lavaan.ugent.be/)-like) equations:
+First, I used a naive algorithm to choose a structural model at random. Here it is in R-like (specifically [Lavaan](https://lavaan.ugent.be/)-like) equations [@rosseel2012]:
 
 ```r
 {{< include ./scripts/script_1.R >}}
@@ -41,7 +42,7 @@ meaning that (1) our variables are already standardized and (2) this is a pretty
 
 ![](./figures/sem_model.png)
 
-Ignore the p-values in this example. We don't care about those in this post, and they're not the right the right p-values anyway.
+Ignore the p-values in this example. We don't care about those in this post, and they're not the right p-values anyway.
 
 | lval   | op   | rval   |      Estimate |    Std. Err |     z-value |     p-value |
 |:-------|:-----|:-------|--------------:|------------:|------------:|------------:|
@@ -391,22 +392,22 @@ This first example shows that we can in fact train linear or rank-based SEMs on 
 
 # Comparisons & Discussion
 
-Now that we can readily generating linear and rank-based SEMs, let's setup a comparative experiment. We'll generate 100 data generating processes, then train both the linear and rank-based SEMs with the correctly-specified directed acyclic graph (DAG). This DAG in a real problem might come from a domain-driven hypothesis or from automated causal discovery.
+Now that we can readily generate linear and rank-based SEMs, let's set up a comparative experiment. We'll generate 100 data generating processes, then train both the linear and rank-based SEMs with the correctly-specified directed acyclic graph (DAG). This DAG in a real problem might come from a domain-driven hypothesis or from automated causal discovery.
 
-In this experiment I focused on estimating the extend to which the rank-based SEM could preserve the signum (i.e. sign) of the original true parameters. The rank-based $\beta_{\text{rank}}$ will be bounded to $[-1,1]$ just like Spearman's correlation. But unlike Spearman's correlation along, SEMs allow us to model conditional independence.
+In this experiment I focused on estimating the extent to which the rank-based SEM could preserve the signum (i.e. sign) of the original true parameters. The rank-based $\beta_{\text{rank}}$ will be bounded to $[-1,1]$ just like Spearman's correlation [@spearman1904]. But unlike Spearman's correlation alone, SEMs allow us to model conditional independence [@pearl2009].
 
 Here is a plot from one of the example rank-based SEMs. The horizontal axis gives us the true effect size, and the vertical axis is the indicator of whether the rank-based estimate matches the true parameter in sign.
 
 ![](./figures/rank_sem_equal_signum_vs_param.png)
 
-What is evident here is that the when the rank-based SEM got the signum wrong it also tended to be the case that the absolute value of the true parameter was small. This isn't partccularly surprising, but also note that the misclassification only occurred a small number of times among the many parameters of the model.
+What is evident here is that when the rank-based SEM got the signum wrong it also tended to be the case that the absolute value of the true parameter was small. This isn't particularly surprising, but also note that the misclassification only occurred a small number of times among the many parameters of the model.
 
-I also noted that there is a substantial amount of correlation between the accuracy of the signum in the rank-based vs linear SEM was substantial, and that generally both approaches did a pretty good (albeit imperfect) job of recovering the signum. Below is a plot of these accuracies paired by the true data generating process that was used.
+I also noted that there is a substantial amount of correlation between the accuracy of the signum in the rank-based vs linear SEM, and that generally both approaches did a pretty good (albeit imperfect) job of recovering the signum. Below is a plot of these accuracies paired by the true data generating process that was used.
 
 ![](./figures/prob_signum_match_sem.png)
 
 
-In this particular computation experiment I found that 
+In this particular computational experiment I found that 
 
 $$\hat P \left[ \hat P \left[ \mathbb{I} \left[ \operatorname{sign} \left( \hat \beta_{\text{rank}} \right) = \operatorname{sign} \left( \beta \right) \right] \right] > \hat P \left[ \mathbb{I} \left[ \operatorname{sign} \left( \hat \beta_{\text{linear}} \right) = \operatorname{sign} \left( \beta \right) \right] \right] \right] = \frac{39}{100}$$
 
@@ -414,9 +415,9 @@ and
 
 $$\hat P \left[ \hat P \left[ \mathbb{I} \left[ \operatorname{sign} \left( \hat \beta_{\text{linear}} \right) = \operatorname{sign} \left( \beta \right) \right] \right] > \hat P \left[ \mathbb{I} \left[ \operatorname{sign} \left( \hat \beta_{\text{rank}} \right) = \operatorname{sign} \left( \beta \right) \right] \right] \right] = \frac{35}{100}$$
 
-which are close enough that at 100 replicates could still easily be due to sampling variation. This is not strong evidence of [stochastic dominance](https://en.wikipedia.org/wiki/Stochastic_dominance). Notably the rank-based SEM was not obviously dominated by the linear SEM in this experiment sampling from conditional normal variables.
+which are close enough that 100 replicates could still easily be due to sampling variation. This is not strong evidence of [stochastic dominance](https://en.wikipedia.org/wiki/Stochastic_dominance). Notably the rank-based SEM was not obviously dominated by the linear SEM in this experiment sampling from conditional normal variables.
 
-As I discussed in [*Spearman Correlation Quatifies Comonotonicity*](https://galenseilis.github.io/posts/spearman-correlation/), the notion of quantifying which variables go up-and-down together (or reverse) is valuable to scientists and other practioner's of statistics. With rank-based SEM we can hypothesize patterns of increasing/decreasing relationships among the variables according to a structural causal model.
+As I discussed in [*Spearman Correlation Quantifies Comonotonicity*](https://galenseilis.github.io/posts/spearman-correlation/), the notion of quantifying which variables go up-and-down together (or reverse) is valuable to scientists and other practitioners of statistics. With rank-based SEM we can hypothesize patterns of increasing/decreasing relationships among the variables according to a structural causal model.
 
 
 
@@ -428,6 +429,6 @@ Here is the code to replicate the experiment.
 
 # Discussion & Conclusions
 
-I was able to show that rank-based SEM is pretty good at recoving the sigmum of the true parameters from a family of data generating process. Because the underlying process had only conditionally linear parameters, the recovery of the sigmum of the parameters also meant that the rank-based SEM was telling us about monotonicity. However, the coefficients in the rank-based model would tell us about monotonicity in many cases anyway.
+I was able to show that rank-based SEM is pretty good at recovering the signum of the true parameters from a family of data generating processes. Because the underlying process had only conditionally linear parameters, the recovery of the signum of the parameters also meant that the rank-based SEM was telling us about monotonicity. However, the coefficients in the rank-based model would tell us about monotonicity in many cases anyway.
 
 This is still quite a limited example because many data generating processes will not be conditionally Gaussian, but it is a good first approximation. Likewise the true data generating process that I used is linear in its path functions, but that is not necessary. A further example where the true path functions are non-linear in the parameters would make for a more interesting example. What I expect is that the rank-based SEM will tend to recover the conditionally-dependent monotonicity when it is strong in tendency, although not necessarily the signum of any parameters in the path functions as they may not so simply relate to the monotonicity relationship as was the case in linear SEM.

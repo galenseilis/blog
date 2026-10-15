@@ -3,12 +3,13 @@ title: "A Ciw Implementation of SimPy's Clock Example"
 author: "Galen Seilis"
 date: "2023-12-19"
 categories: [Python, Discrete Event Simulation, Ciw, SimPy]
+bibliography: references.bib
 echo: true
 ---
 
 ## Introduction
 
-This post looks at implementing a simple simulation described in the SImPy documentation using the Ciw Python package.
+This post looks at implementing a simple simulation described in the SimPy documentation using the Ciw Python package [@palmer2019].
 
 ## SimPy Simulation
 
@@ -37,7 +38,7 @@ Let's do this in Ciw. First, we need to import Ciw, and I would also like Pandas
 {{< include ./scripts/imports.py >}}
 ```
 
-We 'could' just use the `ciw.dists.Deterministic` and a simple loop achieve the same output, but that would seem to ignore how Ciw is motivated.  Ciw is for queueing models, so let's keep to that aim. Instead of taking the easy way, let's map our understanding of the clock problem into being a queueing network problem so that we can follow the typical Ciw workflow.
+We 'could' just use the `ciw.dists.Deterministic` and a simple loop to achieve the same output, but that would seem to ignore how Ciw is motivated.  Ciw is for queueing models, so let's keep to that aim. Instead of taking the easy way, let's map our understanding of the clock problem into being a queueing network problem so that we can follow the typical Ciw workflow.
 
 Let us take each clock to be a node in a queueing network. We will consider the case of two clocks as per the original example.
 
@@ -59,7 +60,7 @@ The servers at each clock are some component of the clock that make it tick, cal
 {{< include ./scripts/number_of_tickers.py >}}
 ```
 
-We can treat each completed tick of these clocks as the completion of a service. Each clock completes a tick at an exact deterministic rate, so the inter-arrival times of ticks are [constant random variables](https://en.wikipedia.org/wiki/Degenerate_distribution#Constant_random_variable).We can think of these service times mathematically as
+We can treat each completed tick of these clocks as the completion of a service. Each clock completes a tick at an exact deterministic rate, so the inter-arrival times of ticks are [constant random variables](https://en.wikipedia.org/wiki/Degenerate_distribution#Constant_random_variable). We can think of these service times mathematically as
 
 $$T_{\text{service}} \sim \delta \left( s \right)$$
 
@@ -73,7 +74,7 @@ In order to ensure that each ticker has a correctly-timed packet we must conside
 
 $$T_{\text{arrivals}} \sim \delta \left( s \right)$$
 
-Because the order of the packets doesn't matter, the [service discipline](https://en.wikipedia.org/wiki/Network_scheduler)doesn't either. We'll allow Ciw to use its default of first-come, first-serve, but it wouldn't matter if we used something else.
+Because the order of the packets doesn't matter, the [service discipline](https://en.wikipedia.org/wiki/Network_scheduler) doesn't either. We'll allow Ciw to use its default of first-come, first-serve, but it wouldn't matter if we used something else.
 
 Just because we have the rates of change correct doesn't mean that we are starting in the correct state. The last, and trickiest, business of this exercise is to start the system with the correct number of packets. If it takes $s$ units of time for a packet to arrive and it takes another $s$ units of time for a packet to be processed into a tick, then each packet has a sojourn time of $2s$. Which means that at the start of the simulation there will be a delay before the clocks start ticking. We could chalk this up to simulation [warm-up](https://ciw.readthedocs.io/en/latest/Tutorial-I/tutorial_iv.html), but let's get this right. What we can do is have a distribution that
 

@@ -4,6 +4,7 @@ author: "Galen Seilis"
 date: "2024-09-14"
 categories: [Statistics, Poisson Distribution, Expected Value]
 toc: true
+bibliography: references.bib
 ---
 
 # Introduction
@@ -61,7 +62,7 @@ I have rarely heard phrases such as "the average accounts for the uncertainty", 
 
 Averages are often used as an attempt to ignore the uncertainty of the outcome while preserving something about where most of the outcomes are weighted (by the probabilities) to be around. Roughly locating the 'center' of the outcomes in this way is a compression that loses information about the uncertainty rather than preserves it. 
 
-Realizing that averages ignore a lot of information about the uncertainty, some have turned to confidence intervals (or sometimes credible intervals) around their averages or conditional averages. Confidence intervals are widely misunderstood and misused for other reasons, but they are not even the right tool for the job here.
+Realizing that averages ignore a lot of information about the uncertainty, some have turned to confidence intervals [@neyman1937] (or sometimes credible intervals) around their averages or conditional averages. Confidence intervals are widely misunderstood and misused for other reasons, but they are not even the right tool for the job here.
 
 ::: {#fig-ci-meme}
 <a href="https://imgflip.com/i/93icku"><img src="https://i.imgflip.com/93icku.jpg" title="made at imgflip.com"/></a><div><a href="https://imgflip.com/memegenerator">from Imgflip Meme Generator</a></div>
@@ -80,7 +81,7 @@ Consider a computational example where we estimate the confidence interval for t
 
 ![Computational Example Illustrating That Prediction Intervals Are Distinct From Confidence Intervals.](./figures/confidence_vs_prediction_intervals.png){#fig-c-vs-p-intervals}
 
-You can see from the above figure that the estimates of the confidence intervals slowly narrow, whereas the estimates of the prediction intervals tends to stabilize. This is not a coincidence. As our sample size increases indefinitely we should expect that the confidence interval will narrow indefinitely towards the closed interval $[0,0]$. The prediction interval will also approach constant bounds, but this interval will in most cases have non-zero width even with an infinite sample. Loosely speaking, the confidence interval is describing our estimation procedure whereas the prediction interval is describing the outcomes. 
+You can see from the above figure that the estimates of the confidence intervals slowly narrow, whereas the estimates of the prediction intervals tend to stabilize. This is not a coincidence. As our sample size increases indefinitely we should expect that the confidence interval will narrow indefinitely towards the closed interval $[0,0]$. The prediction interval will also approach constant bounds, but this interval will in most cases have non-zero width even with an infinite sample. Loosely speaking, the confidence interval is describing our estimation procedure whereas the prediction interval is describing the outcomes. 
 
 Let's consider a less abstract example now. Suppose I want to know about the heights of randomly-selected people. The average human height can be computed from samples of human heights, and a confidence interval for that average can be computed. The confidence interval, assuming an infinite population, will converge such that it has a width of zero at any valid level of confidence. Would it really make sense that the distribution of human heights should be narrowing due to measuring more human heights? Assuming a simple random sample and stationarity, definitely not. 
 
@@ -98,7 +99,7 @@ Allocating service supply close to average demand can seem like a smart, efficie
 Icarus' Fall (Public Domain).
 :::
 
-Similarly, when decision-makers allocate resources to equal average demand, they may feel like they’re operating with maximum efficiency, avoiding unnecessary costs. However, this strategy can be perilous. Like Icarus, who failed to account for the sun's intensity, an organization service stability "melting" under the pressure of unexpected demand surges or rare events. If a hospital staffs its emergency department based on average patient numbers without accounting for common fluctuations in demand, or if a call center schedules operators based only on average call volume, a sudden surge could overwhelm the system, leading to long wait times, burnout, or a decline in service quality.
+Similarly, when decision-makers allocate resources to equal average demand, they may feel like they’re operating with maximum efficiency, avoiding unnecessary costs. However, this strategy can be perilous. Like Icarus, who failed to account for the sun's intensity, an organization risks its service stability "melting" under the pressure of unexpected demand surges or rare events. If a hospital staffs its emergency department based on average patient numbers without accounting for common fluctuations in demand, or if a call center schedules operators based only on average call volume, a sudden surge could overwhelm the system, leading to long wait times, burnout, or a decline in service quality.
 
 In both cases, the illusion of stability masks the vulnerability of the system. Just as Icarus’ wings could not withstand the intensity of the sun, resource allocations set too close to average demand cannot withstand the inevitable variability and shocks that real-world systems encounter. The lesson: flying too close to the demand “sun” might lead to operational failures when stress exceeds what the average can handle. Allocating additional buffer resources is like heeding Daedalus’ advice, ensuring a safer, more sustainable flight.
 
@@ -131,15 +132,15 @@ stateDiagram
     🚘Departures --> [*]
 ```
 
-New arrivals enter the service and go into a waiting area, which I have termed `Queue` in the diagram. The service discipline is a rule or business process which decides the order that patients get served. When a server, such as a nurse or doctor, becomes available they will begin service on the next patient. Patients tha have been served also depart from the system.
+New arrivals enter the service and go into a waiting area, which I have termed `Queue` in the diagram. The service discipline is a rule or business process which decides the order that patients get served. When a server, such as a nurse or doctor, becomes available they will begin service on the next patient. Patients that have been served also depart from the system.
 
-In order to make a numerical example we'll need to make some further assumptions. Suppose that the interarrival times of demand arrive according to an exponential distribution with a rate parameter $\lambda$, and the duration of each service also follows an exponential distribution with a rate $\mu$. The fact that these variables follow probability distributions is why there are fluctuations in the behaviour of this hypothetical service. Note that other sources of variaion tend to make the stability no-better-off or even worse, rather than better.
+In order to make a numerical example we'll need to make some further assumptions. Suppose that the interarrival times of demand arrive according to an exponential distribution with a rate parameter $\lambda$, and the duration of each service also follows an exponential distribution with a rate $\mu$. The fact that these variables follow probability distributions is why there are fluctuations in the behaviour of this hypothetical service. Note that other sources of variation tend to make the stability no-better-off or even worse, rather than better.
 
-In simple queueing systems like the one we have described here, the stability can be determined by a simple inequality. First, define the *utilization* $\rho$ to be 
+In simple queueing systems like the one we have described here, the stability can be determined by a simple inequality [@kendall1953]. First, define the *utilization* $\rho$ to be 
 
 $$\rho \triangleq \frac{\lambda}{s \mu}$$
 
-where $\lambda$ is the arrival rate, $\mu$ is the service rate, and $s$ is the number of servers. Here the notion of servers is a little abstract as it generally referred to how many patients can be receiving service simultaneously and independently, rather than a literal count of people. But for our purposes here we will take the number of servers $s$ to intuitively be the number of people available to provide medical services.
+where $\lambda$ is the arrival rate, $\mu$ is the service rate, and $s$ is the number of servers. Here the notion of servers is a little abstract as it generally refers to how many patients can be receiving service simultaneously and independently, rather than a literal count of people. But for our purposes here we will take the number of servers $s$ to intuitively be the number of people available to provide medical services.
 
 
 ```python
@@ -148,7 +149,7 @@ where $\lambda$ is the arrival rate, $\mu$ is the service rate, and $s$ is the n
 
 ![Service Waiting Times Following a Random Walk Due to Unity Queue Utilization](./figures/random_walk_service.png){#fig-random-walk-service}
 
- When we exactly match the average supply of a service with the average demand for that service we create a system which is instable. The waiting times will meander up and down over time. That description might sound like things will even out over time. After all, doesn't some ups combined with some downs cancel out in the long run? Unfortunately, no. In fact, mathematicians have shown that when $\rho \approx 1$ then the waiting times will tend to increase over time. In such cases any apparent improvement in the waiting times will only be eventually replaced by an even bigger increase in the wait times.  
+ When we exactly match the average supply of a service with the average demand for that service we create a system which is unstable. The waiting times will meander up and down over time. That description might sound like things will even out over time. After all, don't some ups combined with some downs cancel out in the long run? Unfortunately, no. In fact, mathematicians have shown that when $\rho \approx 1$ then the waiting times will tend to increase over time. In such cases any apparent improvement in the waiting times will only be eventually replaced by an even bigger increase in the wait times.  
 
 ```python
 {{< include ./scripts/underservicing.py >}}
@@ -169,13 +170,13 @@ The key insight is that when a process has random variation in the completion of
 
 ## Averages Are Not Usually Risk Conservative, but People's Judgements Are
 
-When we look at how people address real-world risk, especially about things that personally impact them, you may not that they do not base their decisions around the average or even the most probable outcome. We require workers to follow standard operating procedures and wear personal protective equipment not only for situations in which 
+When we look at how people address real-world risk, especially about things that personally impact them, you may note that they do not base their decisions around the average or even the most probable outcome. We require workers to follow standard operating procedures and wear personal protective equipment not only for situations in which 
 
-Suppose the amount of surgeons we need on a given day, which we will denote $X$, follows a Poisson distribution:
+Suppose the number of surgeons we need on a given day, which we will denote $X$, follows a Poisson distribution [@poisson1837]:
 
 $$X \sim \operatorname{Poisson}(\lambda)$$
 
-where $\lambda$ is the rate parameter. As it happens to be the case with a Poisson distribution, its parameter $\lambda$ is also the population average. That is, the average number of required surgeons is $\lambda$. We can plot the probability that the needed number of surgeons is less than the average $\Pr [ X \leq \lambda ]$ for different values of $\lambda$ the cumulative distribution function of a Poisson distribution.
+where $\lambda$ is the rate parameter. As it happens to be the case with a Poisson distribution, its parameter $\lambda$ is also the population average. That is, the average number of required surgeons is $\lambda$. We can plot the probability that the needed number of surgeons is less than the average $\Pr [ X \leq \lambda ]$ for different values of $\lambda$ using the cumulative distribution function of a Poisson distribution.
 
 ```python
 {{< include ./scripts/probability_less_than_average.py >}}
@@ -183,7 +184,7 @@ where $\lambda$ is the rate parameter. As it happens to be the case with a Poiss
 
 ![Probability that the number of required surgeons does not exceed the average for a Poisson distribution](./figures/probability_less_than_average.png)
 
-You can see from the plot above that the smaller the average number of required surgeries is, the higher the probability that allocating a number of surgerons close to the average will be sufficient. 
+You can see from the plot above that the smaller the average number of required surgeries is, the higher the probability that allocating a number of surgeons close to the average will be sufficient. 
 
 If we choose to allocate zero surgeons then the probability of having enough surgeons (i.e. not needing to perform any surgeries) is given by $e^{-\lambda}$. But how large does the probability of having enough resources allocated need to be in order to say that "we have enough"? There is not a purely mathematical answer to this question in practice. Rather, an acceptable level of risk has to be defined.
 
@@ -206,7 +207,7 @@ In fields like healthcare, education, and public services, there is often a long
 
 ## Confidence in Predictability
 
-Sometimes the average really is close enough to all observations. This can happen in areas where there is a large degree of control over the system being measured, such as the behaviour of some electronic components where the manufacturing processed can be carefully standardized. While it isn't ideal, it is pragmatic. If something is predictable enough that an average is always close enough to the right answer, then ignoring the uncertainty might work.
+Sometimes the average really is close enough to all observations. This can happen in areas where there is a large degree of control over the system being measured, such as the behaviour of some electronic components where the manufacturing process can be carefully standardized. While it isn't ideal, it is pragmatic. If something is predictable enough that an average is always close enough to the right answer, then ignoring the uncertainty might work.
 
 Confidence can be overconfidence in some contexts where there is an illusion of predictability. Decision-makers may assume that if they've planned for the average case, they’ve accounted for most of the risks.
 
@@ -236,9 +237,9 @@ Capturing the full range of variability in demand or resource usage *can* be dif
 
 This lack of clarity around how to account for variability further entrenches the use of averages as the "best-available" approximation, especially in the absence of tools that can model these dynamics accurately.
 
-## Cogntive Heuristics
+## Cognitive Heuristics
 
-The reliance on averages for resource allocation can be explained by cognitive heuristics, which are mental shortcuts people use when they face complex or uncertain problems. When individuals or organizations don’t fully understand how to solve a difficult problem—like predicting fluctuating demand—they might unconsciously resort to solving a simpler, related problem that feels more familiar. In this case, the complex problem is about how to handle the variability, risk, and unpredictability of demand, but the simpler, more familiar problem that people default to is finding the "average" demand.
+The reliance on averages for resource allocation can be explained by cognitive heuristics [@tversky1974], which are mental shortcuts people use when they face complex or uncertain problems. When individuals or organizations don’t fully understand how to solve a difficult problem—like predicting fluctuating demand—they might unconsciously resort to solving a simpler, related problem that feels more familiar. In this case, the complex problem is about how to handle the variability, risk, and unpredictability of demand, but the simpler, more familiar problem that people default to is finding the "average" demand.
 
 Heuristics help people make quick decisions without needing to gather and process all the information. These shortcuts are useful in many situations but can lead to oversimplified solutions. When applied to resource allocation, these heuristics can lead decision-makers to rely on averages because:
 

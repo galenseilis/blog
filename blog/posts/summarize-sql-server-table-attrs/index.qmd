@@ -1,5 +1,5 @@
 ---
-title: "Summarize columns in a table using MS SQL Server"
+title: "Summarize columns in a table using Microsoft SQL Server"
 author: "Galen Seilis"
 date: "2023-10-30"
 categories: [Database-Programming, SQL, Tsql]

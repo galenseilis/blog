@@ -3,9 +3,10 @@ title: "List of Example Implementations of Some Classic Queue Models in Ciw"
 author: "Galen Seilis"
 date: "2023-12-20"
 categories: [Simulation, Discrete-Event-Simulation, Queueing-Networks, Ciw]
+bibliography: references.bib
 ---
 
-Here is a list of implementations of classic classes of queueing models.
+Here is a list of implementations of classic classes of [queueing models](https://en.wikipedia.org/wiki/Queueing_theory) [@kendall1953].
 
 - [Implementing a M/M/1 Queue in Ciw](https://galenseilis.github.io/posts/m-m-1-queue-ciw/)
 - [Implementing a M/M/c Queue in Ciw](https://galenseilis.github.io/posts/m-m-c-queue-ciw/)

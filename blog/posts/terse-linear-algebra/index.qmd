@@ -5,4 +5,4 @@ date: "2023-12-13"
 categories: [Mathematics, Linear-Algebra]
 ---
 
-The real numbers in $n$ dimensions $\mathbb{R}^n$ is a collection of $n$-tuples $(x_1, \ldots, x_n)$ formed by the Cartesian product of the real numbers $n-1$ times with itself.
+The [real numbers](https://en.wikipedia.org/wiki/Real_number) in $n$ dimensions, $\mathbb{R}^n$, are a collection of $n$-tuples $(x_1, \ldots, x_n)$ formed by the [Cartesian product](https://en.wikipedia.org/wiki/Cartesian_product) of the real numbers $n-1$ times with itself.

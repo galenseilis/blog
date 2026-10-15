@@ -1,22 +1,23 @@
 ---
-title: "Causalily Speedrun"
+title: "Causality Speedrun"
 author: "Galen Seilis"
 date: "2024-08-23"
 categories: [Causality, Causal-Inference]
+bibliography: references.bib
 draft: true
 ---
 
 ## Introduction
 
-This post is a "speed run" through the definitions found in Judea Pearl's *Causality: Models, Reasoning, and Inference". I may have added or removed some topics subject to my prejudice.
+This post is a "speed run" through the definitions found in Judea Pearl's *Causality: Models, Reasoning, and Inference* [@pearl2009]. I may have added or removed some topics subject to my prejudice.
 
 ## Probability
 
 The common definitions and results in probability are worth knowing. 
 
-- Kolmogorov's axioms
+- Kolmogorov's axioms [@kolmogorov1933]
 - Joint, conditional, and marginal probability.
-- Law of total probability,
+- Law of total probability
 - Statistical independence
 - Conditional independence and its properties.
 
@@ -36,7 +37,7 @@ Know the definition of a graph, and related terms such as *vertices*, *edges* an
 - A node in a directed graph is called a *root* if it has no parents and a *sink* if it has no children.
 - A connected DAG in which every node has at-most one parent is called a *tree*.
 - A tree in which every node has at-most one child is called a *chain*.
-- A graph in which every pair of nodes is connected by an edge is called *complete.
+- A graph in which every pair of nodes is connected by an edge is called *complete*.
 
 ## Probability and Graphs
 

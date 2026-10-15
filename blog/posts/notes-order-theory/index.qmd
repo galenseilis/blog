@@ -15,10 +15,10 @@ This section provides an overview of some fundamental concepts in order theory.
 
 > **Definition**
 >
-> A partial order is a pair $(X, \leq)$ composed of a set $X$ called the ground set and $\leq$ is a binary relation with the following relation:
+> A partial order is a pair $(X, \leq)$ composed of a set $X$ called the ground set and $\leq$ is a binary relation with the following properties:
 - reflexivity: $x \leq x\ \forall x \in X$
 - transitivity: $x \leq y \land y \leq z \implies x \leq z\  \forall x,y,z \in X$
-- antisymmtry: $x \leq y \land y \leq x \implies x = y\  \forall x,y \in X$
+- antisymmetry: $x \leq y \land y \leq x \implies x = y\  \forall x,y \in X$
 
 Let us consider an example of a partial order and some of the ways we can represent them.
 
@@ -59,7 +59,7 @@ Another representation is a directed graph (AKA a digraph):
 ![Digraph representation of the example partial order](./figures/example_partial_order.png)
 
 ::: {.callout-tip}
-> The previous example only required a relatively small subset of the Cartesian $X \times X$. When you a have too many elements in $X$ to deal with by hand, one quick Python script to make the pairs in a format suitable for $\LaTeX$ is the following:
+> The previous example only required a relatively small subset of the Cartesian product $X \times X$. When you have too many elements in $X$ to deal with by hand, one quick Python script to make the pairs in a format suitable for $\LaTeX$ is the following:
 
 ```python
 {{< include ./scripts/latex_pairs.py >}}
@@ -73,7 +73,7 @@ Another representation is a directed graph (AKA a digraph):
 
 > **Definition**
 >
-> A strict partial order is a pair $(X, <)$ composed of a set $X$ called the ground set and $<$ is a binary relation with the following relation:
+> A strict partial order is a pair $(X, <)$ composed of a set $X$ called the ground set and $<$ is a binary relation with the following properties:
 - transitivity: $x < y \land y < z \implies x < z\  \forall x,y,z \in X$
 - asymmetry: $\lnot (x < y \land y < x) \  \forall x,y \in X$
 
@@ -110,7 +110,7 @@ flowchart TB
 
 > **Definition** 
 > 
-> A graph $G = (V, E)$ whose edge set $E$ is the set of incomparable pairs of a partial order is called the comparability graph.
+> A graph $G = (V, E)$ whose edge set $E$ is the set of incomparable pairs of a partial order is called the incomparability graph.
 
 > **Example** 
 >Suppose we have the strict partial order $\\{(a,c), (a,e), (b,c), (b,d), (b,e), (d,e)\\}$, then its incomparability graph (AKA cocomparability graph) would look like:
@@ -164,7 +164,7 @@ flowchart TB
 
 > **Definition** 
 >
-> A cover diagram is a drawing of the directed graph representing a cover relation such that the edges are cover pairs $(x,y)$. Edges are drawn in such a way that $x$ is below $y$ (in the graph embedding) ad the edge is $y$-monotone.
+> A cover diagram is a drawing of the directed graph representing a cover relation such that the edges are cover pairs $(x,y)$. Edges are drawn in such a way that $x$ is below $y$ (in the graph embedding) and the edge is $y$-monotone.
 
 > **Example** 
 >
@@ -236,7 +236,7 @@ flowchart TB
 
 > **Definition** 
 >
-> A lower bound $a \in S$ is called an infinum (or greatest lower bound, or meet) of $S$ if for all lower bounds $y \in S$ we have $y \leq a$.
+> A lower bound $a \in S$ is called an infimum (or greatest lower bound, or meet) of $S$ if for all lower bounds $y \in S$ we have $y \leq a$.
 
 > **Definition** 
 >
@@ -248,7 +248,7 @@ flowchart TB
 
 > **Definition** 
 >
-> A finite poset on $S$ is a lattice if every subset of $S$ has an unique least upper bound (aka join or supremum) denoted $\lor$ and an unique greatest lower bound (aka meet or infinum) denoted $\land$.
+> A finite poset on $S$ is a [lattice](https://en.wikipedia.org/wiki/Lattice_(order)) if every subset of $S$ has a unique least upper bound (aka join or supremum) denoted $\lor$ and a unique greatest lower bound (aka meet or infimum) denoted $\land$.
 
 > **Definition** 
 >
@@ -265,7 +265,7 @@ flowchart TB
 
 > **Proposition** 
 >
-> The down-set lattice of $P$ is a distributive lattice.
+> The down-set lattice of $P$ is a [distributive lattice](https://en.wikipedia.org/wiki/Distributive_lattice).
 >
 > **Proof (Hint)** Take $\lor$ to be $\cup$ and $\land$ to be $\cap$.
 
@@ -279,6 +279,7 @@ flowchart TB
 
 # References
 - [Lectures: Introduction to Order Theory, Fall 2020](https://www.youtube.com/playlist?list=PL5rqYzyihIQ0nzfnsEKxxedCpbNQoifgg)
-- [Introduction to Order Theorie](https://page.math.tu-berlin.de/~felsner/Lehre/dsIII20-21.html)
+- [Introduction to Order Theory](https://page.math.tu-berlin.de/~felsner/Lehre/dsIII20-21.html)
 - [Introduction to order theory](https://piotrmicek.staff.tcs.uj.edu.pl/introduction-to-order-theory-2020/)
-- [Infinum and Supremum](https://en.wikipedia.org/wiki/Infimum_and_supremum)
+- [Infimum and Supremum](https://en.wikipedia.org/wiki/Infimum_and_supremum)
+- [Introduction to Lattices and Order](https://www.cambridge.org/us/universitypress/subjects/mathematics/algebra/introduction-lattices-and-order-2nd-edition) by Davey & Priestley (2002)

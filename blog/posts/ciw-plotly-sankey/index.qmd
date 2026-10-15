@@ -32,7 +32,7 @@ Now we can combine these two information sources and get rid of the `-1` for the
 {{< include ./scripts/script_4.py >}}
 ```
 
-Finally, let's sort the values just for fun (as far as I know this doesn't change anyway of substance).
+Finally, let's sort the values just for fun (as far as I know this doesn't change anything of substance).
 
 ```python
 {{< include ./scripts/script_5.py >}}
@@ -44,7 +44,7 @@ Now we can prepare the Plotly figure as follows:
 {{< include ./scripts/script_6.py >}}
 ```
 
-Then we can finall change some background stuff and print the HTML which I have promptly pasted below into this post:
+Then we can finally change some background stuff and print the HTML which I have promptly pasted below into this post:
 
 ```python
 {{< include ./scripts/script_7.py >}}
@@ -58,8 +58,8 @@ And there we have it. A Sankey diagram from Ciw's results output.
 ```
 
 
-I'll be the first to admit that this diagram could use some work, but I am please at how this gives a prototype with little code. Primarily it is how jumbled up the arcs are going out of cold food. It may be possible to use different drawing layouts for `x` and `y` to obtain a nicer arrangement. The [Networkx](https://networkx.org/documentation/stable/reference/drawing.html) package has some `layout` functions that might supply such arrangments even if the core Networkx drawing utilities are not used. 
+I'll be the first to admit that this diagram could use some work, but I am pleased at how this gives a prototype with little code. Primarily it is how jumbled up the arcs are going out of cold food. It may be possible to use different drawing layouts for `x` and `y` to obtain a nicer arrangement. The [Networkx](https://networkx.org/documentation/stable/reference/drawing.html) package has some `layout` functions that might supply such arrangements even if the core Networkx drawing utilities are not used. 
 
-Now, to me, the point of such a diagram isn't to show a *plan* for a model, but rather to show what actually happened. it shows us how much of the customers went through which of the routing paths.
+Now, to me, the point of such a diagram isn't to show a *plan* for a model, but rather to show what actually happened. It shows us how many of the customers went through which of the routing paths.
 
-The above code needs some minor changes to be reusable, but it is definitely a process that can be generalized to work on othe simulation records from Ciw. The details of the model were not particularly important beyond what could be extracted from the results. The structure of the model was implicit in the results. Some parts of the structure could be missing when the simulation is either small or heavily constrained, but then again that might be desirable if you are interested in seeing actually flow rather than what you think you put into the model.
+The above code needs some minor changes to be reusable, but it is definitely a process that can be generalized to work on other simulation records from Ciw. The details of the model were not particularly important beyond what could be extracted from the results. The structure of the model was implicit in the results. Some parts of the structure could be missing when the simulation is either small or heavily constrained, but then again that might be desirable if you are interested in seeing actual flow rather than what you think you put into the model.

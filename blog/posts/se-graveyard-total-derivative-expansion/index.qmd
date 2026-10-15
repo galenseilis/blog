@@ -27,4 +27,4 @@ $$\begin{align}
 &= \frac{d}{dt} \left[ \frac{\partial L}{\partial t} \right] +  \sum_{j=1}^{n}  \left(\frac{d}{dt} \left[\frac{\partial L}{\partial x_j} \right] \frac{dx_j}{dt} +  \frac{\partial L}{\partial x_j} \frac{d}{dt} \left[\frac{dx_j}{dt} \right] \right) \\
 \end{align}$$
 
-but I have not seen a way to simplify the above and generalize to finite $k$.
+but I have not seen a way to simplify the above and generalize to finite $k$ (see [Faà di Bruno's formula](https://en.wikipedia.org/wiki/Fa%C3%A0_di_Bruno%27s_formula) for the general higher-order chain rule).

@@ -13,7 +13,7 @@ In this section I am going to cover the mathematics needed to derive the sample 
 
 ### Univariate Case
 
-The two-sided estimate for the DKWM inequality is given by
+The two-sided estimate for the DKWM inequality is given by [@dvoretzky1956; @massart1990]
 
 $$\Pr \left[ \sup_{x \in \mathbb{R}} \lvert F_n(x) - F(x) \rvert > \epsilon \right] \leq 2 e^{-2n\epsilon^2}$$
 
@@ -21,30 +21,29 @@ Let us define
 
 $$\alpha \triangleq 1 - \Pr \left[ \sup_{x \in \mathbb{R}} \lvert F_n(x) - F(x) \rvert > \epsilon \right] = \Pr \left[ \sup_{x \in \mathbb{R}} \lvert F_n(x) - F(x) \rvert \leq \epsilon \right]$$
 
-so that
+so that, to achieve the desired coverage probability $\alpha$, we require that the DKWM bound be no larger than the permitted failure probability:
+
+$$2 e^{-2n\epsilon^2} \leq 1 - \alpha.$$
+
+We can directly solve for a lower bound on $n$:
+
+$$n \geq \frac{\ln 2 - \ln (1 - \alpha)}{2 \epsilon^2}$$
+
+Clearly the sample size is a positive integer whereas the bound we have placed on it is not. We can take the ceiling to simplify our conclusion about the sample size:
 
 
-$$1 - \alpha \leq 2 e^{-2n\epsilon^2}.$$
-
-We can directly solve for an upper bound on $n$:
-
-$$n \leq \frac{\ln 2 - \ln (1 - \alpha)}{2 \epsilon^2}$$
-
-Clearly the sample size is an positive integer whereas the bound we have place on it is not. We can take the ceil round to simplify our conclusion about the sample size:
-
-
-$$n \leq \left\lceil \frac{\ln 2 - \ln (1 - \alpha)}{2 \epsilon^2} \right\rceil$$
+$$n \geq \left\lceil \frac{\ln 2 - \ln (1 - \alpha)}{2 \epsilon^2} \right\rceil$$
 
 
 ### Multivariate Case
 
-The [multivariate DKW inequality](https://en.wikipedia.org/wiki/Dvoretzky%E2%80%93Kiefer%E2%80%93Wolfowitz_inequality#Multivariate_case) is given by
+The [multivariate DKW inequality](https://en.wikipedia.org/wiki/Dvoretzky%E2%80%93Kiefer%E2%80%93Wolfowitz_inequality#Multivariate_case) is given by [@dvoretzky1956; @massart1990]
 
 $$\Pr \left[ \sup_{t \in \mathbb{R}^k} \left| F_n(t) - F(t)  \right| > \epsilon \right] \leq (n+1)k e^{-2n\epsilon^2},$$
 
 where $F_n(t)$ is the [eCDF](https://en.wikipedia.org/wiki/Empirical_distribution_function), $F(t)$ is the population [CDF](https://en.wikipedia.org/wiki/Cumulative_distribution_function), $\epsilon \in \mathbb{R}_{>0}$, and $n,k \in \mathbb{N}$.
 
-With the multivariate approach we cannot take the direct approach of algebraically obtaining an exact answer for an upper bound on $n$. I tried to apply the [Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function), but I did not find a way to make that approach work (@647066).
+With the multivariate approach we cannot take the direct approach of algebraically obtaining an exact answer for a lower bound on $n$. I tried to apply the [Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function), but I did not find a way to make that approach work (@647066).
 
 The approach I found fruitful is due to @647096, and I will go over the steps below. The first step is to define 
 
@@ -78,7 +77,7 @@ Now let us consider the Taylor series of $f$ at $n_*$.
 -1 - log(p/k) + log(1/(2*\epsilon**2)) + 2*\epsilon**2 - 2*\epsilon**4*(n + 1 - 1/(2*\epsilon**2))**2 + O((n - (1 - 2*\epsilon**2)/(2*\epsilon**2))**3, (n, (1 - 2*\epsilon**2)/(2*\epsilon**2)))
 ```
 
-Since this Taylor series goes on forever, we can choose a finite number of terms as an approximation of $f$. We know that this produces a polynomial which is guaranteed to have no more roots than the degree of the polynomial because of the fundamental theorem of algebra. There will always be exactly the degree number of roots on the complex plane, but we only care about non-negative real roots.
+Since this Taylor series goes on forever, we can choose a finite number of terms as an approximation of $f$. We know that this produces a polynomial which is guaranteed to have no more roots than the degree of the polynomial because of the [fundamental theorem of algebra](https://en.wikipedia.org/wiki/Fundamental_theorem_of_algebra). There will always be exactly the degree number of roots on the complex plane, but we only care about non-negative real roots.
 
 ## Applications
 
@@ -86,7 +85,7 @@ A plausible application is to prescribe the sample size for simulations, includi
 
 Sometimes it is possible to get large IID samples, in which cases you could prescribe the sample size to be collected.
 
-Although not a bound on the sample size itself, the DKW(M) inequality can also be used to 
+Although not a bound on the sample size itself, the DKW(M) inequality can also be used to construct confidence bands for the cumulative distribution function.
 
 ## Limitations
 
@@ -94,4 +93,4 @@ There are two substantial limitations of these sample size bounds.
 
 The first comes from the assumption of the theorem that we must be considering independent sampling.
 
-The second limitation is that the bound will tend to be quite large. In a sense this limitation comes from the generality of this bound. Some distributions converge more slowly than others, and such a general bound must hold for even the most slowly converging distributios.
+The second limitation is that the bound will tend to be quite large. In a sense this limitation comes from the generality of this bound. Some distributions converge more slowly than others, and such a general bound must hold for even the most slowly converging distributions.

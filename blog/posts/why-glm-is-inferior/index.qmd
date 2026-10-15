@@ -5,7 +5,7 @@ date: "2023-02-10"
 categories: [Jekyll Update]
 ---
 
-This post is a tongue-and-cheek response to [Professor writes a love song to statistics](https://www.youtube.com/watch?v=YvO_FFno_wA). 
+This post is a tongue-in-cheek response to [Professor writes a love song to statistics](https://www.youtube.com/watch?v=YvO_FFno_wA). 
 
 {{< video https://www.youtube.com/embed/YvO_FFno_wA >}}
 
@@ -85,4 +85,4 @@ It responded by naming the chat session "Why GLM is Inferior" and generated thes
 >
 > Better models are out there, so let's encroach!
 
-Well, there you have it. ChatGPT can generate song lyrics from a short prompt. It kind of accommodated the request for a specific sentence at the end, although it wasn't quite at the end but rather in the outro. I'd say it kind of missed the boat with "overfitting woes". While GLMs can have overfitting problems, jumping over to neural networks or other general function approximators is not going to improve overfitting. If anything it will make things worse. But overall I am impressed with this output.
+Well, there you have it. ChatGPT can generate song lyrics from a short prompt. It kind of accommodated the request for a specific sentence at the end, although it wasn't quite at the end but rather in the outro. I'd say it kind of missed the boat with "overfitting woes". While GLMs can have overfitting problems, jumping over to neural networks or other general function approximators is not going to improve [overfitting](https://en.wikipedia.org/wiki/Overfitting). If anything it will make things worse. But overall I am impressed with this output.

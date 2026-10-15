@@ -7,7 +7,7 @@ categories: [Python, Flask, Web Applications, URL, HTML Templates]
 
 In this post we will not only have dynamic URLs, but start loading HTML templates. In the last post I wrote on Flask I used the factorial function. In this post we'll take a number and GET/POST different templates depending on whether the input number is a prime number. 
 
-To check that a number is prime we can first check whether the candidate is less than 2. For natural numbers the number 2 is the smallest prime.
+To check that a number is [prime](https://en.wikipedia.org/wiki/Prime_number) we can first check whether the candidate is less than 2. For natural numbers the number 2 is the smallest prime.
 
 ::: {.callout-note}
 In the complex numbers, $\mathbb{C}$, the number 2 is not a "Gaussian prime". It can be factored:
@@ -34,7 +34,7 @@ and in `example_is_not_prime.html` I put
 <h1>The number {{ number }} is not a prime!</h1>
 ```
 
-Note that neither of these files have the usual preamble that you'd find in an `index.html` file. That's taken care of behind the scenes. You can also see `{{ number }}` which specifies a variable name that is expected to come from `render_template`.
+Note that neither of these files have the usual preamble that you'd find in an `index.html` file. That's taken care of behind the scenes. You can also see `{{ number }}` which specifies a variable name that is expected to come from [`render_template`](https://flask.palletsprojects.com/en/stable/api/#flask.render_template).
 
 ```python
 from flask import Flask, render_template
@@ -63,4 +63,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 ```
 
-When you run this application you'll be able to enter various numbers in, and what will be displayed is a sentence telling you whether the number you provided in the URL is a prime number of note.
+When you run this application you'll be able to enter various numbers in, and what will be displayed is a sentence telling you whether the number you provided in the URL is a prime number or not.

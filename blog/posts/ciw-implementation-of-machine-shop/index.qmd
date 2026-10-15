@@ -5,14 +5,14 @@ date: "2024-02-20"
 categories: [Simulation, Discrete-Event-Simulation, Python, Ciw]
 ---
 
-The following is an implementation of the [machine shop example](https://simpy.readthedocs.io/en/latest/examples/machine_shop.html) from the Simpy documention using Ciw. Parts of this implementation came from [this post](https://github.com/CiwPython/Ciw/issues/213#issuecomment-1781036391).
+The following is an implementation of the [machine shop example](https://simpy.readthedocs.io/en/latest/examples/machine_shop.html) from the Simpy documentation using Ciw. Parts of this implementation came from [this post](https://github.com/CiwPython/Ciw/issues/213#issuecomment-1781036391).
 
 ```python
 {{< include ./scripts/script_1.py >}}
 ```
 
 
-When we use the `run` method on an instance of the `CiwMachineShop`  we obtain similar counts as the SimPy machine shop.
+When we use the `run` method on an instance of the `CiwMachineShop` we obtain similar counts as the SimPy machine shop.
 
 ```default
 >>> CiwMachineShop().run()

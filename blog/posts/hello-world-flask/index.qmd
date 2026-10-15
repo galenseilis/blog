@@ -5,7 +5,7 @@ date: "2024-07-29"
 categories: [Python, Flask, Web Applications]
 ---
 
-Ths post shows a relatively minimal example of using Flask to develop of web application. This application will only run locally, but it is otherwise a bona fide web application.
+This post shows a relatively minimal example of using [Flask](https://flask.palletsprojects.com/en/stable/quickstart/) to develop a web application. This application will only run locally, but it is otherwise a bona fide web application.
 
 ```python
 from flask import Flask # 1
@@ -26,6 +26,6 @@ if __name__ == '__main__': # 6
 4. Declare the function we want to have run when a user visits the given URL.
 5. Return `'Hello, World'`.
 6. Conditional to run the application when the module script is run directly.
-7. Run the FLask web server. The `debug=True` parameter assignment enables a debugging mode which provides information about any error messages and automatic restarts. The automatic restarts may occur when changes in the source code of the application are detected.
+7. Run the Flask web server. The `debug=True` parameter assignment enables a debugging mode which provides information about any error messages and automatic restarts. The automatic restarts may occur when changes in the source code of the application are detected.
 
 When you run the application you'll find that it is locally hosted at some port (`http://127.0.0.1/<SOME_PORT>`).

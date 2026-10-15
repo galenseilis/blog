@@ -5,6 +5,7 @@ date: "2023-12-20"
 date-modified: "2024-08-10"
 categories: [Rust, Discrete Event Simulation, Python, SimPy, Simulation, Software Design, Prototyping, CPython, PyPy]
 echo: true
+bibliography: references.bib
 ---
 
 ## Introduction
@@ -27,7 +28,7 @@ The major difference is the introduction of enums for driving events and parking
 
 First, there are events implemented using an `Event` struct which always have two types of data: `time` and `event_type`. The `time` datum is the time that the event is scheduled to elapse. The `event_type` essentially provides a flag for how to update the state of the simulated car. 
 
-The `Environment` struct manages the simulation, including the event schedule is is implemented as a reverse binary heap (`BinaryHeap` combined with `Reverse`).
+The `Environment` struct manages the simulation, including the event schedule which is implemented as a reverse binary heap (`BinaryHeap` combined with `Reverse`) [@cormen2009].
 
 Lastly, is the use of Rust's enums. Here they are used to define the two types of events: `Parking` and `Driving`.
 
@@ -47,7 +48,7 @@ use std::cmp::Reverse;
 
 `Ordering` provides traits that we'll use for implementing the ordering of events in the event schedule. `BinaryHeap` and `Reverse` are useful for implementing the event schedule itself.
 
-Next I defined different types of events. Maybe it would be more logical to define the existence of events first, but we're just going in the order of my code event if that is a little weird. I defined different types of events as a `EventType` enumeration. I also used the `derive` attribute to attach traits related to debugging and comparison of events.
+Next I defined different types of events. Maybe it would be more logical to define the existence of events first, but we're just going in the order of my code even if that is a little weird. I defined different types of events as a `EventType` enumeration. I also used the `derive` attribute to attach traits related to debugging and comparison of events.
 
 ```rust
 #[derive(Debug, PartialEq, PartialOrd)]
@@ -184,7 +185,7 @@ I think this design is "okay", but I want to keep exploring different designs fo
 
 # Performance
 
-I am curious about the relative performance the simpy example compared to the Rust example. We can run each example a bunch of times to obtain distributions. Since this car example should be compatible with PyPy, a just in time compiled interpreter for a restriction implementation of Python, we will use that as well as the CPython interpreter. We'll collect up a bunch of results for both Python and Rust.
+I am curious about the relative performance of the SimPy example compared to the Rust example. We can run each example a bunch of times to obtain distributions. Since this car example should be compatible with PyPy, a just in time compiled interpreter for a restricted implementation of Python, we will use that as well as the CPython interpreter. We'll collect up a bunch of results for both Python and Rust.
 
 ```python
 {{< include ./scripts/benchmark.py >}}

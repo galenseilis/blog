@@ -5,13 +5,13 @@ date: "2024-02-02"
 categories: [Simulation, Discrete-Event-Simulation, Python, Ciw]
 ---
 
-In this post we look at implementing SimPy's [Bank Renege](https://simpy.readthedocs.io/en/latest/examples/bank_renege.html) example using Ciw. At a first glance this example is essentially a [M/M/1 queue](https://en.wikipedia.org/wiki/M/M/1_queue), but it has a couple of custom features. The first customized aspect is reneging customers with a uniformly-distributed reneging patience. See [Bocquet 2005](https://apps.dtic.mil/sti/pdfs/ADA444342.pdf) for some discussion of basic queueing theory with reneging. The second aspect is that there is a fixed total number of customers.
+In this post we look at implementing SimPy's [Bank Renege](https://simpy.readthedocs.io/en/latest/examples/bank_renege.html) example using Ciw. At a first glance this example is essentially an [M/M/1 queue](https://en.wikipedia.org/wiki/M/M/1_queue), but it has a couple of custom features. The first customized aspect is reneging customers with a uniformly-distributed reneging patience. See [Bocquet 2005](https://apps.dtic.mil/sti/pdfs/ADA444342.pdf) for some discussion of basic queueing theory with reneging. The second aspect is that there is a fixed total number of customers.
 
 Initially we could consider the arrivals to follow an exponential distribution
 
 $$T_{\text{Arrivals}} \sim \text{Exponential} \left( \frac{1}{10}  \right)$$
 
-but since this will only be true for the first 5 customer we need a more customized distribution. Specifically
+but since this will only be true for the first 5 customers we need a more customized distribution. Specifically
 
 $$T_{\text{Arrivals}} \sim \begin{cases}  \delta(\infty) & \text{Customers} \geq 5 \\ \text{Exponential} \left( \frac{1}{10}  \right) & \text{Customers} < 5  \end{cases}$$
 
@@ -27,7 +27,7 @@ The service distribution is just an exponential distribution:
 
 $$T_{\text{Service}} \sim \text{Exponential} \left( \frac{1}{12} \right)$$
 
-The reneging times for the customers will simply be according to a continuous unifom distribution:
+The reneging times for the customers will simply be according to a continuous uniform distribution:
 
 $$T_{\text{Renege}} \sim \mathcal{U}_{[1,3]}.$$
 
@@ -38,7 +38,7 @@ Following Ciw guide [*How to Simulate Reneging Customers*](https://ciw.readthedo
 {{< include ./scripts/script_2.py >}}
 ```
 
-How long should we expect this simulation to take? According to queueing theory, such a system is stable if $\rho \triangleq \frac{\lambda}{\mu} < 1$. In this case $\lambda = \frac{1}{10}$ and $\mu = \frac{1}{12}$ so $\rho = \frac{6}{5} > 1$. But there actually is something importantly different from this classic theoretical setting: we know ahead of time we're simulating for only 5 customers. So the theoretically concern of the length of the waitlist having unbounded asymptotic behaviour is not a concern here. That doesn't mean that the distribution is easy to estimate. One cannot, for example, simply add the random variables to get the correct distribution as that would ignore that there is waiting time on the queue and that some of the customers will renege. Instead, we'll simulate and record the simulation times that result.
+How long should we expect this simulation to take? According to queueing theory, such a system is stable if $\rho \triangleq \frac{\lambda}{\mu} < 1$. In this case $\lambda = \frac{1}{10}$ and $\mu = \frac{1}{12}$ so $\rho = \frac{6}{5} > 1$. But there actually is something importantly different from this classic theoretical setting: we know ahead of time we're simulating for only 5 customers. So the theoretical concern of the length of the waitlist having unbounded asymptotic behaviour is not a concern here. That doesn't mean that the distribution is easy to estimate. One cannot, for example, simply add the random variables to get the correct distribution as that would ignore that there is waiting time on the queue and that some of the customers will renege. Instead, we'll simulate and record the simulation times that result.
 
 
 ```python
@@ -49,4 +49,4 @@ The above code results in the plot:
 
 ![](./figures/bank-renege-run-times.png)
 
-You may be wondering how I knew that it would be a Gamma distribution that would fit so well to the simulation results. Honestly, I guessed. Gamma distributions 'often' given good approximations to time-to-event distributions, and happen to generalize some common waiting time distributions such as exponential distributions and Erlang distributions. Nonetheless, it is satisfying to see such a nearly-perfect fit to a relatively simple distribution.
+You may be wondering how I knew that it would be a Gamma distribution that would fit so well to the simulation results. Honestly, I guessed. Gamma distributions 'often' give good approximations to time-to-event distributions, and happen to generalize some common waiting time distributions such as [exponential distributions](https://en.wikipedia.org/wiki/Exponential_distribution) and [Erlang distributions](https://en.wikipedia.org/wiki/Erlang_distribution). Nonetheless, it is satisfying to see such a nearly-perfect fit to a relatively simple distribution.

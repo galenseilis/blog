@@ -1,5 +1,5 @@
 ---
-title: "Installing Anki on Ubuntu 24.04.02"
+title: "Installing Anki on Ubuntu 24.04.2"
 author: "Galen Seilis"
 date: "2025-02-24"
 categories: [Anki, Ubuntu, Linux, Installation]

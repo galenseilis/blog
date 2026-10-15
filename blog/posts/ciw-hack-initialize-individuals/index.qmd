@@ -30,7 +30,7 @@ Note that not everything about the individuals will be handled as an ordinary in
 
 Notably, the `arrival_date` and `queue_size_at_arrival` at arrival are `False`. The `id_number` columns are non-positive to avoid conflicts with instances of `Individual` that are added later. Otherwise you can end up with collisions like having two individuals with the ID of 1. The IDs being set to non-positive values is an easy way to circumvent these collisions.
 
-Something a bit more insideous for this hack is that `self.simulation` internal to these custom instances of `Individual` will also be `False`. If you ever use service disiplines that require accessing something else about the system's state via the instance of `Simulation`, you will get errors or unexpected behaviour. Here is another version of the code that uses a service discipline to print out the default value of `self.simulation`.
+Something a bit more insidious for this hack is that `self.simulation` internal to these custom instances of `Individual` will also be `False`. If you ever use service disciplines that require accessing something else about the system's state via the instance of `Simulation`, you will get errors or unexpected behaviour. Here is another version of the code that uses a service discipline to print out the default value of `self.simulation`.
 
 ```python
 {{< include ./scripts/script_2.py >}}

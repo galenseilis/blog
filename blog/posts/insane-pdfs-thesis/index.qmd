@@ -5,7 +5,7 @@ date: "2023-08-18"
 categories: [Mathematics, Mathematical-Statistics]
 ---
 
-I was just rumaging through some old files and folders when I found some bizarre attempts at deriving some sort of (I think) probability density functions. I don't think they ended up being useful for my thesis, but they are are really quite an impressive output from my computer algebra system.
+I was just rummaging through some old files and folders when I found some bizarre attempts at deriving some sort of (I think) [probability density functions](https://en.wikipedia.org/wiki/Probability_density_function). I don't think they ended up being useful for my thesis, but they are really quite an impressive output from my computer algebra system.
 
 $$\left( z \mapsto \frac{\int\limits_{-\infty}^{\infty} e^{- \frac{x_{1}^{2}}{2 s_{1}^{2}}} \int\limits_{-\infty}^{\infty} e^{- \frac{x_{0}^{2}}{2 s_{0}^{2}}} \delta\left(- z + \frac{x_{0} x_{1}}{\left|{x_{0}}\right| \left|{x_{1}}\right|}\right)\, dx_{0}\, dx_{1}}{2 \pi s_{0} s_{1}} \right)$$
 
@@ -35,7 +35,7 @@ I have no idea if these numbers are AM or PM, but I guess I calculated these exp
 | 15    | 09:03:34 |
 
 
-And here is some code I found which I guess tries to put together ratio distribrutions involving normal variables.
+And here is some code I found which I guess tries to put together [ratio distributions](https://en.wikipedia.org/wiki/Ratio_distribution) involving normal variables.
 
 ```python
 {{< include ./scripts/script_1.py >}}

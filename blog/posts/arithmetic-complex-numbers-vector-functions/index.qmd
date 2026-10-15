@@ -5,7 +5,7 @@ date: "2023-10-23"
 categories: [Math, Complex-Numbers]
 ---
 
-The basic arithmetic operations on complex numbers can be represented as vector functions.
+The basic arithmetic operations on [complex numbers](https://en.wikipedia.org/wiki/Complex_number) can be represented as vector functions.
 
 ## Complex Addition
 
@@ -53,7 +53,7 @@ implying
 
 $$\begin{bmatrix} 0 & -1 \\ 1 & 0 \end{bmatrix} \left(\begin{bmatrix}a \\ b \end{bmatrix} \dot \times \begin{bmatrix}1 \\ 0 \end{bmatrix} \right) = \begin{bmatrix}a \\ b \end{bmatrix} \dot \times \begin{bmatrix}0 \\ 1 \end{bmatrix}.$$
 
-This means that the two transformed basis vectors are the same up to a rotation of 90 degrees counter-clockwise on the standard Cartesian plane. This should surprise no one who has studied either linear algebra or complex analysis or algebra.
+This means that the two transformed basis vectors are the same up to a [rotation](https://en.wikipedia.org/wiki/Rotation_matrix) of 90 degrees counter-clockwise on the standard Cartesian plane. This should surprise no one who has studied either linear algebra or complex analysis or algebra.
 
 
 Now let's put the basis vectors on the left-hand-side.
@@ -100,7 +100,7 @@ It should also be apparent that
 
 $$\vec \nabla^{\odot k} \dot \times \left[ \alpha \vec v (x,y) \right] = \alpha \left[ \vec \nabla^{\odot k} \dot \times \vec v (x,y) \right]$$
 
-due to the linearity of derivatives.
+due to the [linearity](https://en.wikipedia.org/wiki/Linear_map) of derivatives.
 
 Likewise the linearity of derivatives implies the distribution:
 

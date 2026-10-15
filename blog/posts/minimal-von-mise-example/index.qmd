@@ -5,7 +5,7 @@ date: "2023-10-21"
 categories: [Statistics, Bayesian-Statistics, Von-Mise-Distribution]
 ---
 
-Found this code in my miscellaneous `bin` folder. Instead of deleting it I thought I would share it here. It is a minimal working example of using the PyMC package to model a Von-Mise distribution with priors put on its parameters. It is an extremely small model given by:
+Found this code in my miscellaneous `bin` folder. Instead of deleting it I thought I would share it here. It is a minimal working example of using the [PyMC](https://www.pymc.io/) package to model a [Von Mises distribution](https://en.wikipedia.org/wiki/Von_Mises_distribution) with priors put on its parameters. It is an extremely small model given by:
 
 $$\kappa \sim \text{Exponential}(1)$$
 
@@ -25,7 +25,7 @@ Here is *an* example output. Because I didn't set a seed number you may find you
 
 ![](./figures/von_mise_bimodal_test.png)
 
-Adding `az.summary(data, round_to=2).to_markdown('von_mise_bimdal_test.md')` to the code above we can also see a summary of the model parameters. It is not a great effective sample size (ESS) and $\hat r$, especially for $\mu$. Actually, $\kappa$ doesn't look horrible despite the low ESS. The plot above also suggests that there are a couple of states that the chain switches between, which are likely the two modes.
+Adding `az.summary(data, round_to=2).to_markdown('von_mise_bimdal_test.md')` to the code above we can also see a summary of the model parameters. It is not a great [effective sample size](https://en.wikipedia.org/wiki/Effective_sample_size) (ESS) and [R-hat](https://en.wikipedia.org/wiki/Gelman%E2%80%93Rubin_statistic) ($\hat r$), especially for $\mu$. Actually, $\kappa$ doesn't look horrible despite the low ESS. The plot above also suggests that there are a couple of states that the chain switches between, which are likely the two modes.
 
 
 |       |   mean |   sd |   hdi_3% |   hdi_97% |   mcse_mean |   mcse_sd |   ess_bulk |   ess_tail |   r_hat |

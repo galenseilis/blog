@@ -3,6 +3,7 @@ title: "A Sum Rule For Silviculture Surveys"
 author: "Galen Seilis"
 date: "2023-03-24"
 categories: [Forestry, Mathematical-Forestry]
+bibliography: references.bib
 ---
 
 ::: {.callout-info}
@@ -13,11 +14,11 @@ This post is based on a memorandum I wrote on 2019-06-12.
 After doing enough silviculture plots, intuitions about whether the block will pass the lower confidence limit (LCL) of stems per hectare (SPH) are developed. This post covers some computational results that back up these intuitions, and may serve as a useful shorthand for predicting if a block will have sufficient SPH for meeting stocking standards.
 
 # Introduction and Findings
-One of these intuitions is that if the free-growing (FG), or well-spaced (WS), counts are sufficiently high for a given number of plots, then the statistics will almost certaintly pass. Similarly, low counts at a given sample size suggest that the statistics will almost certainly fail. The pass-or-failure status is dependent on the LCL.
+One of these intuitions is that if the free-growing (FG), or well-spaced (WS), counts are sufficiently high for a given number of plots, then the statistics will almost certainly pass. Similarly, low counts at a given sample size suggest that the statistics will almost certainly fail. The pass-or-failure status is dependent on the LCL.
 
 $$\text{LCL} = \bar{x} - t_{\alpha, \text{df}} \frac{s}{\sqrt{n}}$$
 
-Where $\bar{x}$ is the average number of stems per hectare (or plot, if scaling factor is not applied), $t_{\alpha, \text{df}}$ is the critical score at a given confidence level ($1 -\alpha$) and degrees of freedom (df). In this context, $\alpha=0.1$ with $\alpha_{\frac{1}{2}} = 0.05$ for the two-tailed procedure. The variable $s$ is the sample standard deviation, defined as $s = \pm \sqrt{\frac{\sum_i^n (x_i - \bar{x})^2}{n-1}}$, and $n$ is the sample size. The factor $\frac{s}{\sqrt{n}}$ is the standard error of the mean. Each count $C_i$ is substituted as $x_i = \min(C_i, \text{M-value})$ for these calculations, thus truncating the upper bound of the interval.
+Where $\bar{x}$ is the average number of stems per hectare (or plot, if scaling factor is not applied), $t_{\alpha, \text{df}}$ is the critical score of Student's $t$-distribution [@student1908] at a given confidence level ($1 -\alpha$) and degrees of freedom (df). In this context, $\alpha=0.1$ with $\alpha_{\frac{1}{2}} = 0.05$ for the two-tailed procedure. The variable $s$ is the sample standard deviation, defined as $s = \pm \sqrt{\frac{\sum_i^n (x_i - \bar{x})^2}{n-1}}$, and $n$ is the sample size. The factor $\frac{s}{\sqrt{n}}$ is the standard error of the mean. Each count $C_i$ is substituted as $x_i = \min(C_i, \text{M-value})$ for these calculations, thus truncating the upper bound of the interval.
 
 
 The LCL is a function of the mean number of stems per hectare, and the mean number of stems per area is a function of the total count of FG/WS stems in the sample. While LCL is not solely a function of the total count of FG/WS stems, the following figure shows the relationships among LCL, the sum of FG/WS plot counts, and the sample size.
@@ -50,7 +51,7 @@ is given by
 
 $$\sum_{i=5}^{r=40} \frac{(i + 6)!}{i!6!}$$
 
-and evaulates to 62891169 unique possibilities. The resulting thresholds are given in the following table:
+and evaluates to 62891169 unique possibilities. The resulting thresholds are given in the following table:
 
 The inclusive thresholds of sum of plot counts guaranteed to either meet or fail to meet minimum stocking standards at a given sample size. This table assumes that the minimum stocking standard is 700 sph (assuming a plot multiplier of 200), or 3.5 stems per plot.
 

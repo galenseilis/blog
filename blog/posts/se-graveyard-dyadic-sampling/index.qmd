@@ -14,4 +14,4 @@ In [Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges](https
 
 > The translated and dilated filters are called *wavelet atoms*; their spatial position and ilation correspond to the coordinates $u$ and $\xi$ of the wavelet transform. These coordinates are usually sampled dyadically ($\xi=2^{-j}$ and $u=2^{-j}k$), with $j$ referred to as scale.
 
-So is this to say that we often reparametrize $u$ and $\xi$ in terms of $j$ and $k$, and then compute the various wavelet transforms with varying combinations of $j$ and $k$?
+So is this to say that we often reparameterize $u$ and $\xi$ in terms of $j$ and $k$, and then compute the various wavelet transforms with varying combinations of $j$ and $k$?

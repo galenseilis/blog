@@ -7,7 +7,7 @@ categories: [Data-Science, Machine-Learning, Python, scikit-Learn]
 
 Uncertainty quantification is a valuable thing to have when modelling noisy data. We need to make decisions and it can make a huge difference having estimates of the worst probable outcome for our planning.  Many of the machine learning methodologies have ignored probabilistic inferences and have rather focused on the conditional expectation. But there are a growing number of exceptions. While there are dedicated modules for predicting probabilities, I wanted to see what was available in Scikit-Learn as "low hanging fruit".
 
-There are three methods that a SKLearn estimator can have that seem relevant: `sample`, `sample_y`, and `predict_proba`. The `sample` method allows for values to be sampled from some internal probability distribution. Here is an example using `sklearn.mixture.BayesianGaussianMixture`.
+There are three methods that a SKLearn estimator can have that seem relevant: `sample`, `sample_y`, and `predict_proba`. The `sample` method allows for values to be sampled from some internal probability distribution. Here is an example using `sklearn.mixture.BayesianGaussianMixture` ([documentation](https://scikit-learn.org/stable/modules/generated/sklearn.mixture.BayesianGaussianMixture.html)).
 
 ```python
 {{< include ./scripts/script_1.py >}}
@@ -15,9 +15,9 @@ There are three methods that a SKLearn estimator can have that seem relevant: `s
 
 The above example returns both a data array and labels representing which statistical subpopulation the sample came from in the mixture distribution.
 
-The `sample_y` is currently only held by the `GaussianProcessRegressor`. It works the same way as `sample` in theory; it samples from the probability distribution. I suspect the name is different because it is considered a regressor by SKLearn whereas other classes with `sample` are not.
+The `sample_y` is currently only held by the `GaussianProcessRegressor` ([documentation](https://scikit-learn.org/stable/modules/generated/sklearn.gaussian_process.GaussianProcessRegressor.html)). It works the same way as `sample` in theory; it samples from the probability distribution. I suspect the name is different because it is considered a regressor by SKLearn whereas other classes with `sample` are not.
 
-The `predict_proba` is held by many of the estimators. When it is implemented it returns an estimated probability for each class, which differs from the `predict` method which would return the class label with the greatest estimated probability. This allows us to sample from a multinomial distribution to obtain samples with those probabilties. Here is a short example:
+The `predict_proba` is held by many of the estimators ([glossary](https://scikit-learn.org/stable/glossary.html#term-predict_proba)). When it is implemented it returns an estimated probability for each class, which differs from the `predict` method which would return the class label with the greatest estimated probability. This allows us to sample from a multinomial distribution to obtain samples with those probabilities. Here is a short example:
 
 ```python
 {{< include ./scripts/script_2.py >}}
@@ -76,7 +76,7 @@ I developed and ran a Python script which allows us to easily check what estimat
 | VotingClassifier               | False      | False        | True              |
 
 
-A concern I have about this table is that not all of the classes should have working implementations of the methods of interest. For example, `Pipeline`, `MultiOutputClassifier`, and similar ensembling classes should not have any logic built-in on how to compute probabilities or samples. Rather, such methods will call an underlying estimator if it exists and has the relevant method. So the table is a little bit misleading, but a good starting point.
+A concern I have about this table is that not all of the classes should have working implementations of the methods of interest. For example, `Pipeline`, `MultiOutputClassifier`, and similar ensembling classes should not have any logic built in on how to compute probabilities or samples. Rather, such methods will call an underlying estimator if it exists and has the relevant method. So the table is a little bit misleading, but a good starting point.
 
 The above table was generated with this Python script:
 

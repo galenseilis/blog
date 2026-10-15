@@ -3,9 +3,10 @@ title: "Sampling from a Linear System of Random Ordinary Differential Equations 
 author: "Galen Seilis"
 date: "2024-06-17"
 categories: [Python, Statistics]
+bibliography: references.bib
 ---
 
-Random differential equations result when some combination of parameters in the rate equations or the initial (or boundary) conditions are random variables. Combining the world of differential equation with the world of mathematical statistics allows us hypothesize about how a system works well accomodating uncertainty into our analysis. See [Strand 1970](https://core.ac.uk/download/pdf/82447522.pdf) for an introduction to random differential equations.
+Random differential equations result when some combination of parameters in the rate equations or the initial (or boundary) conditions are random variables. Combining the world of differential equations with the world of mathematical statistics allows us to hypothesize about how a system works well, accommodating uncertainty into our analysis. See [Strand 1970](https://core.ac.uk/download/pdf/82447522.pdf) for an introduction to random differential equations.
 
 In this post we'll consider the linear system:
 
@@ -18,12 +19,12 @@ $$\frac{dY(t)}{dt} = \mathbf{A} \vec Y(t)$$
 ::: {.callout-warning}
 [Random differential equations are not the same as stochastic differential equations](https://math.stackexchange.com/questions/72208/whats-the-difference-between-rde-and-sde). The latter allows for added variation from a (not necessarily stationary) stochastic process which require techniques such as [Itô integrals](https://en.wikipedia.org/wiki/It%C3%B4_calculus) or [Stratonovich integrals](https://en.wikipedia.org/wiki/Stratonovich_integral).
 :::
-The code to compute this system is given below:
+The code to compute this system is given below, using SciPy [@virtanen2020]:
 
 ```python
 {{< include ./scripts/script_1.py >}}
 ```
 
-Here is the resulting plot. Since we chose the coefficient distributions somewhat haphazardly, it is should not be surprising that no particular direction was preferred for this system.
+Here is the resulting plot. Since we chose the coefficient distributions somewhat haphazardly, it should not be surprising that no particular direction was preferred for this system.
 
 ![](./figures/2024-06-17-example-linear-random-ode.png)

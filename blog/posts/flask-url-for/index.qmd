@@ -1,11 +1,11 @@
 ---
-title: "Creating URL using `url_for` in Flask"
+title: "Creating a URL using `url_for` in Flask"
 author: "Galen Seilis"
 date: "2024-07-29"
 categories: [Python, Flask, Web Applications, URL]
 ---
 
-In this post I quickly show how the `url_for` command allows us to generate URLs. It isn't a fundamental feature, but it can save you some boilerplate.
+In this post I quickly show how the [`url_for`](https://flask.palletsprojects.com/en/3.0.x/api/#flask.url_for) command allows us to generate URLs. It isn't a fundamental feature, but it can save you some boilerplate.
 
 ```python
 import requests
@@ -46,4 +46,4 @@ Indeed, if you look at the CLI output from running the application you will see 
 /card/9
 ```
 
-While this is a simple example. you can use `url_for` to create more complicated URLs and content.
+While this is a simple example, you can use `url_for` to create more complicated URLs and content.

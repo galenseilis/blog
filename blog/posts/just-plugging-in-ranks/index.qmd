@@ -103,7 +103,7 @@ $$\begin{align*}
 &= \frac{\hat \sigma_{\text{rank}(x) \text{rank}(y)}}{\hat \sigma_{\text{rank}(y)}^2} \\
 \end{align*}$$
 
-These results also show us that $-1 \leq \hat \beta \leq 1$, where -1 is acheived when the data is antimonotone and 1 is acheived when the data is monotone. That is to say, the slope of the ranks indicates whether the variables go up or down in either direction. Perhaps less obvious is that this is actually the same as the Spearman rank correlation:
+These results also show us that $-1 \leq \hat \beta \leq 1$, where -1 is achieved when the data is antimonotone and 1 is achieved when the data is monotone. That is to say, the slope of the ranks indicates whether the variables go up or down in either direction. Perhaps less obvious is that this is actually the same as the Spearman rank correlation:
 
 $$\hat \beta = \hat r_{\rho}$$
 

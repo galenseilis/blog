@@ -8,7 +8,7 @@ bibliography: references.bib
 
 In this post I visualize the Bayesian workflow introduced by @2011.01808.
 
-I am setting Quato's `echo: true` so that you can see the Mermaid instructions for the diagram.
+I am setting Quarto's `echo: true` so that you can see the Mermaid instructions for the diagram.
 
 ```{mermaid}
 %%| echo: true

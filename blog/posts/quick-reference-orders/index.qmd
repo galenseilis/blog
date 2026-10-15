@@ -12,24 +12,24 @@ This post is just dumping a short list of notions of order from my MSc thesis da
 
 There are four common classes of orders.
 
-### Non-Strict Partial Order
+### [Non-Strict Partial Order](https://en.wikipedia.org/wiki/Partially_ordered_set)
 - Reflexive
 - Antisymmetric
 - Transitive
 
 
-### Strict Partial Order
+### [Strict Partial Order](https://en.wikipedia.org/wiki/Partially_ordered_set)
 - Irreflexive
 - Asymmetric
 - Transitive
 
-### Non-Strict Total Order
+### [Non-Strict Total Order](https://en.wikipedia.org/wiki/Total_order)
 - Reflexive
 - Transitive
 - Antisymmetric
 - Strongly-connected
 
-### Strict Total Order
+### [Strict Total Order](https://en.wikipedia.org/wiki/Total_order)
 - Irreflexive
 - Transitive
 - Connected
@@ -38,9 +38,9 @@ There are four common classes of orders.
 
 There are orders which sit over tuples, which themselves may be elements of a relation.
 
-- Product order
-- Lexicographic order
-- Pareto order
+- [Product order](https://en.wikipedia.org/wiki/Product_order)
+- [Lexicographic order](https://en.wikipedia.org/wiki/Lexicographic_order)
+- [Pareto order](https://en.wikipedia.org/wiki/Pareto_efficiency#Pareto_order)
 
 
 ## Function-Induced Orders
@@ -56,7 +56,7 @@ Suppose a collection of points $S$ where $x \leq y$ if-and-only-if there are mor
 We can define orders by their proximity to a reference element or set.
 
 #### Point Proximity Orders
-Give a choice of metric space $(X, \rho)$ and a reference element of that metric space $\psi \in X$, then we consider $x \leq y$ if-and-only-if $\rho(\psi, x) \leq \rho(\psi, y)$.
+Given a choice of metric space $(X, \rho)$ and a reference element of that metric space $\psi \in X$, then we consider $x \leq y$ if-and-only-if $\rho(\psi, x) \leq \rho(\psi, y)$.
 
 #### Set Proximity Orders
 

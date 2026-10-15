@@ -4,6 +4,7 @@ author: "Galen Seilis"
 date: "2025-02-17"
 categories: [Python, Kedro, Docker, Data Science, ZenML, Cookiecutter, MLFlow, Intake, DVC, Pachyderm, dbt, plugins, Mamba, Jupyter, Notebooks, Pandas Vet, Pandas, Polars, Pipelines, Kedro Viz, Versioning, Data Versioning, fsspec, Deployment, Best Practices, Problem of Induction, Pareto Front, Tradeoffs]
 toc: true
+bibliography: references.bib
 ---
 
 These are my notes on a video series released on Kedro. I started these notes quite a while ago, but I only just got around to finally finishing them.
@@ -22,7 +23,7 @@ According to [this article](https://www.mckinsey.com/about-us/new-at-mckinsey-bl
 - It was created internally at [Quantum Black](https://www.mckinsey.com/capabilities/quantumblack/how-we-help-clients), acquired by [McKinsey & Company](https://www.mckinsey.com/), in 2017.
 - It was originally being used for internal projects for clients.
 - In 2019 kedro was open-sourced.
-- Later than 2019, Kedro was donated to the Linunx Foundation and AI Data Initiative.
+- Later than 2019, Kedro was donated to the Linux Foundation and AI Data Initiative.
 
 ```{mermaid}
 timeline
@@ -50,14 +51,14 @@ Claimed benefits of Using Kedro:
 		- Project Template
 			- Inspired by Cookiecutter Data Science
 		- Data Catalog
-			- The core declative IO abstraction layer.
+			- The core declarative IO abstraction layer.
 			- The data catalog in hard drive space is specified by one or more YAML files.
 		- Nodes + Pipelines
 			- Constructs which enable data-centric workflows.
-			- The Pipelines at a mathematical level of abstraction are directed acyclic graphs where:
+			- The Pipelines at a mathematical level of abstraction are [directed acyclic graphs](https://en.wikipedia.org/wiki/Directed_acyclic_graph) where:
 				- the nodes are functions,
 				- the in-edges are inputs to the function,
-				- and the out-nodes are the outputs of a function.
+				- and the out-edges are the outputs of a function.
 			- If you want to perform cyclic compositions of functions you must do so with unique sets of names to the input/outputs.
 				- Because all these names of inputs/outputs are in the same namespace scope, [connascence](https://en.wikipedia.org/wiki/Connascence) can be a bit of a challenge.
 			- Kedro will execute the nodes in such a way that respects the partial order induced by the structure of the directed acyclic graph.
@@ -92,7 +93,7 @@ stateDiagram-v2
 		are organized with an adaptable, easy-to-use project template.
 	- You can create your own cookie cutter project template with Starters.
 - Pipeline visualizations & experiment tracking
-	- Kedro pipeline visualizations shows a blueprint of your developing data and machine-learning workflows,
+	- Kedro pipeline visualizations show a blueprint of your developing data and machine-learning workflows,
 	- provides data lineage,
 	- keeps track of machine-learning experiments,
 	- and makes it easier to collaborate with business stake holders.
@@ -185,7 +186,7 @@ def create_pipeline(**kwargs):
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/_HH8SCmCP_Q?si=g5xXbadQxwSU_n3y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-Kedro is a :
+Kedro is a:
 - Data science development framework
 - Machine learning engineering framework
 - Pipeline framework
@@ -255,7 +256,7 @@ flowchart LR
 
 ### Kedro on Databricks
 
-Multiple workflows are supported, both IDE-based and notebook-base:
+Multiple workflows are supported, both IDE-based and notebook-based:
 - Direct development on Databricks Notebooks
 - Local IDE work and synchronization with Databricks Repos (depicted  below).
 - Package and deploy to Databricks Jobs.
@@ -319,7 +320,7 @@ DatabricksRepos --> 2
 | [Pachyderm](https://www.pachyderm.com/) | "Pachyderm is the data layer that powers your machine learning lifecycle. Automate and unify your MLOps tool chain. With automatic data versioning and data driven pipelines." | | | ✅ Data-centric DAG | ✅ | | |
 | [dbt](https://www.getdbt.com/) | "dbt is a SQL transformation workflow that lets teams quickly and collaboratively deploy analytics code following software engineering best practices like modularity, portability, CI/CD, and documentation." | ✅ | ✅ | ✅ Data-centric DAG | ✅ | | | | |
 
-- There is a [Kedro-MLFlow plugin](https://kedro-mlflow.readthedocs.io/en/stable/)to allow MLFlow to be readily used with Kedro.
+- There is a [Kedro-MLFlow plugin](https://kedro-mlflow.readthedocs.io/en/stable/) to allow MLFlow to be readily used with Kedro.
 - When should you **NOT** use Kedro?
 	- Notebook-based workflows:
 		- Some data scientists build production pipelines directly in notebooks rather than IDEs.
@@ -330,7 +331,7 @@ DatabricksRepos --> 2
 	- While Kedro provides SQL and Snowflake data connectors, Kedro is not optimized for workflows authored solely in SQL, and tools like dbt may be a better choice.
 - Overhead for experimental projects:
 	- For pilots and experiments not intended for production, Kedro adds unnecessary boilerplate and structure.
-	- For experimentation, notesbooks may be more appropriate.
+	- For experimentation, notebooks may be more appropriate.
 - Transitioning from existing standards:
 	- Teams with existing standardized templates may experience friction transitioning to Kedro's structure and conventions.
 	- Currently, teams use a custom Kedro starter to merge templates.
@@ -422,7 +423,7 @@ $ tree .
 	- `/docs/source` provides the basic starting source code for a [Sphinx-generated documentation](https://www.sphinx-doc.org/en/master/).
 - `notebooks` is a directory for putting notebooks (e.g. [Jupyter notebooks](https://jupyter.org/)).
 - `src` contains all the source code of the Kedro project.
-	- It contains the required files (e.g. `__init__.py`'s') so that the project can be built as a Python package.
+	- It contains the required files (e.g. `__init__.py`'s) so that the project can be built as a Python package.
 
 
 ## Get started with Kedro - The spaceflights starter
@@ -562,7 +563,7 @@ micromamba create -n spaceflights310 python=3.10 -c conda-forge -y
 - The name `spaceflights310` has `310` appended to it to help remind us later that this environment is prepared for Python version 3.10.
 	- Appending this string to the name does not have any influence on how Micromamba prepares the environment. It is just for us humans. 😊
 - `python=3.10` is used by `micromamba` to prepare the environment for Python 3.10.
-- The `-c conda-forge` is to indicate that we using the [Conda-Forge repository](https://conda-forge.org/) for our Python packages.
+- The `-c conda-forge` is to indicate that we are using the [Conda-Forge repository](https://conda-forge.org/) for our Python packages.
 - The `-y` just means to automatically accept any triggered `[Y/n]` options.
 
 After running the above command, you should get something like this:
@@ -699,7 +700,7 @@ And likewise, you can check what version of pip you are running:
 pip 23.3.1 from /home/galen/.local/lib/python3.10/site-packages/pip (python 3.10)
 ```
 
-Additionally, you can check **where** your environment's installations of Python and pip and located:
+Additionally, you can check **where** your environment's installations of Python and pip are located:
 
 ```bash
 (spaceflights310) $ which python
@@ -753,11 +754,11 @@ In [software versioning](https://en.wikipedia.org/wiki/Software_versioning) they
 
 $$\underbrace{\texttt{M}}_{\text{Major}}.\underbrace{\texttt{m}}_{\text{Minor}}.\underbrace{\texttt{p}}_{\text{Patch}}$$
 
-So with `v0.18.14` instead of `v0.18.13` we have only a small difference. If your curious you can read about the changes in different releases [here](https://github.com/kedro-org/kedro/releases).
+So with `v0.18.14` instead of `v0.18.13` we have only a small difference. If you're curious you can read about the changes in different releases [here](https://github.com/kedro-org/kedro/releases).
 
 Currently we have Kedro installed, but we don't have a Kedro project. Remember that folder system we went over earlier? Now it is time to make that!
 
-Because the spaceflights project is a prebuilt project that is ready to be used, we could setup up by merely running:
+Because the spaceflights project is a prebuilt project that is ready to be used, we could set up by merely running:
 
 ```bash
 (spaceflights310) $ kedro new --starter=spaceflights
@@ -888,7 +889,7 @@ The URL "[http://localhost:8888/tree](http://localhost:8888/tree)," is a local a
 
 Now that we have the notebook interface open, go to the `notebooks` directory in the interface (not the CLI). Following with the tutorial, create a notebook called `first-exploration.ipynb`. Note that creating this notebook has created and renamed a notebook `Untitled.ipynb` to `first-exploration.ipynb` in your `notebooks` directory on your system.
 
-Sadly, at the time of writing, I don't have embedding Jupyter Notebooks setup on my blog. So I am going to use the prompt `(spaceflights310):JN>` to signify that we looking at commands in a Jupyter Notebook environment.
+Sadly, at the time of writing, I don't have embedding Jupyter Notebooks setup on my blog. So I am going to use the prompt `(spaceflights310):JN>` to signify that we are looking at commands in a Jupyter Notebook environment.
 
 
 First thing we can do is load the Kedro-IPython extension:
@@ -904,8 +905,8 @@ First thing we can do is load the Kedro-IPython extension:
                              'pipelines'
 ```
 
-- You can see in the above output that loading the extension how loaded some information into our project including `context`, `session`, `catalog`, and `pipelines`.
-- Both `context`, `session` and session provide a bunch of information we'll get back to.
+- You can see in the above output that loading the extension has loaded some information into our project including `context`, `session`, `catalog`, and `pipelines`.
+- Both `context` and `session` provide a bunch of information we'll get back to.
 - The `catalog` gives us access to all of the datasets that we will declare to be available.
 - `pipelines` should currently be a dictionary with an empty `Pipeline` instance:
 
@@ -920,7 +921,7 @@ Since Jupyter Notebook is itself an environment built on other tools including I
 Although, note the section [Jupyter and the future of IPython](https://ipython.org/#jupyter-and-the-future-of-ipython "Permalink to this headline") on the ipython site.
 :::
 
-So back to our `(spaceflights310) $`, prompt we can start IPython with the command:
+So back to our `(spaceflights310) $` prompt we can start IPython with the command:
 ```bash
 (spaceflights310) $ ipython
 ```
@@ -953,21 +954,21 @@ The same Kedro project things will be available including `context`, `session`, 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/rl2cncGxyts?si=2ryduPkd7eiXWiVV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-The `context`, `session`, `catalog`, and `pipelines` that we encountered in the last tutorial have not been prepared to contain any useful information yet. But not we'll get the Catalog up and running. If you have not been following along in the Kedro docs, we are at the [Set up the data](https://docs.kedro.org/en/stable/tutorial/set_up_data.html) section.
+The `context`, `session`, `catalog`, and `pipelines` that we encountered in the last tutorial have not been prepared to contain any useful information yet. But now we'll get the Catalog up and running. If you have not been following along in the Kedro docs, we are at the [Set up the data](https://docs.kedro.org/en/stable/tutorial/set_up_data.html) section.
 
 - There are three datasets that we care about for this example:
 	- `companies.csv`
 	- `reviews.csv`
 	- `shuttles.xlsx`
 
-Let's go get that data. I'm just going to download those files from [here](https://github.com/WaylonWalker/kedro-spaceflights/tree/feature/project-template/data/01_raw)and put them in my own `data/01_raw` path. You should be able to see the following:
+Let's go get that data. I'm just going to download those files from [here](https://github.com/WaylonWalker/kedro-spaceflights/tree/feature/project-template/data/01_raw) and put them in my own `data/01_raw` path. You should be able to see the following:
 
 ```bash
 (spaceflights310) $ ls data/01_raw/
 companies.csv  reviews.csv  shuttles.xlsx
 ```
 
-Now create a new Jupyter Notebook titled `data-exploration.ipynb`, and install the following command using the following magic command:
+Now create a new Jupyter Notebook titled `data-exploration.ipynb`, and run the following command using the magic command:
 
 ```python
 (spaceflights310):JN> %pip install kedro-datasets[pandas]
@@ -984,7 +985,7 @@ If you're unfamiliar with Pandas you should probably learn it if you're interest
 - [Pandas Cheat Sheet](https://pandas.pydata.org/Pandas_Cheat_Sheet.pdf)
 :::
 
-Alright, so you *still* cannot access those data files in Kedro just yet until your register them in the catalog. Where is the catalog? `conf/base/catalog.yml`.
+Alright, so you *still* cannot access those data files in Kedro just yet until you register them in the catalog. Where is the catalog? `conf/base/catalog.yml`.
 
 ```yaml
 companies:
@@ -1004,7 +1005,7 @@ shuttles:
 
 In most cases you need to provide at least a name for each data source, the type of data source which must be a valid Kedro dataset class, and the filepath. You can see for the `xlsx` file that we require an additional `load_args` which will tell Pandas to use the `openpyxl` package for parsing the Excel file. When you get into external/remote data sources (e.g. SQL databases) you will see that it is possible to register data sources in the catalog to pull remote data for you.
 
-Let's hop back into our `data-exploration.ipynb` notebook to load the Kedro-ipython extension.
+Let's hop back into our `data-exploration.ipynb` notebook to load the Kedro-IPython extension.
 
 ```python
 (spaceflights310):JN> %load_ext kedro.ipython
@@ -1104,7 +1105,7 @@ pandas.core.frame.DataFrame
 Yup, just an ordinary data frame.
 
 ::: {.callout-note}
-Ever wondered what `type(type)` should return? The answer is `type`, making it `type` a [fixed point](https://en.wikipedia.org/wiki/Fixed_point_(mathematics))of itself. This has to do with how classes work in Python, but that is a story for another time. See [Real Python: Python Metaclasses](https://realpython.com/python-metaclasses/)for some introductory background info.
+Ever wondered what `type(type)` should return? The answer is `type`, making `type` a [fixed point](https://en.wikipedia.org/wiki/Fixed_point_(mathematics)) of itself. This has to do with how classes work in Python, but that is a story for another time. See [Real Python: Python Metaclasses](https://realpython.com/python-metaclasses/) for some introductory background info.
 :::
 
 We can also load the other data sets:
@@ -1249,7 +1250,7 @@ Let us start with the `iata_approved` column. This transformation is quite strai
 Name: iata_approved, Length: 77096, dtype: bool
 ```
 
-There is a nice property here that `values == t` will be `True` and otherwise `False`, which happens to coincide with whenever the value in the `iata_approved` is `f`. Except -- oooops! Consider this check for unique values:
+There is a nice property here that `values == t` will be `True` and otherwise `False`, which happens to coincide with whenever the value in the `iata_approved` column is `f`. Except -- oooops! Consider this check for unique values:
 
 ```python
 (spaceflights310):JN> companies['iata_approved'].unique()
@@ -1263,14 +1264,14 @@ See [Working with missing data](https://pandas.pydata.org/docs/user_guide/missin
 :::
 
 ::: {.callout-important}
-I strongly suggest that if you have missing data that you learn about the statistical side of it. Missing data is a less obvious problem in most cases than using `pandas.DataFrame.dropna()`.  Not thinking about the causality of the missingness can confound your results.
+I strongly suggest that if you have missing data that you learn about the statistical side of it. Missing data is a less obvious problem in most cases than using `pandas.DataFrame.dropna()`.  Not thinking about the causality of the missingness can confound your results [@mcelreath2020].
 
-An excellent introduction to this is Richard McElreath's *Statistical Rethinking 2023 - 18 -Missing Data*:
+An excellent introduction to this is Richard McElreath's *Statistical Rethinking 2023 - 18 - Missing Data*:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Oeq6GChHOzc?si=oAdNGjzLy6C09-gB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 :::
 
-Anyway, you may want to overwrite the original column to save computer memory and/or name proliforation.
+Anyway, you may want to overwrite the original column to save computer memory and/or name proliferation.
 
 ```python
 (spaceflights310):JN> companies['iata_approved'] = companies['iata_approved'] == 't'
@@ -1309,10 +1310,10 @@ Name: company_rating, Length: 77096, dtype: object
 You can see that there are also `NaN` values, but these are more general Pandas `NaN` types rather than the [`np.nan` type](https://numpy.org/doc/stable/reference/constants.html#numpy.NAN) which counts as a float.
 
 ::: {.callout-warning}
-The Pandas `NaN` should further not be confused with Pandas' `NA`. See [Experimental `NA` scalar to denote missing values](https://pandas.pydata.org/docs/user_guide/missing_data.html#missing-data-na)for more information.
+The Pandas `NaN` should further not be confused with Pandas' `NA`. See [Experimental `NA` scalar to denote missing values](https://pandas.pydata.org/docs/user_guide/missing_data.html#missing-data-na) for more information.
 :::
 
-We can achieve this by replacing the string value `"%"` with an empty string `""`. This might seem like a [weird flex](https://www.dictionary.com/e/slang/weird-flex-but-okay/)to replace a string character with an empty string character if you're not used to programming, but it is a common practice that doesn't have any logical issues provided that you think carefully about what an [empty string](https://en.wikipedia.org/wiki/Empty_string) is.
+We can achieve this by replacing the string value `"%"` with an empty string `""`. This might seem like a [weird flex](https://www.dictionary.com/e/slang/weird-flex-but-okay/) to replace a string character with an empty string character if you're not used to programming, but it is a common practice that doesn't have any logical issues provided that you think carefully about what an [empty string](https://en.wikipedia.org/wiki/Empty_string) is.
 
 ```python
 (spaceflights310):JN> companies["company_rating"] = (
@@ -1350,7 +1351,7 @@ memory usage: 2.4+ MB
 
 You can see that `company_rating` is now `float64`, and that there are 47187 out of 77096 non-null entries in that column.
 
-In a real analysis we would want to take a look at all of the columns, which would likely be feasible since there are only 2 additional ones to look at. But for this tutorial let's move on the `shuttles` data set.
+In a real analysis we would want to take a look at all of the columns, which would likely be feasible since there are only 2 additional ones to look at. But for this tutorial let's move on to the `shuttles` data set.
 
 The tutorial asks us to do the same thing with `d_check_complete` and `moon_clearance_complete` as we did with `iata_approved`. It also asks us to do a very similar thing with `price` as we did with `company_rating`. Let's make use of `assign` to do all this in one chain.
 
@@ -1373,7 +1374,7 @@ And the tutorial for this basic data processing stops there.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/VFcrvnnNas4?si=TcBZl0-7aefm2sn_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-- At this junction we are aiming to refactor some of the commands we wrote in our Jupyter notebook `data-exploration.ipynb` so that they are suitable for being used in a Kedro pipeline.
+- At this juncture we are aiming to refactor some of the commands we wrote in our Jupyter notebook `data-exploration.ipynb` so that they are suitable for being used in a Kedro pipeline.
 - For example, we could re-write those cases where we checked `col == "t"` to be a Python function which we could re-use.
 
 Here is an attempted implementation.
@@ -1412,7 +1413,7 @@ def _is_char(x: pd.Series, char: str = "t") -> pd.Series:
     return x == char
 ```
 
-I've generalized somewhat from the tutorial to only default to checking for `"t"`, but passing in other values for `char` will extend the capabilities of this function. You may also note that I have used type hinting which you can learn about in the [standard library](https://docs.python.org/3/library/typing.html)or [PEP8](https://peps.python.org/pep-0008/#other-recommendations)or [Real Python: Type Hinting](https://realpython.com/lessons/type-hinting/). Type hints do not coerce types nor do they enforce the types, so as a quick solution I have included a `raise` statement. Some other options include `Enums` (with some careful thought) or more readily we could have simply used an `assert`. The docstrings are [Google's Style](https://google.github.io/styleguide/pyguide.html), if you are unfamiliar.
+I've generalized somewhat from the tutorial to only default to checking for `"t"`, but passing in other values for `char` will extend the capabilities of this function. You may also note that I have used type hinting which you can learn about in the [standard library](https://docs.python.org/3/library/typing.html) or [PEP8](https://peps.python.org/pep-0008/#other-recommendations) or [Real Python: Type Hinting](https://realpython.com/lessons/type-hinting/). Type hints do not coerce types nor do they enforce the types, so as a quick solution I have included a `raise` statement. Some other options include `Enums` (with some careful thought) or more readily we could have simply used an `assert`. The docstrings are [Google's Style](https://google.github.io/styleguide/pyguide.html), if you are unfamiliar.
 
 And likewise here is an implementation of the `str --> float` examples via dropping characters before casting to a float.
 
@@ -1634,7 +1635,7 @@ At this juncture you could use formatters such as [`black`](https://black.readth
 <iframe width="560" height="315" src="https://www.youtube.com/embed/P__gFG1TmMo?si=Qrw2ZUiJ5_50PKou" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 - Last time we wrote our functions in `nodes.py` to define the nodes of our Kedro pipeline.
-- Now we will glue together the nodes by defining a directed acylclic graph in Kedro.
+- Now we will glue together the nodes by defining a directed acyclic graph in Kedro.
 
 Your file will start off looking like this:
 
@@ -1702,7 +1703,7 @@ def create_pipeline(**kwargs) -> Pipeline:
     ])
 ```
 
-The above illustrates something that I don't particular love; repetitive and highly similar naming. Let us refactor this to a loop:
+The above illustrates something that I don't particularly love; repetitive and highly similar naming. Let us refactor this to a loop:
 
 ```python
 """
@@ -1777,10 +1778,10 @@ We have lift off! 🚀
 
 - Last time we ran the pipeline, but we didn't actually produce anything.
 - We just did some processing steps that were summarily forgotten after the pipeline finished running.
-	- These types of data set is called a `MemoryDataset`
+	- This type of data set is called a `MemoryDataset`
 - Time to go back to the catalog!
 
-Let's add these entries to the `catalog.yml`. The `pq` file extension is for the [Apache Parquet](https://parquet.apache.org/)format, which is considered one of the fast-to-load data formats due to how information is stored.
+Let's add these entries to the `catalog.yml`. The `pq` file extension is for the [Apache Parquet](https://parquet.apache.org/) format, which is considered one of the fast-to-load data formats due to how information is stored.
 
 ```yaml
 preprocessed_companies:
@@ -1821,7 +1822,7 @@ And now when you check the intermediate data folder you should see the intermedi
 <iframe width="560" height="315" src="https://www.youtube.com/embed/KWqSzbHgNW4?si=9j4IMRnSSkDB8JYK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 - [`kedro-viz`](https://github.com/kedro-org/kedro-viz) is a plugin for Kedro to show us a high-level view of our Kedro pipelines.
-	- Check out this [demo](https://demo.kedro.org/)if you are just passing through without coding along.
+	- Check out this [demo](https://demo.kedro.org/) if you are just passing through without coding along.
 - With our pipeline built we know there is a DAG there, but we would like to see the DAG.
 
 
@@ -1882,7 +1883,7 @@ def split_data(df: pd.DataFrame, parameters: dict) -> tuple:
 ```
 
 ::: {.callout-note}
-You can reload Kedro in an iPython session using `%reload_kedro` as an iPython magic command.
+You can reload Kedro in an IPython session using `%reload_kedro` as an IPython magic command.
 :::
 
 You can load a Kedro project's parameters using the following:
@@ -1897,13 +1898,13 @@ You can further specify loading an entry in Kedro parameters using a colon:
 catalog.load("params:a")
 ```
 
-This does assume that you have an instance of the catalog loaded. This will occur automatically in a Kedro Jpuyter notebook, but you may need to import and call some callables from Kedro when doing this from a script.
+This does assume that you have an instance of the catalog loaded. This will occur automatically in a Kedro Jupyter notebook, but you may need to import and call some callables from Kedro when doing this from a script.
 
 ## Make complex Kedro pipelines - Master parameters in Kedro
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/eIA12RQMlFY?si=Uuk7bUV8ErOAJJyX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-- Each pipelines will *de facto* have is own parameters file in YAML format.
+- Each pipeline will *de facto* have its own parameters file in YAML format.
 
 Suppose we have a parameters file like this:
 
@@ -2007,7 +2008,7 @@ regressor:
   filepath: data/06_models/regressor.pkl
 ```
 
-We may want to version the model, which Kedro parameters allows us to do as a versioned dataset.
+We may want to version the model, which Kedro parameters allow us to do as a versioned dataset.
 
 ```yaml
 regressor:
@@ -2017,10 +2018,10 @@ regressor:
 ```
 
 ::: {.callout-warning}
-For the unversioned dataset we will find a `yaml` file `data/06_models/regressor.pkl` whereas for the versioned counterpart `data/06_models/regressor.pkl` is actually a directory. This is a potential source of confusion because the paths appear to be identical when they are not, leading to confusion between what is a folder file vs a non-folder file.
+For the unversioned dataset we will find a file `data/06_models/regressor.pkl` whereas for the versioned counterpart `data/06_models/regressor.pkl` is actually a directory. This is a potential source of confusion because the paths appear to be identical when they are not, leading to confusion between what is a folder file vs a non-folder file.
 :::
 
-## make complex Kedro pipelines - Reuse your Kedro pipeline using namespaces
+## Make complex Kedro pipelines - Reuse your Kedro pipeline using namespaces
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/cYHHVAoWZ2E?si=LYgJEGAzjveTEXbi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -2140,7 +2141,7 @@ Calling `kedro catalog resolve` will tell you what your datasets are, including 
 
 Kedro environments are basically distinct sets of configurations that you can have within a single Kedro project. By default you will see the `conf/` path contains `local/` and `base/`. You can add more configurations of your own.
 
-1. Create a new subdirectrory of `conf/` named whatever you want. In this case we will call it `test/`, but you can call it other things too.
+1. Create a new subdirectory of `conf/` named whatever you want. In this case we will call it `test/`, but you can call it other things too.
 
 ```bash
 $ mkdir conf/test
@@ -2152,14 +2153,14 @@ $ mkdir conf/test
 When you run with a custom environment you do not need to specify 'all' the same information as in `base`. The `base` environment is privileged as the default configuration environment. It is possible to change the default configuration catalog, but let's leave that topic for another occasion. When a non-default configuration is used it will add to the default configuration and also override the default configuration whenever there are name collisions.
 
 ::: {.callout-note}
-There is an idea of there of defining [hierarchical configurations of environments](https://github.com/kedro-org/kedro/discussions/3871), but at the time of writing that has not been implemented.
+There is an idea of defining [hierarchical configurations of environments](https://github.com/kedro-org/kedro/discussions/3871), but at the time of writing that has not been implemented.
 :::
 
 ## Ship your Kedro project to production - Use S3 and MiniIO cloud storages with Kedro
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/TkoBEQIdHbA?si=Nsugj1WdknOI7R3z" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-The [`fsspec` library](https://filesystem-spec.readthedocs.io/en/latest/) allows for a unified interface to specify locations of files. This can be particularly handy if you have files that life on different computing systems. Kedro uses this library for this very purpose in its datasets so that you can specify file paths that are not on the local system.
+The [`fsspec` library](https://filesystem-spec.readthedocs.io/en/latest/) allows for a unified interface to specify locations of files. This can be particularly handy if you have files that live on different computing systems. Kedro uses this library for this very purpose in its datasets so that you can specify file paths that are not on the local system.
 
 > [MinIO AIStor](https://min.io/) is designed to allow enterprises to consolidate all of their data on a single, private cloud namespace. Architected using the same principles as the hyperscalers, AIStor delivers performance at scale at a fraction of the cost compared to the public cloud.
 
@@ -2240,7 +2241,7 @@ Now you can use the Kedro Airflow plugin to generate a script:
 $ kedro airflow create --target-dir=dags/ --env=airflow
 ```
 
-In the `dags/` path you'll find a script such as `spaceflights_baseline_dag.py`. One of the classes defined in this script is `KedroOperator` which defines an Airflow operator which will runs components of the Kedro project within the Airflow environment.
+In the `dags/` path you'll find a script such as `spaceflights_baseline_dag.py`. One of the classes defined in this script is `KedroOperator` which defines an Airflow operator which will run components of the Kedro project within the Airflow environment.
 
 Now that you have this script, you can copy it into your `airflow/dags/` directory. One choice of path is `~/airflow/dags/` if you are on Linux.
 
@@ -2251,7 +2252,7 @@ Now that you have this script, you can copy it into your `airflow/dags/` directo
 - There are many ways to use Kedro.
 - There is a Slack channel for Kedro.
 
-The current curriculum for the software envineering principles for data science:
+The current curriculum for the software engineering principles for data science:
 
 - Why is software engineering necessary for data science?
 - Writing Python functions and the refactoring cycle for Jupyter notebooks.
@@ -2269,5 +2270,5 @@ For any given finite set of practices we can consider comparing them exhausitvel
 
 Furthermore, there is a typical issue that arises even among relatively small sets of practices: the existence of tradeoffs. When we have tradeoffs we have a situation in which there is a set of mutually non-dominating options. This should not be confused with the notion of these options being equally good. Rather each non-dominated option being the best according to one objective will also be worse (but not necessarily 'the worst') in terms of another objective.
 
-When we restrict our thinking to a Pareto order on our objectives then the set of such mutually undominating options is called a [Pareto front](https://en.wikipedia.org/wiki/Pareto_front). Real-world objectivse may have a more complicated ordering, but the existence of tradeoffs remains a plausible possibility.
+When we restrict our thinking to a Pareto order on our objectives then the set of such mutually non-dominating options is called a [Pareto front](https://en.wikipedia.org/wiki/Pareto_front). Real-world objectives may have a more complicated ordering, but the existence of tradeoffs remains a plausible possibility.
 :::

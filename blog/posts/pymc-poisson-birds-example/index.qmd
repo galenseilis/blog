@@ -23,7 +23,7 @@ The first problem we have to solve is obtaining the data. This can be done with 
 
 ## Parsing the Data
 
-Just because we have successfully obtaining code from the target URL does not mean it is in a form for analysis. The next steps involve parsing the site response text using Beautiful Soup, a Python package dedicated to this very task. It will look through the HTML to identify the desired block of code which contains the example data, which I identified by looking for the substring `"visits_df"`. 
+Just because we have successfully obtained code from the target URL does not mean it is in a form for analysis. The next steps involve parsing the site response text using Beautiful Soup, a Python package dedicated to this very task. It will look through the HTML to identify the desired block of code which contains the example data, which I identified by looking for the substring `"visits_df"`. 
 
 ```python
 {{< include ./scripts/parse_data.py >}}
@@ -130,7 +130,7 @@ UN          Blackberry               9.0  138.444444  ...  173.00  308.0
 
 ## Model Definition
 
-Now that we have the data loaded, let's define the basic model.
+Now that we have the data loaded, let's define the basic model [@mcelreath2020].
 
 
 ```python

@@ -10,7 +10,7 @@ This post is just some notes I took while watching the following video:
 <iframe width="560" height="315" src="https://www.youtube.com/embed/KTIl1MugsSY?si=k7RR05hWGEICmF7b" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ITM Antipattern
-The initialize then modify (ITM) antipattern is where something it initialized outside a loop and then it is modified in the loop. For change 1 we used `enumerate`, and for change 2 we used a list comprehension.
+The initialize then modify (ITM) antipattern is where something is initialized outside a loop and then it is modified in the loop. For change 1 we used [`enumerate`](https://docs.python.org/3/library/functions.html#enumerate), and for change 2 we used a [list comprehension](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions).
 
 Redundant Comments
     - Remove **redundant** comments.
@@ -24,9 +24,9 @@ Deprecated Print Statements
     - Delete any print statements that are no longer needed.
 
 List Comprehensions
-    - Replace for loops with list comprehensions when the list copmrehension itself will be readible.
+    - Replace for loops with [list comprehensions](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions) when the list comprehension itself will be readable.
 
-Deprecated Conrol Flow
+Deprecated Control Flow
     - Delete control flow (`if/elif/else`) that won't be relevant to future use cases.
 
 Iterable Slicing

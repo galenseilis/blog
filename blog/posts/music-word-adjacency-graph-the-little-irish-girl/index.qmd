@@ -5,7 +5,7 @@ date: "2025-02-19"
 categories: [Art, Music, Word Adjacency]
 ---
 
-Here are the lyrics of silent noon with punctuation and capitalization ignored:
+Here are the lyrics of The Little Irish Girl with punctuation and capitalization ignored:
 
 ```python
 {{< include ./scripts/lyrics.py >}}

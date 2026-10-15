@@ -5,7 +5,7 @@ date: "2023-10-20"
 categories: [Chatgpt, Programming]
 ---
 
-A problem I am interested in is extracting a network model on a collection of tables using a Python package (e.g. sqlparse or sqlglot) to produce a networkx multigraph.
+A problem I am interested in is extracting a network model on a collection of tables using a Python package (e.g. [sqlparse](https://sqlparse.readthedocs.io/) or [sqlglot](https://sqlglot.com/sqlglot.html)) to produce a [networkx](https://networkx.org/documentation/stable/) multigraph.
 
 Suppose we begin with an SQL script containing three queries:
 

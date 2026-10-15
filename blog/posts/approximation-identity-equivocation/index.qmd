@@ -4,6 +4,7 @@ author: "Galen Seilis"
 date: "2025-02-21"
 categories: [Math, Logic, Fallacy, Equivocation, Approximation]
 draft: true
+bibliography: references.bib
 ---
 
 <!--
@@ -56,7 +57,7 @@ Math.SE user Franklin Pezzuti Dyer gives a simple example in a [comment](https:/
 
 A [negligible set](https://en.wikipedia.org/wiki/Negligible_set) is a set that can be ignored for some purpose. Note that "some purpose" here is usually meant in the context of mathematics rather than practical application.
 
-Consider the following mathematical fact. Given two sets $A$ and $B$ in some shared family of sets $\mathcal{F}$ in a measure space. Given a measure $\mu: \mathcal{F} \rightarrow \mathbb{R}_{\geq 0}$ it is possible to have $A \cap B \neq \emptyset$ and yet $\mu (A \cap B) = 0$. This is due to either concept of [almost everywhere](https://en.wikipedia.org/wiki/Almost_everywhere) or [almost surely](https://en.wikipedia.org/wiki/Almost_surely).
+Consider the following mathematical fact. Given two sets $A$ and $B$ in some shared family of sets $\mathcal{F}$ in a measure space. Given a measure $\mu: \mathcal{F} \rightarrow \mathbb{R}_{\geq 0}$ it is possible to have $A \cap B \neq \emptyset$ and yet $\mu (A \cap B) = 0$. This is due to either the concept of [almost everywhere](https://en.wikipedia.org/wiki/Almost_everywhere) or [almost surely](https://en.wikipedia.org/wiki/Almost_surely).
 
 ## Limits
 
@@ -76,9 +77,9 @@ $$\lim_{x \rightarrow \infty} \frac{f(x)}{g(x)} = 1.$$
 Above I used limits going to infinity, but one could also take the limit to negative infinity.
 :::
 
-This captures notion that while two functions may be distinct, they eventually become arbitrarily close together.
+This captures the notion that while two functions may be distinct, they eventually become arbitrarily close together.
 
-Limits of functions can have some nice properties One of them is that asymptotic approximation taken as a binary relation on functions induces an equivalence relation. We will come back to equivalence relations later.
+Limits of functions can have some nice properties. One of them is that asymptotic approximation taken as a binary relation on functions induces an equivalence relation. We will come back to equivalence relations later.
 
 ### Squeeze Theorem
 
@@ -98,7 +99,7 @@ Identity is an [equivalence relation](https://en.wikipedia.org/wiki/Equivalence_
 
 Although it is couched in mathematical jargon, I find the mathematical notion of an ["equivalence relation"](https://en.wikipedia.org/wiki/Equivalence_relation) to be a clear way to define what one could mean by "equivalent".
 
-An equivalence relation is, like many things in standard mathematics, a collection with some sort of structure. We will clarify what that structure is in a moment. Begin with a set $S$. An homogenous binary relation $R$ on $S$ is a subset of the Cartesian product of $S$ with itself. The Cartesian product is the set of all ordered pairs $S \times S = \{ (a,b) \mid a \in S \land b \in S \}$ An equivalence relation is an homogenous binary relation which is reflexive, transitive, and symmetric. An homogenous binary relation $R$ on is reflexive if $(x,x) \in R$ for all $x$ in $S$. A homogenous binary relation is transitive if, for all $x,y,z \in S$, we have $(x,y) \in R \land (y,z) \in R implies (x,z) \in R$. Lastly, an homogenous binary relation is symmetric if, for all $x,y \in S$, it holds that $(x,y) \in R \implies (y,x) \in R$.
+An equivalence relation is, like many things in standard mathematics, a collection with some sort of structure. We will clarify what that structure is in a moment. Begin with a set $S$. A homogeneous binary relation $R$ on $S$ is a subset of the Cartesian product of $S$ with itself. The Cartesian product is the set of all ordered pairs $S \times S = \{ (a,b) \mid a \in S \land b \in S \}$. An equivalence relation is a homogeneous binary relation which is reflexive, transitive, and symmetric. A homogeneous binary relation $R$ on $S$ is reflexive if $(x,x) \in R$ for all $x$ in $S$. A homogeneous binary relation is transitive if, for all $x,y,z \in S$, we have $(x,y) \in R \land (y,z) \in R implies (x,z) \in R$. Lastly, a homogeneous binary relation is symmetric if, for all $x,y \in S$, it holds that $(x,y) \in R \implies (y,x) \in R$.
 
 So is an approximation relation also transitive? No, not in general.
 
@@ -108,7 +109,7 @@ $$|0 - 4| = 4 < 5$$
 $$|4 - 7| = 3 < 5$$
 $$|0 - 7| = 7 > 5$$
 
-This example shows that such approximations given a fixed error tolerance does not necessarily give transitivity. Indeed, given any error tolerance $\epsilon$ and we can always find three real numbers that will violate transitivity. So this sort of approximation, while useful in some contexts, does not give us an equivalence relation.
+This example shows that such approximations given a fixed error tolerance do not necessarily give transitivity. Indeed, given any error tolerance $\epsilon$ we can always find three real numbers that will violate transitivity. So this sort of approximation, while useful in some contexts, does not give us an equivalence relation.
 
 # The Approximation-Identity Fallacy
 
@@ -127,12 +128,12 @@ Example: Physical distances.
 
 # Practical Significance
 
-In my experience the distinction between approximation and identity most often becomes important in the context of numerical computing. Typical computers can represent binary number exactly. When we add two numbers it is not guaranteed that the sum will equal the correct value. In some cases this is ignorable, but sometimes it is not. When of the tricks I have learned, when it matters, is to add up smaller numbers together and aggregate up towards adding bigger numbers. The trick doesn't always work, but sometimes it helps you avoid the numerical problem that a small number plus a big number is the same big number you started with...
+In my experience the distinction between approximation and identity most often becomes important in the context of numerical computing [@goldberg1991]. Typical computers can represent binary numbers exactly. When we add two numbers it is not guaranteed that the sum will equal the correct value. In some cases this is ignorable, but sometimes it is not. One of the tricks I have learned, when it matters, is to add up smaller numbers together and aggregate up towards adding bigger numbers. The trick doesn't always work, but sometimes it helps you avoid the numerical problem that a small number plus a big number is the same big number you started with...
 
 That is, for two numbers $a$ and $b$ for which neither number is zero it is possible to obtain $a + b = b$. You might then be tempted to subtract $b$ from both sides to obtain $a = 0$. This reasoning works quite well for dealing.
 
 
-# The Brass Tax
+# The Brass Tacks
 
 In practice I expect we get away with this fallacy a lot. Rather, it may just be "good enough" as a [heuristic](https://en.wikipedia.org/wiki/Heuristic) in most practical applications. Perhaps we might similarly call it something like "the approximation-identity heuristic".
 

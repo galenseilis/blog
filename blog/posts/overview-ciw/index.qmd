@@ -29,15 +29,15 @@ Here is Geraint Palmer back in 2016 introducing the package at Pycon UK 2016:
 
 ## Overview
 
-Ciw uses an event scheduling approach composed of three types of events: A, B, and C. A-type events move the system's clock forward in time. B-type events have been per-scheduled. C-type events are events triggered by B-type events.<sup>[3][3]{:target="_blank"}</sup> 
+Ciw uses an event scheduling approach composed of three types of events: A, B, and C. A-type events move the system's clock forward in time. B-type events have been pre-scheduled. C-type events are events triggered by B-type events.<sup>[3][3]{:target="_blank"}</sup> 
 
-Ciw simulations are "time-to-event", meaning that time between events are skipped over in the simulation.<sup>[4][4]{:target="_blank"}</sup>  This approach becomes more efficient relative to simulating the state for every time step as the linear density of events over time decreases. Ciw uses an arbitrary scale of time so it is the responsibility of the user to decide whether the base unit of the simulation is in second, minutes, hours, days, years or some other unit.
+Ciw simulations are "time-to-event", meaning that time between events are skipped over in the simulation.<sup>[4][4]{:target="_blank"}</sup>  This approach becomes more efficient relative to simulating the state for every time step as the linear density of events over time decreases. Ciw uses an arbitrary scale of time so it is the responsibility of the user to decide whether the base unit of the simulation is in seconds, minutes, hours, days, years or some other unit.
 
 The core Python classes in Ciw include Simulation, ArrivalNode, ExitNode, Server, and Individual.<sup>[5][5]{:target="_blank"}</sup> The simulation object is responsible for running the simulation, running a state tracker, and recording a log. The arrival node is responsible for generating individuals as the unit that flows through the network. Individuals either remain in the network, or they go to a terminating state called the "exit node". Servers are the units of capacity that limit how many individuals can be served at a node in parallel.
 
 There are also some abstractions in Ciw oriented around the topic of input and a queue representation. These include Network, ServiceCentre, CustomerClasses, and Distributions.<sup>[5][5]{:target="_blank"}</sup>
 
-Two optional components of Ciw are the abstractions of StateTracker and DeadlockDetector.<sup>[5][5]{:target="_blank"}</sup> The state trackers are responsible for collecting aggregrate information of the state of the simulation.<sup>[6][6]{:target="_blank"}</sup> An example is system population tracker, which records the overall number of individuals in the queueing network for each time when an event occurs. The dead lock detector is for Type I blocking,<sup>[3][3]{:target="_blank"}</sup> which is one of three types of blocking.<sup>[7][7]{:target="_blank"},[8][8]{:target="_blank"}</sup>
+Two optional components of Ciw are the abstractions of StateTracker and DeadlockDetector.<sup>[5][5]{:target="_blank"}</sup> The state trackers are responsible for collecting aggregate information of the state of the simulation.<sup>[6][6]{:target="_blank"}</sup> An example is system population tracker, which records the overall number of individuals in the queueing network for each time when an event occurs. The deadlock detector is for Type I blocking,<sup>[3][3]{:target="_blank"}</sup> which is one of three types of blocking.<sup>[7][7]{:target="_blank"},[8][8]{:target="_blank"}</sup>
 
 Although it does not have an explicitly recreational scope, Ciw has been used for recreation in the form of simulating an asynchronous variant of snakes and ladders.<sup>[9][9]{:target="_blank"}</sup>
 
@@ -45,7 +45,7 @@ Ciw v3.1.0 requires Python 3.7 or greater.<sup>[10][10]{:target="_blank"}</sup> 
 
 ## Features
 
-This section lists many of the features available in Ciw. While Ciw be used to implement any queueing network which can be specified in standard Kendall's notation, it can be configured to model queueing networks which deviate from that family of models.<sup>[13][13]{:target="_blank"}</sup>
+This section lists many of the features available in Ciw. While Ciw can be used to implement any queueing network which can be specified in standard Kendall's notation, it can be configured to model queueing networks which deviate from that family of models.<sup>[13][13]{:target="_blank"}</sup>
 
 ### Distributions
 
@@ -55,9 +55,9 @@ Ciw supports a variety of common distributions,<sup>[15][15]{:target="_blank"}</
 
 ### Arrivals
 
-When a network is initialized in Ciw, every node is assigned an inter-arrival time distribution.<sup>[17][17]{:target="_blank"}</sup> This distribution is sampled from in order to determine when the next arrival will be. The main requirement for arrival times is that they have non-negative support, which includes any of the supported distributions over non-negative number.<sup>[15][15]{:target="_blank"}</sup>
+When a network is initialized in Ciw, every node is assigned an inter-arrival time distribution.<sup>[17][17]{:target="_blank"}</sup> This distribution is sampled from in order to determine when the next arrival will be. The main requirement for arrival times is that they have non-negative support, which includes any of the supported distributions over non-negative numbers.<sup>[15][15]{:target="_blank"}</sup>
 
-Sometimes it is desirable for batches of individuals to arrive at a node simultaneously. Ciw supports a batch arrivals feature in which the number of arriving individuals can be sampled according to a distribution.<sup>[18][18]{:target="_blank"}</sup> Batch arrivals can use many, but not all, of the available distribution because the batch sizes must be non-negative integers.
+Sometimes it is desirable for batches of individuals to arrive at a node simultaneously. Ciw supports a batch arrivals feature in which the number of arriving individuals can be sampled according to a distribution.<sup>[18][18]{:target="_blank"}</sup> Batch arrivals can use many, but not all, of the available distributions because the batch sizes must be non-negative integers.
 
 ### Restricted Networks
 
@@ -69,7 +69,7 @@ Ciw supports queueing networks with multiple classes of individual, including Ke
 
 Once multiple classes of individual are being used in Ciw, many of the other features become individual-class-dependent. This includes arrivals, service discipline, server behaviour, and routing.
 
-Dynamic classes of individual (i.e. the class of individual can changing) are supported in two ways in Ciw:<sup>[22][22]{:target="_blank"}</sup>
+Dynamic classes of individual (i.e. the class of individual can change) are supported in two ways in Ciw:<sup>[22][22]{:target="_blank"}</sup>
 
 - Customer class can change after service.<sup>[22][22]{:target="_blank"}</sup>
 - Customer class can change while queueing (i.e. waiting).<sup>[22][22]{:target="_blank"}</sup>
@@ -83,7 +83,7 @@ In addition to customer classes being dynamic as mentioned in the previous subse
 
 ### Routing
 
-Routing of individuals occurs when an individual goes from one node to another having completed their service at the previous node. When there are multiple nodes there are consequently multiples places that an individual could go. Routing is the process of deciding where such individuals go.
+Routing of individuals occurs when an individual goes from one node to another having completed their service at the previous node. When there are multiple nodes there are consequently multiple places that an individual could go. Routing is the process of deciding where such individuals go.
 
 Ciw has three approaches to routing:
 
@@ -93,7 +93,7 @@ Ciw has three approaches to routing:
 
 #### Routing Matrices
 
-A routing matrix is an $n \times n$ matrix (where $n$ is the number of nodes in the network) such that the $(i,j)$th element $P_{ij}$ corresponds to the probability of transitioning to node $j$ after service at node $i$.<sup>[27][27]{:target="_blank"}</sup> This is similar to a Stochastic matrix in the sense that the elements are probabilities of state transitions, however the sum of a given row can be less than one. This is due to the fact that the complement of each sum is the probability of an individual leaving the network altogether from that node. This can be donated by the following equation: 
+A routing matrix is an $n \times n$ matrix (where $n$ is the number of nodes in the network) such that the $(i,j)$th element $P_{ij}$ corresponds to the probability of transitioning to node $j$ after service at node $i$.<sup>[27][27]{:target="_blank"}</sup> This is similar to a stochastic matrix in the sense that the elements are probabilities of state transitions, however the sum of a given row can be less than one. This is due to the fact that the complement of each sum is the probability of an individual leaving the network altogether from that node. This can be denoted by the following equation: 
 
  $$Pr[\text{Leave Network From Node}_i]= 1-\sum _{j}^{n} P_{ij}$$
 
@@ -105,7 +105,7 @@ In process-based routing the simulation simply dictates where an individual goes
 
 #### Custom Routing
 
-Through Subclassing the core Node class and overwriting its the next_node method, any time-dependent or state-dependent routing can be achieved.
+Through subclassing the core Node class and overriding its next_node method, any time-dependent or state-dependent routing can be achieved.
 
 An example custom is when individuals join the shortest available queue in a processor sharing system. There are a couple of implementations of this type of behaviour in the Ciw documentation.<sup>[29][29]{:target="_blank"},[30][30]{:target="_blank"}</sup>
 
@@ -121,21 +121,21 @@ The service times follow a distribution with non-negative support.<sup>[17][17]{
 
 A service discipline in Ciw is whatever rule determines which individual gets served next.
 
-By default Ciw uses a first come, first serve (FCFS), which is termed first-in-first-out (FIFO) in Ciw in adherence to computer science terminology.<sup>[31][31]{:target="_blank"}</sup> Two other built-in service disciplines include "last in, first out" (LIFO) and "service in random order" SIRO.<sup>[31][31]{:target="_blank"}</sup>
+By default Ciw uses a first come, first served (FCFS), which is termed first-in-first-out (FIFO) in Ciw in adherence to computer science terminology.<sup>[31][31]{:target="_blank"}</sup> Two other built-in service disciplines include "last in, first out" (LIFO) and "service in random order" SIRO.<sup>[31][31]{:target="_blank"}</sup>
 
 When multiple classes are used, it is optionally possible to provide priority classes which achieves a priority queue service discipline.<sup>[32][32]{:target="_blank"}</sup>
 
 As part of Ciw's create_network interface, the service discipline can be changed to any provided function which takes the individuals at a queue and returns the next individual chosen to be served. Because every individual has a reference to the simulation instance as an attribute, which has access to the complete time and state of the system, it is possible to have time and state-dependent service disciplines. This customization feature subsumes the other service disciplines mentioned above.
 
-Process sharing is service discipline where a number of individuals are served simultaneously and the service load is shared equally among the individuals receiving the service.<sup>[33][33]{:target="_blank"}</sup> This creates a monotonic relationship between the number of individuals being served and their service time.
+Process sharing is a service discipline where a number of individuals are served simultaneously and the service load is shared equally among the individuals receiving the service.<sup>[33][33]{:target="_blank"}</sup> This creates a monotonic relationship between the number of individuals being served and their service time.
 
 #### Server Behaviour
 
 Servers represent a unit of capacity for a service center at a node.
 
-- The number of available servers can dependent on the state.<sup>[34][34]{:target="_blank"}</sup>
-- The service rate can dependent on the server.<sup>[35][35]{:target="_blank"}</sup>
-- Servers themselves can have priorities which can dependent on the individual being served.<sup>[36][36]{:target="_blank"}</sup>
+- The number of available servers can depend on the state.<sup>[34][34]{:target="_blank"}</sup>
+- The service rate can depend on the server.<sup>[35][35]{:target="_blank"}</sup>
+- Servers themselves can have priorities which can depend on the individual being served.<sup>[36][36]{:target="_blank"}</sup>
 - The number of servers can follow a pre-calculated schedule,<sup>[37][37]{:target="_blank"}</sup> including slotted schedules.<sup>[38][38]{:target="_blank"}</sup>
 
 ### Stopping & Resuming
@@ -160,7 +160,7 @@ Ciw supports the following attributes in its visit records:
 |        Attribute        |                                                                                  Description                                                                                 |
 |-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |        `id_number`        | The unique identification number for that customer.                                                                                                                          |
-|      `customer_class`     | The number of that customer’s customer class. If dynamic customer  classes are used, this is the customer’s class that they were when they  recieved service at that node.   |
+|      `customer_class`     | The number of that customer’s customer class. If dynamic customer  classes are used, this is the customer’s class that they were when they  received service at that node.   |
 | `original_customer_class` | The number of the customer’s class when they arrived at the node.                                                                                                            |
 |           `node`          | The number of the node at which the service took place.                                                                                                                      |
 |       `arrival_date`      | The date of arrival to that node, the date which the customer joined the queue.                                                                                              |
@@ -168,8 +168,8 @@ Ciw supports the following attributes in its visit records:
 |    `service_start_date`   | The date at which service began at that node.                                                                                                                                |
 |       `service_time`      | The amount of time spent in service at that node.                                                                                                                            |
 |     `service_end_date`    | The date which the customer finished their service at that node.                                                                                                             |
-|       `time_blocked`      | The amount of time spent blocked at that node. That is the time between finishing service at exiting the node.                                                               |
-|        `exit_date`        | The date which the customer exited the node. This may be  immediatly after service if no blocking occured, or after some period of  being blocked.                           |
+|       `time_blocked`      | The amount of time spent blocked at that node. That is the time between finishing service and exiting the node.                                                               |
+|        `exit_date`        | The date which the customer exited the node. This may be  immediately after service if no blocking occurred, or after some period of  being blocked.                           |
 |       `destination`       | The number of the customer’s destination, that is the next node  the customer will join after leaving the current node. If the customer  leaves the system, this will be `-1`. |
 |  `queue_size_at_arrival`  | The size of the queue at the customer’s arrival date. Does not include the individual themselves.                                                                            |
 | `queue_size_at_departure` | The size of the queue at the customer’s exit date. Does not include the individual themselves.                                                                               |
@@ -179,7 +179,7 @@ Ciw supports the following attributes in its visit records:
 The attribute `record_type` can be one of:
 
 - `"service"`: a completed service
-- `"interrupted service"`: an interupted service
+- `"interrupted service"`: an interrupted service
 - `"renege"`: the waiting time while a customer waited before reneging
 - `"baulk"`: the record of a customer baulking
 - `"rejection"`: the record of a customer being rejected due to the queue being full
@@ -189,12 +189,12 @@ The attribute `record_type` can be one of:
 Some of the miscellaneous features of Ciw include being able to set a progress bar to display the progress of a simulation<sup>[44][44]{:target="_blank"}</sup> and set numerical calculations to be exact.<sup>[45][45]{:target="_blank"}</sup>
 Extended Behaviour
 
-There is some additional behaviour that can be obtained from Ciw that are not officially supported features.
+There is some additional behaviour that can be obtained from Ciw that is not an officially supported feature.
 
-- Ciw can be hybridized with other forms of time-dependent processes including Differential equations even it is not a built-in feature.<sup>[46][46],[47][47],[48][48]{:target="_blank"}</sup>
+- Ciw can be hybridized with other forms of time-dependent processes including differential equations even if it is not a built-in feature.<sup>[46][46],[47][47],[48][48]{:target="_blank"}</sup>
 - Ciw does not have a built-in feature for initializing the state of the system, however the HCiw package provides this functionality.<sup>[49][49]{:target="_blank"}</sup>
 - There are no utilities in Ciw to schedule non-queueing functions, but this is possible with external code.<sup>[50][50]{:target="_blank"}</sup>
-- Parallel computing computing is not a built-in feature but can be utilized for repeated runs of the simulation under differing input or pseudorandom seed.<sup>[51][51]{:target="_blank"}</sup>
+- Parallel computing is not a built-in feature but can be utilized for repeated runs of the simulation under differing input or pseudorandom seed.<sup>[51][51]{:target="_blank"}</sup>
 - While Ciw collects complete records, it does not automatically report incomplete records (i.e. those that are still in a node at the end of the simulation). It is possible to further extract that information.<sup>[52][52]{:target="_blank"}</sup>
     
 ## Examples
@@ -207,13 +207,13 @@ The video quality is not great, but the talk *PyDiff 18th October - 'Queues Queu
 
 A [list of example implementations of some classic queue models in Ciw](https://galenseilis.github.io/posts/list-of-queues-ciw/){:target="_blank"} is available.
 
-The blog post [Queueing Simulations](https://www.programmingopiethehokie.com/2023/01/queueing-simulations.html){:target="_blank"} on the *programming opiethehokie* illustrates using Ciw to simulation a restricted M/M/c queueing model.
+The blog post [Queueing Simulations](https://www.programmingopiethehokie.com/2023/01/queueing-simulations.html){:target="_blank"} on the *programming opiethehokie* illustrates using Ciw to simulate a restricted M/M/c queueing model.
 
 [Monks & Harper 2023](https://pubmed.ncbi.nlm.nih.gov/37881450/){:target="_blank"} use Ciw to simulate an urgent care calling centre.
 
 ## Adoption
 
-At the time writing I expect that Ciw has an extremely small community of users.
+At the time of writing I expect that Ciw has an extremely small community of users.
 
 ### Star History
 The following is a plot of the number of Github stars on the [Ciw repository](https://github.com/CiwPython/Ciw){:target="_blank"} for Ciw and its closest counterpart, [Queuing-tool](https://queueing-tool.readthedocs.io/en/latest/){:target="_blank"}.

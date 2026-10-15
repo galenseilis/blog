@@ -3,6 +3,7 @@ title: "How do I derive the distribution of a real-valued statistic from real-va
 author: "Galen Seilis"
 date: "2021-07-03"
 categories: [Statistics, Probability-Distributions]
+bibliography: references.bib
 ---
 
 ::: {.callout-info}
@@ -18,4 +19,4 @@ $$\hat{\theta} = g\left( X_1, \cdots, X_n \right)$$
 
 Let's also assume that $g$ and $f_i$ are sufficiently smooth. But let us not assume that any subset of $\{X_j \sim f_j\}_{j=1}^{n}$ is necessarily independent.
 
-While this description is not sufficient to provide an exact algorithm, I would like to know if there are some common approaches or procedures to deriving the distribution of $\hat{\theta}$.
+While this description is not sufficient to provide an exact algorithm, I would like to know if there are some common approaches or procedures to deriving the distribution of $\hat{\theta}$ [@casella2002].

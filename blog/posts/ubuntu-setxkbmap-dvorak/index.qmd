@@ -5,7 +5,7 @@ date: "2024-12-11"
 categories: [Ubuntu, setxkbamp, Dvorak, Keyboard Layouts]
 ---
 
-Changing over to programmer's Dvorak on Ubuntu is really easy:
+Changing over to [programmer's Dvorak](https://www.kaufmann.no/roland/dvorak/) on Ubuntu is really easy:
 
 ```bash
 setxkbmap -layout us -variant dvp

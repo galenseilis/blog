@@ -5,7 +5,7 @@ date: "2023-06-10"
 categories: [Python, Plotting]
 ---
 
-Disapointed by ChatGPT in [*Asking ChatGPT to Code a Plotting Function for Covering Diagrams*](https://galenseilis.github.io/posts/chatgpt-plot-covering-diagram/) but inspired by some of the diagrams in [*The Joy of Abstraction: An Exploration of Math, Category Theory, and Life*](https://www.goodreads.com/en/book/show/60658614) by Eugenia Cheng, I decided to take a quick attempt at plotting Hasse diagrams for the factorization of positive integers.
+Disappointed by ChatGPT in [*Asking ChatGPT to Code a Plotting Function for Covering Diagrams*](https://galenseilis.github.io/posts/chatgpt-plot-covering-diagram/) but inspired by some of the diagrams in [*The Joy of Abstraction: An Exploration of Math, Category Theory, and Life*](https://www.goodreads.com/en/book/show/60658614) by Eugenia Cheng, I decided to take a quick attempt at plotting [Hasse diagrams](https://en.wikipedia.org/wiki/Hasse_diagram) for the factorization of positive integers.
 
 ```python
 {{< include ./scripts/script_1.py >}}

@@ -31,4 +31,4 @@ Another option is that we could use the `gcd` crate.
 gcd(2024, 748) = 44
 ```
 
-Often I think going with the existing crate for work projects. There's no need to reinvent such a simple wheel, and it supports a wider variety of types than the example from @programming_rust. But it is also a great code example since calculating the GCD is a well-known, and relatively simple, task.
+Often I think going with the existing crate is best for work projects. There's no need to reinvent such a simple wheel, and it supports a wider variety of types than the example from @programming_rust. But it is also a great code example since calculating the GCD is a well-known, and relatively simple, task [@knuth1997].

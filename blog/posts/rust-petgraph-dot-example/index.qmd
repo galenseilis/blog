@@ -6,9 +6,9 @@ categories: [Rust, Petgraph, Petgraph-evcxr, Dot]
 echo: true
 ---
 
-In this post I want to quickly showcase the use of the use of the Petgraph and Petgraph-evcxr packages. Petgraph is a popular graph data structures and algorithms crate available for Rust. Petgraph-evcxr is a tool that makes it possible to easily visualize graphs created using Petgraph within Jupyter notebooks. This in turn allows us to visualize such graphs within Quarto.
+In this post I want to quickly showcase the use of the [Petgraph](https://docs.rs/petgraph/) and [Petgraph-evcxr](https://github.com/timthelion/petgraph-evcxr) packages. Petgraph is a popular graph data structures and algorithms crate available for Rust. Petgraph-evcxr is a tool that makes it possible to easily visualize graphs created using Petgraph within Jupyter notebooks. This in turn allows us to visualize such graphs within Quarto.
 
-This we need to include them as dependencies.
+Thus we need to include them as dependencies.
 
 ```rust
 {{< include ./scripts/graph.rs >}}

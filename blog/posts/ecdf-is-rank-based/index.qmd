@@ -5,7 +5,7 @@ date: "2023-09-09"
 categories: [Statistics, Rank-Based-Statistics, Empirical-Cumulative-Distribution-Function]
 ---
 
-There is a relationship between rank-based statistics and the notion of an empirical distribuion function. The empirical cumulative distribution function can be written as
+There is a relationship between rank-based statistics and the notion of an empirical distribution function. The empirical cumulative distribution function can be written as
 
 $$\hat F (t) \triangleq \frac{1}{n} \sum_{i=1}^n \mathbb{I}_{X_i \leq t}$$
 

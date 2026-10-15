@@ -6,13 +6,14 @@ date-modified: "2024-08-10"
 categories: [Mathematics, Differential Forms]
 echo: true
 toc: true
+bibliography: references.bib
 ---
 
 # Tangent Space 
 
 ## Definition
 
-Suppose $C \subseteq \mathbb{R}^2$ is a curve and $p \in C$. The **tangent space to $C$ at $p$, $T_pC$** is the set of all vectors tangent to $C$ at $p$.
+Suppose $C \subseteq \mathbb{R}^2$ is a curve and $p \in C$. The **tangent space to $C$ at $p$, $T_pC$** is the set of all vectors tangent to $C$ at $p$ [@flanders1989].
 
 ## Example
 
@@ -55,7 +56,7 @@ Let $y = x^2$, then the coordinate vector is $(x,y)(p) = (a, a^2) \in C$. Simila
 
 ![Tangent space to a parabola](./figures/tangent_space_quadratic.png)
 
-> The equation $\langle dx, dy \rangle (v) = \langle 1, 2a \rangle$ implies familiar result that $dy = 2a \cdot 1 = 2 a dx \implies \frac{dy}{dx} = 2a = f^{\prime}(a).$
+> The equation $\langle dx, dy \rangle (v) = \langle 1, 2a \rangle$ implies the familiar result that $dy = 2a \cdot 1 = 2 a dx \implies \frac{dy}{dx} = 2a = f^{\prime}(a).$
 
 ## Example
 
@@ -120,7 +121,7 @@ Suppose $\omega$ scalar projects onto the line $dy = 2dx$ with length of 3. Find
 
 We know that $\omega (\langle dx, dy \rangle) = \langle a,b \rangle \cdot \langle dx, dy \rangle .$ We need  $\langle a, b \rangle$ to be parallel to $\langle 1, 2 \rangle$ because $\langle 1, 2 \rangle$ is the vector in the direction of the line $dy = 2dx$.
 
-So $\langle a, b \rangle = \langle a, 2a \rangle$ which needs that have
+So $\langle a, b \rangle = \langle a, 2a \rangle$ which requires that we have
 $$\vert| \langle a, 2a \rangle \vert| = 3 $$ .
 
  So

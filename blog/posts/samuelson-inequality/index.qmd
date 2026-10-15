@@ -3,9 +3,10 @@ title: "Applications of Samuelson's Inequality"
 author: "Galen Seilis"
 date: "2023-11-03"
 categories: [Statistics, Mathematical-Statistics, Samuelson-Inequality]
+bibliography: references.bib
 ---
 
-Samuelson's inequality allows us to put bounds on the values in collection of data points that we do not have.
+Samuelson's inequality allows us to put bounds on the values in a collection of data points that we do not have [@samuelson1968].
 
 Suppose we are only given the sample mean $\bar x$, sample standard deviation $s$, and the sample size $n$.
 
@@ -17,9 +18,9 @@ which likewise feeds into the standard deviation
 
 $$s = \sqrt{\frac{1}{n-1} \sum_{i=1}^n \left( x_i - \bar x \right)^2}.$$
 
-Not that this is the sample standard deviation with [Bessel's correction](https://en.wikipedia.org/wiki/Bessel%27s_correction), which is sometimes confused for the distinction of a sample standard deviation vs a population standard deviation. But that is a story for another time.
+Note that this is the sample standard deviation with [Bessel's correction](https://en.wikipedia.org/wiki/Bessel%27s_correction), which is sometimes confused for the distinction of a sample standard deviation vs a population standard deviation. But that is a story for another time.
 
-In turns out that with these facts we can deduce that any $x_i$ from the missing data must satisfy the inequality
+It turns out that with these facts we can deduce that any $x_i$ from the missing data must satisfy the inequality
 
 $$\bar x - s \frac{n-1}{\sqrt{n}} \leq x_i \leq \bar x + s \frac{n-1}{\sqrt{n}}$$
 

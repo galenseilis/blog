@@ -9,7 +9,7 @@ I have a speculation about where empirical distributions come from which has bee
 
 The basic idea is to come up with a mathematical relationship between a hypothetical deterministic data generating process and empirical distributions. I'll focus on examples using differential equations.
 
-## Exponential Decay
+## [Exponential Decay](https://en.wikipedia.org/wiki/Exponential_decay)
 
 $$\frac{dx}{dt} = -kx$$
 
@@ -19,7 +19,7 @@ $$\frac{dx}{dt} = -kx$$
 
 ## Lotka-Volterra
 
-This is a classic example of a predator-prey system.
+This is a classic example of a [predator-prey system](https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations).
 
 $$\frac{dx}{dt} = ax - bxy$$
 $$\frac{dy}{dt} = -cy + dxy$$
@@ -30,7 +30,7 @@ $$\frac{dy}{dt} = -cy + dxy$$
 
 ## Lorenz System
 
-This is a classic system in chaos theory.
+This is a classic [system in chaos theory](https://en.wikipedia.org/wiki/Lorenz_system).
 
 $$\frac{dx}{dt} = \sigma (y - x)$$
 $$\frac{dy}{dt} = x (\rho - z) - y$$
@@ -42,7 +42,7 @@ $$\frac{dz}{dt} = xy - \beta z$$
 
 ## SIR Model
 
-This model has three state variables known as compartments:
+This model has three state variables known as [compartments](https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology):
 - S: Susceptible
 - I: Infected
 - R: Recovered
@@ -57,7 +57,7 @@ $$\frac{dR}{dt} = \gamma I$$
 
 ## Van der Pol Oscillator
 
-The Van der Pol oscillator is a non-conservative oscillator with non-linear damping.
+The [Van der Pol oscillator](https://en.wikipedia.org/wiki/Van_der_Pol_oscillator) is a non-conservative oscillator with non-linear damping.
 
 $$\frac{d^2x}{dt^2} = \mu (1 - x^2) \frac{dx}{dt} + x = 0$$
 
@@ -73,7 +73,7 @@ $$\frac{dy}{dt} = \mu (1 - x^2) y - x$$
 
 ## Brusselator (Chemical Oscillator)
 
-The Brusselator model is a model for a type of autocatalytic reaction.
+The [Brusselator](https://en.wikipedia.org/wiki/Brusselator) model is a model for a type of autocatalytic reaction.
 
 $$\frac{dx}{dt} = A + x^2y - (B+1) x$$
 $$\frac{dy}{dt} = Bx - x^2 y$$
@@ -84,7 +84,7 @@ $$\frac{dy}{dt} = Bx - x^2 y$$
 
 ## FitzHugh-Nagumo Model (Neuroscience)
 
-The FitzHugh-Nagumo model is a simplification of the Hodgkin-Huxley model of neuron activation.
+The [FitzHugh-Nagumo model](https://en.wikipedia.org/wiki/FitzHugh%E2%80%93Nagumo_model) is a simplification of the [Hodgkin-Huxley model](https://en.wikipedia.org/wiki/Hodgkin%E2%80%93Huxley_model) of neuron activation.
 
 $$\frac{dv}{dt} = v - \frac{v^3}{3} - w + I$$
 $$\frac{dw}{dt} = \frac{1}{\tau} (v + a - bw)$$
@@ -95,7 +95,7 @@ $$\frac{dw}{dt} = \frac{1}{\tau} (v + a - bw)$$
 
 ## Simple Harmonic Oscillator
 
-A simple harmonic oscillator describes the motion of a mass-spring system without damping.
+A [simple harmonic oscillator](https://en.wikipedia.org/wiki/Harmonic_oscillator) describes the motion of a mass-spring system without damping.
 
 ```python
 {{< include ./scripts/script_8.py >}}
@@ -103,7 +103,7 @@ A simple harmonic oscillator describes the motion of a mass-spring system withou
 
 ## Hodgkin-Huxley Model (Neuroscience)
 
-The Hodgkin-Huxley model describes how action potentials in neurons are initiated and propagated. This is a simplified version for demonstration purposes.
+The [Hodgkin-Huxley model](https://en.wikipedia.org/wiki/Hodgkin%E2%80%93Huxley_model) describes how action potentials in neurons are initiated and propagated. This is a simplified version for demonstration purposes.
 
 $$C_m \frac{dV}{dt} = I - g_{Na} m^3 h (V - V_{Na}) - g_Kn^4(V-V_K)-g_L(V-V_L)$$
 $$\frac{dm}{dt} = \alpha_m (1-m) - \beta_mm$$
@@ -116,7 +116,7 @@ $$\frac{dn}{dt} = \alpha_n (1 - n) - \beta_n n$$
 
 ## Double Pendulum
 
-A double pendulum exhibits complex dynamic behavior and is described by a system of second-order differential equations. Here I converted it to a system of first-order differential equations.
+A [double pendulum](https://en.wikipedia.org/wiki/Double_pendulum) exhibits complex dynamic behavior and is described by a system of second-order differential equations. Here I converted it to a system of first-order differential equations.
 
 $$\frac{\theta_1}{dt} = \omega_1$$
 $$\frac{\theta_2}{dt} = \omega_2$$
@@ -129,7 +129,7 @@ $$\frac{d\omega_2}{dt} = \frac{2 \sin (\theta_1 - \theta_2) (\omega_1^2 L_1 (m_1
 
 ## Rössler Attractor
 
-The Rössler attractor is another system that exhibits chaotic dynamics.
+The [Rössler attractor](https://en.wikipedia.org/wiki/R%C3%B6ssler_attractor) is another system that exhibits chaotic dynamics.
 
 $$\frac{dx}{dt} = -y - x$$
 $$\frac{dy}{dt} = x + ay$$
@@ -141,7 +141,7 @@ $$\frac{dz}{dt} = b + z (x - c)$$
 
 ## SEIR Model (Epidemiology)
 
-The SEIR model is an extension of the SIR model, including an Exposed (E) compartment.
+The [SEIR model](https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology) is an extension of the SIR model, including an Exposed (E) compartment.
 
 $$\frac{dS}{dt} = - \beta S I$$
 
@@ -157,7 +157,7 @@ $$\frac{dR}{dt} = \gamma I$$
 
 ## Chua's Circuit
 
-Chua's circuit is a well-known example of a chaotic system. It is an electronic circuit that exhibits chaotic behavior and can be described by a system of three coupled nonlinear differential equations.
+[Chua's circuit](https://en.wikipedia.org/wiki/Chua%27s_circuit) is a well-known example of a chaotic system. It is an electronic circuit that exhibits chaotic behavior and can be described by a system of three coupled nonlinear differential equations.
 
 The equations for Chua's circuit are:
 

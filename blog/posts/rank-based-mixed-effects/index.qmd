@@ -38,7 +38,7 @@ What if we are just given the ranks/rankings? In that case we would have [missin
 ::: {.callout-info}
 For simplicity, I am assuming that each runner participates in every race. This is an unrealistic assumption, but fortunately it can be accounted for in a real application. It involves using tricks such as masking, or coding a custom computation graph, such that not all study participants are used in every competition. It is also possible to impute the counterfactual of what a runner's rank *would have been* if they had participated in the race, but the procedure would require accounting for the fact that the ranks are relative to the other racers. This would motivate modelling the arrival time distributions to estimate this counterfactual.
 :::
-While runners do not always get a numerical (i.e. monitary) reward, we will suppose there is a numerical reward $Y$ that depends on their rank (not their arrival time *per se*) in a given race. Let us construct a sequence of models that have mixed effects with increasing complexity. The first model is just 
+While runners do not always get a numerical (i.e. monetary) reward, we will suppose there is a numerical reward $Y$ that depends on their rank (not their arrival time *per se*) in a given race. Let us construct a sequence of models that have mixed effects with increasing complexity. The first model is just 
 
 $$Y = \gamma_{\infty} + \epsilon$$
 
@@ -101,9 +101,9 @@ $$Y = \gamma_{\infty} + \sum_{j=1}^n \gamma_{j} \mathbb{I}(\operatorname{rank} \
 
 Further effects can be put into such a model to account for different ranking methods and rules for assigning reward. I took marathons as an example, but there is nothing about this model that truly depends us considering marathons. What was required was a collection of random variables that could be ranked, and a numerical reward $Y$, in order to fit this model. The mixed effect achieves the notion *cumulative reward* for ranking better in competition. (Indeed, this is a special case of something I term a *cumulative mixed effects model* for which I am working on a manuscript).
 
-The last point, which is really a concession, is that this rank-based model is perhaps better termed a [*semiparametric*](https://en.wikipedia.org/wiki/Semiparametric_regression) regression model because we would likely still consider the distribution of the rewards $Y$ even if we can get away with ignoring the distribution of the arrival times in the marathon $T$. And even then, if $T$ is not continous then we make still have to consider the distribution of $T$ explicitly as well. Nonetheless, the possiblity of this semiparametric model is notable.
+The last point, which is really a concession, is that this rank-based model is perhaps better termed a [*semiparametric*](https://en.wikipedia.org/wiki/Semiparametric_regression) regression model because we would likely still consider the distribution of the rewards $Y$ even if we can get away with ignoring the distribution of the arrival times in the marathon $T$. And even then, if $T$ is not continuous then we make still have to consider the distribution of $T$ explicitly as well. Nonetheless, the possibility of this semiparametric model is notable.
 
-You could further compute the regression on the ranks of $Y$, however I don't think that would be natural for the marathon example. We already know that a better arrival time entails getting a better reward, or at least no-worse. But a fully nonparametric form of this is possible via that route on continous random variabless.
+You could further compute the regression on the ranks of $Y$, however I don't think that would be natural for the marathon example. We already know that a better arrival time entails getting a better reward, or at least no-worse. But a fully nonparametric form of this is possible via that route on continuous random variables.
 
 # Conclusions
 

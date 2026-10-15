@@ -5,7 +5,7 @@ date: "2024-07-30"
 categories: [Python, Asyncio, subprocess, Asynchronous Programming, Concurrent Programming]
 ---
 
-We can define a "Hello, World" type of example using Asyncio as follows:
+We can define a "Hello, World" type of example using [Asyncio](https://docs.python.org/3/library/asyncio.html) as follows:
 
 ```python
 {{< include ./scripts/example.py >}}
@@ -36,4 +36,4 @@ Hello,
 World!
 ```
 
-This setup is fine for simple and isolated blogging examples. Anyway, that's about as close as I think we'll get to a "Hello, World" script with Asyncio. As with similar scripts that I have written for Rust and other languages, Quarto's automatic freezing feature will only look for if the source of the QMD file has changed. Quarto will ignore any example Python files outside of that.
+This setup is fine for simple and isolated blogging examples. Anyway, that's about as close as I think we'll get to a "Hello, World" script with Asyncio. As with similar scripts that I have written for Rust and other languages, Quarto's automatic freezing feature will only look to see if the source of the QMD file has changed. Quarto will ignore any example Python files outside of that.

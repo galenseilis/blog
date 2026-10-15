@@ -9,17 +9,17 @@ In a previous post I used a Lua extension to compile a Rust file using the `rust
 
 Using `rustc` rather than Cargo means that I miss out on a lot of the build tools, and it is also less conventional for Rust projects. 
 
-There were also issues with my plugin. It did not correctly turn off echo either locally to a code block, or to the global setting in the preamble of the Quarto file. It also did not put code on a new line. Further, I got feedback that this might not be supported. I also learned from a [discussion answer](https://github.com/quarto-dev/quarto-cli/discussions/10399#discussioncomment-10178340) on the Quarto Github discussion board that there are tools that might be better.
+There were also issues with my plugin. It did not correctly turn off echo either locally to a code block, or to the global setting in the preamble of the Quarto file. It also did not put code on a new line. Further, I got feedback that this might not be supported. I also learned from a [discussion answer](https://github.com/quarto-dev/quarto-cli/discussions/10399#discussioncomment-10178340) on the Quarto GitHub discussion board that there are tools that might be better.
 
 While other tools like [`evcxr`](https://github.com/evcxr/evcxr/) look appealing, I have not looked into how to exactly integrate it with Quarto yet. 
 
-But there is a low-hanging fruit we can take advantage of here. We can certainly use Python subprocess library to indirectly orchestrate building and running a rust project. It also allows us to capture the output as text and return that into a Jupyter notebook. So that's exaxtly what I made:
+But there is a low-hanging fruit we can take advantage of here. We can certainly use the [Python subprocess library](https://docs.python.org/3/library/subprocess.html) to indirectly orchestrate building and running a rust project. It also allows us to capture the output as text and return that into a Jupyter notebook. So that's exactly what I made:
 
 ```python
 {{< include ./scripts/run_rust.py >}}
 ```
 
-Python Jupyter notebooks run Python in interactive mode, so it is slightly less convenient for importing Python files. Nonetheless this can be done by inserting our script into the path using the `sys` library. Once we have imported the `run_rust` file, we can call the `compile_and_run_rust` pointing to a Rust project path that is locally stored
+Python Jupyter notebooks run Python in interactive mode, so it is slightly less convenient for importing Python files. Nonetheless this can be done by inserting our script into the path using the `sys` library. Once we have imported the `run_rust` file, we can call the `compile_and_run_rust` pointing to a Rust project path that is locally stored.
 
 
 Let us start a Rust project called "hello".
@@ -90,4 +90,4 @@ And there we have it! We can further try again, but with `#| echo: false` in the
 12 Hello, world!
 ```
 
-In conclusion, this approach using Python itself and Python Jupyter notebooks to compile, run, and display the printed output from a Rust program. It succeeds in preserving newline characters, and echo works locally. It also works globally for the whole file. The only remaining thing to watch out for in particular if Quarto's automatic freezing of posts will not detect if you have changed the Rust code; you may need to change your `qmd` file in some way.
+In conclusion, this approach uses Python itself and Python Jupyter notebooks to compile, run, and display the printed output from a Rust program. It succeeds in preserving newline characters, and echo works locally. It also works globally for the whole file. The only remaining thing to watch out for in particular is that Quarto's automatic freezing of posts will not detect if you have changed the Rust code; you may need to change your `qmd` file in some way.

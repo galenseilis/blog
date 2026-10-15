@@ -7,7 +7,7 @@ categories: [Math, Operators, Differential-Operators, Dalembert]
 
 According to one of my old notebooks, I came up with a generalization of the d'Alembert operator between 2022-03-27 and 2022-05-20. I can't say that it was well-motivated by a particular mathematical or physical problem. It was just some low-hanging fruit in terms of mathematical generalization.
 
-First, let us start with the definition of the d'Alembert in rectangular coordinates:
+First, let us start with the definition of the d'Alembert operator in rectangular coordinates:
 
 > **Definition** 
 >
@@ -29,6 +29,6 @@ It is then clear that the following generalization allows for different orders o
 >
 > $$\square_k \triangleq \frac{1}{\alpha^k} \frac{\partial^k}{\partial t^k} - \vec 1_n \cdot \left( \bigodot_{i=1}^{k} \nabla_{\vec x} \right)$$
 >
-> where $\alpha$ is a parameter , and  $\bigodot$ is the element-wise product.
+> where $\alpha$ is a parameter, and $\bigodot$ is the element-wise product.
 
-Mathematically the d'Alembert has a relationship to the curvature of manifolds, but its generalization will certainly have a less-direct relationship to curvature for $k \neq 2$.
+Mathematically the d'Alembert has a relationship to the [curvature of manifolds](https://en.wikipedia.org/wiki/Curvature), but its generalization will certainly have a less-direct relationship to curvature for $k \neq 2$.

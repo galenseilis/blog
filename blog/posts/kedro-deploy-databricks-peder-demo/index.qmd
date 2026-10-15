@@ -59,7 +59,7 @@ $ kedro databricks
 The `kedro-databricks` plugin provides three commands:
 
 - `init`: Initialize databricks asset bundle.
-- `bundle`: Convert kedro pipelines into Databricks assert bundle resources.
+- `bundle`: Convert kedro pipelines into Databricks asset bundle resources.
 - `deploy`: Deploy the asset bundle to Databricks.
 
 Let's start by running the initialization command:
@@ -68,7 +68,7 @@ Let's start by running the initialization command:
 $ kedro datasets init
 ```
 
-The above command will prompt you for your cloud provider. In the demo there were three options: Azure, AWS, and GCP. Once you enter your cloud provider and continue, a `databricks.yml` file will be created at the root of your Kedro project. The `databricks.yml` file is an asset bundle definition. You can read more about what this is at [*What are Databricks Asset Bundles*](https://docs.databricks.com/aws/en/dev-tools/bundles). There will also be `databricks.yml` located at `/conf/base/databricks.yml`, which allow you to provide overrides to the `databricks.yml` bundle definition located at your project root.
+The above command will prompt you for your cloud provider. In the demo there were three options: Azure, AWS, and GCP. Once you enter your cloud provider and continue, a `databricks.yml` file will be created at the root of your Kedro project. The `databricks.yml` file is an asset bundle definition. You can read more about what this is at [*What are Databricks Asset Bundles*](https://docs.databricks.com/aws/en/dev-tools/bundles). There will also be a `databricks.yml` located at `/conf/base/databricks.yml`, which allows you to provide overrides to the `databricks.yml` bundle definition located at your project root.
 
 Now let's run the next databricks plugin command: `bundle`.
 
@@ -76,7 +76,7 @@ Now let's run the next databricks plugin command: `bundle`.
 $ kedro databricks bundle
 ```
 
-Running the `bundle` command will create yaml file in `resources/`. This file describes which files should be deployed, and which tasks should be in a job. For more information about the technical specification of these files you can erad the [Databricks API documentation](https://docs.databricks.com/api/workspace/introduction).
+Running the `bundle` command will create a yaml file in `resources/`. This file describes which files should be deployed, and which tasks should be in a job. For more information about the technical specification of these files you can read the [Databricks API documentation](https://docs.databricks.com/api/workspace/introduction).
 
 Next you can deploy!
 
@@ -89,7 +89,7 @@ You may see some warning of the form:
 
 `<datetime> -- Command -- ERROR -- Deploying to Databricks: <message>`
 
-which are not necessarily due to the `kedro-databricks` plugin iteslf.
+which are not necessarily due to the `kedro-databricks` plugin itself.
 :::
 
 You will need to be authenticated, which can be done with `databricks`.

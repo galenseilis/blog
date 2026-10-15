@@ -10,8 +10,8 @@ CHAPTER 1
 
 
 CHAPTER 2
-- Use unix command /usr/bin/time to get timing spent inside/outsie python process
-    - /usr/bin/time --verbose <scripy.py>
+- Use unix command /usr/bin/time to get timing spent inside/outside python process
+    - /usr/bin/time --verbose <script.py>
         - Use full path instead of `time` to avoid Shell built-in that is different
     - Major page faults give information about file I/O?
 - cProfile
@@ -23,7 +23,7 @@ CHAPTER 2
     - runsnakerun
         - requires wxpython
 - UML would visualize structure but not performance
-- line_profiler package providers a decorator to give detailed function performance
+- line_profiler package provides a decorator to give detailed function performance
     - kernprof.py -l -v <script.py>
 - Use timeit package to profile snippets of code
 - In compound "if" statements, put faster comparisons further to the left
@@ -38,7 +38,7 @@ CHAPTER 2
         - profile.timestamp context manager allows further annotation of time graph
 - guppy package contains heapy tool that gives detailed memory usage of different datatypes
     - hpy.setrelheap allows deltas of usage from set point in code
-- dowser (and dozer?) package with cherryPy package provide live memory usage of instantiated variables
+- dowser (and dozer?) package with cherryPy package provides live memory usage of instantiated variables
 - dis package disassembles code which can provide info on what the program is really doing
 - Use coverage.py to learn which parts of your code participate in unit tests
 - Use no-op @decorators found on page 58 of "High Performance Python" to make unit tests compatible with profiler decorators
@@ -48,7 +48,7 @@ CHAPTER 2
     - Disable TurboBoost in BIOS
     - Disable the OS's ability to override SpeedStep (option in BIOS)
     - Use only mains power, never battery
-    - Disable backrgound tools (backups/Dropbox)
+    - Disable background tools (backups/Dropbox)
     - Run experiments many times to obtain statistics
     - Drop to run level 1 (Unix) to minimize running processes
     - Reboot and rerun all experiments to duplicate results
@@ -94,8 +94,8 @@ CHAPTER 6
 - Minimize operations performed
 - Minimize memory allocations
 - Prefer to reuse allocated space rather than allocate new space
-- Von Neumann bottleneck
-- branch prection and pipelining are performed by CPU
+- [Von Neumann bottleneck](https://en.wikipedia.org/wiki/Von_Neumann_architecture)
+- branch prediction and pipelining are performed by CPU
 - perf gives information about a program's CPU performance
     - https://en.wikipedia.org/wiki/Perf_(Linux)
     - example: perf stat -e cycles,stalled-cycles-frontend,stalled-cycles-backend,instructions,cache-references,cache-misses,branches,branch-misses,task-clock,faults,minor-faults,cs,migrations -r 3 python3 <script.py>
@@ -135,7 +135,7 @@ CHAPTER 6
     - https://en.wikipedia.org/wiki/Fragmentation_(computing)
     - https://en.wikipedia.org/wiki/Array_programming
 - lists are fragmented, but not array.array
-    - but array.array are will not be vectorized, and their creation is actually slower than making lists
+    - but array.array will not be vectorized, and their creation is actually slower than making lists
     - array.array is suitable for non-math storage of fixed data types
 -numpy.array are continuous in memory, vectorized, can require less CPU instructions, and have fewer cache misses compared to lists
 - call builtin id() on things to check if they're referencing the same memory
@@ -144,7 +144,7 @@ CHAPTER 6
 - 'sometimes' it is best to rewrite numpy functions with fewer allocations, sacrificing human understandability
 - use numexpr on vector expressions b/c it will compile them into code that minimizes cache misses, temp space used, and allow multicore utilization
     - requires rewriting expressions as strings
-    - Works best if the problem cannot be contained within cache, else it might take 'more' time with numepxr
+    - Works best if the problem cannot be contained within cache, else it might take 'more' time with numexpr
         - How can I automatically check cache size of system in Python?
 
 CHAPTER 7
@@ -156,7 +156,7 @@ CHAPTER 7
             - cython -a <script>.pyx provides a colour-coded annotation of Python vs non-python calls
             - Can disable bounds checking and wraparound checking
                 - Improve performance if code is in loop that involves frequent dereferencing
-            - pyximport is a tool that might be easy for beginners to Cython
+            - pyximport is a tool that might be easy for beginners to use Cython
     - JIT: 
         -https://numba.pydata.org/
             -NumPy-friendly
@@ -234,13 +234,13 @@ CHAPTER 8
     - https://pypi.org/project/gevent/
     - a semaphore can be used to control the number of greenlets (a type of thread)
         - https://en.wikipedia.org/wiki/Semaphore_(programming)
-        - sephamore can be a context manager
+        - semaphore can be a context manager
 - grequests
     - library that combines making HTTP requests with gevent library
     - handles semaphore logic for you 
     - https://pypi.org/project/grequests/
 - tornado
-    - library thats make asynchronous HTTP requests
+    - library that makes asynchronous HTTP requests
     - based on callbacks rather than coroutines
 - sometimes set membership in streamed data can be stochastically estimated
     - https://en.wikipedia.org/wiki/Bloom_filter

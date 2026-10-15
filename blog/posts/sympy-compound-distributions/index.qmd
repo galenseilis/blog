@@ -5,7 +5,7 @@ date: "2024-06-17"
 categories: [Python, SymPy, Statistics]
 ---
 
-[Compound distributions](https://en.wikipedia.org/wiki/Compound_probability_distribution) allow us to compose probability distributions together. In other words, it allows us to have parameters in our model that are themselves random variables. This facilities including a hierarchical structure (e.g. like in a [BHM](https://en.wikipedia.org/wiki/Bayesian_hierarchical_modeling)) in our models.
+[Compound distributions](https://en.wikipedia.org/wiki/Compound_probability_distribution) allow us to compose probability distributions together. In other words, it allows us to have parameters in our model that are themselves random variables. This facilitates including a hierarchical structure (e.g. like in a [BHM](https://en.wikipedia.org/wiki/Bayesian_hierarchical_modeling)) in our models.
 
 A few weeks ago I learned that [SymPy supports compound distributions](https://docs.sympy.org/latest/modules/stats.html#compound-distribution). 
 

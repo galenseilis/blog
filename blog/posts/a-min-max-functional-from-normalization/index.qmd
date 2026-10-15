@@ -3,20 +3,21 @@ title: "A Functional Inspired by Min-Max Normalization"
 author: "Galen Seilis"
 date: "2023-03-19"
 categories: [Math, Functions, Functionals]
+bibliography: references.bib
 ---
 
 For a function $F: \mathbb{R}^n \mapsto \mathbb{R}$ we can consider the functional
 
 $$\frac{F(x) - F(a)}{F(b) - F(a)} $$
 
-where $$a = \arg\min_x F(x)$$ and $$b = \arg\max_x F(x)$$. You may recognize this to be the form of [min-max normalization](https://en.wikipedia.org/wiki/Feature_scaling#Rescaling_(min-max_normalization)). If we restrict $F$ to be a cumulative distribution function then this is also the form of a [truncated probability distribution](https://en.wikipedia.org/wiki/Truncated_distribution). Both of these notions are useful for certain kinds of modelling problems. For recreation rather than utility, I generalize this functional below.
+where $$a = \arg\min_x F(x)$$ and $$b = \arg\max_x F(x)$$. You may recognize this to be the form of [min-max normalization](https://en.wikipedia.org/wiki/Feature_scaling#Rescaling_(min-max_normalization)). If we restrict $F$ to be a [cumulative distribution function](https://en.wikipedia.org/wiki/Cumulative_distribution_function) then this is also the form of a [truncated probability distribution](https://en.wikipedia.org/wiki/Truncated_distribution) [@casella2002]. Both of these notions are useful for certain kinds of modelling problems. For recreation rather than utility, I generalize this functional below.
 
 
 We can consider a more general functional
 
 $$g \left( f\left( F(x), F(a) \right),  f\left( F(b), F(a) \right) \right)$$
 
-where $g$ and $h$ are suitably-defined binary operators.
+where $f$ and $g$ are suitably-defined binary operators.
 
 Taking common operations including addition, subtraction, multiplication, division, exponentiation, and logarithms, I've tabulated various choices below.
 

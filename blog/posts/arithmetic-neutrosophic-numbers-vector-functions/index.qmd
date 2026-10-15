@@ -3,9 +3,10 @@ title: "Arithmetic of Neutrosophic Numbers as Vector Functions"
 author: "Galen Seilis"
 date: "2023-10-23"
 categories: [Math, Neutrosophic-Numbers]
+bibliography: references.bib
 ---
 
-In this post I map the arithmetic of neutrosophic numbers to vector functions and then aimlessly wander.
+In this post I map the arithmetic of neutrosophic numbers [@kandasamy2004] to vector functions and then aimlessly wander.
 
 ## Neutrosophic Scalar Addition
 

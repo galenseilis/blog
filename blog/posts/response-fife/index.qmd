@@ -9,9 +9,9 @@ This post is the home page to a collection of responses to the following video, 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/qee6b7vl2O0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-This is response is substantially later than I had intended. Between life being busy and flip-flopping on whether to develop a response in video (which I started but did not complete) or a written form. Even in written form I had started it as a $\LaTeX$ document along with a bunch of notes in an [Obsidian](https://obsidian.md/) vault. Well, I've amalgamated these attempts to respond into a collection of blog posts that give some passing remarks on various aspects of Dustin's video. 
+This response is substantially later than I had intended. Between life being busy and flip-flopping on whether to develop a response in video (which I started but did not complete) or a written form. Even in written form I had started it as a $\LaTeX$ document along with a bunch of notes in an [Obsidian](https://obsidian.md/) vault. Well, I've amalgamated these attempts to respond into a collection of blog posts that give some passing remarks on various aspects of Dustin's video. 
 
-**TL;DR**: Neither Dustin or I think that nonparametric statistics are useless, but we still disagree on whether *rank-based* nonparametric statistics are useless.
+**TL;DR**: Neither Dustin nor I think that nonparametric statistics are useless, but we still disagree on whether *rank-based* nonparametric statistics are useless.
 
 Here they are, hopefully in some kind of coherent order:
 
@@ -32,4 +32,4 @@ Here they are, hopefully in some kind of coherent order:
 - [The Ultimate Goal Of Research Is Not Parametric Models](https://galenseilis.github.io/posts/ultimate-goal-of-research/)
 - [Nonparametric Statistics Don't Model The Mathematical Structure Of Nature?](https://galenseilis.github.io/posts/nonparametric-nature-follows-laws/)
 
-I have enjoyed trying to unpack Dustin's video. It has given me an opportunity to think more thoroughly about how I understand a variety of concepts in Mathematics and Statistics. While I didn't pull any punches, I hope that Dustin feels that I have ernestly attempted to consider his point of view.
+I have enjoyed trying to unpack Dustin's video. It has given me an opportunity to think more thoroughly about how I understand a variety of concepts in Mathematics and Statistics. While I didn't pull any punches, I hope that Dustin feels that I have earnestly attempted to consider his point of view.

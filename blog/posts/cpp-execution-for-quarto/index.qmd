@@ -9,7 +9,7 @@ echo: false
 ::: {.callout-caution}
 ## Deprecated Output
 
-I have turned off the Lua filter discussed in this post. It was running everytime I rendered/published the blog. I have copy-pasted the original output for reference.
+I have turned off the Lua filter discussed in this post. It was running every time I rendered/published the blog. I have copy-pasted the original output for reference.
 :::
 
 In [*Executable Rust Code in Quarto*](https://galenseilis.github.io/blog/posts/rust-execution-for-quarto/) I made a rough implementation of having Rust code compiled and its output rendered.

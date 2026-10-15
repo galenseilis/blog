@@ -6,7 +6,7 @@ categories: [Python, Simulation, Queueing System, Queueing Network, Queueing The
 echo: true
 ---
 
-In the SimPy documentation they describe a [car process](https://simpy.readthedocs.io/en/latest/simpy_intro/basic_concepts.html#our-first-process) which involves a car which transitions between parking and driving. From being parked it takes 5 units of time to change to being in a state of driving. Similarly, it takes 2 units of time to go from being in a state of driving to a state of parkerd. Here is a state diagram representing this system:
+In the SimPy documentation they describe a [car process](https://simpy.readthedocs.io/en/latest/simpy_intro/basic_concepts.html#our-first-process) which involves a car which transitions between parking and driving. From being parked it takes 5 units of time to change to being in a state of driving. Similarly, it takes 2 units of time to go from being in a state of driving to a state of parked. Here is a state diagram representing this system:
 
 ```mermaid
 stateDiagram
@@ -17,9 +17,9 @@ stateDiagram
     Driving --> [*]
 ```
 
-For something this simple we don't really need discrete event simulation software, but it can be helpful for the sake of illustration to do it anyway. Let's use idiomatic Ciw to make an equivalent simulation.
+For something this simple we don't really need discrete event simulation software, but it can be helpful for the sake of illustration to do it anyway. Let's use idiomatic [Ciw](https://ciw.readthedocs.io/en/latest/) to make an equivalent simulation.
 
-Let our queueing network have two nodes, each representing either of the two states "Parked" or "Driving". The car will go between these two nodes. When the car arrives at a node that will represent that it has begun the whatever process is involved, and when the car finishes service at that node we will interpret that to mean it is now changing state.
+Let our queueing network have two nodes, each representing either of the two states "Parked" or "Driving". The car will go between these two nodes. When the car arrives at a node that will represent that it has begun whatever process is involved, and when the car finishes service at that node we will interpret that to mean it is now changing state.
 
 Since there will be only one car in the whole network, we do not need to give any consideration to service discipline. If the car is on the queue, then serve it. Otherwise, don't.
 
@@ -29,7 +29,7 @@ We do need to pay attention to arrival times however. We need the car to arrive 
 {{< include ./scripts/sequential_arrivals.py >}}
 ```
 
-The class `ciw.dists.Sequential` takes an iterable (usually a list) representing the sequence of arrival times to be done. When it has gotten through the list it will start again at the start of the list. But here's the catch: we have set the second time to $\infty$, which it will never reach. So there will be a single arrival at $t=0$ and non thereafter. We need to specify that no arrivals occur at the second node, which we can do using `None`:
+The class `ciw.dists.Sequential` takes an iterable (usually a list) representing the sequence of arrival times to be done. When it has gotten through the list it will start again at the start of the list. But here's the catch: we have set the second time to $\infty$, which it will never reach. So there will be a single arrival at $t=0$ and none thereafter. We need to specify that no arrivals occur at the second node, which we can do using `None`:
 
 ```python
 {{< include ./scripts/arrival_distributions.py >}}
@@ -59,7 +59,7 @@ We only need one server at each node since there could only ever be one car eith
 {{< include ./scripts/number_of_servers.py >}}
 ```
 
-Since we have two nodes, we need to specifying the routing behaviour. It is simple in this case, and stationary. Whenever the car is leaving node one, go to node to. Whenever the car is leaving node two, go to node one. We can specify this as the following routing matrix:
+Since we have two nodes, we need to specify the routing behaviour. It is simple in this case, and stationary. Whenever the car is leaving node one, go to node two. Whenever the car is leaving node two, go to node one. We can specify this as the following routing matrix:
 
 $$\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}$$
 
@@ -75,7 +75,7 @@ We can now put together our simulation object:
 {{< include ./scripts/create_network.py >}}
 ```
 
-And put together out simulation object:
+And put together our simulation object:
 
 ```python
 {{< include ./scripts/create_simulation.py >}}

@@ -12,15 +12,15 @@ I got a request to compare SciPy's way of fitting and sampling of distributions 
 
 There are some theoretical differences between what is happening in SciPy and PyMC, but the theory also comes from outside of these tools.
 
-It is tempting to think that SciPy is simply frequentist and PyMC is simply Bayesian, but it isn't quite that simple. Where frequetists fundamentally differ with Bayesians has to do with how probability is interpreted, not whether we make explicit use of Bayes' rule.
+It is tempting to think that SciPy is simply frequentist and PyMC is simply Bayesian, but it isn't quite that simple. Where frequentists fundamentally differ with Bayesians has to do with how [probability is interpreted](https://en.wikipedia.org/wiki/Probability_interpretations), not whether we make explicit use of [Bayes' rule](https://en.wikipedia.org/wiki/Bayes%27_theorem).
 
-And yet in pracice you'll find that Bayesians will tend to use PyMC, as it was intended, because often frequentists are unwilling or unable to say what their base rate should be. I have even seen people state that if a parameter is treated as a random variable then it is Bayesian. That's not strictly true, but practically it is substantially diagnostic.
+And yet in practice you'll find that Bayesians will tend to use PyMC, as it was intended, because often frequentists are unwilling or unable to say what their base rate should be. I have even seen people state that if a parameter is treated as a random variable then it is Bayesian. That's not strictly true, but practically it is substantially diagnostic.
 
 ## Tradeoffs
 
 When you have a simple model to sample and/or fit from, and you have a large dataset, then SciPy is an appealing option. I have found that PyMC involves more code in the simplest cases.
 
-However, in my experience so far I have had less difficulty in building complex models using PyMC than I have using SciPy's `rv_continuous` class, or similarly writing more custom code to take care of fiting more complicated models. Also, SciPy doesn't have `fit` methods for discrete random variables, although it does have a variety of other useful methods in its `rv_discrete`.
+However, in my experience so far I have had less difficulty in building complex models using PyMC than I have using SciPy's `rv_continuous` class, or similarly writing more custom code to take care of fitting more complicated models. Also, SciPy doesn't have `fit` methods for discrete random variables, although it does have a variety of other useful methods in its `rv_discrete`.
 
 While there's nothing that guarantees this empirical induction, I find that there is a tendency for PyMC to offer more flexibility in modelling. Like SciPy, it provides classes to define custom probability distributions. SciPy does not give explicit support to building complicated models such as structural equation models or hierarchical models, but it is possible to develop such models.
 

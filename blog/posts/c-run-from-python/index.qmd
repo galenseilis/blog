@@ -99,7 +99,7 @@ void helper2();
 #endif
 ```
 
-Now we can similarly point `run_c.compile_and_rune_c` pointed at the path where these files exist.
+Now we can similarly point `run_c.compile_and_rune_c` at the path where these files exist.
 
 ```python
 {{< include ./scripts/run_c_linked.py >}}
@@ -114,6 +114,6 @@ Program finished.
 
 ## Conclusions
 
-As long as the linking and compiled options are kept simple, this script allows you to compile simple C language programs. This may be suitable for ensuring that C code examples for blogging actually work. Expanding into autotools and make files is the way to go for more complicated builds.
+As long as the linking and compilation options are kept simple, this script allows you to compile simple C language programs. This may be suitable for ensuring that C code examples for blogging actually work. Expanding into autotools and make files is the way to go for more complicated builds.
 
-The same limitation as the corresponding script to run Rust code applies: if your `qmd` file does not change while Quarto's setting is `freeze: auto`, the page will not be rerendered if the C code changes even if the Quarto document is not changed.
+The same limitation as the corresponding script to run Rust code applies: if your `qmd` file does not change while Quarto's setting is [`freeze: auto`](https://quarto.org/docs/projects/code-execution.html#freeze), the page will not be rerendered if the C code changes even if the Quarto document is not changed.

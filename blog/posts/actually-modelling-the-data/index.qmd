@@ -5,6 +5,7 @@ date: "2024-03-04"
 categories: [Statistics, Statistical Modelling]
 toc: true
 draft: true
+bibliography: references.bib
 ---
 
 # Introduction
@@ -64,7 +65,7 @@ Unfortunately, Galen today disagrees with Galen from over a year ago. Reading an
 
 Without getting *too deep* into quagmires of epistemology and ontology, there is a basic philosophical problem: *representation* is too ubiquitous for our purposes here. If you're using any kind of language or symbols to represent things at all, and using this representation notion of a model, then you are modelling things. Taken to even a cursory logical rigor we find that anything that references the data can be thought of as *modelling the data*.
 
-There is a metaphor I find helpful around this: the [map-territory relation](https://en.wikipedia.org/wiki/Map%E2%80%93territory_relation). I was going to explain it here, but I think these blog posts adequately cover the idea:
+There is a metaphor I find helpful around this: the [map-territory relation](https://en.wikipedia.org/wiki/Map%E2%80%93territory_relation) [@korzybski1933]. I was going to explain it here, but I think these blog posts adequately cover the idea:
 
 - [The Map is Not the Territory](https://www.lesswrong.com/tag/the-map-is-not-the-territory) on the *LessWrong* blog.
 - [The Map is Not the Territory](https://fs.blog/map-and-territory/) on the *fs* blog.
@@ -87,14 +88,14 @@ Let us move on to what I think about as a "statistical model".
 
 One of the lexical barriers that exists between Dustin and I pertains to what we call a "model". Vaguely, a model is anything that we use to represent another thing. In particular we are interested in "statistical models" in this context. This motivated me to think on what I would call a model, and most especially near the edge cases where it is harder to decide if something is a model or not.
 
-The most fundamental example I can think of in statistics is the notion of a random variable on a probability space. [Random variables](https://en.wikipedia.org/wiki/Random_variable) are [measurable functions](https://en.wikipedia.org/wiki/Measurable_function) of the [outcome space](https://en.wikipedia.org/wiki/Sample_space) of a [probability space](https://en.wikipedia.org/wiki/Probability_space), and are perhaps the most common and elementary statistical models that we use to represent data with. A random variable $X$ has some probability distribution $F_X$ associated with it.
+The most fundamental example I can think of in statistics is the notion of a random variable on a probability space. [Random variables](https://en.wikipedia.org/wiki/Random_variable) are [measurable functions](https://en.wikipedia.org/wiki/Measurable_function) of the [outcome space](https://en.wikipedia.org/wiki/Sample_space) of a [probability space](https://en.wikipedia.org/wiki/Probability_space) [@kolmogorov1933], and are perhaps the most common and elementary statistical models that we use to represent data with. A random variable $X$ has some probability distribution $F_X$ associated with it.
 
 Simply declaring a random variable to represent a variable in our data set is usually only the beginning what we can consider. Often we calculate functions of random variables, called "statistics". Functions of random variables are themselves random variables. So given a function $g$ and a random variable $X$ it holds that $g(X)$ is also a random variable. This still holds for compositions of functions. If I have a sequence of functions $g_1, \cdots, g_k$ and a random variable $X$, then $(g_k \circ g_{k-1} \circ \cdots g_2 \circ g_1) (X)$ is also a random variable. All random variables are statistical models if they are intended to represent something.
 
 > This view is not restricted to random scalars. We could likewise think about random vectors, random matrices, random tensors, random graphs, random hypergraphs, random simplicial complexes, ..., random "things". The requirements of a random variable do not even include numbers, nor do mathematical functions have to even consider numbers. There is a lot more generality than some, perhaps Dustin or perhaps not, may realize.
 {: .prompt-tip}
 
-In contrast to using random variables (as formally or as informally as required), I am unsure what Dustin means by a "model". From watching many of his videos I believe he considers [general linear models](https://en.wikipedia.org/wiki/General_linear_model), [generalized linear models](https://en.wikipedia.org/wiki/Generalized_linear_model), [(linear) effects models](https://en.wikipedia.org/wiki/Mixed_model), and [structural equation models](https://en.wikipedia.org/wiki/Structural_equation_modeling), and at least some (unspecified) [nonlinear regression](https://en.wikipedia.org/wiki/Nonlinear_regression) models to be models. I suspect further combinations thereof such as [generalized linear mixed models](https://en.wikipedia.org/wiki/Generalized_linear_mixed_model) and [nonlinear mixed effects models](https://en.wikipedia.org/wiki/Nonlinear_mixed-effects_model) probably qualify as well. Attempting an empirical induction (which may suffer from the [problem of induction](https://en.wikipedia.org/wiki/Problem_of_induction)), I infer that any [regression analysis](https://en.wikipedia.org/wiki/Regression_analysis) has sufficient conditions for being a model in Dustin's view, but I will leave that speculation for Dustin to correct. I agree that these are all models, but what remains is unclear to me is whether we agree on that conclusion for the same reasons.
+In contrast to using random variables (as formally or as informally as required), I am unsure what Dustin means by a "model". From watching many of his videos I believe he considers [general linear models](https://en.wikipedia.org/wiki/General_linear_model), [generalized linear models](https://en.wikipedia.org/wiki/Generalized_linear_model), [(linear) effects models](https://en.wikipedia.org/wiki/Mixed_model), and [structural equation models](https://en.wikipedia.org/wiki/Structural_equation_modeling), and at least some (unspecified) [nonlinear regression](https://en.wikipedia.org/wiki/Nonlinear_regression) models to be models. I suspect further combinations thereof such as [generalized linear mixed models](https://en.wikipedia.org/wiki/Generalized_linear_mixed_model) and [nonlinear mixed effects models](https://en.wikipedia.org/wiki/Nonlinear_mixed-effects_model) probably qualify as well. Attempting an empirical induction (which may suffer from the [problem of induction](https://en.wikipedia.org/wiki/Problem_of_induction) [@hume1748]), I infer that any [regression analysis](https://en.wikipedia.org/wiki/Regression_analysis) has sufficient conditions for being a model in Dustin's view, but I will leave that speculation for Dustin to correct. I agree that these are all models, but what remains is unclear to me is whether we agree on that conclusion for the same reasons.
 
 There are a couple of things I like about this 'general statistical model' I have suggested.
 
@@ -102,13 +103,13 @@ The first thing is that it allows for careful reasoning. I can state various ass
 
 The second thing is that it is a highly general theoretical framework. Whenever I encounter a new statistical problem I very often find that it falls within this framework of thinking. (The exceptions are interesting, weird, and beyond the scope of this post.) Recipes that be useful mental shortcuts if they are prepared carefully and used in an appropriate context, but often they fall short. I was taught such recipes early in my education, and they are not what has stuck with me because of the problem described in the following quote:
 
-> **Quotation** (as cited in [Sundberg 1994](https://www.sciencedirect.com/science/article/abs/pii/0169743993E00412?via\%3Dihub))
+> **Quotation** (as cited in @sundberg1994)
 >
 >	Most real-life statistical problems have one or more nonstandard features. There are no routine statistical questions, only questionable statistical routines.
->  > This quote is attributed to J.M. Hammersley in a footnote of Sundberg 1994. It is also attributed to D.R. Cox [here](https://stats.stackexchange.com/a/737/69508) where I found the same link to Sundberg's paper.
+>  > This quote is attributed to J.M. Hammersley in a footnote of Sundberg 1994 [@sundberg1994]. It is also attributed to D.R. Cox [here](https://stats.stackexchange.com/a/737/69508).
 > {: .prompt-info}
 
-To emphasize again, I don't think statistical recipes like flow charts are *useless*. Rather they are just part of a wider arsenal of ways of thinking and solving problems. I appreciate the attitude expressed by Richard McElreath in his *Statistical Rethinking* course material. He expresses his view in the first few minutes of the following video, although I will provide a quote below as well.
+To emphasize again, I don't think statistical recipes like flow charts are *useless*. Rather they are just part of a wider arsenal of ways of thinking and solving problems. I appreciate the attitude expressed by Richard McElreath in his *Statistical Rethinking* course material [@mcelreath2020]. He expresses his view in the first few minutes of the following video, although I will provide a quote below as well.
 
 ::: {#fig-video-statistical-rethinking-2023-golem-of-prague}
 <iframe width="560" height="315" src="https://www.youtube.com/embed/cclUd_HoRlo?si=Ct0xmuYFEHnnGcsQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -128,7 +129,7 @@ If you've never seen statistical analysis outside general linear models, Richard
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Doaod09YitA?si=aAGohPJU1NLY3FwM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 :::
 
-Even the highly general notion of a statistical model that I suggested earlier should be abandoned when it doesn't suite us. We should seek out approaches and ideas that are suitable to our problems.
+Even the highly general notion of a statistical model that I suggested earlier should be abandoned when it doesn't suit us. We should seek out approaches and ideas that are suitable to our problems.
 
 Starting with random variables isn't perfect or "universal", but it provides a framework that allows me to develop models that are highly applicable and general. It goes beyond simplistic flow charts as well as common regression models such as GLMs, but also includes them.
 
@@ -214,13 +215,13 @@ max      0.300000    3.592396    4.830130  122.543813    3.000000
 
 ![Histograms of X at the first two timepoints](./figures/dynamics_histogram.png)
 
-At this juncture of having two groups of measurements of $X$ corresponding to two timepoints, we might consider inferring how different the values of $X_{0.1}$ are from the values of $X_{0.2}$. Maybe you decide that these distributions appear approximately normal but with non-equal variances so you perform a [Welch's t-test](https://en.wikipedia.org/wiki/Welch\%27s_t-test). Maybe you decide you can model the distributions of $X_{0.1}$ and $X_{0.2}$ and derive the sampling distribution of $\frac{\bar X_{0.2} - \bar X_{0.1}}{S_{\Delta \bar X}}$ under those distribution assumptions.
+At this juncture of having two groups of measurements of $X$ corresponding to two timepoints, we might consider inferring how different the values of $X_{0.1}$ are from the values of $X_{0.2}$. Maybe you decide that these distributions appear approximately normal but with non-equal variances so you perform a [Welch's t-test](https://en.wikipedia.org/wiki/Welch%27s_t-test) [@welch1947]. Maybe you decide you can model the distributions of $X_{0.1}$ and $X_{0.2}$ and derive the sampling distribution of $\frac{\bar X_{0.2} - \bar X_{0.1}}{S_{\Delta \bar X}}$ under those distribution assumptions [@casella2002].
 
 ::: {.callout-warning}
 Many data analysts take their confidence level $\alpha \in (0,1)$ to be an arbitrary number such as 0.1, 0.05, 0.01, or 0.005. I don't recommend this practice, although it is beyond the scope of this post to address why.
 :::
 
-Or maybe you just perform a non-parametric bootstrap. Maybe you goes with a Bayesian approach with some choice of priors and then procede in sampling posterior values of $\frac{\bar X_{0.2} - \bar X_{0.1}}{S_{\Delta \bar X}}$. Whatever of these approach we go with, or others, we're pretty limited *prima facie* with what we can do with a data set like this. One of the main takeaways of this analysis is that $X$ seems to have net-increased between the time points.
+Or maybe you just perform a non-parametric bootstrap. Maybe you go with a Bayesian approach with some choice of priors and then proceed in sampling posterior values of $\frac{\bar X_{0.2} - \bar X_{0.1}}{S_{\Delta \bar X}}$. Whatever approaches we go with, or others, we're pretty limited *prima facie* with what we can do with a data set like this. One of the main takeaways of this analysis is that $X$ seems to have increased between the time points.
 
 Now let's suppose we collect a third time point to make open up more types of analysis. We examine the data as boxplots shown in the next plot. If you're from an earlier generation of statisticians you might think about setting up one of various choices of analysis of variance. And again, you might get concerned about equality of variances and do something like derive sampling distributions or bootstrap. Or even estimate the posterior of the F-scores. If you're from a later generation of statisticians you might look at this from a linear model perspective and again consider various choices about the model. Whatever you do here, you can model a richer description with these three time points in comparison to when we had measurements at only two. You get a sense that $X$ seems to increase and then decrease, which is more complicated than the two-group analysis could show us
 
@@ -253,7 +254,7 @@ $$\frac{d}{d t} Z{\left(t \right)} = \beta X{\left(t \right)} Y{\left(t \right)}
 
 where $\sigma = 10$, $\rho = 28$, $\beta = \frac{8}{3}$.
 
-> This system is similar the [Lorenz system](https://en.wikipedia.org/wiki/Lorenz_system) in three variables. I simply replaced $\frac{d}{d t} Z{\left(t \right)} = X{\left(t \right)} Y{\left(t \right)} - \beta Z{\left(t \right)}$ with $\frac{d}{d t} Z{\left(t \right)} = \beta X{\left(t \right)} Y{\left(t \right)} Z{\left(t \right)}$.
+> This system is similar to the [Lorenz system](https://en.wikipedia.org/wiki/Lorenz_system) in three variables [@lorenz1963]. I simply replaced $\frac{d}{d t} Z{\left(t \right)} = X{\left(t \right)} Y{\left(t \right)} - \beta Z{\left(t \right)}$ with $\frac{d}{d t} Z{\left(t \right)} = \beta X{\left(t \right)} Y{\left(t \right)} Z{\left(t \right)}$.
 {: .prompt-info}
 
 > I noticed that SymPy (a computer algebra system) grumbled about not finding a closed form solution for this system of equation. This is why I have not provided an exact solution, but rather just shared the rate equations with you.
@@ -272,7 +273,7 @@ In case you wish to tinker, here is the requisite code to reproduce the above re
 ```
 
 ::: {.callout-warning}
-Note that we are only considering ordinary differential equations in which we have taken our derivatives with respect to a deterministic variables (time). If you want to consider differentials of [stochastic processes](https://en.wikipedia.org/wiki/Stochastic_process) you should look further to the tools of [stochastic calculus](https://en.wikipedia.org/wiki/Stochastic_calculus) and [stochstic differential equations](https://en.wikipedia.org/wiki/Stochastic_differential_equation). See the [Itô calculus](https://en.wikipedia.org/wiki/It%C3%B4_calculus) and [Stratonovich integral](https://en.wikipedia.org/wiki/Stratonovich_integral) for a flavour of how such generalization is achieved in theory. Throwing derivatives around willy-nilly can result in sadness.
+Note that we are only considering ordinary differential equations in which we have taken our derivatives with respect to a deterministic variable (time). If you want to consider differentials of [stochastic processes](https://en.wikipedia.org/wiki/Stochastic_process), you should look further to the tools of [stochastic calculus](https://en.wikipedia.org/wiki/Stochastic_calculus) and [stochastic differential equations](https://en.wikipedia.org/wiki/Stochastic_differential_equation). See the [Itô calculus](https://en.wikipedia.org/wiki/It%C3%B4_calculus) [@ito1944] and [Stratonovich integral](https://en.wikipedia.org/wiki/Stratonovich_integral) [@stratonovich1966] for a flavour of how such generalization is achieved in theory. Throwing derivatives around willy-nilly can result in sadness.
 :::
 
 What does this lengthy example show us? (Other than that you should have an amazing grad student.) It shows we can use statistics to understand a system at different levels of detail. First we had a single variable with two time points. Then we had a single variable with three timepoints. Then we had three variables at three time points. As we had more information available to us we had more options for functions we could compute in order to make inferences/predictions.
@@ -285,6 +286,6 @@ Does this mean we should be using differential equations on every project? No. E
 
 The main issues that prevent me from adopting Dustin's view about "actually modelling the data" are as follows:
 
-1. I'm still not sufficiently clear about what Dustin means by "modelling the data", which is why I have mostly stuck to *what I understand* that phrase to mean in this post.
+1. I'm still not entirely clear about what Dustin means by "modelling the data", which is why I have mostly stuck to *what I understand* that phrase to mean in this post.
 2. Considering a "model" to be using one thing (e.g. a symbolic representation such as a word or a function) to represent another thing (e.g. a phenomena like that taller people are heavier [*caeteris paribus*](https://en.wikipedia.org/wiki/Ceteris_paribus)) is something we're pretty much always doing. Representing things is what human language and mathematics are grounded upon to begin with, so it isn't clear to me what is added by saying "actually modelling the data".
 3. The way I think about statistical models is both general and clear (e.g. mathematically unambiguous), and can be used and discussed by theoreticians and practitioners alike to make advances on *new* problems. GLMs and similar things fit into this approach, but they are not the only things in the armamentarium.

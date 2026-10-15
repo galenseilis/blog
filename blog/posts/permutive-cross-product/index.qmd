@@ -46,7 +46,7 @@ $$\text{sgn}(\sigma) = (-1)^{N(\sigma)}$$
 where $N(\sigma)$ is the number of [inversions](https://en.wikipedia.org/wiki/Inversion_(discrete_mathematics)) in $\sigma$. The permutation matrix for the ordinary cross product has exactly two inversions. But to me this feels too restrictive since it means we can only flip the order in two components, which is not really a restriction that I care about.
 
 ### Orthogonality
-A more interesting property, to me, is that the cross product gives a vector which is orthogonal to either of the input vectors.  Using the following Python code I searched over all permutation matrices in 3D that where orthogonal to the original vectors **and** were not the zero vector. (The zero vector is not particularly interesting here and is orthogonal to all vectors in $\mathbb{R}^n$.)
+A more interesting property, to me, is that the cross product gives a vector which is orthogonal to either of the input vectors.  Using the following Python code I searched over all permutation matrices in 3D that were orthogonal to the original vectors **and** were not the zero vector. (The zero vector is not particularly interesting here and is orthogonal to all vectors in $\mathbb{R}^n$.)
 
 ```python
 {{< include ./scripts/script_1.py >}}
@@ -95,7 +95,7 @@ But let's get perverse by generalizing further (just for fun).
 
 ## Getting Perverse
 
-Let's taking a further generalization from what we have seen so far. The operator
+Let's take a further generalization from what we have seen so far. The operator
 
 $$\vec a \times_P \vec b \triangleq P \vec a \odot P^T\vec b - P^T \vec a \odot P \vec b$$
 
@@ -122,7 +122,7 @@ One could imagine exploring
 
 $$O_1 \vec a \odot  O_2 \vec b - O_3 \vec a \odot O_4 \vec b$$
 
-where $O_1, O_2, O_3, O_4$ are orthogonal matrices... but that's not going to happen. A more limited case would be to look at [rotation matrices](https://en.wikipedia.org/wiki/Rotation_matrix) which are orthonormal (meaning their transpose is equal to their inverse):
+where $O_1, O_2, O_3, O_4$ are [orthogonal matrices](https://en.wikipedia.org/wiki/Orthogonal_matrix)... but that's not going to happen. A more limited case would be to look at [rotation matrices](https://en.wikipedia.org/wiki/Rotation_matrix) which are orthonormal (meaning their transpose is equal to their inverse):
 
 $$\begin{bmatrix} \cos \theta & - \sin \theta \\ \sin \theta & \cos \theta \end{bmatrix} \begin{bmatrix} a_1 \\ a_2 \end{bmatrix} \odot \begin{bmatrix} \cos \theta & - \sin \theta \\ \sin \theta & \cos \theta \end{bmatrix}^T \begin{bmatrix} b_1 \\ b_2 \end{bmatrix} - \begin{bmatrix} \cos \theta & - \sin \theta \\ \sin \theta & \cos \theta \end{bmatrix}^T \begin{bmatrix} a_1 \\ a_2 \end{bmatrix} \odot \begin{bmatrix} \cos \theta & - \sin \theta \\ \sin \theta & \cos \theta \end{bmatrix} \begin{bmatrix} b_1 \\ b_2 \end{bmatrix}$$
 
@@ -136,7 +136,7 @@ There are 3 rotation matrices in 3D which can be composed together as linear tra
 
 ## Concluding Thoughts
 
-While there are [known generalizations](https://en.wikipedia.org/wiki/Cross_product#Generalizations)of the cross product, which I would like to learn more about at some point, I thought I would give it a shot on my own. Actually, the [multilinear approach](https://en.wikipedia.org/wiki/Cross_product#Multilinear_algebra)looks quite comprehensible as a sort of determinant:
+While there are [known generalizations](https://en.wikipedia.org/wiki/Cross_product#Generalizations) of the cross product, which I would like to learn more about at some point, I thought I would give it a shot on my own. Actually, the [multilinear approach](https://en.wikipedia.org/wiki/Cross_product#Multilinear_algebra) looks quite comprehensible as a sort of determinant:
 
 $$\bigwedge_{i=0}^{n-1}\vec v_i = \det \left(
 \begin{bmatrix}

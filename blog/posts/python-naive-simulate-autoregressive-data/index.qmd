@@ -5,9 +5,9 @@ date: "2024-07-31"
 categories: [Python, Statistics, Stochastic Processes, Autoregressive, Time Series, Matplotlib, NumPy]
 ---
 
-In this post I will show you how to simulate an autoregressive (AR) process using Matplotlib and NumPy.
+In this post I will show you how to simulate an [autoregressive (AR) process](https://en.wikipedia.org/wiki/Autoregressive_model) using Matplotlib and NumPy.
 
-First, let's define a function which pseudorandomly generates the data sequence. We'll set an intercept parameter to set a consistent offset of the series from zero, and a sequence of autoregressive coefficients. The order of the coefficients entails the lag order that they are each applied to, so if you want to skip a lag order you can just set it to zero. Some AR series are noisier than others, and you can set that level of noise using the `noise` parameter. In this model we assume that the noise is a stationary normal distribution:
+First, let's define a function which pseudorandomly generates the data sequence. We'll set an intercept parameter to set a consistent offset of the series from zero, and a sequence of autoregressive coefficients. The order of the coefficients entails the lag order that they are each applied to, so if you want to skip a lag order you can just set it to zero. Some AR series are noisier than others, and you can set that level of noise using the `noise` parameter. In this model we assume that the noise is a [stationary](https://en.wikipedia.org/wiki/Stationary_process) normal distribution:
 
 $$\epsilon_t \sim \mathcal{N}(0,\sigma)$$
 

@@ -5,9 +5,9 @@ date: "2024-01-26"
 categories: [Simulation, Discrete-Event-Simulation, Rust]
 ---
 
-Here is a Rust implementation of a simple event-based discrete event simulation.
+Here is a Rust implementation of a simple event-based [discrete event simulation](https://en.wikipedia.org/wiki/Discrete-event_simulation).
 
-First we need to import some needed libraries so that events can be implemented to have an order relation, a heap which provides the core implementation of the event schedule, and a reverse function for allowing a "min heap" behaviour so that events are scheduled chronologically.
+First we need to import some needed libraries so that events can be implemented to have an order relation, a [heap](https://en.wikipedia.org/wiki/Binary_heap) which provides the core implementation of the event schedule, and a reverse function for allowing a "min heap" behaviour so that events are scheduled chronologically.
 
 
 ```rust
@@ -20,7 +20,7 @@ Here are the core components for implementing events as structs. Each event has 
 {{< include ./scripts/script_2.rs >}}
 ```
 
-The environment struct contains the binary heap which itself will contain the events as a representation of the event schedule. The environment also has `clock` which represents the clock time in the simulation. The `schedule_event` takes a mutable reference of self and an event to be scheduled and puts in on the schedule. The `run_until` function will iteratively pop events from the event schedule, update the time, and execute the event. When the event schedule is empty or the time runs out the loop will be broken.
+The environment struct contains the binary heap which itself will contain the events as a representation of the event schedule. The environment also has `clock` which represents the clock time in the simulation. The `schedule_event` takes a mutable reference of self and an event to be scheduled and puts it on the schedule. The `run_until` function will iteratively pop events from the event schedule, update the time, and execute the event. When the event schedule is empty or the time runs out the loop will be broken.
 
 ```rust
 {{< include ./scripts/script_3.rs >}}

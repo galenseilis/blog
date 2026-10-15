@@ -9,10 +9,10 @@ echo: false
 ::: {.callout-caution}
 ## Deprecated Output
 
-I have turned off the Lua filter discussed in this post. It was running everytime I rendered/published the blog. I have copy-pasted the original output for reference.
+I have turned off the Lua filter discussed in this post. It was running every time I rendered/published the blog. I have copy-pasted the original output for reference.
 :::
 
-The following is a Lua filter which looks through a `qmd` file for Rust code associated with `{rust}`, compiles that code using `rustc`, runs the compiled Rust program and collects its output, and inserts the output to be rendered by pandoc.
+The following is a [Lua filter](https://pandoc.org/lua-filters.html) which looks through a `qmd` file for Rust code associated with `{rust}`, compiles that code using `rustc`, runs the compiled Rust program and collects its output, and inserts the output to be rendered by pandoc.
 
 ```lua
 local io = require("io")
@@ -185,6 +185,6 @@ fn main() {
 ```
 1 + 2 = 3 1 - 2 = -1 1e4 is 10000, -2.5e-3 is -0.0025 true AND false is false true OR false is true NOT true is false 0011 AND 0101 is 0001 0011 OR 0101 is 0111 0011 XOR 0101 is 0110 1 << 5 is 32 0x80 >> 2 is 0x20 One million is written as 1000000
 
-In the current state there are a couple of glaring issues I have with this implementation. The first is that Rust code blocks will be run regardless of whether `echo: false` is used. The second is that all the outputs are being rendered on a single, notwithstanding Quarto's line wrapping. 
+In the current state there are a couple of glaring issues I have with this implementation. The first is that Rust code blocks will be run regardless of whether `echo: false` is used. The second is that all the outputs are being rendered on a single line, notwithstanding Quarto's line wrapping. 
 
 There is also an enhancement which is desirable, which is to render other types of things from Rust that are not just plaintext. Instead of developing this kind of functionality myself, it would make sense to take a closer look at integrating tools such as the [Evcxr Jupyter kernel](https://github.com/evcxr/evcxr/blob/main/evcxr_jupyter/README.md).

@@ -26,13 +26,13 @@ After checking through the code for anything looking dangerous, I ran the code a
 
 As people like to say about ChatGPT, it is both impressive and imperfect. Let's go over some of it.
 
-The first thing that struck me as odd was that it chose a total (i.e. linear) order. I would have been interested in seeing more arboricity in structure. 
+The first thing that struck me as odd was that it chose a [total (i.e. linear) order](https://en.wikipedia.org/wiki/Total_order). I would have been interested in seeing more [arboricity](https://en.wikipedia.org/wiki/Arboricity) in structure. 
 
 I also don't see why running `dg.add_nodes_from(['a', 'b', 'c', 'd', 'e', 'f'])` makes any sense if you are going to run `dg.add_edges_from([('a', 'b'), ('a', 'c'), ('a', 'd'), ('b', 'e'), ('c', 'e'), ('d', 'e'), ('e', 'f')])` because NetworkX will actually add the needed nodes as it adds the edges.
 
 Using `plt.show` is common for quick little plots, which I guess wasn't prohibited from what I asked. But I would rather that it return a [`matplotlib.pyplot.axis`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.axis.html) object, or receive an axis object as a parameter to `covering_diagram`. 
 
-It is completely reasonable that neither ChatGPT or a human would account for an unstated preference that the output plot have a transparent background, which can be accomplished by passing `transparent=True` to the [`matplotlib.pyplot.savefig`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.savefig.html) command. I can't expect a machine to read my mind though! (Can I?)
+It is completely reasonable that neither ChatGPT nor a human would account for an unstated preference that the output plot have a transparent background, which can be accomplished by passing `transparent=True` to the [`matplotlib.pyplot.savefig`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.savefig.html) command. I can't expect a machine to read my mind though! (Can I?)
 
 And when it said "*Finally, it uses matplotlib to plot the graph with the covering relations highlighted in red.*" I was confused at first. But yes, some of the edges are coloured red according to whether it thought they were part of the covering relation on the input set.
 
@@ -40,7 +40,7 @@ It is appreciated that it attempted a docstring that seems to describe the gener
 
 Offhand I don't know if the function is correct, but I would like to try some test cases on it.
 
-Before doing that, I will replace `plt.show()` with `plt.savefig('chatgpt_cover_relation_plotter_output_test.png', dpi=300, transparent=True)` so I can confortably embed the output on this blog post. And now let us run this case
+Before doing that, I will replace `plt.show()` with `plt.savefig('chatgpt_cover_relation_plotter_output_test.png', dpi=300, transparent=True)` so I can comfortably embed the output on this blog post. And now let us run this case
 
 ```python
 {{< include ./scripts/script_3.py >}}

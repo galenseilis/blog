@@ -6,7 +6,7 @@ categories: [Quarto, Rust, evcxr, evcxr_jupyter, Jupyter, Jupyter Notebooks]
 echo: false
 ---
 
-I recently learned that setting up Rust execution in Quarto is easy via `evcxr_jupyter`.
+I recently learned that setting up Rust execution in Quarto is easy via [`evcxr_jupyter`](https://github.com/evcxr/evcxr/tree/main/evcxr_jupyter).
 
 The first thing you need to do is ensure that Rust is installed. See [**Install Rust**](https://www.rust-lang.org/tools/install).
 
@@ -14,7 +14,7 @@ The first thing you need to do is ensure that Rust is installed. See [**Install 
 It doesn't hurt to run `rustup update` if you have not updated in a while.
 :::
 
-Then you can use Cargo to install relevant crate. Expect this step to take a while.
+Then you can use Cargo to install the relevant crate. Expect this step to take a while.
 
 ```bash
 $ cargo install evcxr_jupyter

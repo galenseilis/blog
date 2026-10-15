@@ -23,7 +23,7 @@ Suppose you have a function $f : \mathbb{R}^n \mapsto \mathbb{R}^m$ and you want
         Analyze the first and higher-order derivatives, if applicable. This can provide insights into the function's behavior, critical points, and curvature.
 
 - [ ] Gradient, Curl, divergence:
-        Compute the gradient, curl, and Jacobian of the vector function to understand the direction and magnitude of change at different points.
+        Compute the [gradient](https://en.wikipedia.org/wiki/Gradient), [curl](https://en.wikipedia.org/wiki/Curl_(mathematics)), and [Jacobian](https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant) of the vector function to understand the direction and magnitude of change at different points.
 
 - [ ] Integral Properties:
         Investigate the integral properties of the function, such as line integrals, surface integrals, and volume integrals. These can help analyze physical or geometric interpretations.

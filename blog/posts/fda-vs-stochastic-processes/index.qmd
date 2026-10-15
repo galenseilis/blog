@@ -5,7 +5,7 @@ date: "2023-04-21"
 categories: [Statistics]
 ---
 
-[Functional data analysis](https://en.wikipedia.org/wiki/Functional_data_analysis) is an approach to modelling that appears similar to [stochastic proceses](https://en.wikipedia.org/wiki/Stochastic_process). This is because stochastic processes deal with functions in the sense of being a function of a parameter (often time or space), and each random variable in probability theory is a function of the outcome space of a probability space.
+[Functional data analysis](https://en.wikipedia.org/wiki/Functional_data_analysis) is an approach to modelling that appears similar to [stochastic processes](https://en.wikipedia.org/wiki/Stochastic_process). This is because stochastic processes deal with functions in the sense of being a function of a parameter (often time or space), and each [random variable](https://en.wikipedia.org/wiki/Random_variable) in probability theory is a function of the outcome space of a [probability space](https://en.wikipedia.org/wiki/Probability_space).
 
 I asked ChatGPT a couple of questions about this. I've put the Q&A below.
 

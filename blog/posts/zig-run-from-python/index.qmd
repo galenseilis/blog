@@ -9,7 +9,7 @@ In this post I share a way to compile and run a Zig file using Python, which in 
 
 ## Python Script
 
-The Python script I developed is similar to the one I made for Rust, except that it does two phases. While Zig has a very powerful and flexible build system, I will only attempt to compile a single project file.
+The Python script I developed is similar to the one I made for Rust, except that it does two phases. While Zig has a very powerful and flexible [build system](https://ziglang.org/learn/build-system/), I will only attempt to compile a single project file.
 
 ```python
 {{< include ./scripts/run_zig.py >}}
@@ -46,4 +46,4 @@ Hello, World!
 
 ## Conclusion
 
-While Zig doesn't really have a REPL (that I'm aware of), you can include its standard output in Quarto blogs using Python's Subprocess library.
+While Zig doesn't really have a REPL (that I'm aware of), you can include its standard output in Quarto blogs using Python's [subprocess](https://docs.python.org/3/library/subprocess.html) library.

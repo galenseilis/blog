@@ -12,7 +12,7 @@ This post was migrated from my iNaturalist journal to my Jekyll blog on 2023-02-
 
 Suppose
 - you have just downloaded an export of iNaturalist data,
-- the data file is a [zipped](https://en.wikipedia.org/wiki/ZIP_(file_format)) [comma-separated value](https://en.wikipedia.org/wiki/Comma-separated_values)(CSV) text file,
+- the data file is a [zipped](https://en.wikipedia.org/wiki/ZIP_(file_format)) [comma-separated value](https://en.wikipedia.org/wiki/Comma-separated_values) (CSV) text file,
 - and you are running a [Ubuntu system](https://en.wikipedia.org/wiki/Ubuntu).
 
 Begin by opening up a [BASH](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) environment.

@@ -7,13 +7,13 @@ categories: [Python, Scipy, NumPy, timeit, optimization, Numba]
 
 # Introduction
 
-[Numba](http://numba.pydata.org/) is a Python library that provides an open source just-in-time compiler that allows a coder to mark selected parts of their code to be compiled for faster execution. As someone interested in computation at any scale, from calculating $13 \times 19$ (mental arithmetic is not my *forte*) to analyzing the behaviour of tens of thousands of genes or hundreds of thousands of IP addresses. I am not one to squeeze every inch of performance out of something small that was only meant to run once as a proof of concept, but it can be worth speeding up tasks that are either huge or will be repeated.
+[Numba](http://numba.pydata.org/) is a Python library that provides an open source [just-in-time compiler](https://en.wikipedia.org/wiki/Just-in-time_compilation) that allows a coder to mark selected parts of their code to be compiled for faster execution. As someone interested in computation at any scale, from calculating $13 \times 19$ (mental arithmetic is not my *forte*) to analyzing the behaviour of tens of thousands of genes or hundreds of thousands of IP addresses. I am not one to squeeze every inch of performance out of something small that was only meant to run once as a proof of concept, but it can be worth speeding up tasks that are either huge or will be repeated.
 
-Let's get into how to use Numba -- hang on! Why not just use compiled languages like C, C++ or FORTRAN? Well, herein lies one of meta-problems of development that requires some optimization. Coding in Python is useful for quickly coding up proofs of concept, but properties like its dynamic typing slow it down compared to memory-managed code in C. Coding in C will give a faster execution for the same code, but will often require more time and degugging to get ready for deployment. Using Python with Numba is an attempt to get the best of both worlds, and in practice is not much slower than software compiled from well-written low-level languages.
+Let's get into how to use Numba -- hang on! Why not just use compiled languages like C, C++ or FORTRAN? Well, herein lies one of the meta-problems of development that requires some optimization. Coding in Python is useful for quickly coding up proofs of concept, but properties like its [dynamic typing](https://en.wikipedia.org/wiki/Type_system#Dynamic_type_checking_and_runtime_type_information) slow it down compared to memory-managed code in C. Coding in C will give a faster execution for the same code, but will often require more time and debugging to get ready for deployment. Using Python with Numba is an attempt to get the best of both worlds, and in practice is not much slower than software compiled from well-written low-level languages.
 
 # JIT
 
-The first way we can use Numba to speed up our code is by compiling a function so that future executions can use the compiled version, removing the need to compile at runtime. Let's take a function that gives us the first *n* Fibonacci numbers, and see how it performs.
+The first way we can use Numba to speed up our code is by compiling a function so that future executions can use the compiled version, removing the need to compile at runtime. Let's take a function that gives us the first *n* [Fibonacci numbers](https://en.wikipedia.org/wiki/Fibonacci_sequence), and see how it performs.
 
 ```python
 {{< include ./scripts/fib_iterative.py >}}
@@ -22,7 +22,7 @@ The first way we can use Numba to speed up our code is by compiling a function s
 ```default
 5.042577191954479
 ```
-Running the above code on my laptop gives around 2 seconds to run the function $1000000$ times according to timeit, which is reasonable for small $n$ but let's see if we can speed this up with the Numba's jit.
+Running the above code on my laptop gives around 2 seconds to run the function $1000000$ times according to timeit, which is reasonable for small $n$ but let's see if we can speed this up with Numba's jit.
 
 ```python
 {{< include ./scripts/fib_jit.py >}}
@@ -31,13 +31,13 @@ Running the above code with jit brought the execution time down to about 0.7 sec
 
 # Vectorizing
 
-Another approach to speeding up code is vectorizing, where multiple operations are applied to each entry directly instead of producing multiple intermediate arrays as operations are applied. Originally I had wanted to use our `fib` function, but [I quickly learned](https://stackoverflow.com/questions/55564403/numba-indexing-error-typeerror-cant-index-at-0-in-i8) that it is not [vectorizable](https://numba.pydata.org/numba-doc/dev/user/vectorize.html) because it cannot be made into a [universal function](https://docs.scipy.org/doc/numpy/reference/ufuncs.html). For a function to be universal, it is necessary that they map scalars into scalers, and map arrays into arrays. With that in mind, we'll vectorize a suitable function to show how the time performance is improved. Let's start by timing the unvectorized function.
+Another approach to speeding up code is vectorizing, where multiple operations are applied to each entry directly instead of producing multiple intermediate arrays as operations are applied. Originally I had wanted to use our `fib` function, but [I quickly learned](https://stackoverflow.com/questions/55564403/numba-indexing-error-typeerror-cant-index-at-0-in-i8) that it is not [vectorizable](https://numba.pydata.org/numba-doc/dev/user/vectorize.html) because it cannot be made into a [universal function](https://docs.scipy.org/doc/numpy/reference/ufuncs.html). For a function to be universal, it is necessary that they map scalars into scalars, and map arrays into arrays. With that in mind, we'll vectorize a suitable function to show how the time performance is improved. Let's start by timing the unvectorized function.
 
 ```python
 {{< include ./scripts/unvectorized.py >}}
 ```
 
-On my machine the execution time was about $0.05$ seconds, which isn't half-bad by itself. Not let's run the same code in vectorized form.
+On my machine the execution time was about $0.05$ seconds, which isn't half-bad by itself. Now let's run the same code in vectorized form.
 
 ```python
 {{< include ./scripts/vectorized.py >}}
@@ -45,7 +45,7 @@ On my machine the execution time was about $0.05$ seconds, which isn't half-bad 
 
 This vectorized form took about $0.0042$ seconds to execute, which is about $12$ times faster! This is a clear demonstration that vectorizing functions is worthwhile as scalability becomes an issue.
 
-Because the vectorization of this function means that each element of the array is calculated independently, we can further attempt to speed this calculation up by calculating elements in parallel! We do that by telling the decorator the element types (we'll use `float64`), and that the target is function should be done in parallel.
+Because the vectorization of this function means that each element of the array is calculated independently, we can further attempt to speed this calculation up by calculating elements in parallel! We do that by telling the decorator the element types (we'll use `float64`), and that the target function should be done in parallel.
 
 ```python
 {{< include ./scripts/parallel_vectorized.py >}}
@@ -55,5 +55,5 @@ This last acceleration to make the calculations parallel squeezed the execution 
 
 # Conclusion
 
-Using Numba allows us an easy way to increase the performance of functions in Python without going to a lower-abstraction language such as C or FORTRAN. Some functions will be more suitable to `@jit` than `@vectorize` based on the type of operations and whether the function is universal (or can be made into a universal function). These accelerations in performance becomes increasingly valuable as the amount of data being processed becomes large!
+Using Numba allows us an easy way to increase the performance of functions in Python without going to a lower-abstraction language such as C or FORTRAN. Some functions will be more suitable to `@jit` than `@vectorize` based on the type of operations and whether the function is universal (or can be made into a universal function). These accelerations in performance become increasingly valuable as the amount of data being processed becomes large!
 

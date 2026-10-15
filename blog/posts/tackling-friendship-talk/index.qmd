@@ -1,10 +1,10 @@
 ---
-title: "Jaime Krem's Tackling Friendship"
+title: "Jaimie Krems' Tackling Friendship"
 author: "Galen Seilis"
 date: "2023-06-03"
 categories: [Sociology, Friendship]
 ---
 
-I found this talk fascinating. I have not finished thinking about it. I have concerns about the statistical methods, but some of the theorical concepts presented are interesting to me.
+I found this talk fascinating. I have not finished thinking about it. I have concerns about the statistical methods, but some of the theoretical concepts presented are interesting to me.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/tbyU-XaDRqY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>

@@ -15,7 +15,7 @@ In contrast, with Jekyll, I needed to
 
 1. make the plot
 2. move the plot to an images folder
-3. reference to the plot’s path in the blog post.
+3. reference the plot’s path in the blog post.
 
 It wasn’t terrible, and it is possible that I just didn’t figure out how to make this easier with Jekyll, but it was quickly apparent to me that Quarto makes this easy.
 
@@ -39,7 +39,7 @@ gitGraph
    commit
 ```
 
-I can also easily prepare Graphiz diagrams provided that I supply some valid dot notation:
+I can also easily prepare Graphviz diagrams provided that I supply some valid dot notation:
 
 ```{dot}
 //| echo: true

@@ -7,7 +7,7 @@ categories: [Python, Flask, Web Applications, URL, Requests, Images]
 
 In this post I am going to show a Flask application which takes an integer and searches the Magic the Gathering database for an image of a corresponding card whose "multiverse ID" is the same as the given number.
 
-I used the `requests` package to get the image content. Supposing you get the content back, which will result in a response status code of 200, the image will still need to be converted into a memory binary stream. That's where `io.BytesIO` comes in handy. Once the stream is prepared, the `flask.send_file` function can be used to prepare the rendered page content containing the file.
+I used the [`requests`](https://requests.readthedocs.io/en/latest/) package to get the image content. Supposing you get the content back, which will result in a response status code of 200, the image will still need to be converted into a memory binary stream. That's where [`io.BytesIO`](https://docs.python.org/3/library/io.html#io.BytesIO) comes in handy. Once the stream is prepared, the [`flask.send_file`](https://flask.palletsprojects.com/en/stable/api/#flask.send_file) function can be used to prepare the rendered page content containing the file.
 
 ```python
 from flask import Flask, send_file
@@ -39,4 +39,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 ```
 
-This app should allow you to input different numbers into the URL which then will render an Magic the Gathering card image, or will give an error.
+This app should allow you to input different numbers into the URL which then will render a Magic the Gathering card image, or will give an error.

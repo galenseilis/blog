@@ -3,13 +3,14 @@ title: "When do the bounds on a Poisson's median almost equal the mean?"
 author: "Galen Seilis"
 date: "2024-01-28"
 categories: [Mathematics, Mathematical-Statistics]
+bibliography: references.bib
 ---
 
 ## Question 1
 
 When do the bounds on the median $\nu$ of a Poisson distribution equal (or nearly equal) the mean of the distribution, $\frac{1}{\lambda}$?
 
-The bounds of the median are given as
+The bounds of the median are given as [@choi1994]
 
 $$\lambda - \ln 2 \leq \nu < \lambda + \frac{1}{3}$$
 
