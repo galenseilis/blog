@@ -235,7 +235,7 @@ window.Quarto = {
 
 
 
-<p>Found this code in my miscellaneous <code>bin</code> folder. Instead of deleting it I thought I would share it here. It is a minimal working example of using the PyMC package to model a Von-Mise distribution with priors put on its parameters. It is an extremely small model given by:</p>
+<p>Found this code in my miscellaneous <code>bin</code> folder. Instead of deleting it I thought I would share it here. It is a minimal working example of using the <a href="https://www.pymc.io/">PyMC</a> package to model a <a href="https://en.wikipedia.org/wiki/Von_Mises_distribution">Von Mises distribution</a> with priors put on its parameters. It is an extremely small model given by:</p>
 <p><span class="math display">\[\kappa \sim \text{Exponential}(1)\]</span></p>
 <p><span class="math display">\[\mu \sim \text{Uniform}\left( -\pi, \pi \right)\]</span></p>
 <p><span class="math display">\[\theta \sim \text{VonMises}(\mu, \kappa)\]</span></p>
@@ -258,7 +258,7 @@ window.Quarto = {
 <p>I can see from <code>observed=[-2]*10 + [2]*10</code> that I was tinkering with having data at exactly two angles. Maybe I was stress-testing the sampler for how it handles bimodality.</p>
 <p>Here is <em>an</em> example output. Because I didn’t set a seed number you may find your plot differs from mine somewhat.</p>
 <p><img src="./figures/von_mise_bimodal_test.png" class="img-fluid"></p>
-<p>Adding <code>az.summary(data, round_to=2).to_markdown('von_mise_bimdal_test.md')</code> to the code above we can also see a summary of the model parameters. It is not a great effective sample size (ESS) and <span class="math inline">\(\hat r\)</span>, especially for <span class="math inline">\(\mu\)</span>. Actually, <span class="math inline">\(\kappa\)</span> doesn’t look horrible despite the low ESS. The plot above also suggests that there are a couple of states that the chain switches between, which are likely the two modes.</p>
+<p>Adding <code>az.summary(data, round_to=2).to_markdown('von_mise_bimdal_test.md')</code> to the code above we can also see a summary of the model parameters. It is not a great <a href="https://en.wikipedia.org/wiki/Effective_sample_size">effective sample size</a> (ESS) and <a href="https://en.wikipedia.org/wiki/Gelman%E2%80%93Rubin_statistic">R-hat</a> (<span class="math inline">\(\hat r\)</span>), especially for <span class="math inline">\(\mu\)</span>. Actually, <span class="math inline">\(\kappa\)</span> doesn’t look horrible despite the low ESS. The plot above also suggests that there are a couple of states that the chain switches between, which are likely the two modes.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 7%">

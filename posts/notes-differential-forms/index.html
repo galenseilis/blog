@@ -63,7 +63,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -267,7 +286,7 @@ window.Quarto = {
 <h1>Tangent Space</h1>
 <section id="definition" class="level2">
 <h2 class="anchored" data-anchor-id="definition">Definition</h2>
-<p>Suppose <span class="math inline">\(C \subseteq \mathbb{R}^2\)</span> is a curve and <span class="math inline">\(p \in C\)</span>. The <strong>tangent space to <span class="math inline">\(C\)</span> at <span class="math inline">\(p\)</span>, <span class="math inline">\(T_pC\)</span></strong> is the set of all vectors tangent to <span class="math inline">\(C\)</span> at <span class="math inline">\(p\)</span>.</p>
+<p>Suppose <span class="math inline">\(C \subseteq \mathbb{R}^2\)</span> is a curve and <span class="math inline">\(p \in C\)</span>. The <strong>tangent space to <span class="math inline">\(C\)</span> at <span class="math inline">\(p\)</span>, <span class="math inline">\(T_pC\)</span></strong> is the set of all vectors tangent to <span class="math inline">\(C\)</span> at <span class="math inline">\(p\)</span> <span class="citation" data-cites="flanders1989">(<a href="#ref-flanders1989" role="doc-biblioref">Flanders 1989</a>)</span>.</p>
 </section>
 <section id="example" class="level2">
 <h2 class="anchored" data-anchor-id="example">Example</h2>
@@ -375,7 +394,7 @@ window.Quarto = {
 </figure>
 </div>
 <blockquote class="blockquote">
-<p>The equation <span class="math inline">\(\langle dx, dy \rangle (v) = \langle 1, 2a \rangle\)</span> implies familiar result that <span class="math inline">\(dy = 2a \cdot 1 = 2 a dx \implies \frac{dy}{dx} = 2a = f^{\prime}(a).\)</span></p>
+<p>The equation <span class="math inline">\(\langle dx, dy \rangle (v) = \langle 1, 2a \rangle\)</span> implies the familiar result that <span class="math inline">\(dy = 2a \cdot 1 = 2 a dx \implies \frac{dy}{dx} = 2a = f^{\prime}(a).\)</span></p>
 </blockquote>
 </section>
 <section id="example-2" class="level2">
@@ -469,7 +488,7 @@ Tip
 <h2 class="anchored" data-anchor-id="example-7">Example</h2>
 <p>Suppose <span class="math inline">\(\omega\)</span> scalar projects onto the line <span class="math inline">\(dy = 2dx\)</span> with length of 3. Find <span class="math inline">\(\omega .\)</span></p>
 <p>We know that <span class="math inline">\(\omega (\langle dx, dy \rangle) = \langle a,b \rangle \cdot \langle dx, dy \rangle .\)</span> We need <span class="math inline">\(\langle a, b \rangle\)</span> to be parallel to <span class="math inline">\(\langle 1, 2 \rangle\)</span> because <span class="math inline">\(\langle 1, 2 \rangle\)</span> is the vector in the direction of the line <span class="math inline">\(dy = 2dx\)</span>.</p>
-<p>So <span class="math inline">\(\langle a, b \rangle = \langle a, 2a \rangle\)</span> which needs that have <span class="math display">\[\vert| \langle a, 2a \rangle \vert| = 3 \]</span> .</p>
+<p>So <span class="math inline">\(\langle a, b \rangle = \langle a, 2a \rangle\)</span> which requires that we have <span class="math display">\[\vert| \langle a, 2a \rangle \vert| = 3 \]</span> .</p>
 <p>So <span class="math display">\[\vert| \langle a, 2a \rangle \vert| = \sqrt{a^2 + 4 a^2} = 3 \implies a \sqrt{5} = 3 \implies a = \frac{3}{\sqrt{5}}\]</span> . So <span class="math inline">\(b=\frac{6}{\sqrt{5}}\)</span></p>
 <p><span class="math display">\[\implies \omega (\langle dx, dy \rangle) = \frac{3}{\sqrt{5}} dx + \frac{6}{\sqrt{5}} dy\]</span></p>
 </section>
@@ -489,9 +508,14 @@ Tip
 </ul>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-flanders1989" class="csl-entry" role="listitem">
+Flanders, Harley. 1989. <em>Differential Forms with Applications to the Physical Sciences</em>. Dover Publications.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

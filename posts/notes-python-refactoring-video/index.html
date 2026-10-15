@@ -173,12 +173,12 @@ ul.task-list li input[type="checkbox"] {
 <p>This post is just some notes I took while watching the following video:</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/KTIl1MugsSY?si=k7RR05hWGEICmF7b" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
-<p>ITM Antipattern The initialize then modify (ITM) antipattern is where something it initialized outside a loop and then it is modified in the loop. For change 1 we used <code>enumerate</code>, and for change 2 we used a list comprehension.</p>
+<p>ITM Antipattern The initialize then modify (ITM) antipattern is where something is initialized outside a loop and then it is modified in the loop. For change 1 we used <a href="https://docs.python.org/3/library/functions.html#enumerate"><code>enumerate</code></a>, and for change 2 we used a <a href="https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions">list comprehension</a>.</p>
 <p>Redundant Comments - Remove <strong>redundant</strong> comments. - Redundant comments just restate the literal command.</p>
 <p>Index ITM - Initializing index outside of a loop and then incrementing it inside the loop. - Solution: Use <code>enumerate</code>.</p>
 <p>Deprecated Print Statements - Delete any print statements that are no longer needed.</p>
-<p>List Comprehensions - Replace for loops with list comprehensions when the list copmrehension itself will be readible.</p>
-<p>Deprecated Conrol Flow - Delete control flow (<code>if/elif/else</code>) that won’t be relevant to future use cases.</p>
+<p>List Comprehensions - Replace for loops with <a href="https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions">list comprehensions</a> when the list comprehension itself will be readable.</p>
+<p>Deprecated Control Flow - Delete control flow (<code>if/elif/else</code>) that won’t be relevant to future use cases.</p>
 <p>Iterable Slicing - Use slicing instead of looping over an iterable when the location of the target information is reliable.</p>
 <p>Changes 6 and 7 we have seen above.</p>
 <p>Try/Except/Pass - Remove <code>try &lt;type_cast&gt; except pass</code> patterns. - Replace with a conditional expression <code>&lt;type_cast&gt; if &lt;condition&gt; else &lt;other&gt;</code>.</p>

@@ -63,7 +63,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -257,7 +276,7 @@ window.Quarto = {
   <li><a href="#perceived-cost-of-alternatives" id="toc-perceived-cost-of-alternatives" class="nav-link" data-scroll-target="#perceived-cost-of-alternatives">Perceived Cost of Alternatives</a></li>
   <li><a href="#pressure-for-short-term-efficiency" id="toc-pressure-for-short-term-efficiency" class="nav-link" data-scroll-target="#pressure-for-short-term-efficiency">Pressure for Short-Term Efficiency</a></li>
   <li><a href="#quantifying-variability-can-be-difficult" id="toc-quantifying-variability-can-be-difficult" class="nav-link" data-scroll-target="#quantifying-variability-can-be-difficult">Quantifying Variability Can Be Difficult</a></li>
-  <li><a href="#cogntive-heuristics" id="toc-cogntive-heuristics" class="nav-link" data-scroll-target="#cogntive-heuristics">Cogntive Heuristics</a></li>
+  <li><a href="#cognitive-heuristics" id="toc-cognitive-heuristics" class="nav-link" data-scroll-target="#cognitive-heuristics">Cognitive Heuristics</a></li>
   </ul></li>
   <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
   </ul>
@@ -311,7 +330,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="averages-hide-uncertainty-about-outcomes">Averages Hide Uncertainty About Outcomes</h2>
 <p>I have rarely heard phrases such as “the average accounts for the uncertainty”, but nonetheless this is believed by some. While that is sort of true in the sense that the average, or more formally the expectation, is a function of the outcomes <em>and</em> the probabilities, the phrasing is substantively false.</p>
 <p>Averages are often used as an attempt to ignore the uncertainty of the outcome while preserving something about where most of the outcomes are weighted (by the probabilities) to be around. Roughly locating the ‘center’ of the outcomes in this way is a compression that loses information about the uncertainty rather than preserves it.</p>
-<p>Realizing that averages ignore a lot of information about the uncertainty, some have turned to confidence intervals (or sometimes credible intervals) around their averages or conditional averages. Confidence intervals are widely misunderstood and misused for other reasons, but they are not even the right tool for the job here.</p>
+<p>Realizing that averages ignore a lot of information about the uncertainty, some have turned to confidence intervals <span class="citation" data-cites="neyman1937">(<a href="#ref-neyman1937" role="doc-biblioref">Neyman 1937</a>)</span> (or sometimes credible intervals) around their averages or conditional averages. Confidence intervals are widely misunderstood and misused for other reasons, but they are not even the right tool for the job here.</p>
 <div id="fig-ci-meme" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ci-meme-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -395,7 +414,7 @@ Figure&nbsp;2: Computational Example Illustrating That Prediction Intervals Are 
 </figcaption>
 </figure>
 </div>
-<p>You can see from the above figure that the estimates of the confidence intervals slowly narrow, whereas the estimates of the prediction intervals tends to stabilize. This is not a coincidence. As our sample size increases indefinitely we should expect that the confidence interval will narrow indefinitely towards the closed interval <span class="math inline">\([0,0]\)</span>. The prediction interval will also approach constant bounds, but this interval will in most cases have non-zero width even with an infinite sample. Loosely speaking, the confidence interval is describing our estimation procedure whereas the prediction interval is describing the outcomes.</p>
+<p>You can see from the above figure that the estimates of the confidence intervals slowly narrow, whereas the estimates of the prediction intervals tend to stabilize. This is not a coincidence. As our sample size increases indefinitely we should expect that the confidence interval will narrow indefinitely towards the closed interval <span class="math inline">\([0,0]\)</span>. The prediction interval will also approach constant bounds, but this interval will in most cases have non-zero width even with an infinite sample. Loosely speaking, the confidence interval is describing our estimation procedure whereas the prediction interval is describing the outcomes.</p>
 <p>Let’s consider a less abstract example now. Suppose I want to know about the heights of randomly-selected people. The average human height can be computed from samples of human heights, and a confidence interval for that average can be computed. The confidence interval, assuming an infinite population, will converge such that it has a width of zero at any valid level of confidence. Would it really make sense that the distribution of human heights should be narrowing due to measuring more human heights? Assuming a simple random sample and stationarity, definitely not.</p>
 <p>Averages ignore uncertainty about outcomes, and confidence intervals are not a solution to this problem.</p>
 </section>
@@ -412,7 +431,7 @@ Figure&nbsp;3: Icarus’ Fall (Public Domain).
 </figcaption>
 </figure>
 </div>
-<p>Similarly, when decision-makers allocate resources to equal average demand, they may feel like they’re operating with maximum efficiency, avoiding unnecessary costs. However, this strategy can be perilous. Like Icarus, who failed to account for the sun’s intensity, an organization service stability “melting” under the pressure of unexpected demand surges or rare events. If a hospital staffs its emergency department based on average patient numbers without accounting for common fluctuations in demand, or if a call center schedules operators based only on average call volume, a sudden surge could overwhelm the system, leading to long wait times, burnout, or a decline in service quality.</p>
+<p>Similarly, when decision-makers allocate resources to equal average demand, they may feel like they’re operating with maximum efficiency, avoiding unnecessary costs. However, this strategy can be perilous. Like Icarus, who failed to account for the sun’s intensity, an organization risks its service stability “melting” under the pressure of unexpected demand surges or rare events. If a hospital staffs its emergency department based on average patient numbers without accounting for common fluctuations in demand, or if a call center schedules operators based only on average call volume, a sudden surge could overwhelm the system, leading to long wait times, burnout, or a decline in service quality.</p>
 <p>In both cases, the illusion of stability masks the vulnerability of the system. Just as Icarus’ wings could not withstand the intensity of the sun, resource allocations set too close to average demand cannot withstand the inevitable variability and shocks that real-world systems encounter. The lesson: flying too close to the demand “sun” might lead to operational failures when stress exceeds what the average can handle. Allocating additional buffer resources is like heeding Daedalus’ advice, ensuring a safer, more sustainable flight.</p>
 <p>Let us consider a computational example to show how allocating the average service level to exactly match demand goes wrong. Suppose a healthcare service that looks like the state diagram in <a href="#fig-service-diagram" class="quarto-xref">Figure&nbsp;4</a>.</p>
 <div class="cell" data-layout-align="default">
@@ -451,11 +470,11 @@ Figure&nbsp;4: Example State Diagram of a Healthcare Service
 </div>
 </div>
 </div>
-<p>New arrivals enter the service and go into a waiting area, which I have termed <code>Queue</code> in the diagram. The service discipline is a rule or business process which decides the order that patients get served. When a server, such as a nurse or doctor, becomes available they will begin service on the next patient. Patients tha have been served also depart from the system.</p>
-<p>In order to make a numerical example we’ll need to make some further assumptions. Suppose that the interarrival times of demand arrive according to an exponential distribution with a rate parameter <span class="math inline">\(\lambda\)</span>, and the duration of each service also follows an exponential distribution with a rate <span class="math inline">\(\mu\)</span>. The fact that these variables follow probability distributions is why there are fluctuations in the behaviour of this hypothetical service. Note that other sources of variaion tend to make the stability no-better-off or even worse, rather than better.</p>
-<p>In simple queueing systems like the one we have described here, the stability can be determined by a simple inequality. First, define the <em>utilization</em> <span class="math inline">\(\rho\)</span> to be</p>
+<p>New arrivals enter the service and go into a waiting area, which I have termed <code>Queue</code> in the diagram. The service discipline is a rule or business process which decides the order that patients get served. When a server, such as a nurse or doctor, becomes available they will begin service on the next patient. Patients that have been served also depart from the system.</p>
+<p>In order to make a numerical example we’ll need to make some further assumptions. Suppose that the interarrival times of demand arrive according to an exponential distribution with a rate parameter <span class="math inline">\(\lambda\)</span>, and the duration of each service also follows an exponential distribution with a rate <span class="math inline">\(\mu\)</span>. The fact that these variables follow probability distributions is why there are fluctuations in the behaviour of this hypothetical service. Note that other sources of variation tend to make the stability no-better-off or even worse, rather than better.</p>
+<p>In simple queueing systems like the one we have described here, the stability can be determined by a simple inequality <span class="citation" data-cites="kendall1953">(<a href="#ref-kendall1953" role="doc-biblioref">Kendall 1953</a>)</span>. First, define the <em>utilization</em> <span class="math inline">\(\rho\)</span> to be</p>
 <p><span class="math display">\[\rho \triangleq \frac{\lambda}{s \mu}\]</span></p>
-<p>where <span class="math inline">\(\lambda\)</span> is the arrival rate, <span class="math inline">\(\mu\)</span> is the service rate, and <span class="math inline">\(s\)</span> is the number of servers. Here the notion of servers is a little abstract as it generally referred to how many patients can be receiving service simultaneously and independently, rather than a literal count of people. But for our purposes here we will take the number of servers <span class="math inline">\(s\)</span> to intuitively be the number of people available to provide medical services.</p>
+<p>where <span class="math inline">\(\lambda\)</span> is the arrival rate, <span class="math inline">\(\mu\)</span> is the service rate, and <span class="math inline">\(s\)</span> is the number of servers. Here the notion of servers is a little abstract as it generally refers to how many patients can be receiving service simultaneously and independently, rather than a literal count of people. But for our purposes here we will take the number of servers <span class="math inline">\(s\)</span> to intuitively be the number of people available to provide medical services.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Simulate a queue at unity utilization and plot the resulting random-walk waiting times."""</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -501,7 +520,7 @@ Figure&nbsp;5: Service Waiting Times Following a Random Walk Due to Unity Queue 
 </figcaption>
 </figure>
 </div>
-<p>When we exactly match the average supply of a service with the average demand for that service we create a system which is instable. The waiting times will meander up and down over time. That description might sound like things will even out over time. After all, doesn’t some ups combined with some downs cancel out in the long run? Unfortunately, no. In fact, mathematicians have shown that when <span class="math inline">\(\rho \approx 1\)</span> then the waiting times will tend to increase over time. In such cases any apparent improvement in the waiting times will only be eventually replaced by an even bigger increase in the wait times.</p>
+<p>When we exactly match the average supply of a service with the average demand for that service we create a system which is unstable. The waiting times will meander up and down over time. That description might sound like things will even out over time. After all, don’t some ups combined with some downs cancel out in the long run? Unfortunately, no. In fact, mathematicians have shown that when <span class="math inline">\(\rho \approx 1\)</span> then the waiting times will tend to increase over time. In such cases any apparent improvement in the waiting times will only be eventually replaced by an even bigger increase in the wait times.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Simulate an underserviced queue and plot the increasing waiting times."""</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -597,10 +616,10 @@ Figure&nbsp;7: Stable Waiting Times Due to Sufficient Resourcing
 </section>
 <section id="averages-are-not-usually-risk-conservative-but-peoples-judgements-are" class="level2">
 <h2 class="anchored" data-anchor-id="averages-are-not-usually-risk-conservative-but-peoples-judgements-are">Averages Are Not Usually Risk Conservative, but People’s Judgements Are</h2>
-<p>When we look at how people address real-world risk, especially about things that personally impact them, you may not that they do not base their decisions around the average or even the most probable outcome. We require workers to follow standard operating procedures and wear personal protective equipment not only for situations in which</p>
-<p>Suppose the amount of surgeons we need on a given day, which we will denote <span class="math inline">\(X\)</span>, follows a Poisson distribution:</p>
+<p>When we look at how people address real-world risk, especially about things that personally impact them, you may note that they do not base their decisions around the average or even the most probable outcome. We require workers to follow standard operating procedures and wear personal protective equipment not only for situations in which</p>
+<p>Suppose the number of surgeons we need on a given day, which we will denote <span class="math inline">\(X\)</span>, follows a Poisson distribution <span class="citation" data-cites="poisson1837">(<a href="#ref-poisson1837" role="doc-biblioref">Poisson 1837</a>)</span>:</p>
 <p><span class="math display">\[X \sim \operatorname{Poisson}(\lambda)\]</span></p>
-<p>where <span class="math inline">\(\lambda\)</span> is the rate parameter. As it happens to be the case with a Poisson distribution, its parameter <span class="math inline">\(\lambda\)</span> is also the population average. That is, the average number of required surgeons is <span class="math inline">\(\lambda\)</span>. We can plot the probability that the needed number of surgeons is less than the average <span class="math inline">\(\Pr [ X \leq \lambda ]\)</span> for different values of <span class="math inline">\(\lambda\)</span> the cumulative distribution function of a Poisson distribution.</p>
+<p>where <span class="math inline">\(\lambda\)</span> is the rate parameter. As it happens to be the case with a Poisson distribution, its parameter <span class="math inline">\(\lambda\)</span> is also the population average. That is, the average number of required surgeons is <span class="math inline">\(\lambda\)</span>. We can plot the probability that the needed number of surgeons is less than the average <span class="math inline">\(\Pr [ X \leq \lambda ]\)</span> for different values of <span class="math inline">\(\lambda\)</span> using the cumulative distribution function of a Poisson distribution.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Plot the probability that a Poisson variable is at most its mean against the mean."""</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -633,7 +652,7 @@ Figure&nbsp;7: Stable Waiting Times Due to Sufficient Resourcing
 <figcaption>Probability that the number of required surgeons does not exceed the average for a Poisson distribution</figcaption>
 </figure>
 </div>
-<p>You can see from the plot above that the smaller the average number of required surgeries is, the higher the probability that allocating a number of surgerons close to the average will be sufficient.</p>
+<p>You can see from the plot above that the smaller the average number of required surgeries is, the higher the probability that allocating a number of surgeons close to the average will be sufficient.</p>
 <p>If we choose to allocate zero surgeons then the probability of having enough surgeons (i.e.&nbsp;not needing to perform any surgeries) is given by <span class="math inline">\(e^{-\lambda}\)</span>. But how large does the probability of having enough resources allocated need to be in order to say that “we have enough”? There is not a purely mathematical answer to this question in practice. Rather, an acceptable level of risk has to be defined.</p>
 </section>
 </section>
@@ -652,7 +671,7 @@ Figure&nbsp;7: Stable Waiting Times Due to Sufficient Resourcing
 </section>
 <section id="confidence-in-predictability" class="level2">
 <h2 class="anchored" data-anchor-id="confidence-in-predictability">Confidence in Predictability</h2>
-<p>Sometimes the average really is close enough to all observations. This can happen in areas where there is a large degree of control over the system being measured, such as the behaviour of some electronic components where the manufacturing processed can be carefully standardized. While it isn’t ideal, it is pragmatic. If something is predictable enough that an average is always close enough to the right answer, then ignoring the uncertainty might work.</p>
+<p>Sometimes the average really is close enough to all observations. This can happen in areas where there is a large degree of control over the system being measured, such as the behaviour of some electronic components where the manufacturing process can be carefully standardized. While it isn’t ideal, it is pragmatic. If something is predictable enough that an average is always close enough to the right answer, then ignoring the uncertainty might work.</p>
 <p>Confidence can be overconfidence in some contexts where there is an illusion of predictability. Decision-makers may assume that if they’ve planned for the average case, they’ve accounted for most of the risks.</p>
 <p>This mindset is particularly dangerous in environments like healthcare or disaster response, where small probability events (like pandemics or natural disasters) can have massive consequences. But the ease of relying on averages offers a kind of psychological comfort: it’s easier to think you’ve covered your bases by using historical data than to admit the uncertainty and volatility of the real world.</p>
 </section>
@@ -676,9 +695,9 @@ Figure&nbsp;7: Stable Waiting Times Due to Sufficient Resourcing
 <p>Capturing the full range of variability in demand or resource usage <em>can</em> be difficult to quantify. While averages offer a simple metric, capturing extremes and rare events often requires advanced statistical modeling. In some cases, it’s difficult to even identify the appropriate distribution to model demand—let alone run simulations based on that model.</p>
 <p>This lack of clarity around how to account for variability further entrenches the use of averages as the “best-available” approximation, especially in the absence of tools that can model these dynamics accurately.</p>
 </section>
-<section id="cogntive-heuristics" class="level2">
-<h2 class="anchored" data-anchor-id="cogntive-heuristics">Cogntive Heuristics</h2>
-<p>The reliance on averages for resource allocation can be explained by cognitive heuristics, which are mental shortcuts people use when they face complex or uncertain problems. When individuals or organizations don’t fully understand how to solve a difficult problem—like predicting fluctuating demand—they might unconsciously resort to solving a simpler, related problem that feels more familiar. In this case, the complex problem is about how to handle the variability, risk, and unpredictability of demand, but the simpler, more familiar problem that people default to is finding the “average” demand.</p>
+<section id="cognitive-heuristics" class="level2">
+<h2 class="anchored" data-anchor-id="cognitive-heuristics">Cognitive Heuristics</h2>
+<p>The reliance on averages for resource allocation can be explained by cognitive heuristics <span class="citation" data-cites="tversky1974">(<a href="#ref-tversky1974" role="doc-biblioref">Tversky and Kahneman 1974</a>)</span>, which are mental shortcuts people use when they face complex or uncertain problems. When individuals or organizations don’t fully understand how to solve a difficult problem—like predicting fluctuating demand—they might unconsciously resort to solving a simpler, related problem that feels more familiar. In this case, the complex problem is about how to handle the variability, risk, and unpredictability of demand, but the simpler, more familiar problem that people default to is finding the “average” demand.</p>
 <p>Heuristics help people make quick decisions without needing to gather and process all the information. These shortcuts are useful in many situations but can lead to oversimplified solutions. When applied to resource allocation, these heuristics can lead decision-makers to rely on averages because:</p>
 <p>Familiarity Bias: Averages are easy to calculate and familiar to most people. They provide a sense of certainty and simplicity, making decision-makers feel like they’ve arrived at a logical conclusion, even though they may not fully address the problem of variable demand.</p>
 <p>Substitution Heuristic: Instead of tackling the harder question—how to allocate resources given the uncertainty of demand—people unconsciously substitute it with an easier question: “What is the average demand?” While this seems like a reasonable approach, it sidesteps the challenge of planning for variability, rare events, or peak demand.</p>
@@ -690,9 +709,23 @@ Figure&nbsp;7: Stable Waiting Times Due to Sufficient Resourcing
 <p>As organizations gain access to better data and more sophisticated tools and methods, there’s an opportunity to move beyond averages and adopt risk-aware approaches that provide resilience in the face of uncertainty. By acknowledging that the world is far more unpredictable than averages suggest, organizations can build systems that are not just efficient but adaptable and prepared for the unexpected.</p>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-kendall1953" class="csl-entry" role="listitem">
+Kendall, David G. 1953. <span>“Stochastic Processes Occurring in the Theory of Queues and Their Analysis by the Method of the Imbedded Markov Chain.”</span> <em>The Annals of Mathematical Statistics</em> 24 (3): 338–54. <a href="https://doi.org/10.1214/aoms/1177728975">https://doi.org/10.1214/aoms/1177728975</a>.
+</div>
+<div id="ref-neyman1937" class="csl-entry" role="listitem">
+Neyman, J. 1937. <span>“Outline of a Theory of Statistical Estimation Based on the Classical Theory of Probability.”</span> <em>Philosophical Transactions of the Royal Society A</em> 236 (767): 333–80. <a href="https://doi.org/10.1098/rsta.1937.0005">https://doi.org/10.1098/rsta.1937.0005</a>.
+</div>
+<div id="ref-poisson1837" class="csl-entry" role="listitem">
+Poisson, Siméon-Denis. 1837. <em>Recherches Sur La Probabilité Des Jugements En Matière Criminelle Et En Matière Civile, Précédées Des Règles Générales Du Calcul Des Probabilités</em>. Bachelier.
+</div>
+<div id="ref-tversky1974" class="csl-entry" role="listitem">
+Tversky, Amos, and Daniel Kahneman. 1974. <span>“Judgment Under Uncertainty: Heuristics and Biases.”</span> <em>Science</em> 185 (4157): 1124–31. <a href="https://doi.org/10.1126/science.185.4157.1124">https://doi.org/10.1126/science.185.4157.1124</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

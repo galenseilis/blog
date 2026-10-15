@@ -248,15 +248,15 @@ window.Quarto = {
 
 
 
-<p>In the SimPy documentation they describe a <a href="https://simpy.readthedocs.io/en/latest/simpy_intro/basic_concepts.html#our-first-process">car process</a> which involves a car which transitions between parking and driving. From being parked it takes 5 units of time to change to being in a state of driving. Similarly, it takes 2 units of time to go from being in a state of driving to a state of parkerd. Here is a state diagram representing this system:</p>
+<p>In the SimPy documentation they describe a <a href="https://simpy.readthedocs.io/en/latest/simpy_intro/basic_concepts.html#our-first-process">car process</a> which involves a car which transitions between parking and driving. From being parked it takes 5 units of time to change to being in a state of driving. Similarly, it takes 2 units of time to go from being in a state of driving to a state of parked. Here is a state diagram representing this system:</p>
 <pre class="mermaid"><code>stateDiagram
     [*] --&gt; Parked
     Parked --&gt; Driving: 5
     Driving --&gt; Parked: 2
     Parked --&gt; [*]
     Driving --&gt; [*]</code></pre>
-<p>For something this simple we don’t really need discrete event simulation software, but it can be helpful for the sake of illustration to do it anyway. Let’s use idiomatic Ciw to make an equivalent simulation.</p>
-<p>Let our queueing network have two nodes, each representing either of the two states “Parked” or “Driving”. The car will go between these two nodes. When the car arrives at a node that will represent that it has begun the whatever process is involved, and when the car finishes service at that node we will interpret that to mean it is now changing state.</p>
+<p>For something this simple we don’t really need discrete event simulation software, but it can be helpful for the sake of illustration to do it anyway. Let’s use idiomatic <a href="https://ciw.readthedocs.io/en/latest/">Ciw</a> to make an equivalent simulation.</p>
+<p>Let our queueing network have two nodes, each representing either of the two states “Parked” or “Driving”. The car will go between these two nodes. When the car arrives at a node that will represent that it has begun whatever process is involved, and when the car finishes service at that node we will interpret that to mean it is now changing state.</p>
 <p>Since there will be only one car in the whole network, we do not need to give any consideration to service discipline. If the car is on the queue, then serve it. Otherwise, don’t.</p>
 <p>We do need to pay attention to arrival times however. We need the car to arrive at the first node at the start of the simulation and for no additional cars to arrive thereafter. This can be achieved with a sequential distribution available in Ciw:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Demonstrate Ciw's ``Sequential`` distribution for a single arrival at time zero."""</span></span>
@@ -264,7 +264,7 @@ window.Quarto = {
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ciw</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>ciw.dists.Sequential([<span class="dv">0</span>, <span class="bu">float</span>(<span class="st">'inf'</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The class <code>ciw.dists.Sequential</code> takes an iterable (usually a list) representing the sequence of arrival times to be done. When it has gotten through the list it will start again at the start of the list. But here’s the catch: we have set the second time to <span class="math inline">\(\infty\)</span>, which it will never reach. So there will be a single arrival at <span class="math inline">\(t=0\)</span> and non thereafter. We need to specify that no arrivals occur at the second node, which we can do using <code>None</code>:</p>
+<p>The class <code>ciw.dists.Sequential</code> takes an iterable (usually a list) representing the sequence of arrival times to be done. When it has gotten through the list it will start again at the start of the list. But here’s the catch: we have set the second time to <span class="math inline">\(\infty\)</span>, which it will never reach. So there will be a single arrival at <span class="math inline">\(t=0\)</span> and none thereafter. We need to specify that no arrivals occur at the second node, which we can do using <code>None</code>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Arrival distributions for the car example: one car at ``t=0``, none thereafter."""</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ciw</span>
@@ -347,7 +347,7 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""One server at each node, which is sufficient for the single-car network."""</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>num_servers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Since we have two nodes, we need to specifying the routing behaviour. It is simple in this case, and stationary. Whenever the car is leaving node one, go to node to. Whenever the car is leaving node two, go to node one. We can specify this as the following routing matrix:</p>
+<p>Since we have two nodes, we need to specify the routing behaviour. It is simple in this case, and stationary. Whenever the car is leaving node one, go to node two. Whenever the car is leaving node two, go to node one. We can specify this as the following routing matrix:</p>
 <p><span class="math display">\[\begin{bmatrix} 0 &amp; 1 \\ 1 &amp; 0 \end{bmatrix}\]</span></p>
 <p>In Ciw we can take our routing matrix to be:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Routing matrix: whenever the car leaves a node it goes to the other one."""</span></span>
@@ -369,7 +369,7 @@ window.Quarto = {
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    number_of_servers <span class="op">=</span> num_servers,</span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    routing<span class="op">=</span>R</span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>And put together out simulation object:</p>
+<p>And put together our simulation object:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Instantiate a Ciw simulation for the car network."""</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ciw</span>

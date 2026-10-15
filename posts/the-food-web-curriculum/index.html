@@ -28,7 +28,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -176,16 +195,21 @@ ul.task-list li input[type="checkbox"] {
 <p lang="en" dir="ltr">
 It's time we address the oversight in our <a href="https://twitter.com/hashtag/educational?src=hash&amp;ref_src=twsrc%5Etfw">#educational</a> curriculum that often leaves out soil's crucial role in food webs. Soil is teeming with life and plays a vital part in sustaining all life on Earth. It's time for a new curriculum!<a href="https://t.co/z6MmqLXuw6">https://t.co/z6MmqLXuw6</a><a href="https://twitter.com/hashtag/savesoil?src=hash&amp;ref_src=twsrc%5Etfw">#savesoil</a> <a href="https://twitter.com/hashtag/food?src=hash&amp;ref_src=twsrc%5Etfw">#food</a> <a href="https://t.co/PUm7HwXOTZ">pic.twitter.com/PUm7HwXOTZ</a>
 </p>
-— Conscious Planet #SaveSoil (<span class="citation" data-cites="cpsavesoil">@cpsavesoil</span>) <a href="https://twitter.com/cpsavesoil/status/1659633987449507845?ref_src=twsrc%5Etfw">May 19, 2023</a>
+— Conscious Planet #SaveSoil (<span class="citation" data-cites="cpsavesoil">(<a href="#ref-cpsavesoil" role="doc-biblioref"><strong>cpsavesoil?</strong></a>)</span>) <a href="https://twitter.com/cpsavesoil/status/1659633987449507845?ref_src=twsrc%5Etfw">May 19, 2023</a>
 </blockquote>
 <script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <p>I agree with the spirit of the post that understanding food chains is improved in light of soil science. There are some concerns I have with both diagrams.</p>
-<p>The left-hand diagram is a food web, which is a collection of food chains. Perhaps it is comprehensive enough as model in a particular project, but it seems quite incomplete. For some reason vertebrates take a strong majority of the diagram, ignoring almost all invertebrates. Likewise, there is no indication of microorganisms and only a single (polyphyletic) group of plants. This kind of comprehensiveness is not necessary for pedagogy, but it is a limitation of these sorts of diagrams. A bigger limitation of this sort of diagram is that it gives the impression that food webs are directed acyclic graphs when it has been well-established that cycles exist in food webs.</p>
+<p>The left-hand diagram is a food web, which is a collection of food chains. Perhaps it is comprehensive enough as a model in a particular project, but it seems quite incomplete. For some reason vertebrates take a strong majority of the diagram, ignoring almost all invertebrates. Likewise, there is no indication of microorganisms and only a single (polyphyletic) group of plants. This kind of comprehensiveness is not necessary for pedagogy, but it is a limitation of these sorts of diagrams. A bigger limitation of this sort of diagram is that it gives the impression that food webs are directed acyclic graphs when it has been well-established that cycles exist in food webs <span class="citation" data-cites="polis1991">(<a href="#ref-polis1991" role="doc-biblioref">Polis 1991</a>)</span>.</p>
 <p>The second diagram removes the need to speak of specific species or clades by abstracting to a “food chain”. People can choose terminology as they like, but I would rather say that the second diagram shows a class of <a href="https://en.wikipedia.org/wiki/Food_chain">food chains</a>. Often food chains are assumed to always ascend up a <a href="https://en.wikipedia.org/wiki/Total_order">total order</a> of <a href="https://en.wikipedia.org/wiki/Trophic_level">trophic levels</a>. This characterization is not entirely accurate of observed interactions, but it does communicate a tendency accurately. For modelling purposes it is productive to model the interactions as a stochastic directed graph, which would allow for violations in the typical partial orders but still be able to represent the order-like properties. Lastly, food chains are supposed to have classes of organisms as nodes. While some have claimed that “soil is an organism”, the arguments I have seen in its favour are subject to a <a href="https://en.wikipedia.org/wiki/Fallacy_of_composition">fallacy of composition</a>. In my opinion referring to decomposers, which often live in soil, would be more appropriate than simply “soil”.</p>
 
 
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-polis1991" class="csl-entry" role="listitem">
+Polis, Gary A. 1991. <span>“Complex Trophic Interactions in Deserts: An Empirical Critique of Food-Web Theory.”</span> <em>The American Naturalist</em> 138 (1): 123–55. <a href="https://doi.org/10.1086/285208">https://doi.org/10.1086/285208</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

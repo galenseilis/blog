@@ -63,7 +63,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -235,11 +254,11 @@ window.Quarto = {
 
 
 
-<p>When I listen to what people are describing as patterns in the data I rarely find that linearity itself is of any core interest. Rather, many tools and educational resources are oriented around linear models. That itself I think has to do with path-dependence of historical developments and the computational feasibility of fitting linear models. But when pressed I find that most people don’t actualy give any special preference to linearity being scientifically plausible.</p>
-<p>Now what is going to seem like a weird flex for many people is the notion of being able to do structural equation models on ranks. For other people, who were told from on-high “thou shalt not regress on ranks”, will see this approach as invalid. But it is valid. Its math.</p>
+<p>When I listen to what people are describing as patterns in the data I rarely find that linearity itself is of any core interest. Rather, many tools and educational resources are oriented around linear models. That itself I think has to do with path-dependence of historical developments and the computational feasibility of fitting linear models. But when pressed I find that most people don’t actually give any special preference to linearity being scientifically plausible.</p>
+<p>Now what is going to seem like a weird flex for many people is the notion of being able to do structural equation models <span class="citation" data-cites="bollen1989">(<a href="#ref-bollen1989" role="doc-biblioref">Bollen 1989</a>)</span> on ranks. For other people, who were told from on-high “thou shalt not regress on ranks”, will see this approach as invalid. But it is valid. It’s math.</p>
 <section id="structural-model" class="level1">
 <h1>Structural Model</h1>
-<p>First, I used a naive algorithm to choose a structural model at random. Here it is in R-like (specifically <a href="https://lavaan.ugent.be/">Lavaan</a>-like) equations:</p>
+<p>First, I used a naive algorithm to choose a structural model at random. Here it is in R-like (specifically <a href="https://lavaan.ugent.be/">Lavaan</a>-like) equations <span class="citation" data-cites="rosseel2012">(<a href="#ref-rosseel2012" role="doc-biblioref">Rosseel 2012</a>)</span>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x42 <span class="sc">~</span> x90<span class="sc">+</span>x0</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x27 <span class="sc">~</span> x87<span class="sc">+</span>x32</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>x12 <span class="sc">~</span> x0<span class="sc">+</span>x3<span class="sc">+</span>x84</span>
@@ -316,7 +335,7 @@ window.Quarto = {
 <section id="train-linear-sem" class="level1">
 <h1>Train Linear SEM</h1>
 <p><img src="./figures/sem_model.png" class="img-fluid"></p>
-<p>Ignore the p-values in this example. We don’t care about those in this post, and they’re not the right the right p-values anyway.</p>
+<p>Ignore the p-values in this example. We don’t care about those in this post, and they’re not the right p-values anyway.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 10%">
@@ -3381,19 +3400,19 @@ window.Quarto = {
 </section>
 <section id="comparisons-discussion" class="level1">
 <h1>Comparisons &amp; Discussion</h1>
-<p>Now that we can readily generating linear and rank-based SEMs, let’s setup a comparative experiment. We’ll generate 100 data generating processes, then train both the linear and rank-based SEMs with the correctly-specified directed acyclic graph (DAG). This DAG in a real problem might come from a domain-driven hypothesis or from automated causal discovery.</p>
-<p>In this experiment I focused on estimating the extend to which the rank-based SEM could preserve the signum (i.e.&nbsp;sign) of the original true parameters. The rank-based <span class="math inline">\(\beta_{\text{rank}}\)</span> will be bounded to <span class="math inline">\([-1,1]\)</span> just like Spearman’s correlation. But unlike Spearman’s correlation along, SEMs allow us to model conditional independence.</p>
+<p>Now that we can readily generate linear and rank-based SEMs, let’s set up a comparative experiment. We’ll generate 100 data generating processes, then train both the linear and rank-based SEMs with the correctly-specified directed acyclic graph (DAG). This DAG in a real problem might come from a domain-driven hypothesis or from automated causal discovery.</p>
+<p>In this experiment I focused on estimating the extent to which the rank-based SEM could preserve the signum (i.e.&nbsp;sign) of the original true parameters. The rank-based <span class="math inline">\(\beta_{\text{rank}}\)</span> will be bounded to <span class="math inline">\([-1,1]\)</span> just like Spearman’s correlation <span class="citation" data-cites="spearman1904">(<a href="#ref-spearman1904" role="doc-biblioref">Spearman 1904</a>)</span>. But unlike Spearman’s correlation alone, SEMs allow us to model conditional independence <span class="citation" data-cites="pearl2009">(<a href="#ref-pearl2009" role="doc-biblioref">Pearl 2009</a>)</span>.</p>
 <p>Here is a plot from one of the example rank-based SEMs. The horizontal axis gives us the true effect size, and the vertical axis is the indicator of whether the rank-based estimate matches the true parameter in sign.</p>
 <p><img src="./figures/rank_sem_equal_signum_vs_param.png" class="img-fluid"></p>
-<p>What is evident here is that the when the rank-based SEM got the signum wrong it also tended to be the case that the absolute value of the true parameter was small. This isn’t partccularly surprising, but also note that the misclassification only occurred a small number of times among the many parameters of the model.</p>
-<p>I also noted that there is a substantial amount of correlation between the accuracy of the signum in the rank-based vs linear SEM was substantial, and that generally both approaches did a pretty good (albeit imperfect) job of recovering the signum. Below is a plot of these accuracies paired by the true data generating process that was used.</p>
+<p>What is evident here is that when the rank-based SEM got the signum wrong it also tended to be the case that the absolute value of the true parameter was small. This isn’t particularly surprising, but also note that the misclassification only occurred a small number of times among the many parameters of the model.</p>
+<p>I also noted that there is a substantial amount of correlation between the accuracy of the signum in the rank-based vs linear SEM, and that generally both approaches did a pretty good (albeit imperfect) job of recovering the signum. Below is a plot of these accuracies paired by the true data generating process that was used.</p>
 <p><img src="./figures/prob_signum_match_sem.png" class="img-fluid"></p>
-<p>In this particular computation experiment I found that</p>
+<p>In this particular computational experiment I found that</p>
 <p><span class="math display">\[\hat P \left[ \hat P \left[ \mathbb{I} \left[ \operatorname{sign} \left( \hat \beta_{\text{rank}} \right) = \operatorname{sign} \left( \beta \right) \right] \right] &gt; \hat P \left[ \mathbb{I} \left[ \operatorname{sign} \left( \hat \beta_{\text{linear}} \right) = \operatorname{sign} \left( \beta \right) \right] \right] \right] = \frac{39}{100}\]</span></p>
 <p>and</p>
 <p><span class="math display">\[\hat P \left[ \hat P \left[ \mathbb{I} \left[ \operatorname{sign} \left( \hat \beta_{\text{linear}} \right) = \operatorname{sign} \left( \beta \right) \right] \right] &gt; \hat P \left[ \mathbb{I} \left[ \operatorname{sign} \left( \hat \beta_{\text{rank}} \right) = \operatorname{sign} \left( \beta \right) \right] \right] \right] = \frac{35}{100}\]</span></p>
-<p>which are close enough that at 100 replicates could still easily be due to sampling variation. This is not strong evidence of <a href="https://en.wikipedia.org/wiki/Stochastic_dominance">stochastic dominance</a>. Notably the rank-based SEM was not obviously dominated by the linear SEM in this experiment sampling from conditional normal variables.</p>
-<p>As I discussed in <a href="https://galenseilis.github.io/posts/spearman-correlation/"><em>Spearman Correlation Quatifies Comonotonicity</em></a>, the notion of quantifying which variables go up-and-down together (or reverse) is valuable to scientists and other practioner’s of statistics. With rank-based SEM we can hypothesize patterns of increasing/decreasing relationships among the variables according to a structural causal model.</p>
+<p>which are close enough that 100 replicates could still easily be due to sampling variation. This is not strong evidence of <a href="https://en.wikipedia.org/wiki/Stochastic_dominance">stochastic dominance</a>. Notably the rank-based SEM was not obviously dominated by the linear SEM in this experiment sampling from conditional normal variables.</p>
+<p>As I discussed in <a href="https://galenseilis.github.io/posts/spearman-correlation/"><em>Spearman Correlation Quantifies Comonotonicity</em></a>, the notion of quantifying which variables go up-and-down together (or reverse) is valuable to scientists and other practitioners of statistics. With rank-based SEM we can hypothesize patterns of increasing/decreasing relationships among the variables according to a structural causal model.</p>
 <p>Here is the code to replicate the experiment.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> product</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
@@ -3529,13 +3548,27 @@ window.Quarto = {
 </section>
 <section id="discussion-conclusions" class="level1">
 <h1>Discussion &amp; Conclusions</h1>
-<p>I was able to show that rank-based SEM is pretty good at recoving the sigmum of the true parameters from a family of data generating process. Because the underlying process had only conditionally linear parameters, the recovery of the sigmum of the parameters also meant that the rank-based SEM was telling us about monotonicity. However, the coefficients in the rank-based model would tell us about monotonicity in many cases anyway.</p>
+<p>I was able to show that rank-based SEM is pretty good at recovering the signum of the true parameters from a family of data generating processes. Because the underlying process had only conditionally linear parameters, the recovery of the signum of the parameters also meant that the rank-based SEM was telling us about monotonicity. However, the coefficients in the rank-based model would tell us about monotonicity in many cases anyway.</p>
 <p>This is still quite a limited example because many data generating processes will not be conditionally Gaussian, but it is a good first approximation. Likewise the true data generating process that I used is linear in its path functions, but that is not necessary. A further example where the true path functions are non-linear in the parameters would make for a more interesting example. What I expect is that the rank-based SEM will tend to recover the conditionally-dependent monotonicity when it is strong in tendency, although not necessarily the signum of any parameters in the path functions as they may not so simply relate to the monotonicity relationship as was the case in linear SEM.</p>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-bollen1989" class="csl-entry" role="listitem">
+Bollen, Kenneth A. 1989. <em>Structural Equations with Latent Variables</em>. John Wiley &amp; Sons. <a href="https://doi.org/10.1002/9781118619179">https://doi.org/10.1002/9781118619179</a>.
+</div>
+<div id="ref-pearl2009" class="csl-entry" role="listitem">
+Pearl, Judea. 2009. <em>Causality: Models, Reasoning, and Inference</em>. 2nd ed. Cambridge University Press.
+</div>
+<div id="ref-rosseel2012" class="csl-entry" role="listitem">
+Rosseel, Yves. 2012. <span>“Lavaan: An r Package for Structural Equation Modeling.”</span> <em>Journal of Statistical Software</em> 48 (2): 1–36. <a href="https://doi.org/10.18637/jss.v048.i02">https://doi.org/10.18637/jss.v048.i02</a>.
+</div>
+<div id="ref-spearman1904" class="csl-entry" role="listitem">
+Spearman, Charles. 1904. <span>“The Proof and Measurement of Association Between Two Things.”</span> <em>The American Journal of Psychology</em> 15 (1): 72–101. <a href="https://doi.org/10.2307/1412159">https://doi.org/10.2307/1412159</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

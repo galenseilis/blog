@@ -28,7 +28,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -212,13 +231,13 @@ window.Quarto = {
 <p>A natural question for me to start with is: <em>what assumptions</em>?</p>
 <p>I think for a lot of people that take a statistics course they are given a collection of pre-made recipes to master. A typical frequentist course on statistics often covers an assortment of null hypothesis significance testing procedures that make particular assumptions. I already commented to an extent on the non-necessity of these procedures and assumptions for parametric statistics in <a href="https://galenseilis.github.io/posts/wilcoxons-heuristic/">Wilcoxon’s Heuristic</a>.</p>
 <p>I’ve seen some people try really hard to conform their analysis to such recipes. This often comes in the form of applying functions (AKA transformations) to obtain estimates that are <a href="https://en.wikipedia.org/wiki/Bias_of_an_estimator">unbiased</a>, <a href="https://en.wikipedia.org/wiki/Consistent_estimator">consistent</a>, <a href="https://en.wikipedia.org/wiki/Sufficient_statistic">sufficient</a>, or <a href="https://en.wikipedia.org/wiki/Efficiency_(statistics)">efficient</a>, or similarly satisfying the <a href="https://en.wikipedia.org/wiki/Gauss%E2%80%93Markov_theorem">Gauss-Markov theorem</a>.</p>
-<p>Often, although not always or not to the same extent, this comes from people not having the tools and knowledge to develop their own statistical methodologies. This is in part due to not have sufficient familiarity with mathematics or computer science. I expect that we’re all doing this to an extent; taking the approaches we have in hand conforming the problem to the tools. I am reminded of this quote which is purportedly from <a href="https://en.wikipedia.org/wiki/Amos_Tversky">Amos Tversky</a>:</p>
+<p>Often, although not always or not to the same extent, this comes from people not having the tools and knowledge to develop their own statistical methodologies. This is in part due to not having sufficient familiarity with mathematics or computer science. I expect that we’re all doing this to an extent; taking the approaches we have in hand conforming the problem to the tools. I am reminded of this quote which is purportedly from <a href="https://en.wikipedia.org/wiki/Amos_Tversky">Amos Tversky</a>:</p>
 <blockquote class="blockquote">
 <p>Quotation (Amos Tversky)</p>
 <p>Whenever there is a simple error that most laymen fall for, there is always a slightly more sophisticated version of the same problem that experts fall for.</p>
 </blockquote>
 <p>But I wouldn’t say that all this adjusting to meet assumptions is entirely bad, especially if it is done rigorously. It is a matter of satisfying the goals and constraints of the analysis given the tools and the data in hand.</p>
-<p>Functions, especially invertible functions, provide a means of making a hard problem easy. Physicists routinely apply what they call <em>change of coordinates</em>, which are just invertible functions, if it makes the problem they are working on easier. While there are complicated or sophisticated approaches involving integral transforms that are often used, I think there is a relatively simple example that we can draw on for intuition: <a href="https://en.wikipedia.org/wiki/Polar_coordinate_system">polar coordinates</a>. Often our data is supposed to be embedded in <a href="https://en.wikipedia.org/wiki/Cartesian_coordinate_system">Cartesian coordinates</a>, but in sometimes the mathematics (and ‘shape of our data’ so-to-speak) becomes simpler if we convert to polar coordinates. If our data is a sample from a manifold which is a circle in Cartesian coordinates, then our data just becomes a line in polar coordinates. Likewise, many complicated curves on the plane just become polynomials or other tractable examples in polar coordinates.</p>
+<p>Functions, especially invertible functions, provide a means of making a hard problem easy. Physicists routinely apply what they call <em>change of coordinates</em>, which are just invertible functions, if it makes the problem they are working on easier. While there are complicated or sophisticated approaches involving integral transforms that are often used, I think there is a relatively simple example that we can draw on for intuition: <a href="https://en.wikipedia.org/wiki/Polar_coordinate_system">polar coordinates</a>. Often our data is supposed to be embedded in <a href="https://en.wikipedia.org/wiki/Cartesian_coordinate_system">Cartesian coordinates</a>, but sometimes the mathematics (and ‘shape of our data’ so-to-speak) becomes simpler if we convert to polar coordinates. If our data is a sample from a manifold which is a circle in Cartesian coordinates, then our data just becomes a line in polar coordinates. Likewise, many complicated curves on the plane just become polynomials or other tractable examples in polar coordinates.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -229,10 +248,10 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Invertible functions are nice, but sometimes we have to do without them, or generalize what we mean by “inverse”. One approach that I’ve seen in <a href="https://en.wikipedia.org/wiki/Copula_(probability_theory)">Copula Theory</a> is to take the <a href="https://en.wikipedia.org/wiki/Infimum_and_supremum">infinum</a> of the <a href="https://mathworld.wolfram.com/Pre-Image.html">preimage</a> of the function. With inverting matrices, which represent linear maps, we have the <a href="https://en.wikipedia.org/wiki/Moore%E2%80%93Penrose_inverse">Moore-Penrose inverse</a>. Or sometimes functions are not invertible but they are <em>locally invertible</em> via the <a href="https://en.wikipedia.org/wiki/Inverse_function_theorem">inverse function theorem</a> (IVT). And even when IVT fails because we don’t have partial derivatives we can turn to <a href="https://en.wikipedia.org/wiki/Weak_derivative">weak derivatives</a> and <a href="https://en.wikipedia.org/wiki/Distribution_(mathematics)#Differentiation_of_distributions">distributional derivatives</a> to obtain a similar relaxation of the <a href="https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant">Jacobian</a>s. See <a href="https://terrytao.wordpress.com/2009/04/19/245c-notes-3-distributions/">Tao 2009</a> for further reference on the distributional approach.</p>
+<p>Invertible functions are nice, but sometimes we have to do without them, or generalize what we mean by “inverse”. One approach that I’ve seen in <a href="https://en.wikipedia.org/wiki/Copula_(probability_theory)">Copula Theory</a> is to take the <a href="https://en.wikipedia.org/wiki/Infimum_and_supremum">infimum</a> of the <a href="https://mathworld.wolfram.com/Pre-Image.html">preimage</a> of the function. With inverting matrices, which represent linear maps, we have the <a href="https://en.wikipedia.org/wiki/Moore%E2%80%93Penrose_inverse">Moore-Penrose inverse</a>. Or sometimes functions are not invertible but they are <em>locally invertible</em> via the <a href="https://en.wikipedia.org/wiki/Inverse_function_theorem">inverse function theorem</a> (IVT). And even when IVT fails because we don’t have partial derivatives we can turn to <a href="https://en.wikipedia.org/wiki/Weak_derivative">weak derivatives</a> and <a href="https://en.wikipedia.org/wiki/Distribution_(mathematics)#Differentiation_of_distributions">distributional derivatives</a> to obtain a similar relaxation of the <a href="https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant">Jacobian</a>s. See <a href="https://terrytao.wordpress.com/2009/04/19/245c-notes-3-distributions/">Tao 2009</a> for further reference on the distributional approach.</p>
 </div>
 </div>
-<p>As (I think) I’ve mentioned before, the best use cases for rank-based statistics pertain to certain problems where the order properties of the data are of interest. While many people have used Wilcoxon’s heuristic as I’ve described it, I don’t think of them as synonymous with that approach. By all means use the Mann-Whitney U statistic if you want to quantify the strength of a stochastic ordering between two groups as the statistic itself doesn’t assume very much at all. You can even compute the statistic on non-numerical data provided that the notion of order relation (i.e.&nbsp;what we mean by “<span class="math inline">\(\leq\)</span>”) is defined. You can use the classic Mann-Whitney U <em>test</em> if</p>
+<p>As (I think) I’ve mentioned before, the best use cases for rank-based statistics <span class="citation" data-cites="wilcoxon1945">(<a href="#ref-wilcoxon1945" role="doc-biblioref">Wilcoxon 1945</a>)</span> pertain to certain problems where the order properties of the data are of interest. While many people have used Wilcoxon’s heuristic as I’ve described it, I don’t think of them as synonymous with that approach. By all means use the Mann-Whitney U statistic <span class="citation" data-cites="mann1947">(<a href="#ref-mann1947" role="doc-biblioref">Mann and Whitney 1947</a>)</span> if you want to quantify the strength of a stochastic ordering between two groups as the statistic itself doesn’t assume very much at all. You can even compute the statistic on non-numerical data provided that the notion of order relation (i.e.&nbsp;what we mean by “<span class="math inline">\(\leq\)</span>”) is defined. You can use the classic Mann-Whitney U <em>test</em> if</p>
 <ol type="1">
 <li>you can assign a non-arbitrary significance level threshold <span class="math inline">\(\alpha\)</span> and</li>
 <li>can assume the observations are soundly modelled as <a href="https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables">IID</a> random variables and</li>
@@ -240,14 +259,22 @@ Tip
 </ol>
 <p>Otherwise, don’t use it. 🤷</p>
 <p>There’s no shortage of mathematical modifications you can make to existing procedures if they don’t quite match what you’re going for. If a Mann-Whitney U test is almost what you want except that you cannot assume IID, then further develop a modification of the procedure that accounts for the statistical dependence. Maybe you further assume that the observations have a multivariate normal distribution, for example. Likewise, you can get out a dry eraser and whiteboard and start working out a new procedure from first principles.</p>
-<p>Overall my impression of “you’re hacking the data to meet the assumptions” is that this isn’t necessarily as bad as it sounds. Sure, some people are producing <a href="https://www.merriam-webster.com/dictionary/janky">janky</a> work because they’re desparately trying to make something work that doesn’t work. However I think that Dustin may be thinking he is <a href="https://www.merriam-webster.com/dictionary/separate%20the%20wheat%20from%20the%20chaff">separating the wheat from the chaff</a> when he is actually <a href="https://en.wikipedia.org/wiki/Don%27t_throw_the_baby_out_with_the_bathwater">throwing out the baby with the bathwater</a>… Figures of speech are weird. 🤔</p>
+<p>Overall my impression of “you’re hacking the data to meet the assumptions” is that this isn’t necessarily as bad as it sounds. Sure, some people are producing <a href="https://www.merriam-webster.com/dictionary/janky">janky</a> work because they’re desperately trying to make something work that doesn’t work. However I think that Dustin may be thinking he is <a href="https://www.merriam-webster.com/dictionary/separate%20the%20wheat%20from%20the%20chaff">separating the wheat from the chaff</a> when he is actually <a href="https://en.wikipedia.org/wiki/Don%27t_throw_the_baby_out_with_the_bathwater">throwing out the baby with the bathwater</a>… Figures of speech are weird. 🤔</p>
 <p>Anyway, my point being that provided that it is done rigorously I do not think that rank-based non-parametric statistics (including the classics) are problematic <em>per se</em>. Where Dustin and I may find some agreement is that they often <em>are not</em> applied rigorously by people.</p>
 <p>In my view we should challenge specific misuses of statistics when they arise rather than calling for an overly-broad abolition of what is basically a branch of math.</p>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-mann1947" class="csl-entry" role="listitem">
+Mann, Henry B., and Donald R. Whitney. 1947. <span>“On a Test of Whether One of Two Random Variables Is Stochastically Larger Than the Other.”</span> <em>The Annals of Mathematical Statistics</em> 18 (1): 50–60. <a href="https://doi.org/10.1214/aoms/1177730491">https://doi.org/10.1214/aoms/1177730491</a>.
+</div>
+<div id="ref-wilcoxon1945" class="csl-entry" role="listitem">
+Wilcoxon, Frank. 1945. <span>“Individual Comparisons by Ranking Methods.”</span> <em>Biometrics Bulletin</em> 1 (6): 80–83. <a href="https://doi.org/10.2307/3001968">https://doi.org/10.2307/3001968</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

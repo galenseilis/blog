@@ -253,7 +253,7 @@ window.Quarto = {
 
 
 <p>This post just shows what a <a href="https://en.wikipedia.org/wiki/Dirac_delta_function">Dirac delta distribution</a> is and how to make a mixture of Dirac delta distributions in PyMC.</p>
-<p>The Dirac delta distribution is somewhat unlike most distributions you will come across. Instead of having some spread of non-zero probability density of a measurable set of possibilities, we instead have all of the density concentrated on a single outcome. Usually denoted <span class="math inline">\(\delta\)</span>, it is defined by</p>
+<p>The Dirac delta distribution is somewhat unlike most distributions you will come across. Instead of having some spread of non-zero probability density of a measurable set of possibilities, we have all of the density concentrated on a single outcome. Usually denoted <span class="math inline">\(\delta\)</span>, it is defined by</p>
 <p><span class="math display">\[\delta (x) = \lim_{\sigma \rightarrow 0} \frac{1}{|\sigma| \sqrt{\pi}}e^{-\left( \frac{x}{\sigma} \right)^2}\]</span></p>
 <p>which can be thought of as a normal distribution whose standard deviation limits to zero. The first time I encountered this strange creature of mathematics I thought it was little more than a curiosity, but it turns out to be a highly useful and general tool in statistics, and engineering.</p>
 <p>But why would you want to have a mixture of Dirac delta distributions? There is no known (to me) use case for having a mixture of “only” Dirac delta distributions because it would be equivalent to simply having a discrete random variable with that many levels. Rather a mixture of Dirac delta distributions is of theoretical importance. You can represent a discrete (i.e.&nbsp;countable) random variable as a mixture of continuous random variables.</p>
@@ -305,8 +305,8 @@ window.Quarto = {
 <figcaption>Trace plot of the mixture of Dirac delta distributions</figcaption>
 </figure>
 </div>
-<p>Notice that our parameters are roughly centered around <span class="math inline">\(\frac{1}{3}\)</span>? This is because there are three outcomes for <span class="math inline">\(x\)</span> and they were all equally probable.</p>
-<p>But there is a use case for including Dirac delta distributions in a mixture with other distributions: inflated values. An inflated value is one in which it is extremely common among other values. A typical example of an inflated value is zero-inflation, where zero is especially common. I’ve seen (what was purportely) phone call durations be zero-inflated. But you can also have inflation of values other than zero. Let’s take our same example from above of mixing three Dirac delta distribution and include a <a href="https://en.wikipedia.org/wiki/Poisson_distribution">Poisson distribution</a>! That is to say, we will have a mixture of a Poisson distribution with inflation of 0, 1, and 2.</p>
+<p>Notice that our parameters are roughly centered around <span class="math inline">\(\frac{1}{3}\)</span>. This is because there are three outcomes for <span class="math inline">\(x\)</span> and they were all equally probable.</p>
+<p>But there is a use case for including Dirac delta distributions in a mixture with other distributions: inflated values. An inflated value is one in which it is extremely common among other values. A typical example of an inflated value is <a href="https://en.wikipedia.org/wiki/Zero-inflated_model">zero-inflation</a>, where zero is especially common. I’ve seen (what was purportedly) phone call durations be zero-inflated. But you can also have inflation of values other than zero. Let’s take our same example from above of mixing three Dirac delta distribution and include a <a href="https://en.wikipedia.org/wiki/Poisson_distribution">Poisson distribution</a>! That is to say, we will have a mixture of a Poisson distribution with inflation of 0, 1, and 2.</p>
 <p>Here is some Python code to run this simulation.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Sample a PyMC mixture of Dirac delta and Poisson distributions and save its trace plot."""</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -356,7 +356,7 @@ window.Quarto = {
 </figure>
 </div>
 <p>Notice that the weights are not all around <span class="math inline">\(\frac{1}{3}\)</span>. With the Poisson distribution having a mean parameter of <span class="math inline">\(\lambda = 1\)</span> it tends to take up more of the probability mass than the inflated values. That is true for this example where the data generating process is constructed to be so. Also notice that <span class="math inline">\(w_i\)</span> is no longer simply the probability of <span class="math inline">\(p(x_i)\)</span> because some values <span class="math inline">\(x_i\)</span> could be generated by either a Dirac delta distribution or by the Poisson distribution.</p>
-<p>Dirac delta distributions can represent discrete probability distributions. More practically, we can create mixture distributions that combinate Dirac delta distributions with other distributions.</p>
+<p>Dirac delta distributions can represent discrete probability distributions. More practically, we can create mixture distributions that combine Dirac delta distributions with other distributions.</p>
 
 
 

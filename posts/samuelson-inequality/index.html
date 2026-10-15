@@ -28,7 +28,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -203,14 +222,14 @@ window.Quarto = {
 
 
 
-<p>Samuelson’s inequality allows us to put bounds on the values in collection of data points that we do not have.</p>
+<p>Samuelson’s inequality allows us to put bounds on the values in a collection of data points that we do not have <span class="citation" data-cites="samuelson1968">(<a href="#ref-samuelson1968" role="doc-biblioref">Samuelson 1968</a>)</span>.</p>
 <p>Suppose we are only given the sample mean <span class="math inline">\(\bar x\)</span>, sample standard deviation <span class="math inline">\(s\)</span>, and the sample size <span class="math inline">\(n\)</span>.</p>
 <p>We know that the sample mean must have been</p>
 <p><span class="math display">\[\bar x =  \frac{\sum_{i=1}^n x_i}{n}\]</span></p>
 <p>which likewise feeds into the standard deviation</p>
 <p><span class="math display">\[s = \sqrt{\frac{1}{n-1} \sum_{i=1}^n \left( x_i - \bar x \right)^2}.\]</span></p>
-<p>Not that this is the sample standard deviation with <a href="https://en.wikipedia.org/wiki/Bessel%27s_correction">Bessel’s correction</a>, which is sometimes confused for the distinction of a sample standard deviation vs a population standard deviation. But that is a story for another time.</p>
-<p>In turns out that with these facts we can deduce that any <span class="math inline">\(x_i\)</span> from the missing data must satisfy the inequality</p>
+<p>Note that this is the sample standard deviation with <a href="https://en.wikipedia.org/wiki/Bessel%27s_correction">Bessel’s correction</a>, which is sometimes confused for the distinction of a sample standard deviation vs a population standard deviation. But that is a story for another time.</p>
+<p>It turns out that with these facts we can deduce that any <span class="math inline">\(x_i\)</span> from the missing data must satisfy the inequality</p>
 <p><span class="math display">\[\bar x - s \frac{n-1}{\sqrt{n}} \leq x_i \leq \bar x + s \frac{n-1}{\sqrt{n}}\]</span></p>
 <p>without needing to know anything about the underlying distribution (statistical population).</p>
 <p>This means that one can start with nothing but these three pieces of summary statistics to produce an interval dataset!</p>
@@ -237,7 +256,12 @@ Samuelsons_Inequality --&gt; Interval_Data
 
 
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-samuelson1968" class="csl-entry" role="listitem">
+Samuelson, Paul A. 1968. <span>“How Deviant Can You Be?”</span> <em>Journal of the American Statistical Association</em> 63 (324): 1522–25. <a href="https://doi.org/10.1080/01621459.1968.10480944">https://doi.org/10.1080/01621459.1968.10480944</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

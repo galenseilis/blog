@@ -63,7 +63,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -247,7 +266,7 @@ window.Quarto = {
 </section>
 <section id="common-ranks-in-statistics" class="level1">
 <h1>Common Ranks in Statistics</h1>
-<p>A lot of folks (including myself) have often referred to “the” rank transform, but it actually it isn’t a uniquely specified thing. For example, <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rankdata.html"><code>scipy.stats.rankdata</code></a> implements multiple ranking methods depending on how tied elements are to be handled:</p>
+<p>A lot of folks (including myself) have often referred to “the” rank transform, but actually it isn’t a uniquely specified thing. For example, <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rankdata.html"><code>scipy.stats.rankdata</code></a> implements multiple ranking methods depending on how tied elements are to be handled:</p>
 <blockquote class="blockquote">
 <p><code>method</code> : {<code>‘average’</code>, <code>‘min’</code>, <code>‘max’</code>, <code>‘dense’</code>, <code>‘ordinal’</code>}, optional</p>
 <p>The method used to assign ranks to tied elements. The following methods are available (default is <code>‘average’</code>):</p>
@@ -297,29 +316,29 @@ window.Quarto = {
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a> 7             9.0         8.0        10.0           5.0             8.0</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a> 7             9.0         8.0        10.0           5.0             9.0</span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a> 7             9.0         8.0        10.0           5.0            10.0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You can see above that most methods return only integers, with the exception of the “average” method. What the average method accomplishes it preserving the total rank even when ties occur. The “average” method will output rational numbers to account for ties whereas the minimum method and maximum method create spacing between the ranks. Another kind of “rank” which is non-integer-valued is the <a href="https://en.wikipedia.org/wiki/Percentile_rank">percentile rank</a> which is the percentage of scores in the sample that are less than the given score. Certain percentile ranks can be calculated using <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.percentileofscore.html"><code>scipy.stats.percentileofscore</code></a> or by passing <code>pct=True</code> into <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.rank.html"><code>pandas.DataFrame.rank</code></a>.</p>
+<p>You can see above that most methods return only integers, with the exception of the “average” method. What the average method accomplishes is preserving the total rank even when ties occur. The “average” method will output rational numbers to account for ties whereas the minimum method and maximum method create spacing between the ranks. Another kind of “rank” which is non-integer-valued is the <a href="https://en.wikipedia.org/wiki/Percentile_rank">percentile rank</a> which is the percentage of scores in the sample that are less than the given score. Certain percentile ranks can be calculated using <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.percentileofscore.html"><code>scipy.stats.percentileofscore</code></a> or by passing <code>pct=True</code> into <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.rank.html"><code>pandas.DataFrame.rank</code></a>.</p>
 <p>The ordinal method ignores ties altogether, but does have the advantage of being equal to the indices of a sorted array up to a translation of unity. The ordinal method is called <code>first</code> in the methods available in <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.rank.html"><code>pandas.DataFrame.rank</code></a>.</p>
 <p>Many ranking procedures are what I call <strong>count ranks</strong> because they involve some kind of counting procedure. For example, the dense ranking method can be considered to assign a rank to an element equal to the number of other elements strictly less than it plus unity.</p>
-<p>The above ranking procedures assume that the ranks are an order-preserving function, but we can also have order-reversing functions that are in a sense a rank. For example, we might have a weight-lifting competition where the person who lifts <strong>the most</strong> gets <strong>first</strong> place, thus assigning the largest weight lifted to value of unity. While <code>scipy.stats.rankdata</code> does not do order-reversed ranking <em>per se</em>, applying an order-reversing operation (e.g.&nbsp;<span class="math inline">\(f(X) = - X\)</span>) before applying an order-preserving ranking will achieve the desired result. Some implementations such as <code>pandas.DataFrame.rank</code> provide a Boolean parameter <code>ascending</code> to indicate whether the ranking will be order-preserving or order-reversing.</p>
+<p>The above ranking procedures assume that the ranks are an order-preserving function, but we can also have order-reversing functions that are in a sense a rank. For example, we might have a weight-lifting competition where the person who lifts <strong>the most</strong> gets <strong>first</strong> place, thus assigning the largest weight lifted to a value of unity. While <code>scipy.stats.rankdata</code> does not do order-reversed ranking <em>per se</em>, applying an order-reversing operation (e.g.&nbsp;<span class="math inline">\(f(X) = - X\)</span>) before applying an order-preserving ranking will achieve the desired result. Some implementations such as <code>pandas.DataFrame.rank</code> provide a Boolean parameter <code>ascending</code> to indicate whether the ranking will be order-preserving or order-reversing.</p>
 <p>I want to make a distinction which is not frequently made explicit, but does specify the mathematics nicely. Namely we should make the distinction between a <strong>ranking</strong> and a <strong>rank</strong> which was suggested language in <a href="https://stats.stackexchange.com/a/605359/69508">this post</a> by user <a href="https://stats.stackexchange.com/users/164061/sextus-empiricus">Sextus Empiricus</a>.</p>
-<p>Rank-based statistics are the use of any ranking function to either produce ranks, or a function of ranks, of random variables.</p>
+<p>Rank-based statistics <span class="citation" data-cites="wilcoxon1945 mannwhitney1947">(<a href="#ref-wilcoxon1945" role="doc-biblioref">Wilcoxon 1945</a>; <a href="#ref-mannwhitney1947" role="doc-biblioref">Mann and Whitney 1947</a>)</span> are the use of any ranking function to either produce ranks, or a function of ranks, of random variables.</p>
 </section>
 <section id="abstract-ranks" class="level1">
 <h1>Abstract Ranks</h1>
 <p>In <a href="https://stats.stackexchange.com/a/605350/69508">this post</a> I gave the following definition of an “abstract ranking” which covers most forms of ranking.</p>
 <blockquote class="blockquote">
 <p><strong>Definition</strong></p>
-<p>Assume a collection random variables <span class="math inline">\(\{X_1(\omega), \ldots, X_n(\omega) \}\)</span> on outcome space <span class="math inline">\(\Omega\)</span>, and <span class="math inline">\(\leq\)</span> is a partial order.</p>
+<p>Assume a collection of random variables <span class="math inline">\(\{X_1(\omega), \ldots, X_n(\omega) \}\)</span> on outcome space <span class="math inline">\(\Omega\)</span>, and <span class="math inline">\(\leq\)</span> is a partial order.</p>
 <p>An <strong>abstract ranking</strong> <span class="math display">\[\rho: \prod_{i=1}^n X_i(\omega) \mapsto \mathbb{R}_{\geq 0}^n\]</span> is a function such that there exists a non-decreasing function <span class="math inline">\(\kappa:\mathbb{N} \mapsto \mathbb{R}_{\geq0}\)</span> that satisfies <span class="math inline">\(\rho(\vec x)_i \leq \kappa(n)\)</span> for all <span class="math inline">\(i\in \{1, \ldots, n\}\)</span>.</p>
 <p>It must also hold that <span class="math inline">\(\rho(\vec x)_i \leq \rho(\vec x)_j \iff x_i \leq x_j\)</span> for all <span class="math inline">\(i,j \in \{1, \ldots, n\}\)</span> and for all <span class="math inline">\(\omega \in \Omega\)</span> <a href="https://en.wikipedia.org/wiki/Exclusive_or">exor</a> <span class="math inline">\(\rho(\vec x)_i \geq \rho(\vec x)_j \iff x_i \leq x_j\)</span> for all <span class="math inline">\(i,j \in \{1, \ldots, n\}\)</span> and for all <span class="math inline">\(\omega \in \Omega\)</span>.</p>
-<p>An component of an image element of an abstract ranking is called an <strong>abstract rank</strong>.</p>
+<p>A component of an image element of an abstract ranking is called an <strong>abstract rank</strong>.</p>
 </blockquote>
 <p>While the above definition is quite abstract, it assumes relatively little and provides an umbrella definition for various forms of ranking. I believe it has applications in <a href="https://en.wikipedia.org/wiki/Learning_to_rank">learning to rank</a> recommendations or detect inequity in addition to some of its familiar uses.</p>
-<p>But what does this abstract definition mean? Well, in a pinch it means that a ranking is a collection of ranks that respect some order relation. Like the special cases of ranking given above, any abstract ranking takes a collection of instances of random variables and assigns a number that preserves an order within that collection. Not that this monotonicity applies to the ranks within the ranking, but ranks themselves are not monotonic functions of the outcome space due to the comparative and bounded way they are calculated.</p>
+<p>But what does this abstract definition mean? Well, in a pinch it means that a ranking is a collection of ranks that respect some order relation. Like the special cases of ranking given above, any abstract ranking takes a collection of instances of random variables and assigns a number that preserves an order within that collection. Note that this monotonicity applies to the ranks within the ranking, but ranks themselves are not monotonic functions of the outcome space due to the comparative and bounded way they are calculated.</p>
 </section>
 <section id="ranks-vs-ratings" class="level1">
 <h1>Ranks vs Ratings</h1>
-<p>I want to quickly share a distinct which I find valuable for avoiding certain confusions in mathematical modelling. In this post I am explicitly considering and defining ranking and ranks as functions that satisfy an order relation. This should be contrasted to asking someone to assign ordinals (e.g.&nbsp;Likert-like scales) or forced choice preferences to a selection of options because we often observe <a href="https://en.wikipedia.org/wiki/Intransitivity">intransitivity</a> in human preferences. This intransivity violates the assumptions of a partial order that I made above, which even relaxing from a partially ordered set to a <a href="https://en.wikipedia.org/wiki/Weak_ordering">weak ordering</a> will not satisfy.</p>
+<p>I want to quickly share a distinction which I find valuable for avoiding certain confusions in mathematical modelling. In this post I am explicitly considering and defining ranking and ranks as functions that satisfy an order relation. This should be contrasted to asking someone to assign ordinals (e.g.&nbsp;Likert-like scales) or forced choice preferences to a selection of options because we often observe <a href="https://en.wikipedia.org/wiki/Intransitivity">intransitivity</a> in human preferences. This intransitivity violates the assumptions of a partial order that I made above, which even relaxing from a partially ordered set to a <a href="https://en.wikipedia.org/wiki/Weak_ordering">weak ordering</a> will not satisfy.</p>
 <p>When I am thinking about these mathematical transformations that are guaranteed to preserve/reverse order I use the term <strong>ranking</strong>, whereas observations of preferences by a human/AI/system I would instead use the term <strong>rating</strong>.</p>
 </section>
 <section id="beyond-ranking-numbers" class="level1">
@@ -343,16 +362,24 @@ window.Quarto = {
 </ul></li>
 <li><a href="https://mathworld.wolfram.com/PartiallyOrderedSet.html">Partial orders</a> can likewise be defined on just about anything.</li>
 </ul>
-<p>So we can have just-about-anything-valued random variables and partial orderings on just about anything. Taking these notions together, we can rankings and ranks defined on just about anything as well. We’re not restricted to orders on numbers.</p>
+<p>So we can have just-about-anything-valued random variables and partial orderings on just about anything. Taking these notions together, we can have rankings and ranks defined on just about anything as well. We’re not restricted to orders on numbers.</p>
 </section>
 <section id="conclusions" class="level1">
 <h1>Conclusions</h1>
 <p>Ranks are transformations of things, often numbers, to describe something about their order relationships to other things. In the context of statistics we have rankings of random variables, giving rise to the notion of rank-based statistics to help us study order in the presence of uncertainty.</p>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-mannwhitney1947" class="csl-entry" role="listitem">
+Mann, Henry B., and Donald R. Whitney. 1947. <span>“On a Test of Whether One of Two Random Variables Is Stochastically Larger Than the Other.”</span> <em>The Annals of Mathematical Statistics</em> 18 (1): 50–60. <a href="https://doi.org/10.1214/aoms/1177730491">https://doi.org/10.1214/aoms/1177730491</a>.
+</div>
+<div id="ref-wilcoxon1945" class="csl-entry" role="listitem">
+Wilcoxon, Frank. 1945. <span>“Individual Comparisons by Ranking Methods.”</span> <em>Biometrics Bulletin</em> 1 (6): 80–83. <a href="https://doi.org/10.2307/3001968">https://doi.org/10.2307/3001968</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

@@ -63,7 +63,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -234,7 +253,7 @@ window.Quarto = {
 
 
 
-<p>Random differential equations result when some combination of parameters in the rate equations or the initial (or boundary) conditions are random variables. Combining the world of differential equation with the world of mathematical statistics allows us hypothesize about how a system works well accomodating uncertainty into our analysis. See <a href="https://core.ac.uk/download/pdf/82447522.pdf">Strand 1970</a> for an introduction to random differential equations.</p>
+<p>Random differential equations result when some combination of parameters in the rate equations or the initial (or boundary) conditions are random variables. Combining the world of differential equations with the world of mathematical statistics allows us to hypothesize about how a system works well, accommodating uncertainty into our analysis. See <a href="https://core.ac.uk/download/pdf/82447522.pdf">Strand 1970</a> for an introduction to random differential equations.</p>
 <p>In this post we’ll consider the linear system:</p>
 <p><span class="math display">\[\vec Y(0) \sim \mathcal{U}(-10, 110)\]</span></p>
 <p><span class="math display">\[\mathbf{A}_{ij} \sim \mathcal{U}(-1, 1)\]</span></p>
@@ -252,7 +271,7 @@ Warning
 <p><a href="https://math.stackexchange.com/questions/72208/whats-the-difference-between-rde-and-sde">Random differential equations are not the same as stochastic differential equations</a>. The latter allows for added variation from a (not necessarily stationary) stochastic process which require techniques such as <a href="https://en.wikipedia.org/wiki/It%C3%B4_calculus">Itô integrals</a> or <a href="https://en.wikipedia.org/wiki/Stratonovich_integral">Stratonovich integrals</a>.</p>
 </div>
 </div>
-<p>The code to compute this system is given below:</p>
+<p>The code to compute this system is given below, using SciPy <span class="citation" data-cites="virtanen2020">(<a href="#ref-virtanen2020" role="doc-biblioref">Virtanen et al. 2020</a>)</span>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> odeint</span>
@@ -312,12 +331,17 @@ Warning
 <span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
 <span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'2024-06-17-example-linear-random-ode.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span>
 <span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Here is the resulting plot. Since we chose the coefficient distributions somewhat haphazardly, it is should not be surprising that no particular direction was preferred for this system.</p>
+<p>Here is the resulting plot. Since we chose the coefficient distributions somewhat haphazardly, it should not be surprising that no particular direction was preferred for this system.</p>
 <p><img src="./figures/2024-06-17-example-linear-random-ode.png" class="img-fluid"></p>
 
 
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-virtanen2020" class="csl-entry" role="listitem">
+Virtanen, Pauli, Ralf Gommers, Travis E. Oliphant, et al. 2020. <span>“SciPy 1.0: Fundamental Algorithms for Scientific Computing in Python.”</span> <em>Nature Methods</em> 17 (3): 261–72. <a href="https://doi.org/10.1038/s41592-019-0686-2">https://doi.org/10.1038/s41592-019-0686-2</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

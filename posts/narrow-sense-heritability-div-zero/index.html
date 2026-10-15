@@ -28,7 +28,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -200,23 +219,31 @@ window.Quarto = {
 
 
 
-<p>I want to share a recollection of an amusing argument I had back in my undergraduate days. A biology professor explained a definition of <em>narrow sense heritability</em> in the sense of a <a href="https://en.wikipedia.org/wiki/Heritability#Parent-offspring_regression">parent-offspring regression</a>. In this approach the heritability is being estimated via the slope of the regression line. Our professor further claimed that if there is no variability in parent phenotype, then the heritability is zero. Herein lies the problem.</p>
-<p>Supposing ordinary least-squares estimation, the slope <span class="math inline">\(\beta\)</span> can be written as the ratio <span class="math inline">\(\frac{\operatorname{Cov}[X,Y]}{\operatorname{Var}[X]}\)</span>. In our estimate of the slope from a sample, <span class="math inline">\(\hat \beta\)</span>, we can represent it as</p>
+<p>I want to share a recollection of an amusing argument I had back in my undergraduate days. A biology professor explained a definition of <em>narrow sense heritability</em> in the sense of a <a href="https://en.wikipedia.org/wiki/Heritability#Parent-offspring_regression">parent-offspring regression</a> <span class="citation" data-cites="falconer1996">(<a href="#ref-falconer1996" role="doc-biblioref">Falconer and Mackay 1996</a>)</span>. In this approach the heritability is being estimated via the slope of the regression line. Our professor further claimed that if there is no variability in parent phenotype, then the heritability is zero. Herein lies the problem.</p>
+<p>Supposing ordinary least-squares estimation <span class="citation" data-cites="casella2002">(<a href="#ref-casella2002" role="doc-biblioref">Casella and Berger 2002</a>)</span>, the slope <span class="math inline">\(\beta\)</span> can be written as the ratio <span class="math inline">\(\frac{\operatorname{Cov}[X,Y]}{\operatorname{Var}[X]}\)</span>. In our estimate of the slope from a sample, <span class="math inline">\(\hat \beta\)</span>, we can represent it as</p>
 <p><span class="math display">\[\hat \beta = \frac{\sum_{i=1}^n \left(x_i - \frac{1}{n} \sum_{i=1} x_i \right) \left(y_i - \frac{1}{n} \sum_{i=1} y_i \right)}{\sum_{i=1}^n \left(x_i - \frac{1}{n} \sum_{i=1} x_i \right)^2}.\]</span></p>
 <p>Notice that if all <span class="math inline">\(x\)</span> values are equal, then <span class="math inline">\(\hat \beta\)</span> would be partially evaluated to <span class="math inline">\(\frac{a}{0}\)</span> for some real number <span class="math inline">\(a\)</span>. Most students will recognize that this is an undefined expression in standard algebra. Here is a Numberphile video that explains this perspective.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/BRRolKTlF6Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
 <p>If we were to allow <span class="math display">\[\frac{a}{0} = 0\]</span> and <span class="math display">\[\frac{b}{0} = 0\]</span> then we have <span class="math display">\[\frac{a}{0} = \frac{b}{0}\]</span> or <span class="math display">\[a = b\]</span> for any arbitrary <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>. Since <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> were arbitrary, this is tantamount to saying that all numbers are the same number. In other words <span class="math inline">\(1=2=3=\pi=\frac{5}{9}\)</span> would be taken to be true. But this violates our assumption (or construction in standard math) that these numbers are distinct. What we’ve found is <em>nonsense</em>.</p>
 <p>You cannot count or quantify nonsense. It is not that there are zero beds made of sleep but rather that it isn’t sufficiently clear what a “bed made of sleep” is meant to be in order to start counting them.</p>
-<p>If you’re going to define a concept in terms of some piece of math, then how you reason about that concept must play by the rules of that mathematics. That is, the mathematics is the specification of what you thought you were talking about it in the first place.</p>
+<p>If you’re going to define a concept in terms of some piece of math, then how you reason about that concept must play by the rules of that mathematics. That is, the mathematics is the specification of what you thought you were talking about in the first place.</p>
 <p>This isn’t to say that we cannot divide by zero regardless of the algebra we are considering. The following video gives a quick indication of <a href="https://en.wikipedia.org/wiki/Wheel_theory">Wheel algebra</a> that allows division by zero. There are other algebras that allow division by zero, none with obvious applications that I’m aware of, leading to it being a niche side topic that division by zero <em>can</em> be defined.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ydLTfyXaQmU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
-<p>I explained to the professor that dividing by zero leads to an issue of definition. He responded, “Galen, are you a math guy?” with a perceived framing that somehow that would be grounds for dismissing my concern. I don’t recall exactly how I responsed to that question, but I recall being surprised at how irrelevant that argument was. Logicians know this as a <a href="https://en.wikipedia.org/wiki/Genetic_fallacy">genetic fallacy</a>. I missed the opportunity, probably to my own benefit, to retort, “I don’t know <code>&lt;professor's name&gt;</code>, are you a biology guy?”</p>
+<p>I explained to the professor that dividing by zero leads to an issue of definition. He responded, “Galen, are you a math guy?” with a perceived framing that somehow that would be grounds for dismissing my concern. I don’t recall exactly how I responded to that question, but I recall being surprised at how irrelevant that argument was. Logicians know this as a <a href="https://en.wikipedia.org/wiki/Genetic_fallacy">genetic fallacy</a>. I missed the opportunity, probably to my own benefit, to retort, “I don’t know <code>&lt;professor's name&gt;</code>, are you a biology guy?”</p>
 
 
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-casella2002" class="csl-entry" role="listitem">
+Casella, George, and Roger L. Berger. 2002. <em>Statistical Inference</em>. 2nd ed. Duxbury.
+</div>
+<div id="ref-falconer1996" class="csl-entry" role="listitem">
+Falconer, Douglas S., and Trudy F. C. Mackay. 1996. <em>Introduction to Quantitative Genetics</em>. 4th ed. Longman.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

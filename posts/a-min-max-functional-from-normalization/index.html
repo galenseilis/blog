@@ -63,7 +63,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -237,10 +256,10 @@ window.Quarto = {
 
 <p>For a function <span class="math inline">\(F: \mathbb{R}^n \mapsto \mathbb{R}\)</span> we can consider the functional</p>
 <p><span class="math display">\[\frac{F(x) - F(a)}{F(b) - F(a)} \]</span></p>
-<p>where <span class="math display">\[a = \arg\min_x F(x)\]</span> and <span class="math display">\[b = \arg\max_x F(x)\]</span>. You may recognize this to be the form of <a href="https://en.wikipedia.org/wiki/Feature_scaling#Rescaling_(min-max_normalization)">min-max normalization</a>. If we restrict <span class="math inline">\(F\)</span> to be a cumulative distribution function then this is also the form of a <a href="https://en.wikipedia.org/wiki/Truncated_distribution">truncated probability distribution</a>. Both of these notions are useful for certain kinds of modelling problems. For recreation rather than utility, I generalize this functional below.</p>
+<p>where <span class="math display">\[a = \arg\min_x F(x)\]</span> and <span class="math display">\[b = \arg\max_x F(x)\]</span>. You may recognize this to be the form of <a href="https://en.wikipedia.org/wiki/Feature_scaling#Rescaling_(min-max_normalization)">min-max normalization</a>. If we restrict <span class="math inline">\(F\)</span> to be a <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function">cumulative distribution function</a> then this is also the form of a <a href="https://en.wikipedia.org/wiki/Truncated_distribution">truncated probability distribution</a> <span class="citation" data-cites="casella2002">(<a href="#ref-casella2002" role="doc-biblioref">Casella and Berger 2002</a>)</span>. Both of these notions are useful for certain kinds of modelling problems. For recreation rather than utility, I generalize this functional below.</p>
 <p>We can consider a more general functional</p>
 <p><span class="math display">\[g \left( f\left( F(x), F(a) \right),  f\left( F(b), F(a) \right) \right)\]</span></p>
-<p>where <span class="math inline">\(g\)</span> and <span class="math inline">\(h\)</span> are suitably-defined binary operators.</p>
+<p>where <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span> are suitably-defined binary operators.</p>
 <p>Taking common operations including addition, subtraction, multiplication, division, exponentiation, and logarithms, I’ve tabulated various choices below.</p>
 <table class="caption-top table">
 <colgroup>
@@ -490,7 +509,12 @@ Warning
 
 
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-casella2002" class="csl-entry" role="listitem">
+Casella, George, and Roger L. Berger. 2002. <em>Statistical Inference</em>. 2nd ed. Duxbury.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

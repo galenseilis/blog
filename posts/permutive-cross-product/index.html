@@ -263,7 +263,7 @@ window.Quarto = {
 </section>
 <section id="orthogonality" class="level3">
 <h3 class="anchored" data-anchor-id="orthogonality">Orthogonality</h3>
-<p>A more interesting property, to me, is that the cross product gives a vector which is orthogonal to either of the input vectors. Using the following Python code I searched over all permutation matrices in 3D that where orthogonal to the original vectors <strong>and</strong> were not the zero vector. (The zero vector is not particularly interesting here and is orthogonal to all vectors in <span class="math inline">\(\mathbb{R}^n\)</span>.)</p>
+<p>A more interesting property, to me, is that the cross product gives a vector which is orthogonal to either of the input vectors. Using the following Python code I searched over all permutation matrices in 3D that were orthogonal to the original vectors <strong>and</strong> were not the zero vector. (The zero vector is not particularly interesting here and is orthogonal to all vectors in <span class="math inline">\(\mathbb{R}^n\)</span>.)</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> itertools</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sympy <span class="im">as</span> sp</span>
@@ -309,7 +309,7 @@ window.Quarto = {
 </section>
 <section id="getting-perverse" class="level2">
 <h2 class="anchored" data-anchor-id="getting-perverse">Getting Perverse</h2>
-<p>Let’s taking a further generalization from what we have seen so far. The operator</p>
+<p>Let’s take a further generalization from what we have seen so far. The operator</p>
 <p><span class="math display">\[\vec a \times_P \vec b \triangleq P \vec a \odot P^T\vec b - P^T \vec a \odot P \vec b\]</span></p>
 <p>gives us a generalization of the cross product using a given permutation matrix <span class="math inline">\(P\)</span>. Let’s see if we find anything new if we generalize to</p>
 <p><span class="math display">\[P_1 \vec a \odot  P_2 \vec b - P_3 \vec a \odot P_4 \vec b\]</span></p>
@@ -410,7 +410,7 @@ window.Quarto = {
 <p>That’s right. Opening up to a wider pool of permutation matrices did not add any new cross products. If anything actually using only one permutation matrix (and its transpose) substantially reduces the size of the search space. And if we were smart and not lazy then we could further take advantage of the reflections by not enumerating them. There are <span class="math inline">\((4!)^4=331776\)</span> arrangements of permutations if you have the patience to search through them.</p>
 <p>One could imagine exploring</p>
 <p><span class="math display">\[O_1 \vec a \odot  O_2 \vec b - O_3 \vec a \odot O_4 \vec b\]</span></p>
-<p>where <span class="math inline">\(O_1, O_2, O_3, O_4\)</span> are orthogonal matrices… but that’s not going to happen. A more limited case would be to look at <a href="https://en.wikipedia.org/wiki/Rotation_matrix">rotation matrices</a> which are orthonormal (meaning their transpose is equal to their inverse):</p>
+<p>where <span class="math inline">\(O_1, O_2, O_3, O_4\)</span> are <a href="https://en.wikipedia.org/wiki/Orthogonal_matrix">orthogonal matrices</a>… but that’s not going to happen. A more limited case would be to look at <a href="https://en.wikipedia.org/wiki/Rotation_matrix">rotation matrices</a> which are orthonormal (meaning their transpose is equal to their inverse):</p>
 <p><span class="math display">\[\begin{bmatrix} \cos \theta &amp; - \sin \theta \\ \sin \theta &amp; \cos \theta \end{bmatrix} \begin{bmatrix} a_1 \\ a_2 \end{bmatrix} \odot \begin{bmatrix} \cos \theta &amp; - \sin \theta \\ \sin \theta &amp; \cos \theta \end{bmatrix}^T \begin{bmatrix} b_1 \\ b_2 \end{bmatrix} - \begin{bmatrix} \cos \theta &amp; - \sin \theta \\ \sin \theta &amp; \cos \theta \end{bmatrix}^T \begin{bmatrix} a_1 \\ a_2 \end{bmatrix} \odot \begin{bmatrix} \cos \theta &amp; - \sin \theta \\ \sin \theta &amp; \cos \theta \end{bmatrix} \begin{bmatrix} b_1 \\ b_2 \end{bmatrix}\]</span></p>
 <p>Evaluating this case gives us:</p>
 <p><span class="math display">\[\left(a_{1} b_{2} - a_{2} b_{1}\right) \sin\left(2 t \right) \begin{bmatrix} 1 \\ 1 \end{bmatrix}\]</span></p>
@@ -419,7 +419,7 @@ window.Quarto = {
 </section>
 <section id="concluding-thoughts" class="level2">
 <h2 class="anchored" data-anchor-id="concluding-thoughts">Concluding Thoughts</h2>
-<p>While there are <a href="https://en.wikipedia.org/wiki/Cross_product#Generalizations">known generalizations</a>of the cross product, which I would like to learn more about at some point, I thought I would give it a shot on my own. Actually, the <a href="https://en.wikipedia.org/wiki/Cross_product#Multilinear_algebra">multilinear approach</a>looks quite comprehensible as a sort of determinant:</p>
+<p>While there are <a href="https://en.wikipedia.org/wiki/Cross_product#Generalizations">known generalizations</a> of the cross product, which I would like to learn more about at some point, I thought I would give it a shot on my own. Actually, the <a href="https://en.wikipedia.org/wiki/Cross_product#Multilinear_algebra">multilinear approach</a> looks quite comprehensible as a sort of determinant:</p>
 <p><span class="math display">\[\bigwedge_{i=0}^{n-1}\vec v_i = \det \left(
 \begin{bmatrix}
 v_1^1 &amp; \cdots &amp; v_1^n \\

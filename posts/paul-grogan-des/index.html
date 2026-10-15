@@ -207,7 +207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>I watched a YouTube video over a year ago that showed an implementation of a specific discrete event simulation. Here is the video:</p>
+<p>I watched a YouTube video over a year ago that showed an implementation of a specific <a href="https://en.wikipedia.org/wiki/Discrete-event_simulation">discrete event simulation</a>. Here is the video:</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/oJyf8Q0KLRY?si=-xRxMyPWZn8guR6x" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
 </iframe>
 <p>I typed out the implementation in that video, and added some docstrings and type annotations.</p>
@@ -294,13 +294,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="co">            float: The service time.</span></span>
 <span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
 <span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.random.exponential(<span class="dv">1</span> <span class="op">/</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We can then initialize the simulation and run it for discrete units of times like this:</p>
+<p>We can then initialize the simulation and run it for discrete units of time like this:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> script_1 <span class="im">import</span> Simulation</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>S <span class="op">=</span> Simulation()</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2018</span>):</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    S.advance_time()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Grogan’s implementation is a pedagogical example that can be quickly coded and explained. What can we use for prototyping and using something more flushed out?</p>
+<p>Grogan’s implementation is a pedagogical example that can be quickly coded and explained. What can we use for prototyping and using something more fleshed out?</p>
 <p>The <a href="https://ciw.readthedocs.io/en/latest/">Ciw package</a> is a ready-to-use discrete event simulation package for queueing networks. It covers a variety of cases, including a similar simulation:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ciw</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>

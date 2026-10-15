@@ -28,7 +28,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -204,13 +223,13 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p>I think what Galen is talking about here is convergence issues. If not, please correct me, Galen.</p>
 </blockquote>
-<p>I was not alluding to convergence issus, although I think this is a reasonable interperation of my words. Perhaps I’ll address what I actually meant in another post.</p>
+<p>I was not alluding to convergence issues, although I think this is a reasonable interpretation of my words. Perhaps I’ll address what I actually meant in another post.</p>
 <blockquote class="blockquote">
 <p>I don’t have time to go into convergence issues, but long story short sometimes the algorithms that are used to estimate models are really really complicated and the computer just can’t find a solution.</p>
 </blockquote>
 <p>I essentially agree with this, although I’ll caution that “complicated” can be a few distinct things that may not align with some intuitive notions of complexity.</p>
 <blockquote class="blockquote">
-<p>So, in the presence of convergence issues, is it a good idea to use rank-based nonparametric statistcs? I still don’t think so two reasons.</p>
+<p>So, in the presence of convergence issues, is it a good idea to use rank-based nonparametric statistics? I still don’t think so two reasons.</p>
 </blockquote>
 <p>I think I can offer a point of agreement here that it is not necessarily a good idea to use rank-based nonparametric statistics just because convergence issues with some model are present. However, depending on context I still believe it <em>may</em> be a good idea.</p>
 <blockquote class="blockquote">
@@ -222,9 +241,9 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p>So maybe your doing a mixed model for example. As far as I know, and I could totally be wrong here cause this isn’t my area of expertise, but as far as I know there are no nonparametric tests for mixed models.</p>
 </blockquote>
-<p>That surprises me. It is relatively easy to start with a function on ranks that contains parameters and substitute in a mixed effect for one or more of the parameters. With some further assumptions, such as those to fullfill a central limit theorem, a test procedure can be developed.</p>
+<p>That surprises me. It is relatively easy to start with a function on ranks that contains parameters and substitute in a mixed effect for one or more of the parameters. With some further assumptions, such as those to fulfill a central limit theorem, a test procedure can be developed.</p>
 <blockquote class="blockquote">
-<p>So again, I could totally be wrong here, but I don’t think there’s ever a sitution where you’re going to have a convergence issue, because its a complex model, where there’s actually going to be a rank-based equivalent for that model.</p>
+<p>So again, I could totally be wrong here, but I don’t think there’s ever a situation where you’re going to have a convergence issue, because its a complex model, where there’s actually going to be a rank-based equivalent for that model.</p>
 </blockquote>
 <p>The notion that there is an equivalence between certain rank-based nonparametric statistics and non-rank-based parametric statistics is considered in my post <a href="https://galenseilis.github.io/posts/wilcoxons-heuristic/"><em>Wilcoxon’s heuristic</em></a>. But my terse response is that we don’t need a procedure that is equivalent in order for it to be useful.</p>
 <blockquote class="blockquote">
@@ -238,13 +257,13 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p>But assuming your model is actually properly specified, and it makes sense, convergence issues are… I want to say they’re rare. But mixed models - I’ve been doing a lot of mixed models lately, and they’re actually not that rare. You do have a lot of convergence issues, but they’re not issues that are going to break the analysis entirely. It still estimates something. Its just less trustworthy.</p>
 </blockquote>
-<p>This will depend on context, but sometimes the fitted result really is broken entirely. The main examples come from when there is numerical underflow or numerical overflow in some part of the calculations. I don’t trust estimates like <code>NaN</code> or <span class="math inline">\(\pm \infty\)</span>. Sometimes I don’t trust when it spits out a number close to zero either. I have not seen this with linear models, but I have certaintly seen it with non-linear models.</p>
-<p>But I do think that Dustin is right about what tends to happen. Often the results are not eggregiously wrong when you get a warning that the result did not converge. It always makes sense to double check that the resulting model isn’t telling you implausible or nonsensical things, but this is especially so with models that didn’t <em>sample smooth as butter</em> (as Richard McElreath, an anthropologist, likes to say when a MCMC has few/no divergences).</p>
+<p>This will depend on context, but sometimes the fitted result really is broken entirely. The main examples come from when there is numerical underflow or numerical overflow in some part of the calculations. I don’t trust estimates like <code>NaN</code> or <span class="math inline">\(\pm \infty\)</span>. Sometimes I don’t trust when it spits out a number close to zero either. I have not seen this with linear models, but I have certainly seen it with non-linear models.</p>
+<p>But I do think that Dustin is right about what tends to happen. Often the results are not egregiously wrong when you get a warning that the result did not converge. It always makes sense to double check that the resulting model isn’t telling you implausible or nonsensical things, but this is especially so with models that didn’t <em>sample smooth as butter</em> (as Richard McElreath, an anthropologist, likes to say when a MCMC has few/no divergences).</p>
 <blockquote class="blockquote">
 <p>But even then if you really care about convergence you could always do a Bayesian model. And with Bayesian models you still might have convergence issues but in my experience they’re a lot easier to deal with than they are with a linear mixed model.</p>
 </blockquote>
-<p>Yes, you can train Baysian models. Yes, you can still run into convergence issues. And yes they can often be addressed by variety of techniques including (but not limited to) adjusting priors or reparametrization. But I am perplexed by the comparison of a Bayesian model against a linear mixed model. They’re not mutually exclusive classes of models. I can design a Bayesian model with or without mixed effects, and in either case the model may or may not be a linear model.</p>
-<p>There is a lateral move here, which is to use ranks on the trace plots of Monte Carlo simulations rather than a part of a regression model (presumably being fit using Monte Carlo methods). The following is a lecture by Richard McElreath introducing a handful of Monte Carlo methods, but he also coins the term “<em>trank plot</em>” as an abbreviation of trace rank plots developed in <a href="https://arxiv.org/abs/1903.08008">Vehtari <em>et al</em> 2019</a>. <a href="https://arxiv.org/abs/2103.10522">Säilynoja <em>et al</em> 2021</a> similarly developed graphical methods using rank-based statistics to evaluate traces.</p>
+<p>Yes, you can train Bayesian models. Yes, you can still run into convergence issues. And yes they can often be addressed by a variety of techniques including (but not limited to) adjusting priors or reparameterization. But I am perplexed by the comparison of a Bayesian model against a linear mixed model. They’re not mutually exclusive classes of models. I can design a Bayesian model with or without mixed effects, and in either case the model may or may not be a linear model.</p>
+<p>There is a lateral move here, which is to use ranks on the trace plots of Monte Carlo simulations rather than a part of a regression model (presumably being fit using Monte Carlo methods). The following is a lecture by Richard McElreath <span class="citation" data-cites="mcelreath2020">(<a href="#ref-mcelreath2020" role="doc-biblioref">McElreath 2020</a>)</span> introducing a handful of Monte Carlo methods, but he also coins the term “<em>trank plot</em>” as an abbreviation of trace rank plots developed in Vehtari <em>et al</em> <span class="citation" data-cites="vehtari2019">(<a href="#ref-vehtari2019" role="doc-biblioref">Vehtari et al. 2019</a>)</span>. Säilynoja <em>et al</em> <span class="citation" data-cites="sailynoja2021">(<a href="#ref-sailynoja2021" role="doc-biblioref">Säilynoja et al. 2021</a>)</span> similarly developed graphical methods using rank-based statistics to evaluate traces.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/rZk2FqX2XnY?si=egtIfUIbh7YpY1Wx&amp;start=3359" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
 <p>It is in part the scale and translation invariance of ranks, along with being order-preserving on a given sample, that make them suitable for identifying certain problems in trace plots.</p>
@@ -252,7 +271,18 @@ window.Quarto = {
 
 
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-mcelreath2020" class="csl-entry" role="listitem">
+McElreath, Richard. 2020. <em>Statistical Rethinking: A Bayesian Course with Examples in r and Stan</em>. 2nd ed. CRC Press.
+</div>
+<div id="ref-sailynoja2021" class="csl-entry" role="listitem">
+Säilynoja, Teemu, Paul-Christian Bürkner, and Aki Vehtari. 2021. <span>“Graphical Test for Discrete Uniformity and Its Applications in Goodness of Fit Evaluation and Multiple Sample Comparison.”</span> <em>arXiv Preprint arXiv:2103.10522</em>, ahead of print. <a href="https://doi.org/10.48550/arXiv.2103.10522">https://doi.org/10.48550/arXiv.2103.10522</a>.
+</div>
+<div id="ref-vehtari2019" class="csl-entry" role="listitem">
+Vehtari, Aki, Andrew Gelman, Daniel Simpson, Bob Carpenter, and Paul-Christian Bürkner. 2019. <span>“Rank-Normalization, Folding, and Localization: An Improved <span class="math inline">\(\widehat{R}\)</span> for Assessing Convergence of MCMC.”</span> <em>arXiv Preprint arXiv:1903.08008</em>, ahead of print. <a href="https://doi.org/10.48550/arXiv.1903.08008">https://doi.org/10.48550/arXiv.1903.08008</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

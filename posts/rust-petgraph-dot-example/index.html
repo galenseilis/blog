@@ -210,8 +210,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>In this post I want to quickly showcase the use of the use of the Petgraph and Petgraph-evcxr packages. Petgraph is a popular graph data structures and algorithms crate available for Rust. Petgraph-evcxr is a tool that makes it possible to easily visualize graphs created using Petgraph within Jupyter notebooks. This in turn allows us to visualize such graphs within Quarto.</p>
-<p>This we need to include them as dependencies.</p>
+<p>In this post I want to quickly showcase the use of the <a href="https://docs.rs/petgraph/">Petgraph</a> and <a href="https://github.com/timthelion/petgraph-evcxr">Petgraph-evcxr</a> packages. Petgraph is a popular graph data structures and algorithms crate available for Rust. Petgraph-evcxr is a tool that makes it possible to easily visualize graphs created using Petgraph within Jupyter notebooks. This in turn allows us to visualize such graphs within Quarto.</p>
+<p>Thus we need to include them as dependencies.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">extern</span> <span class="kw">crate</span> petgraph<span class="op">;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">petgraph::graph::</span>Graph<span class="op">;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">petgraph_evcxr::</span>draw_graph<span class="op">;</span></span>

@@ -28,7 +28,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -208,9 +227,9 @@ window.Quarto = {
 </section>
 <section id="introduction-and-findings" class="level1">
 <h1>Introduction and Findings</h1>
-<p>One of these intuitions is that if the free-growing (FG), or well-spaced (WS), counts are sufficiently high for a given number of plots, then the statistics will almost certaintly pass. Similarly, low counts at a given sample size suggest that the statistics will almost certainly fail. The pass-or-failure status is dependent on the LCL.</p>
+<p>One of these intuitions is that if the free-growing (FG), or well-spaced (WS), counts are sufficiently high for a given number of plots, then the statistics will almost certainly pass. Similarly, low counts at a given sample size suggest that the statistics will almost certainly fail. The pass-or-failure status is dependent on the LCL.</p>
 <p><span class="math display">\[\text{LCL} = \bar{x} - t_{\alpha, \text{df}} \frac{s}{\sqrt{n}}\]</span></p>
-<p>Where <span class="math inline">\(\bar{x}\)</span> is the average number of stems per hectare (or plot, if scaling factor is not applied), <span class="math inline">\(t_{\alpha, \text{df}}\)</span> is the critical score at a given confidence level (<span class="math inline">\(1 -\alpha\)</span>) and degrees of freedom (df). In this context, <span class="math inline">\(\alpha=0.1\)</span> with <span class="math inline">\(\alpha_{\frac{1}{2}} = 0.05\)</span> for the two-tailed procedure. The variable <span class="math inline">\(s\)</span> is the sample standard deviation, defined as <span class="math inline">\(s = \pm \sqrt{\frac{\sum_i^n (x_i - \bar{x})^2}{n-1}}\)</span>, and <span class="math inline">\(n\)</span> is the sample size. The factor <span class="math inline">\(\frac{s}{\sqrt{n}}\)</span> is the standard error of the mean. Each count <span class="math inline">\(C_i\)</span> is substituted as <span class="math inline">\(x_i = \min(C_i, \text{M-value})\)</span> for these calculations, thus truncating the upper bound of the interval.</p>
+<p>Where <span class="math inline">\(\bar{x}\)</span> is the average number of stems per hectare (or plot, if scaling factor is not applied), <span class="math inline">\(t_{\alpha, \text{df}}\)</span> is the critical score of Student’s <span class="math inline">\(t\)</span>-distribution <span class="citation" data-cites="student1908">(<a href="#ref-student1908" role="doc-biblioref">Student 1908</a>)</span> at a given confidence level (<span class="math inline">\(1 -\alpha\)</span>) and degrees of freedom (df). In this context, <span class="math inline">\(\alpha=0.1\)</span> with <span class="math inline">\(\alpha_{\frac{1}{2}} = 0.05\)</span> for the two-tailed procedure. The variable <span class="math inline">\(s\)</span> is the sample standard deviation, defined as <span class="math inline">\(s = \pm \sqrt{\frac{\sum_i^n (x_i - \bar{x})^2}{n-1}}\)</span>, and <span class="math inline">\(n\)</span> is the sample size. The factor <span class="math inline">\(\frac{s}{\sqrt{n}}\)</span> is the standard error of the mean. Each count <span class="math inline">\(C_i\)</span> is substituted as <span class="math inline">\(x_i = \min(C_i, \text{M-value})\)</span> for these calculations, thus truncating the upper bound of the interval.</p>
 <p>The LCL is a function of the mean number of stems per hectare, and the mean number of stems per area is a function of the total count of FG/WS stems in the sample. While LCL is not solely a function of the total count of FG/WS stems, the following figure shows the relationships among LCL, the sum of FG/WS plot counts, and the sample size.</p>
 <p><img src="./figures/n_affects_sum_effect_on_LCL.png" class="img-fluid"></p>
 <p>Scatterplot showing the relationship between the sum of free growing plot counts and the resulting lower confidence limit used to determine sufficient stocking for Free-to-Grow status of a surveyed block. The relationship is plotted at 5 different sample sizes to illustrate the effect that sample size has on the relationship between the sum of free growing plot counts and the resulting lower confidence limit. Each point represents a possible combination of FG/WS stem counts for a sampled block.</p>
@@ -225,7 +244,7 @@ window.Quarto = {
 <p><span class="math display">\[n \in [5, 40] \land n \in \mathbb{N}\]</span></p>
 <p>is given by</p>
 <p><span class="math display">\[\sum_{i=5}^{r=40} \frac{(i + 6)!}{i!6!}\]</span></p>
-<p>and evaulates to 62891169 unique possibilities. The resulting thresholds are given in the following table:</p>
+<p>and evaluates to 62891169 unique possibilities. The resulting thresholds are given in the following table:</p>
 <p>The inclusive thresholds of sum of plot counts guaranteed to either meet or fail to meet minimum stocking standards at a given sample size. This table assumes that the minimum stocking standard is 700 sph (assuming a plot multiplier of 200), or 3.5 stems per plot.</p>
 <p>|Sample Size | Fail | Pass| |<span class="math inline">\(n\)</span> | Threshold | Threshold | |5 | <span class="math inline">\(\leq\)</span> 19 | 27 <span class="math inline">\(\leq\)</span> | |6 | <span class="math inline">\(\leq\)</span> 23 | 32 <span class="math inline">\(\leq\)</span> | |7 | <span class="math inline">\(\leq\)</span> 26 | 37 <span class="math inline">\(\leq\)</span> | |8 | <span class="math inline">\(\leq\)</span> 30 | 40 <span class="math inline">\(\leq\)</span> | |9 | <span class="math inline">\(\leq\)</span> 33 | 45 <span class="math inline">\(\leq\)</span> | |10 | <span class="math inline">\(\leq\)</span> 37 | 49 <span class="math inline">\(\leq\)</span> | |11 | <span class="math inline">\(\leq\)</span> 41 | 53 <span class="math inline">\(\leq\)</span> | |12 | <span class="math inline">\(\leq\)</span> 44 | 57 <span class="math inline">\(\leq\)</span> | |13 | <span class="math inline">\(\leq\)</span> 48 | 62 <span class="math inline">\(\leq\)</span> | |14 | <span class="math inline">\(\leq\)</span> 52 | 66 <span class="math inline">\(\leq\)</span> | |15 | <span class="math inline">\(\leq\)</span> 55 | 70 <span class="math inline">\(\leq\)</span> | |16 | <span class="math inline">\(\leq\)</span> 59 | 74 <span class="math inline">\(\leq\)</span> | |17 | <span class="math inline">\(\leq\)</span> 62 | 79 <span class="math inline">\(\leq\)</span> | |18 | <span class="math inline">\(\leq\)</span> 66 | 82 <span class="math inline">\(\leq\)</span> | |19 | <span class="math inline">\(\leq\)</span> 70 | 86 <span class="math inline">\(\leq\)</span> | |20 | <span class="math inline">\(\leq\)</span> 73 | 91 <span class="math inline">\(\leq\)</span> | |21 | <span class="math inline">\(\leq\)</span> 77 | 95 <span class="math inline">\(\leq\)</span> | |22 | <span class="math inline">\(\leq\)</span> 80 | 99 <span class="math inline">\(\leq\)</span> | |23 | <span class="math inline">\(\leq\)</span> 84 | 103 <span class="math inline">\(\leq\)</span> | |24 | <span class="math inline">\(\leq\)</span> 88 | 107 <span class="math inline">\(\leq\)</span> | |25 | <span class="math inline">\(\leq\)</span> 91 | 111 <span class="math inline">\(\leq\)</span> | |26 | <span class="math inline">\(\leq\)</span> 95 | 115 <span class="math inline">\(\leq\)</span> | |27 | <span class="math inline">\(\leq\)</span> 98 | 119 <span class="math inline">\(\leq\)</span> | |28 | <span class="math inline">\(\leq\)</span> 102 | 123 <span class="math inline">\(\leq\)</span> | |29 | <span class="math inline">\(\leq\)</span> 105 | 127 <span class="math inline">\(\leq\)</span> | |30 | <span class="math inline">\(\leq\)</span> 109 | 130 <span class="math inline">\(\leq\)</span> | |31 | <span class="math inline">\(\leq\)</span> 113 | 134 <span class="math inline">\(\leq\)</span> | |32 | <span class="math inline">\(\leq\)</span> 116 | 139 <span class="math inline">\(\leq\)</span> | |33 | <span class="math inline">\(\leq\)</span> 120 | 142 <span class="math inline">\(\leq\)</span> | |34 | <span class="math inline">\(\leq\)</span> 123 | 146 <span class="math inline">\(\leq\)</span> | |35 | <span class="math inline">\(\leq\)</span> 127 | 151 <span class="math inline">\(\leq\)</span> | |36 | <span class="math inline">\(\leq\)</span> 130 | 154 <span class="math inline">\(\leq\)</span> | |37 | <span class="math inline">\(\leq\)</span> 134 | 158 <span class="math inline">\(\leq\)</span> | |38 | <span class="math inline">\(\leq\)</span> 138 | 162 <span class="math inline">\(\leq\)</span> | |39 | <span class="math inline">\(\leq\)</span> 141 | 166 <span class="math inline">\(\leq\)</span> | |40 | <span class="math inline">\(\leq\)</span> 145 | 170 <span class="math inline">\(\leq\)</span> |</p>
 </section>
@@ -243,9 +262,14 @@ window.Quarto = {
 </ul>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-student1908" class="csl-entry" role="listitem">
+Student. 1908. <span>“The Probable Error of a Mean.”</span> <em>Biometrika</em> 6 (1): 1–25. <a href="https://doi.org/10.1093/biomet/6.1.1">https://doi.org/10.1093/biomet/6.1.1</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

@@ -257,17 +257,17 @@ window.Quarto = {
 </section>
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>Ciw uses an event scheduling approach composed of three types of events: A, B, and C. A-type events move the system’s clock forward in time. B-type events have been per-scheduled. C-type events are events triggered by B-type events.<sup><a href="https://ciw.readthedocs.io/en/latest/Background/mechanisms.html" title="Notes on Ciw's Mechanisms — Ciw 3.1.0 documentation">3</a>{:target=“_blank”}</sup></p>
-<p>Ciw simulations are “time-to-event”, meaning that time between events are skipped over in the simulation.<sup><a href="https://www.youtube.com/watch?v=0KvA92ykPKI" title="Discrete-Event Simulation with Lewis Bobbermen">4</a>{:target=“_blank”}</sup> This approach becomes more efficient relative to simulating the state for every time step as the linear density of events over time decreases. Ciw uses an arbitrary scale of time so it is the responsibility of the user to decide whether the base unit of the simulation is in second, minutes, hours, days, years or some other unit.</p>
+<p>Ciw uses an event scheduling approach composed of three types of events: A, B, and C. A-type events move the system’s clock forward in time. B-type events have been pre-scheduled. C-type events are events triggered by B-type events.<sup><a href="https://ciw.readthedocs.io/en/latest/Background/mechanisms.html" title="Notes on Ciw's Mechanisms — Ciw 3.1.0 documentation">3</a>{:target=“_blank”}</sup></p>
+<p>Ciw simulations are “time-to-event”, meaning that time between events are skipped over in the simulation.<sup><a href="https://www.youtube.com/watch?v=0KvA92ykPKI" title="Discrete-Event Simulation with Lewis Bobbermen">4</a>{:target=“_blank”}</sup> This approach becomes more efficient relative to simulating the state for every time step as the linear density of events over time decreases. Ciw uses an arbitrary scale of time so it is the responsibility of the user to decide whether the base unit of the simulation is in seconds, minutes, hours, days, years or some other unit.</p>
 <p>The core Python classes in Ciw include Simulation, ArrivalNode, ExitNode, Server, and Individual.<sup><a href="https://ciw.readthedocs.io/en/latest/Background/codestructure.html" title="Code Structure — Ciw 3.1.0 documentation">5</a>{:target=“_blank”}</sup> The simulation object is responsible for running the simulation, running a state tracker, and recording a log. The arrival node is responsible for generating individuals as the unit that flows through the network. Individuals either remain in the network, or they go to a terminating state called the “exit node”. Servers are the units of capacity that limit how many individuals can be served at a node in parallel.</p>
 <p>There are also some abstractions in Ciw oriented around the topic of input and a queue representation. These include Network, ServiceCentre, CustomerClasses, and Distributions.<sup><a href="https://ciw.readthedocs.io/en/latest/Background/codestructure.html" title="Code Structure — Ciw 3.1.0 documentation">5</a>{:target=“_blank”}</sup></p>
-<p>Two optional components of Ciw are the abstractions of StateTracker and DeadlockDetector.<sup><a href="https://ciw.readthedocs.io/en/latest/Background/codestructure.html" title="Code Structure — Ciw 3.1.0 documentation">5</a>{:target=“_blank”}</sup> The state trackers are responsible for collecting aggregrate information of the state of the simulation.<sup><a href="https://ciw.readthedocs.io/en/latest/Reference/state_trackers.html" title="List of Implemented State Trackers — Ciw 3.1.0 documentation">6</a>{:target=“_blank”}</sup> An example is system population tracker, which records the overall number of individuals in the queueing network for each time when an event occurs. The dead lock detector is for Type I blocking,<sup><a href="https://ciw.readthedocs.io/en/latest/Background/mechanisms.html" title="Notes on Ciw's Mechanisms — Ciw 3.1.0 documentation">3</a>{:target=“_blank”}</sup> which is one of three types of blocking.<sup><a href="https://www.sciencedirect.com/science/article/abs/pii/0167637786900672" title="On equivalencies of blocking mechanisms in queueing networks with blocking">7</a>{:target=“_blank”},<a href="https://stats.stackexchange.com/a/632255/69508" title="Are there other types of blocking in queueing networks beyond Type I?">8</a>{:target=“_blank”}</sup></p>
+<p>Two optional components of Ciw are the abstractions of StateTracker and DeadlockDetector.<sup><a href="https://ciw.readthedocs.io/en/latest/Background/codestructure.html" title="Code Structure — Ciw 3.1.0 documentation">5</a>{:target=“_blank”}</sup> The state trackers are responsible for collecting aggregate information of the state of the simulation.<sup><a href="https://ciw.readthedocs.io/en/latest/Reference/state_trackers.html" title="List of Implemented State Trackers — Ciw 3.1.0 documentation">6</a>{:target=“_blank”}</sup> An example is system population tracker, which records the overall number of individuals in the queueing network for each time when an event occurs. The deadlock detector is for Type I blocking,<sup><a href="https://ciw.readthedocs.io/en/latest/Background/mechanisms.html" title="Notes on Ciw's Mechanisms — Ciw 3.1.0 documentation">3</a>{:target=“_blank”}</sup> which is one of three types of blocking.<sup><a href="https://www.sciencedirect.com/science/article/abs/pii/0167637786900672" title="On equivalencies of blocking mechanisms in queueing networks with blocking">7</a>{:target=“_blank”},<a href="https://stats.stackexchange.com/a/632255/69508" title="Are there other types of blocking in queueing networks beyond Type I?">8</a>{:target=“_blank”}</sup></p>
 <p>Although it does not have an explicitly recreational scope, Ciw has been used for recreation in the form of simulating an asynchronous variant of snakes and ladders.<sup><a href="https://galenseilis.github.io/posts/ciw-snakes-ladders/" title="A Discrete Event Simulation Generalization of Snakes and Ladders Using Ciw">9</a>{:target=“_blank”}</sup></p>
 <p>Ciw v3.1.0 requires Python 3.7 or greater.<sup><a href="https://github.com/CiwPython/Ciw" title="Ciw, CiwPython">10</a>{:target=“_blank”}</sup> The project has had 15-17 contributors as of December 18th, 2023.<sup><a href="https://github.com/CiwPython/Ciw/graphs/contributors" title="Contributors to CiwPython/Ciw">11</a>{:target=“_blank”},<a href="https://ciw.readthedocs.io/en/latest/Reference/authors.html" title="Authors — Ciw 3.1.0 documentation">12</a>{:target=“_blank”}</sup></p>
 </section>
 <section id="features" class="level2">
 <h2 class="anchored" data-anchor-id="features">Features</h2>
-<p>This section lists many of the features available in Ciw. While Ciw be used to implement any queueing network which can be specified in standard Kendall’s notation, it can be configured to model queueing networks which deviate from that family of models.<sup><a href="https://ciw.readthedocs.io/en/latest/Background/kendall.html" title="Kendall's Notation — Ciw 3.1.0 documentation">13</a>{:target=“_blank”}</sup></p>
+<p>This section lists many of the features available in Ciw. While Ciw can be used to implement any queueing network which can be specified in standard Kendall’s notation, it can be configured to model queueing networks which deviate from that family of models.<sup><a href="https://ciw.readthedocs.io/en/latest/Background/kendall.html" title="Kendall's Notation — Ciw 3.1.0 documentation">13</a>{:target=“_blank”}</sup></p>
 <section id="distributions" class="level3">
 <h3 class="anchored" data-anchor-id="distributions">Distributions</h3>
 <p>Distributions are an essential component in Ciw simulations. By default they influence inter-arrival times and service times, but can also be used to define the service discipline, routing, and server behaviour at a given node. Distributions can be time-dependent, state-dependent, or both.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/time_dependent.html" title="How to Define Time and State Dependent Distributions — Ciw 3.1.0 documentation">14</a>{:target=“_blank”}</sup></p>
@@ -275,8 +275,8 @@ window.Quarto = {
 </section>
 <section id="arrivals" class="level3">
 <h3 class="anchored" data-anchor-id="arrivals">Arrivals</h3>
-<p>When a network is initialized in Ciw, every node is assigned an inter-arrival time distribution.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/set_distributions.html" title="How to Set Arrival &amp; Service Distributions — Ciw 3.1.0 documentation">17</a>{:target=“_blank”}</sup> This distribution is sampled from in order to determine when the next arrival will be. The main requirement for arrival times is that they have non-negative support, which includes any of the supported distributions over non-negative number.<sup><a href="https://ciw.readthedocs.io/en/latest/Reference/distributions.html" title="List of Supported Distributions — Ciw 3.1.0 documentation">15</a>{:target=“_blank”}</sup></p>
-<p>Sometimes it is desirable for batches of individuals to arrive at a node simultaneously. Ciw supports a batch arrivals feature in which the number of arriving individuals can be sampled according to a distribution.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/batching.html" title="How to Set Batch Arrivals — Ciw 3.1.0 documentation">18</a>{:target=“_blank”}</sup> Batch arrivals can use many, but not all, of the available distribution because the batch sizes must be non-negative integers.</p>
+<p>When a network is initialized in Ciw, every node is assigned an inter-arrival time distribution.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/set_distributions.html" title="How to Set Arrival &amp; Service Distributions — Ciw 3.1.0 documentation">17</a>{:target=“_blank”}</sup> This distribution is sampled from in order to determine when the next arrival will be. The main requirement for arrival times is that they have non-negative support, which includes any of the supported distributions over non-negative numbers.<sup><a href="https://ciw.readthedocs.io/en/latest/Reference/distributions.html" title="List of Supported Distributions — Ciw 3.1.0 documentation">15</a>{:target=“_blank”}</sup></p>
+<p>Sometimes it is desirable for batches of individuals to arrive at a node simultaneously. Ciw supports a batch arrivals feature in which the number of arriving individuals can be sampled according to a distribution.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/batching.html" title="How to Set Batch Arrivals — Ciw 3.1.0 documentation">18</a>{:target=“_blank”}</sup> Batch arrivals can use many, but not all, of the available distributions because the batch sizes must be non-negative integers.</p>
 </section>
 <section id="restricted-networks" class="level3">
 <h3 class="anchored" data-anchor-id="restricted-networks">Restricted Networks</h3>
@@ -286,7 +286,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="multiple-classes-of-individual">Multiple Classes of Individual</h3>
 <p>Ciw supports queueing networks with multiple classes of individual, including Kelly networks. This is a network in which there are multiple types of individuals who are distinguished in simulation by Value objects.</p>
 <p>Once multiple classes of individual are being used in Ciw, many of the other features become individual-class-dependent. This includes arrivals, service discipline, server behaviour, and routing.</p>
-<p>Dynamic classes of individual (i.e.&nbsp;the class of individual can changing) are supported in two ways in Ciw:<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/dynamic_customerclasses.html" title="How to Set Dynamic Customer Classes — Ciw 3.1.0 documentation">22</a>{:target=“_blank”}</sup></p>
+<p>Dynamic classes of individual (i.e.&nbsp;the class of individual can change) are supported in two ways in Ciw:<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/dynamic_customerclasses.html" title="How to Set Dynamic Customer Classes — Ciw 3.1.0 documentation">22</a>{:target=“_blank”}</sup></p>
 <ul>
 <li>Customer class can change after service.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/dynamic_customerclasses.html" title="How to Set Dynamic Customer Classes — Ciw 3.1.0 documentation">22</a>{:target=“_blank”}</sup></li>
 <li>Customer class can change while queueing (i.e.&nbsp;waiting).<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/dynamic_customerclasses.html" title="How to Set Dynamic Customer Classes — Ciw 3.1.0 documentation">22</a>{:target=“_blank”}</sup></li>
@@ -302,7 +302,7 @@ window.Quarto = {
 </section>
 <section id="routing" class="level3">
 <h3 class="anchored" data-anchor-id="routing">Routing</h3>
-<p>Routing of individuals occurs when an individual goes from one node to another having completed their service at the previous node. When there are multiple nodes there are consequently multiples places that an individual could go. Routing is the process of deciding where such individuals go.</p>
+<p>Routing of individuals occurs when an individual goes from one node to another having completed their service at the previous node. When there are multiple nodes there are consequently multiple places that an individual could go. Routing is the process of deciding where such individuals go.</p>
 <p>Ciw has three approaches to routing:</p>
 <ul>
 <li>Routing matrices</li>
@@ -311,7 +311,7 @@ window.Quarto = {
 </ul>
 <section id="routing-matrices" class="level4">
 <h4 class="anchored" data-anchor-id="routing-matrices">Routing Matrices</h4>
-<p>A routing matrix is an <span class="math inline">\(n \times n\)</span> matrix (where <span class="math inline">\(n\)</span> is the number of nodes in the network) such that the <span class="math inline">\((i,j)\)</span>th element <span class="math inline">\(P_{ij}\)</span> corresponds to the probability of transitioning to node <span class="math inline">\(j\)</span> after service at node <span class="math inline">\(i\)</span>.<sup><a href="https://ciw.readthedocs.io/en/latest/Tutorial-II/tutorial_v.html" title="Tutorial V: A Network of Queues — Ciw 3.1.0 documentation">27</a>{:target=“_blank”}</sup> This is similar to a Stochastic matrix in the sense that the elements are probabilities of state transitions, however the sum of a given row can be less than one. This is due to the fact that the complement of each sum is the probability of an individual leaving the network altogether from that node. This can be donated by the following equation:</p>
+<p>A routing matrix is an <span class="math inline">\(n \times n\)</span> matrix (where <span class="math inline">\(n\)</span> is the number of nodes in the network) such that the <span class="math inline">\((i,j)\)</span>th element <span class="math inline">\(P_{ij}\)</span> corresponds to the probability of transitioning to node <span class="math inline">\(j\)</span> after service at node <span class="math inline">\(i\)</span>.<sup><a href="https://ciw.readthedocs.io/en/latest/Tutorial-II/tutorial_v.html" title="Tutorial V: A Network of Queues — Ciw 3.1.0 documentation">27</a>{:target=“_blank”}</sup> This is similar to a stochastic matrix in the sense that the elements are probabilities of state transitions, however the sum of a given row can be less than one. This is due to the fact that the complement of each sum is the probability of an individual leaving the network altogether from that node. This can be denoted by the following equation:</p>
 <p><span class="math display">\[Pr[\text{Leave Network From Node}_i]= 1-\sum _{j}^{n} P_{ij}\]</span></p>
 <p>When this form of routing is specified Ciw will sample which node is the next node according to the provided routing matrix, or otherwise leave the network.</p>
 </section>
@@ -321,7 +321,7 @@ window.Quarto = {
 </section>
 <section id="custom-routing" class="level4">
 <h4 class="anchored" data-anchor-id="custom-routing">Custom Routing</h4>
-<p>Through Subclassing the core Node class and overwriting its the next_node method, any time-dependent or state-dependent routing can be achieved.</p>
+<p>Through subclassing the core Node class and overriding its next_node method, any time-dependent or state-dependent routing can be achieved.</p>
 <p>An example custom is when individuals join the shortest available queue in a processor sharing system. There are a couple of implementations of this type of behaviour in the Ciw documentation.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/behaviour/ps_routing.html" title="Join Shortest Queue in Processor Sharing Systems — Ciw 3.1.0 documentation">29</a>{:target=“_blank”},<a href="https://ciw.readthedocs.io/en/latest/Guides/behaviour/custom_routing.html" title="State-dependent Routing — Ciw 3.1.0 documentation">30</a>{:target=“_blank”}</sup></p>
 </section>
 </section>
@@ -335,18 +335,18 @@ window.Quarto = {
 <section id="service-disciplines" class="level4">
 <h4 class="anchored" data-anchor-id="service-disciplines">Service Disciplines</h4>
 <p>A service discipline in Ciw is whatever rule determines which individual gets served next.</p>
-<p>By default Ciw uses a first come, first serve (FCFS), which is termed first-in-first-out (FIFO) in Ciw in adherence to computer science terminology.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/service_disciplines.html" title="How to Change Service Discipline — Ciw 3.1.0 documentation">31</a>{:target=“_blank”}</sup> Two other built-in service disciplines include “last in, first out” (LIFO) and “service in random order” SIRO.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/service_disciplines.html" title="How to Change Service Discipline — Ciw 3.1.0 documentation">31</a>{:target=“_blank”}</sup></p>
+<p>By default Ciw uses a first come, first served (FCFS), which is termed first-in-first-out (FIFO) in Ciw in adherence to computer science terminology.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/service_disciplines.html" title="How to Change Service Discipline — Ciw 3.1.0 documentation">31</a>{:target=“_blank”}</sup> Two other built-in service disciplines include “last in, first out” (LIFO) and “service in random order” SIRO.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/service_disciplines.html" title="How to Change Service Discipline — Ciw 3.1.0 documentation">31</a>{:target=“_blank”}</sup></p>
 <p>When multiple classes are used, it is optionally possible to provide priority classes which achieves a priority queue service discipline.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/priority.html" title="How to Set Priority Classes — Ciw 3.1.0 documentation">32</a>{:target=“_blank”}</sup></p>
 <p>As part of Ciw’s create_network interface, the service discipline can be changed to any provided function which takes the individuals at a queue and returns the next individual chosen to be served. Because every individual has a reference to the simulation instance as an attribute, which has access to the complete time and state of the system, it is possible to have time and state-dependent service disciplines. This customization feature subsumes the other service disciplines mentioned above.</p>
-<p>Process sharing is service discipline where a number of individuals are served simultaneously and the service load is shared equally among the individuals receiving the service.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/processor-sharing.html" title="How to Simulate Processor Sharing — Ciw 3.1.0 documentation">33</a>{:target=“_blank”}</sup> This creates a monotonic relationship between the number of individuals being served and their service time.</p>
+<p>Process sharing is a service discipline where a number of individuals are served simultaneously and the service load is shared equally among the individuals receiving the service.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/processor-sharing.html" title="How to Simulate Processor Sharing — Ciw 3.1.0 documentation">33</a>{:target=“_blank”}</sup> This creates a monotonic relationship between the number of individuals being served and their service time.</p>
 </section>
 <section id="server-behaviour" class="level4">
 <h4 class="anchored" data-anchor-id="server-behaviour">Server Behaviour</h4>
 <p>Servers represent a unit of capacity for a service center at a node.</p>
 <ul>
-<li>The number of available servers can dependent on the state.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/behaviour/custom_number_servers.html" title="Variable Number of Servers — Ciw 3.1.0 documentation">34</a>{:target=“_blank”}</sup></li>
-<li>The service rate can dependent on the server.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/behaviour/server_dependent_dist.html" title="Server-dependent Services — Ciw 3.1.0 documentation">35</a>{:target=“_blank”}</sup></li>
-<li>Servers themselves can have priorities which can dependent on the individual being served.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/server_priority.html" title="How to Set Server Priorities — Ciw 3.1.0 documentation">36</a>{:target=“_blank”}</sup></li>
+<li>The number of available servers can depend on the state.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/behaviour/custom_number_servers.html" title="Variable Number of Servers — Ciw 3.1.0 documentation">34</a>{:target=“_blank”}</sup></li>
+<li>The service rate can depend on the server.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/behaviour/server_dependent_dist.html" title="Server-dependent Services — Ciw 3.1.0 documentation">35</a>{:target=“_blank”}</sup></li>
+<li>Servers themselves can have priorities which can depend on the individual being served.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/server_priority.html" title="How to Set Server Priorities — Ciw 3.1.0 documentation">36</a>{:target=“_blank”}</sup></li>
 <li>The number of servers can follow a pre-calculated schedule,<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/server_schedule.html" title="How to Set Server Schedules — Ciw 3.1.0 documentation">37</a>{:target=“_blank”}</sup> including slotted schedules.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/slotted.html" title="How to Set Slotted Services — Ciw 3.1.0 documentation">38</a>{:target=“_blank”}</sup></li>
 </ul>
 </section>
@@ -388,7 +388,7 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td><code>customer_class</code></td>
-<td>The number of that customer’s customer class. If dynamic customer classes are used, this is the customer’s class that they were when they recieved service at that node.</td>
+<td>The number of that customer’s customer class. If dynamic customer classes are used, this is the customer’s class that they were when they received service at that node.</td>
 </tr>
 <tr class="odd">
 <td><code>original_customer_class</code></td>
@@ -420,11 +420,11 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td><code>time_blocked</code></td>
-<td>The amount of time spent blocked at that node. That is the time between finishing service at exiting the node.</td>
+<td>The amount of time spent blocked at that node. That is the time between finishing service and exiting the node.</td>
 </tr>
 <tr class="odd">
 <td><code>exit_date</code></td>
-<td>The date which the customer exited the node. This may be immediatly after service if no blocking occured, or after some period of being blocked.</td>
+<td>The date which the customer exited the node. This may be immediately after service if no blocking occurred, or after some period of being blocked.</td>
 </tr>
 <tr class="even">
 <td><code>destination</code></td>
@@ -451,7 +451,7 @@ window.Quarto = {
 <p>The attribute <code>record_type</code> can be one of:</p>
 <ul>
 <li><code>"service"</code>: a completed service</li>
-<li><code>"interrupted service"</code>: an interupted service</li>
+<li><code>"interrupted service"</code>: an interrupted service</li>
 <li><code>"renege"</code>: the waiting time while a customer waited before reneging</li>
 <li><code>"baulk"</code>: the record of a customer baulking</li>
 <li><code>"rejection"</code>: the record of a customer being rejected due to the queue being full</li>
@@ -461,12 +461,12 @@ window.Quarto = {
 <section id="miscellaneous" class="level2">
 <h2 class="anchored" data-anchor-id="miscellaneous">Miscellaneous</h2>
 <p>Some of the miscellaneous features of Ciw include being able to set a progress bar to display the progress of a simulation<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/progressbar.html" title="How to Implement a Progress Bar — Ciw 3.1.0 documentation">44</a>{:target=“_blank”}</sup> and set numerical calculations to be exact.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/exact.html" title="How to Implement Exact Arithmetic — Ciw 3.1.0 documentation">45</a>{:target=“_blank”}</sup> Extended Behaviour</p>
-<p>There is some additional behaviour that can be obtained from Ciw that are not officially supported features.</p>
+<p>There is some additional behaviour that can be obtained from Ciw that is not an officially supported feature.</p>
 <ul>
-<li>Ciw can be hybridized with other forms of time-dependent processes including Differential equations even it is not a built-in feature.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/behaviour/hybrid.html" title="DES+SD Hybrid Simulation with Ciw — Ciw 3.1.0 documentation">46</a>,<a href="http://www.geraintianpalmer.org.uk/2023/08/03/hybrid-simulation-ciw/" title="A Guide to Building Hybrid DES+SD Simulations in Ciw">47</a>,<a href="https://orca.cardiff.ac.uk/id/eprint/145799/1/main.pdf" title="Implementing hybrid simulations that integrate DES+SD in Python">48</a>{:target=“_blank”}</sup></li>
+<li>Ciw can be hybridized with other forms of time-dependent processes including differential equations even if it is not a built-in feature.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/behaviour/hybrid.html" title="DES+SD Hybrid Simulation with Ciw — Ciw 3.1.0 documentation">46</a>,<a href="http://www.geraintianpalmer.org.uk/2023/08/03/hybrid-simulation-ciw/" title="A Guide to Building Hybrid DES+SD Simulations in Ciw">47</a>,<a href="https://orca.cardiff.ac.uk/id/eprint/145799/1/main.pdf" title="Implementing hybrid simulations that integrate DES+SD in Python">48</a>{:target=“_blank”}</sup></li>
 <li>Ciw does not have a built-in feature for initializing the state of the system, however the HCiw package provides this functionality.<sup><a href="https://github.com/galenseilis/HCiw/blob/main/src/hciw/waitlist.py" title="HCiw/src/hciw/waitlist.py at main · galenseilis/HCiw">49</a>{:target=“_blank”}</sup></li>
 <li>There are no utilities in Ciw to schedule non-queueing functions, but this is possible with external code.<sup><a href="https://galenseilis.github.io/posts/ciw-external-schedule/" title="External Schedule of Ciw Simulations">50</a>{:target=“_blank”}</sup></li>
-<li>Parallel computing computing is not a built-in feature but can be utilized for repeated runs of the simulation under differing input or pseudorandom seed.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/parallel_process.html" title="How to Parallelise Trials — Ciw 3.1.0 documentation">51</a>{:target=“_blank”}</sup></li>
+<li>Parallel computing is not a built-in feature but can be utilized for repeated runs of the simulation under differing input or pseudorandom seed.<sup><a href="https://ciw.readthedocs.io/en/latest/Guides/parallel_process.html" title="How to Parallelise Trials — Ciw 3.1.0 documentation">51</a>{:target=“_blank”}</sup></li>
 <li>While Ciw collects complete records, it does not automatically report incomplete records (i.e.&nbsp;those that are still in a node at the end of the simulation). It is possible to further extract that information.<sup><a href="https://github.com/galenseilis/HCiw/blob/main/src/hciw/results.py" title="HCiw/src/hciw/results.py at main · galenseilis/HCiw">52</a>{:target=“_blank”}</sup></li>
 </ul>
 </section>
@@ -477,12 +477,12 @@ window.Quarto = {
 </iframe>
 <p><a href="https://vknight.org/unpeudemath/mathematics/2016/10/29/anscombes-quartet-variability-and-ciw.html">*Anscombe’s quartet, variability and studying queues with Python</a>{:target=“_blank”} is a post on Vincent Knight’s blog which uses Ciw.</p>
 <p>A <a href="https://galenseilis.github.io/posts/list-of-queues-ciw/">list of example implementations of some classic queue models in Ciw</a>{:target=“_blank”} is available.</p>
-<p>The blog post <a href="https://www.programmingopiethehokie.com/2023/01/queueing-simulations.html">Queueing Simulations</a>{:target=“_blank”} on the <em>programming opiethehokie</em> illustrates using Ciw to simulation a restricted M/M/c queueing model.</p>
+<p>The blog post <a href="https://www.programmingopiethehokie.com/2023/01/queueing-simulations.html">Queueing Simulations</a>{:target=“_blank”} on the <em>programming opiethehokie</em> illustrates using Ciw to simulate a restricted M/M/c queueing model.</p>
 <p><a href="https://pubmed.ncbi.nlm.nih.gov/37881450/">Monks &amp; Harper 2023</a>{:target=“_blank”} use Ciw to simulate an urgent care calling centre.</p>
 </section>
 <section id="adoption" class="level2">
 <h2 class="anchored" data-anchor-id="adoption">Adoption</h2>
-<p>At the time writing I expect that Ciw has an extremely small community of users.</p>
+<p>At the time of writing I expect that Ciw has an extremely small community of users.</p>
 <section id="star-history" class="level3">
 <h3 class="anchored" data-anchor-id="star-history">Star History</h3>
 <p>The following is a plot of the number of Github stars on the <a href="https://github.com/CiwPython/Ciw">Ciw repository</a>{:target=“_blank”} for Ciw and its closest counterpart, <a href="https://queueing-tool.readthedocs.io/en/latest/">Queuing-tool</a>{:target=“_blank”}.</p>

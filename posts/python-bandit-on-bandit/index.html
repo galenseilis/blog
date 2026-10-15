@@ -207,14 +207,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>Bandit is a Python package for checking for security issues in Python code. I have been thinking about using Bandit to check for security risks in my own software as well as 3rd party packages that I use. I couldn’t help but venture to the potentially ironic situation of Bandit evaluating that Bandit itself is insecure.</p>
+<p><a href="https://bandit.readthedocs.io/">Bandit</a> is a Python package for checking for security issues in Python code. I have been thinking about using Bandit to check for security risks in my own software as well as 3rd party packages that I use. I couldn’t help but venture to the potentially ironic situation of Bandit evaluating that Bandit itself is insecure.</p>
 <p>We can find the version of Bandit we are using like this:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Print the installed bandit version."""</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> bandit</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(bandit.__version__)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The path that the <code>__init__.py</code> file for Bandit is located on your system can be found in <code>bandit.__file__</code>. We can call Bandit from the command line on itself.</p>
+<p>The path where the <code>__init__.py</code> file for Bandit is located on your system can be found in <code>bandit.__file__</code>. We can call Bandit from the command line on itself.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Run bandit on the installed bandit package."""</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>

@@ -230,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td><code>libssl-dev</code></td>
 <td>Secure Sockets Layer toolkit - development files</td>
-<td><a href="https://packages.debian.org/buster/libssl-dev">This package is part of the OpenSSL project’s implementation of the SSL and TLS crypographic protocols for secure communication over the internet.</a></td>
+<td><a href="https://packages.debian.org/buster/libssl-dev">This package is part of the OpenSSL project’s implementation of the SSL and TLS cryptographic protocols for secure communication over the internet.</a></td>
 </tr>
 <tr class="even">
 <td><code>zlib1g-dev</code></td>
@@ -240,7 +240,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td><code>libncurses5-dev</code></td>
 <td>Transitional package for <code>libncurses-dev</code></td>
-<td><a href="https://packages.ubuntu.com/focal/libncurses5-dev">Package prociding <code>libncurses5-dev</code>.</a></td>
+<td><a href="https://packages.ubuntu.com/focal/libncurses5-dev">Package providing <code>libncurses5-dev</code>.</a></td>
 </tr>
 <tr class="even">
 <td><code>libncursesw5-dev</code></td>
@@ -250,7 +250,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td><code>libreadline-dev</code></td>
 <td>GNU readline and history libraries, development files</td>
-<td><a href="libreadline-dev">The GNU readline library aids in the consistency of user interface across discrete programs that need to provide a command line interace</a></td>
+<td><a href="libreadline-dev">The GNU readline library aids in the consistency of user interface across discrete programs that need to provide a command line interface</a></td>
 </tr>
 <tr class="even">
 <td><code>libsqlite3-dev</code></td>
@@ -265,7 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td><code>libdb5.3-dev</code></td>
 <td>Berkeley v5.3 Database Libraries [development]</td>
-<td><a href="https://packages.debian.org/sid/libdb5.3-dev">This is the development package which contains headers and static libraries for the Berkely v5.3 database library</a></td>
+<td><a href="https://packages.debian.org/sid/libdb5.3-dev">This is the development package which contains headers and static libraries for the Berkeley v5.3 database library</a></td>
 </tr>
 <tr class="odd">
 <td><code>libbz2-dev</code></td>
@@ -275,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td><code>liblzma-dev</code></td>
 <td>XZ-format compression library - development files</td>
-<td><a href="https://packages.debian.org/unstable/liblzma-dev">XZ is the successor to the Lempel-Ziv/Markov-chain Algorithm compression format, which provides memory-hungry but powerful compressoin (often better than bzip2) and fast, easy decompression.</a></td>
+<td><a href="https://packages.debian.org/unstable/liblzma-dev">XZ is the successor to the Lempel-Ziv/Markov-chain Algorithm compression format, which provides memory-hungry but powerful compression (often better than bzip2) and fast, easy decompression.</a></td>
 </tr>
 <tr class="odd">
 <td><code>libffi-dev</code></td>
@@ -284,7 +284,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p>Now run the configuration tool that the Python dev’s have kindly prepared. It will prepare a makefile for everything you need to build CPython.</p>
+<p>Now run the configuration tool that the Python devs have kindly prepared, as described in the <a href="https://devguide.python.org/getting-started/setup-building/">CPython Developer’s Guide</a>. It will prepare a makefile for everything you need to build CPython.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./configure <span class="at">--with-pydebug</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>--with-pydebug</code> tells <code>configure</code> to use a debugging hook.</p>
 <p>Finally, you can just run <code>make</code>.</p>

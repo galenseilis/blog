@@ -28,7 +28,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -199,7 +218,7 @@ window.Quarto = {
 
 
 
-<p>In this post I map the arithmetic of neutrosophic numbers to vector functions and then aimlessly wander.</p>
+<p>In this post I map the arithmetic of neutrosophic numbers <span class="citation" data-cites="kandasamy2004">(<a href="#ref-kandasamy2004" role="doc-biblioref">Kandasamy and Smarandache 2004</a>)</span> to vector functions and then aimlessly wander.</p>
 <section id="neutrosophic-scalar-addition" class="level2">
 <h2 class="anchored" data-anchor-id="neutrosophic-scalar-addition">Neutrosophic Scalar Addition</h2>
 <p>For neutrosophic numbers <span class="math inline">\((a+bI)\)</span> and <span class="math inline">\((c+dI)\)</span>, their sum is given by:</p>
@@ -251,9 +270,14 @@ window.Quarto = {
 <p>for any scalar <span class="math inline">\(\alpha\)</span>.</p>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-kandasamy2004" class="csl-entry" role="listitem">
+Kandasamy, W. B. Vasantha, and Florentin Smarandache. 2004. <em>Basic Neutrosophic Algebraic Structures and Their Application to Fuzzy and Neutrosophic Models</em>. Hexis. <a href="https://arxiv.org/abs/math/0412424">https://arxiv.org/abs/math/0412424</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

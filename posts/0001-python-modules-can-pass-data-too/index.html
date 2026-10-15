@@ -211,10 +211,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>This is kind of obvious, but I think it is often skipped over for more complicated solutions: you can pass data from module-to-module using imports. This approach to <a href="https://en.wikipedia.org/wiki/Modular_design">modular design</a> via <a href="https://en.wikipedia.org/wiki/Modular_programming">modular programming</a> allows us a lightweight way to selective execution of code modelled as a directed acyclic graph (DAG).</p>
+<p>This is kind of obvious, but I think it is often skipped over for more complicated solutions: you can pass data from module-to-module using imports. This approach to <a href="https://en.wikipedia.org/wiki/Modular_design">modular design</a> via <a href="https://en.wikipedia.org/wiki/Modular_programming">modular programming</a> allows us a lightweight way to selectively execute code modelled as a <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">directed acyclic graph (DAG)</a>.</p>
 <section id="toy-example" class="level2">
 <h2 class="anchored" data-anchor-id="toy-example">Toy Example</h2>
-<p>Let’s look a small example involving two modules <code>foo</code> and <code>bar</code>.</p>
+<p>Let’s look at a small example involving two modules <code>foo</code> and <code>bar</code>.</p>
 <pre><code>./posts/0001-python-modules-can-pass-data-too/simple_example/
 ├── bar.py
 └── foo.py
@@ -255,12 +255,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="language-server-protocol-lsp-support" class="level2">
 <h2 class="anchored" data-anchor-id="language-server-protocol-lsp-support">Language Server Protocol (LSP) Support</h2>
-<p>One of the extrinstic aspects of this approach that I enjoy is the opportunity to lean heavily into language server protocol (LSP) support in editors. Want to find where a Python variable came from in your project? Use LSP go to definition. Want to find, or look through, all the places where a Python variable is used? Use LSP go to reference. Want to rename a variable consistently throughout the code? Use LSP rename.</p>
+<p>One of the extrinsic aspects of this approach that I enjoy is the opportunity to lean heavily into language server protocol (LSP) support in editors. Want to find where a Python variable came from in your project? Use LSP go to definition. Want to find, or look through, all the places where a Python variable is used? Use LSP go to reference. Want to rename a variable consistently throughout the code? Use LSP rename.</p>
 </section>
 <section id="module-dependencies" class="level2">
 <h2 class="anchored" data-anchor-id="module-dependencies">Module Dependencies</h2>
-<p>LSPs will allow you to efficiency navigate with respect to a given variable under our cursor.</p>
-<p>One of the extrinstic aspects of this approach that I enjoy is the opportunity to lean heavily into language server protocol (LSP) support in editors. Want to find where a Python variable came from in your project? Use LSP go to definition. Want to find, or look through, all the places where a Python variable is used? Use LSP go to reference. Want to rename a variable consistently throughout the code? Use LSP rename.</p>
+<p>LSPs will allow you to efficiently navigate with respect to a given variable under your cursor.</p>
 <p>Imports form a dependency graph in the form of a directed acyclic graph. There are tools for extracting this structure. A project still being maintained for over a decade is the <a href="https://github.com/thebjorn/pydeps"><code>pydeps</code></a> Python package.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -268,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>A dependency graph created by the PyDeps Python package</figcaption>
 </figure>
 </div>
-<p>It can provide a bird’s-eye view of how modules are related to each other via imports. There is also the <code>ruff analyze graph</code> which is currently experimental but released for use. If you’re using ruff anyway, you can also use the <a href="https://docs.astral.sh/ruff/settings/#analyze_include-dependencies"><code>include-dependencies</code></a> to explicit map out dependencies that are <em>not</em> visible via imports.</p>
+<p>It can provide a bird’s-eye view of how modules are related to each other via imports. There is also the <code>ruff analyze graph</code> which is currently experimental but released for use. If you’re using ruff anyway, you can also use the <a href="https://docs.astral.sh/ruff/settings/#analyze_include-dependencies"><code>include-dependencies</code></a> to explicitly map out dependencies that are <em>not</em> visible via imports.</p>
 </section>
 <section id="fuller-example" class="level2">
 <h2 class="anchored" data-anchor-id="fuller-example">Full(er) Example</h2>

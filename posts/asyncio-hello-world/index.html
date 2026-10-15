@@ -208,7 +208,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>We can define a “Hello, World” type of example using Asyncio as follows:</p>
+<p>We can define a “Hello, World” type of example using <a href="https://docs.python.org/3/library/asyncio.html">Asyncio</a> as follows:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> asyncio, time</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -257,7 +257,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(run_python.run_python_file(os.path.join(here, <span class="st">"example.py"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Hello,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>World!</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This setup is fine for simple and isolated blogging examples. Anyway, that’s about as close as I think we’ll get to a “Hello, World” script with Asyncio. As with similar scripts that I have written for Rust and other languages, Quarto’s automatic freezing feature will only look for if the source of the QMD file has changed. Quarto will ignore any example Python files outside of that.</p>
+<p>This setup is fine for simple and isolated blogging examples. Anyway, that’s about as close as I think we’ll get to a “Hello, World” script with Asyncio. As with similar scripts that I have written for Rust and other languages, Quarto’s automatic freezing feature will only look to see if the source of the QMD file has changed. Quarto will ignore any example Python files outside of that.</p>
 
 
 

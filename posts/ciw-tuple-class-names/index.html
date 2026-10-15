@@ -206,7 +206,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>It would be convienent to keep track of classes of customers in Ciw networks based on a collection of attributes. A first approximation is to try using tuples since they are immutable.</p>
+<p>It would be convenient to keep track of classes of customers in <a href="https://ciw.readthedocs.io/en/latest/">Ciw</a> networks based on a collection of attributes. A first approximation is to try using tuples since they are immutable.</p>
 <p>The following code works, and demonstrates that we can use tuples as the class names for Ciw.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ciw</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> ciw.create_network(</span>
@@ -238,7 +238,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> ciw.Simulation(N)</span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>Q.simulate_until_max_time(<span class="dv">9</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Also note that the tuples do not need to be of the same length provided since the lexicographical ordering used to evaluate tuples in Python will stop at the end of the shortest tuple.</p>
+<p>Also note that the tuples do not need to be of the same length, since the <a href="https://docs.python.org/3/reference/expressions.html#comparisons">lexicographical ordering</a> used to evaluate tuples in Python will stop at the end of the shortest tuple.</p>
 <p>But they do need to have order-compatible data. For example, the following code raises <code>TypeError: '&lt;' not supported between instances of 'int' and 'str'</code>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ciw</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> ciw.create_network(</span>

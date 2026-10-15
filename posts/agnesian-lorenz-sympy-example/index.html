@@ -63,7 +63,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -235,7 +254,7 @@ window.Quarto = {
 
 
 <p>This post shows how to use SymPy to express the Agnesian of order one <span class="math inline">\(\mathcal{A}_t^1\)</span> of a system of ordinary differential equations. See <a href="https://unbc.arcabc.ca/islandora/object/unbc:59312">Seilis 2022</a> for a description of the Agnesian operator. Briefly, it represents a form of non-statistical notion of “covariance”.</p>
-<p>In this case let us choose the <a href="https://en.wikipedia.org/wiki/Lorenz_system">Lorenz system</a>.</p>
+<p>In this case let us choose the <a href="https://en.wikipedia.org/wiki/Lorenz_system">Lorenz system</a> <span class="citation" data-cites="lorenz1963">(<a href="#ref-lorenz1963" role="doc-biblioref">Lorenz 1963</a>)</span>.</p>
 <p><span class="math display">\[\frac{dx}{dt} = \sigma (y - x)\]</span></p>
 <p><span class="math display">\[\frac{dy}{dt} = x (\rho - z) - y\]</span></p>
 <p><span class="math display">\[\frac{dz}{dt} = xy - \beta z\]</span></p>
@@ -262,7 +281,12 @@ window.Quarto = {
 
 
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-lorenz1963" class="csl-entry" role="listitem">
+Lorenz, Edward N. 1963. <span>“Deterministic Nonperiodic Flow.”</span> <em>Journal of the Atmospheric Sciences</em> 20 (2): 130–41. <a href="https://doi.org/10.1175/1520-0469(1963)020<0130:DNF>2.0.CO;2">https://doi.org/10.1175/1520-0469(1963)020&lt;0130:DNF&gt;2.0.CO;2</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

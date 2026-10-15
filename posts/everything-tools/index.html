@@ -170,8 +170,8 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>I have been thinking about development software archicture and reading from <a href="https://www.oreilly.com/library/view/architecture-patterns-with/9781492052197/">Architecture Patterns with Python</a> and thinking about what goes wrong with programming larger programs and what to do about it.</p>
-<p>There is something enticing about abstraction and generalization. As a mathematics nerd it is certainly appealing to find such abstractions, but there is a well-known tendency for highly-abstracted software to come with its own challenges. Building ever-more general programs often inadvertantly leads to <a href="https://en.wikipedia.org/wiki/Programming_complexity">programming complexity</a> and <a href="https://en.wikipedia.org/wiki/Software_bloat">software bloat</a>.</p>
+<p>I have been thinking about software development architecture and reading from <a href="https://www.oreilly.com/library/view/architecture-patterns-with/9781492052197/">Architecture Patterns with Python</a> and thinking about what goes wrong with programming larger programs and what to do about it.</p>
+<p>There is something enticing about abstraction and generalization. As a mathematics nerd it is certainly appealing to find such abstractions, but there is a well-known tendency for highly-abstracted software to come with its own challenges. Building ever-more general programs often inadvertently leads to <a href="https://en.wikipedia.org/wiki/Programming_complexity">programming complexity</a> and <a href="https://en.wikipedia.org/wiki/Software_bloat">software bloat</a>.</p>
 <p>A humorous example of software bloat is given in the form of <a href="https://en.wikipedia.org/wiki/Jamie_Zawinski#Zawinski's_Law">Zawinski’s Law</a>:</p>
 <blockquote class="blockquote">
 <p>Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can.</p>
@@ -180,18 +180,18 @@ ul.task-list li input[type="checkbox"] {
 <iframe width="560" height="315" src="https://www.youtube.com/embed/OXq7NAPxLVU?si=hykYCCRlxFqQUjse" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
 <blockquote class="blockquote">
-<p>I would say that building a product and having someone attempt to abstract the product to be able to fit every need possible, and as new needs and unforseen challenges arise, you more a design that was not designed with that in mind to fit it in. And you do that over years. And what ends up happening is it becomes an untenable mess.</p>
-<p>It’s one of my big problems with reusability and abstraction. People really do attempt to make everything possible. And when I use these everything-possible abtractions you necessarily have to shoe-horn in use cases which just often lead to really wonky items.</p>
+<p>I would say that building a product and having someone attempt to abstract the product to be able to fit every need possible, and as new needs and unforeseen challenges arise, you more a design that was not designed with that in mind to fit it in. And you do that over years. And what ends up happening is it becomes an untenable mess.</p>
+<p>It’s one of my big problems with reusability and abstraction. People really do attempt to make everything possible. And when I use these everything-possible abstractions you necessarily have to shoe-horn in use cases which just often lead to really wonky items.</p>
 <p>I do agree that frameworks need more specialization; less everything.</p>
 </blockquote>
 <p>Specialization is somewhat under-rated. What does it provide?</p>
 <p>Sometimes performance, which might be key for certain systems. If you don’t need to check and handle various possibilities related to a system’s state or input then your program can readily move onto other things.</p>
-<p>But for me one of the major selling points is <a href="https://en.wikipedia.org/wiki/Expressive_power_(computer_science)#Information_description">practical expressivity</a>: the concision and ease in which an idea is expressed. Programming tools which are practically expressive often cohere with <a href="https://en.wikipedia.org/wiki/Domain-driven_design">DDD</a>, allowing us to easily translate business problems into code.</p>
+<p>But for me one of the major selling points is <a href="https://en.wikipedia.org/wiki/Expressive_power_(computer_science)#Information_description">practical expressivity</a>: the concision and ease with which an idea is expressed. Programming tools which are practically expressive often cohere with <a href="https://en.wikipedia.org/wiki/Domain-driven_design">DDD</a>, allowing us to easily translate business problems into code.</p>
 <p>The other notion of expressivity, the darker twin of practical expressivity, is theoretical expressivity: whether an idea can be expressed in a formal system (esp.&nbsp;a formal language). Theoretical expressivity can be useful for proving various results about what a system can do, like establishing <a href="https://en.wikipedia.org/wiki/Turing_completeness">Turing completeness</a>, but to make it a unilateral goal is a swift fall into the <a href="https://en.wikipedia.org/wiki/Turing_tarpit">Turing tarpit</a>:</p>
 <blockquote class="blockquote">
 <p>Beware of the Turing tar-pit in which everything is possible but nothing of interest is easy. – <a href="https://en.wikipedia.org/wiki/Alan_Perlis">AP</a>, <a href="https://en.wikipedia.org/wiki/Epigrams_on_Programming">EoP</a></p>
 </blockquote>
-<p>The appeal of maximal abstraction to a programmer is like the siren’s calling the sailors into the ocean to be drowned.</p>
+<p>The appeal of maximal abstraction to a programmer is like the sirens calling the sailors into the ocean to be drowned.</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Draper_Herbert_James_Ulysses_and_the_Sirens.jpg" class="img-fluid"></p>
 <p>Although it has its own shortcomings, there is an appeal to these <a href="https://en.wikipedia.org/wiki/Unix_philosophy#Origin">summarized Unix philosophy principles</a> as a partial treatment for the disease of unbounded abstraction:</p>
 <ul>

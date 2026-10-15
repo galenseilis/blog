@@ -199,7 +199,7 @@ window.Quarto = {
 
 
 
-<p>The basic arithmetic operations on complex numbers can be represented as vector functions.</p>
+<p>The basic arithmetic operations on <a href="https://en.wikipedia.org/wiki/Complex_number">complex numbers</a> can be represented as vector functions.</p>
 <section id="complex-addition" class="level2">
 <h2 class="anchored" data-anchor-id="complex-addition">Complex Addition</h2>
 <p>Suppose we have complex numbers <span class="math inline">\((a+bi)\)</span> and <span class="math inline">\((c+bi)\)</span> where <span class="math inline">\(a,b,c,d \in \mathbb{R}\)</span> and <span class="math inline">\(i \triangleq \sqrt{-1}\)</span>. The sum of these complex numbers can be written as <span class="math inline">\((a + bi) + (c + di) = (a+c)+(b+d)i\)</span>. This can easily be written as</p>
@@ -226,7 +226,7 @@ window.Quarto = {
 <p><span class="math display">\[\begin{bmatrix}a \\ b \end{bmatrix} \dot \times \begin{bmatrix}0 \\ 1 \end{bmatrix} = \begin{bmatrix} 0 &amp; -1 \\ 1 &amp; 0 \end{bmatrix} \begin{bmatrix}a \\ b \end{bmatrix}\]</span></p>
 <p>implying</p>
 <p><span class="math display">\[\begin{bmatrix} 0 &amp; -1 \\ 1 &amp; 0 \end{bmatrix} \left(\begin{bmatrix}a \\ b \end{bmatrix} \dot \times \begin{bmatrix}1 \\ 0 \end{bmatrix} \right) = \begin{bmatrix}a \\ b \end{bmatrix} \dot \times \begin{bmatrix}0 \\ 1 \end{bmatrix}.\]</span></p>
-<p>This means that the two transformed basis vectors are the same up to a rotation of 90 degrees counter-clockwise on the standard Cartesian plane. This should surprise no one who has studied either linear algebra or complex analysis or algebra.</p>
+<p>This means that the two transformed basis vectors are the same up to a <a href="https://en.wikipedia.org/wiki/Rotation_matrix">rotation</a> of 90 degrees counter-clockwise on the standard Cartesian plane. This should surprise no one who has studied either linear algebra or complex analysis or algebra.</p>
 <p>Now let’s put the basis vectors on the left-hand-side.</p>
 <p><span class="math display">\[\begin{bmatrix}a \\ b \end{bmatrix} \dot \times \begin{bmatrix}c \\ d \end{bmatrix} \triangleq \begin{bmatrix}ac-bd \\ ad+bc \end{bmatrix}\]</span></p>
 <p><span class="math display">\[\begin{bmatrix}1 \\ 0 \end{bmatrix} \dot \times \begin{bmatrix}c \\ d \end{bmatrix} \triangleq \begin{bmatrix}c \\ d \end{bmatrix}\]</span></p>
@@ -251,7 +251,7 @@ window.Quarto = {
 <p><span class="math display">\[\vec \nabla^{\odot k} \dot \times \vec v (x,y) = \frac{\partial^k}{\partial x^k} \begin{bmatrix} g(x,y) \\ h(x,y) \end{bmatrix} + \frac{\partial^k}{\partial y^k} \begin{bmatrix} -h(x,y) \\ g(x,y) \end{bmatrix}.\]</span></p>
 <p>It should also be apparent that</p>
 <p><span class="math display">\[\vec \nabla^{\odot k} \dot \times \left[ \alpha \vec v (x,y) \right] = \alpha \left[ \vec \nabla^{\odot k} \dot \times \vec v (x,y) \right]\]</span></p>
-<p>due to the linearity of derivatives.</p>
+<p>due to the <a href="https://en.wikipedia.org/wiki/Linear_map">linearity</a> of derivatives.</p>
 <p>Likewise the linearity of derivatives implies the distribution:</p>
 <p><span class="math display">\[\vec \nabla^{\odot k} \dot \times  \left[ \vec v (x,y) + \vec u (x,y) \right] = \vec \nabla^{\odot k} \dot \times  \vec v (x,y) + \vec \nabla^{\odot k} \dot \times  \vec u (x,y).\]</span></p>
 <p>We can immediately generalize to linear combinations of functions:</p>

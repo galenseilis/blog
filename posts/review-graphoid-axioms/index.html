@@ -28,7 +28,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -199,7 +218,7 @@ window.Quarto = {
 
 
 
-<p>Consider the following definition:</p>
+<p>Consider the following definition <span class="citation" data-cites="pearl2009">(<a href="#ref-pearl2009" role="doc-biblioref">Pearl 2009</a>)</span>:</p>
 <blockquote class="blockquote">
 <p><strong>Definition</strong> (Pearl 2009)</p>
 <p>Let <span class="math inline">\(V = \{V_1, V_2, \ldots \}\)</span> be a finite set of variables.</p>
@@ -207,7 +226,7 @@ window.Quarto = {
 <p>The sets <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are said to be <strong>conditionally independent</strong> given <span class="math inline">\(Z\)</span> if</p>
 <p><span class="math display">\[P(x | y, z) = P(x|z)\]</span> whenever <span class="math inline">\(P(y,z) &gt; 0\)</span>.</p>
 </blockquote>
-<p>Denoting this ternary relation as <span class="math display">\[(X \mathrel{\unicode{x2AEB}} Y \vert Z)\]</span>, whe have the following properties below.</p>
+<p>Denoting this ternary relation as <span class="math display">\[(X \mathrel{\unicode{x2AEB}} Y \vert Z)\]</span>, we have the following properties below.</p>
 <p>The first property is <strong>symmetry</strong>.</p>
 <p><span class="math display">\[(X \mathrel{\unicode{x2AEB}} Y \vert Z) \implies (Y \mathrel{\unicode{x2AEB}} X \vert Z)\]</span></p>
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -220,7 +239,7 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>While this is a form of symmetry, it is not the same as <a href="https://www.sciencedirect.com/science/article/pii/S0195669809001589"><strong>strongly symmetric</strong></a> when describing any given <span class="math inline">\(n\)</span>-ary relation. If it were, we would have to accept propositions such as <span class="math display">\[(X \mathrel{\unicode{x2AEB}} Y \vert Z) \implies (Y \mathrel{\unicode{x2AEB}} Z \vert Y)\]</span>. But this can not be so for the same type of reason as to why <span class="math inline">\(Pr(A\vert B) \neq Pr(B \vert A)\)</span> for at least some probability measure <span class="math inline">\(Pr\)</span> on events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.</p>
+<p>While this is a form of symmetry, it is not the same as <a href="https://www.sciencedirect.com/science/article/pii/S0195669809001589"><strong>strongly symmetric</strong></a> when describing any given <span class="math inline">\(n\)</span>-ary relation. If it were, we would have to accept propositions such as <span class="math display">\[(X \mathrel{\unicode{x2AEB}} Y \vert Z) \implies (Y \mathrel{\unicode{x2AEB}} Z \vert Y)\]</span>. But this cannot be so for the same type of reason as to why <span class="math inline">\(Pr(A\vert B) \neq Pr(B \vert A)\)</span> for at least some probability measure <span class="math inline">\(Pr\)</span> on events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.</p>
 </div>
 </div>
 <p>The second property is <strong>decomposition</strong>,</p>
@@ -235,7 +254,7 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Pearl 2009 seems to use <span class="math inline">\(YW\)</span> instead of <span class="math inline">\((Y,W)\)</span>, giving a false impression that we might be considing some kind of multiplication. See <a href="https://stats.stackexchange.com/q/605959/69508"><em>Notational confusion about conditional independence in Pearl 2009</em></a> for more information.</p>
+<p>Pearl 2009 seems to use <span class="math inline">\(YW\)</span> instead of <span class="math inline">\((Y,W)\)</span>, giving a false impression that we might be considering some kind of multiplication. See <a href="https://stats.stackexchange.com/q/605959/69508"><em>Notational confusion about conditional independence in Pearl 2009</em></a> for more information.</p>
 </div>
 </div>
 <p>The third property is <strong>weak union</strong>.</p>
@@ -247,7 +266,12 @@ Warning
 
 
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-pearl2009" class="csl-entry" role="listitem">
+Pearl, Judea. 2009. <em>Causality: Models, Reasoning, and Inference</em>. 2nd ed. Cambridge University Press.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

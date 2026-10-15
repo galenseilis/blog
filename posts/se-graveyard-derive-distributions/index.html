@@ -28,7 +28,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -208,12 +227,17 @@ window.Quarto = {
 <p>Let there exist a collection of real-valued random variables <span class="math inline">\(\{X_j \sim f_j\}_{j=1}^{n}\)</span> where the univariate distributions <span class="math inline">\(f_i\)</span> are known, and let there be a population parameter <span class="math inline">\(\theta\)</span> that is estimated by <span class="math inline">\(\hat{\theta}\)</span> which is a function <span class="math inline">\(g\)</span> of the random variables:</p>
 <p><span class="math display">\[\hat{\theta} = g\left( X_1, \cdots, X_n \right)\]</span></p>
 <p>Let’s also assume that <span class="math inline">\(g\)</span> and <span class="math inline">\(f_i\)</span> are sufficiently smooth. But let us not assume that any subset of <span class="math inline">\(\{X_j \sim f_j\}_{j=1}^{n}\)</span> is necessarily independent.</p>
-<p>While this description is not sufficient to provide an exact algorithm, I would like to know if there are some common approaches or procedures to deriving the distribution of <span class="math inline">\(\hat{\theta}\)</span>.</p>
+<p>While this description is not sufficient to provide an exact algorithm, I would like to know if there are some common approaches or procedures to deriving the distribution of <span class="math inline">\(\hat{\theta}\)</span> <span class="citation" data-cites="casella2002">(<a href="#ref-casella2002" role="doc-biblioref">Casella and Berger 2002</a>)</span>.</p>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-casella2002" class="csl-entry" role="listitem">
+Casella, George, and Roger L. Berger. 2002. <em>Statistical Inference</em>. 2nd ed. Duxbury.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

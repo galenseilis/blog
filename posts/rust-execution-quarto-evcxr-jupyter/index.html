@@ -209,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>I recently learned that setting up Rust execution in Quarto is easy via <code>evcxr_jupyter</code>.</p>
+<p>I recently learned that setting up Rust execution in Quarto is easy via <a href="https://github.com/evcxr/evcxr/tree/main/evcxr_jupyter"><code>evcxr_jupyter</code></a>.</p>
 <p>The first thing you need to do is ensure that Rust is installed. See <a href="https://www.rust-lang.org/tools/install"><strong>Install Rust</strong></a>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -224,7 +224,7 @@ Tip
 <p>It doesn’t hurt to run <code>rustup update</code> if you have not updated in a while.</p>
 </div>
 </div>
-<p>Then you can use Cargo to install relevant crate. Expect this step to take a while.</p>
+<p>Then you can use Cargo to install the relevant crate. Expect this step to take a while.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cargo install evcxr_jupyter</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then, if necessary, add the executable <code>evcxr_jupyter</code> to <code>PATH</code>. On Debian-based Linux put the following in your <code>.bashrc</code> file</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="va">$PATH</span>:~/.cargo/bin/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>

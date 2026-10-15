@@ -234,7 +234,7 @@ window.Quarto = {
 
 
 
-<p>I was just rumaging through some old files and folders when I found some bizarre attempts at deriving some sort of (I think) probability density functions. I don’t think they ended up being useful for my thesis, but they are are really quite an impressive output from my computer algebra system.</p>
+<p>I was just rummaging through some old files and folders when I found some bizarre attempts at deriving some sort of (I think) <a href="https://en.wikipedia.org/wiki/Probability_density_function">probability density functions</a>. I don’t think they ended up being useful for my thesis, but they are really quite an impressive output from my computer algebra system.</p>
 <p><span class="math display">\[\left( z \mapsto \frac{\int\limits_{-\infty}^{\infty} e^{- \frac{x_{1}^{2}}{2 s_{1}^{2}}} \int\limits_{-\infty}^{\infty} e^{- \frac{x_{0}^{2}}{2 s_{0}^{2}}} \delta\left(- z + \frac{x_{0} x_{1}}{\left|{x_{0}}\right| \left|{x_{1}}\right|}\right)\, dx_{0}\, dx_{1}}{2 \pi s_{0} s_{1}} \right)\]</span></p>
 <p><span class="math display">\[\left( z \mapsto \frac{e^{- \frac{m_{0}^{2}}{2 s_{0}^{2}}} e^{- \frac{m_{1}^{2}}{2 s_{1}^{2}}} \int\limits_{-\infty}^{\infty} e^{- \frac{x_{1}^{2}}{2 s_{1}^{2}}} e^{\frac{m_{1} x_{1}}{s_{1}^{2}}} \int\limits_{-\infty}^{\infty} e^{- \frac{x_{0}^{2}}{2 s_{0}^{2}}} e^{\frac{m_{0} x_{0}}{s_{0}^{2}}} \delta\left(- z + \frac{m_{0} m_{1}}{\left|{m_{0} - x_{0}}\right| \left|{m_{1} - x_{1}}\right|} - \frac{m_{0} x_{1}}{\left|{m_{0} - x_{0}}\right| \left|{m_{1} - x_{1}}\right|} - \frac{m_{1} x_{0}}{\left|{m_{0} - x_{0}}\right| \left|{m_{1} - x_{1}}\right|} + \frac{x_{0} x_{1}}{\left|{m_{0} - x_{0}}\right| \left|{m_{1} - x_{1}}\right|}\right)\, dx_{0}\, dx_{1}}{2 \pi s_{0} s_{1}} \right)\]</span></p>
 <p><span class="math display">\[\left( z \mapsto \frac{e^{- \frac{m_{0}^{2}}{2 s_{0}^{2}}} e^{- \frac{m_{1}^{2}}{2 s_{1}^{2}}} \int\limits_{-\infty}^{\infty} e^{- \frac{x_{1}^{2}}{2 s_{1}^{2}}} e^{\frac{m_{1} x_{1}}{s_{1}^{2}}} \int\limits_{-\infty}^{\infty} e^{- \frac{x_{0}^{2}}{2 s_{0}^{2}}} e^{\frac{m_{0} x_{0}}{s_{0}^{2}}} \delta\left(- z + \frac{x_{0} x_{1}}{\left|{x_{0}}\right| \left|{x_{1}}\right|}\right)\, dx_{0}\, dx_{1}}{2 \pi s_{0} s_{1}} \right)\]</span></p>
@@ -306,7 +306,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p>And here is some code I found which I guess tries to put together ratio distribrutions involving normal variables.</p>
+<p>And here is some code I found which I guess tries to put together <a href="https://en.wikipedia.org/wiki/Ratio_distribution">ratio distributions</a> involving normal variables.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sympy.stats <span class="im">import</span> <span class="op">*</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sympy <span class="im">import</span> latex, Symbol, Abs</span>

@@ -63,7 +63,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -237,7 +256,7 @@ window.Quarto = {
 
 
 <p>In a previous post I showed how to start the most basic Flask web application. In this post I show a dynamic URL which renders content that depends on using the URL as user input. The mathematical function known as <em>factorial</em> is defined as</p>
-<p><span class="math display">\[n! \triangleq \prod_{i=1}^n i\]</span> when <span class="math inline">\(i \geq 1\)</span> and when <span class="math inline">\(n=0\)</span> then <span class="math inline">\(0! \triangleq 1\)</span>. We will set a dynamic URL which takes an integer for which the factorial will be calculated and displayed. We can specify this by passing <code>'/factorial/&lt;int:number&gt;'</code>. The prefix <code>/factorial/</code> is just to remind us that we’re calculating the factorial of a number. The angle brackets <code>&lt;TYPE:...&gt;</code> indicate that something is unspecified input in between the brackets with type <code>TYPE</code>. In this case we want <code>&lt;int: ...&gt;</code> because the factorial function (not to be confused with its generalizations, like the gamma function) is defined only for non-negative integers. It is natural to use <code>number</code> since we expect a number, but other names are possible for this.</p>
+<p><span class="math display">\[n! \triangleq \prod_{i=1}^n i\]</span> when <span class="math inline">\(n \geq 1\)</span> and when <span class="math inline">\(n=0\)</span> then <span class="math inline">\(0! \triangleq 1\)</span> <span class="citation" data-cites="factorial2023">(<a href="#ref-factorial2023" role="doc-biblioref">Wikipedia contributors 2023</a>)</span>. We will set a dynamic URL which takes an integer for which the factorial will be calculated and displayed. We can specify this by passing <code>'/factorial/&lt;int:number&gt;'</code>. The prefix <code>/factorial/</code> is just to remind us that we’re calculating the factorial of a number. The angle brackets <code>&lt;TYPE:...&gt;</code> indicate that something is unspecified input in between the brackets with type <code>TYPE</code>. In this case we want <code>&lt;int: ...&gt;</code> because the factorial function (not to be confused with its generalizations, like the gamma function) is defined only for non-negative integers. It is natural to use <code>number</code> since we expect a number, but other names are possible for this.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> factorial</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask</span>
@@ -254,7 +273,12 @@ window.Quarto = {
 
 
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-factorial2023" class="csl-entry" role="listitem">
+Wikipedia contributors. 2023. <em>Factorial</em>. <a href="https://en.wikipedia.org/wiki/Factorial" class="uri">Https://en.wikipedia.org/wiki/Factorial</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

@@ -210,7 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>In this post I am going to show a Flask application which takes an integer and searches the Magic the Gathering database for an image of a corresponding card whose “multiverse ID” is the same as the given number.</p>
-<p>I used the <code>requests</code> package to get the image content. Supposing you get the content back, which will result in a response status code of 200, the image will still need to be converted into a memory binary stream. That’s where <code>io.BytesIO</code> comes in handy. Once the stream is prepared, the <code>flask.send_file</code> function can be used to prepare the rendered page content containing the file.</p>
+<p>I used the <a href="https://requests.readthedocs.io/en/latest/"><code>requests</code></a> package to get the image content. Supposing you get the content back, which will result in a response status code of 200, the image will still need to be converted into a memory binary stream. That’s where <a href="https://docs.python.org/3/library/io.html#io.BytesIO"><code>io.BytesIO</code></a> comes in handy. Once the stream is prepared, the <a href="https://flask.palletsprojects.com/en/stable/api/#flask.send_file"><code>flask.send_file</code></a> function can be used to prepare the rendered page content containing the file.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, send_file</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> io <span class="im">import</span> BytesIO</span>
@@ -238,7 +238,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">'__main__'</span>:</span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    app.run(debug<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This app should allow you to input different numbers into the URL which then will render an Magic the Gathering card image, or will give an error.</p>
+<p>This app should allow you to input different numbers into the URL which then will render a Magic the Gathering card image, or will give an error.</p>
 
 
 

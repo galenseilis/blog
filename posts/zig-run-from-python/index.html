@@ -210,7 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In this post I share a way to compile and run a Zig file using Python, which in turn can be used to render the output of the Zig program in Quarto.</p>
 <section id="python-script" class="level2">
 <h2 class="anchored" data-anchor-id="python-script">Python Script</h2>
-<p>The Python script I developed is similar to the one I made for Rust, except that it does two phases. While Zig has a very powerful and flexible build system, I will only attempt to compile a single project file.</p>
+<p>The Python script I developed is similar to the one I made for Rust, except that it does two phases. While Zig has a very powerful and flexible <a href="https://ziglang.org/learn/build-system/">build system</a>, I will only attempt to compile a single project file.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Build and run a Zig project, returning the program's standard output.</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">The project is built with ``zig build`` and the executable produced under</span></span>
@@ -336,7 +336,7 @@ Caution
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>While Zig doesn’t really have a REPL (that I’m aware of), you can include its standard output in Quarto blogs using Python’s Subprocess library.</p>
+<p>While Zig doesn’t really have a REPL (that I’m aware of), you can include its standard output in Quarto blogs using Python’s <a href="https://docs.python.org/3/library/subprocess.html">subprocess</a> library.</p>
 
 
 </section>

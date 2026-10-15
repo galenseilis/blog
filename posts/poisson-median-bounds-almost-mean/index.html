@@ -28,7 +28,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -202,7 +221,7 @@ window.Quarto = {
 <section id="question-1" class="level2">
 <h2 class="anchored" data-anchor-id="question-1">Question 1</h2>
 <p>When do the bounds on the median <span class="math inline">\(\nu\)</span> of a Poisson distribution equal (or nearly equal) the mean of the distribution, <span class="math inline">\(\frac{1}{\lambda}\)</span>?</p>
-<p>The bounds of the median are given as</p>
+<p>The bounds of the median are given as <span class="citation" data-cites="choi1994">(<a href="#ref-choi1994" role="doc-biblioref">Choi 1994</a>)</span></p>
 <p><span class="math display">\[\lambda - \ln 2 \leq \nu &lt; \lambda + \frac{1}{3}\]</span></p>
 <section id="lower-bound" class="level3">
 <h3 class="anchored" data-anchor-id="lower-bound">Lower Bound</h3>
@@ -234,9 +253,14 @@ window.Quarto = {
 <p>Interestingly, no matter what value <span class="math inline">\(\lambda\)</span> takes there is a constant-width interval for the values of the median.</p>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-choi1994" class="csl-entry" role="listitem">
+Choi, Kwok Pui. 1994. <span>“On the Medians of Gamma Distributions and an Equation of Ramanujan.”</span> <em>Proceedings of the American Mathematical Society</em> 121 (1): 245–51. <a href="https://doi.org/10.1090/S0002-9939-1994-1195477-8">https://doi.org/10.1090/S0002-9939-1994-1195477-8</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

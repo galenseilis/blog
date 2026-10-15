@@ -238,7 +238,7 @@ window.Quarto = {
 
 
 <p>In this post we will not only have dynamic URLs, but start loading HTML templates. In the last post I wrote on Flask I used the factorial function. In this post we’ll take a number and GET/POST different templates depending on whether the input number is a prime number.</p>
-<p>To check that a number is prime we can first check whether the candidate is less than 2. For natural numbers the number 2 is the smallest prime.</p>
+<p>To check that a number is <a href="https://en.wikipedia.org/wiki/Prime_number">prime</a> we can first check whether the candidate is less than 2. For natural numbers the number 2 is the smallest prime.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -263,7 +263,7 @@ Note
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>The number {{ number }} is a prime!<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>and in <code>example_is_not_prime.html</code> I put</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>The number {{ number }} is not a prime!<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Note that neither of these files have the usual preamble that you’d find in an <code>index.html</code> file. That’s taken care of behind the scenes. You can also see <code>{ number }</code> which specifies a variable name that is expected to come from <code>render_template</code>.</p>
+<p>Note that neither of these files have the usual preamble that you’d find in an <code>index.html</code> file. That’s taken care of behind the scenes. You can also see <code>{ number }</code> which specifies a variable name that is expected to come from <a href="https://flask.palletsprojects.com/en/stable/api/#flask.render_template"><code>render_template</code></a>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, render_template</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_prime(n):</span>
@@ -288,7 +288,7 @@ Note
 <span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">'__main__'</span>:</span>
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    app.run(debug<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>When you run this application you’ll be able to enter various numbers in, and what will be displayed is a sentence telling you whether the number you provided in the URL is a prime number of note.</p>
+<p>When you run this application you’ll be able to enter various numbers in, and what will be displayed is a sentence telling you whether the number you provided in the URL is a prime number or not.</p>
 
 
 

@@ -28,7 +28,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -175,11 +194,11 @@ ul.task-list li input[type="checkbox"] {
 <p>This post is an ongoing series of responses to the following video:</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/qee6b7vl2O0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
-<p>While Dustin and I have a disagreement about the usefulness of classic rank-based statistics, I will offer a point of potential agreement that they are simplistic (i.e.&nbsp;not just simple but <em>too simple</em>) for many modern research problems. There are sophisticated ways of using ranks that are suitable for complex problems, but I wanted to offer (what may seem like a <a href="https://www.dictionary.com/e/slang/weird-flex-but-okay/">weird flex</a>) that we can study order <em>without</em> ranks. I believe that there are, and will be more, ways to study order that do not involve excplit use of ranks. In this post I want to very briefly outline an idea of how to study order without ranks.</p>
+<p>While Dustin and I have a disagreement about the usefulness of classic rank-based statistics, I will offer a point of potential agreement that they are simplistic (i.e.&nbsp;not just simple but <em>too simple</em>) for many modern research problems. There are sophisticated ways of using ranks that are suitable for complex problems, but I wanted to offer (what may seem like a <a href="https://www.dictionary.com/e/slang/weird-flex-but-okay/">weird flex</a>) that we can study order <em>without</em> ranks. I believe that there are, and will be more, ways to study order that do not involve explicit use of ranks. In this post I want to very briefly outline an idea of how to study order without ranks.</p>
 </section>
 <section id="what-is-order" class="level1">
 <h1>What Is Order?</h1>
-<p>First of all, we need more rigorous tools. Thinking intuitively about order will eventually lead to confusion and fuzzy thinking that is difficult to translate into methods of analysis. Fortunately, there is <a href="https://en.wikipedia.org/wiki/Order_theory">Order Theory</a>, which is a branch of mathematics that makes order its explicit target of study. I’ve been (very slowly) making my way through <a href="https://www.youtube.com/playlist?list=PL5rqYzyihIQ0nzfnsEKxxedCpbNQoifgg">these lectures</a> provide a mathematical introduction. What is the first thing to know about order from this perspective?</p>
+<p>First of all, we need more rigorous tools. Thinking intuitively about order will eventually lead to confusion and fuzzy thinking that is difficult to translate into methods of analysis. Fortunately, there is <a href="https://en.wikipedia.org/wiki/Order_theory">Order Theory</a>, which is a branch of mathematics that makes order its explicit target of study. I’ve been (very slowly) making my way through <a href="https://www.youtube.com/playlist?list=PL5rqYzyihIQ0nzfnsEKxxedCpbNQoifgg">these lectures</a> which provide a mathematical introduction. What is the first thing to know about order from this perspective?</p>
 <p>Order in conventional mathematics is <strong>not</strong> about numbers <em>per se</em>. Rather orders are binary relations, which are subsets of <a href="https://en.wikipedia.org/wiki/Cartesian_product">Cartesian products</a>. An order is a binary relation with certain properties, and there are actually different classes of orders.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -191,24 +210,24 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>I found that n-ary orders are readily definable but I won’t explore that generalization here. It requires generalizing some of the specific properties such as reflexivty, asymmetry/antisymmetry, and transitivty. For example, see <a href="https://www.sciencedirect.com/science/article/pii/S0195669809001589">Cristea and Ştefănescu 2010</a> that describe existing definitions of reflexivity and transitivty for n-ary relations.</p>
+<p>I found that n-ary orders are readily definable but I won’t explore that generalization here. It requires generalizing some of the specific properties such as reflexivity, asymmetry/antisymmetry, and transitivity. For example, see <a href="https://www.sciencedirect.com/science/article/pii/S0195669809001589">Cristea and Ştefănescu 2010</a> that describe existing definitions of reflexivity and transitivity for n-ary relations.</p>
 </div>
 </div>
-<p>In my opinion the ‘first’ (see how I am using order there 😉) type of order to become familiar with the notion of a <a href="https://en.wikipedia.org/wiki/Partially_ordered_set">partial order</a>. They come in a non-strict variety where the relation is <a href="https://en.wikipedia.org/wiki/Reflexive_relation">reflexive</a>, <a href="https://en.wikipedia.org/wiki/Antisymmetric_relation">antisymmetric</a>, and <a href="https://en.wikipedia.org/wiki/Transitive_relation">transitive</a>. A strict partial order has <a href="https://en.wikipedia.org/wiki/Reflexive_relation#Irreflexive_relation">irreflexivity</a> instead of reflexivity and <a href="https://en.wikipedia.org/wiki/Asymmetric_relation">asymmetry</a> instead of antisymmetry.</p>
-<p>What is particularly noteworthy is the fact that order is representable without not only ranks but numbers altogether! Order from an Order Theory perspective is not about numbers so much as patterns about how things are paired together. This offers an approach to studying order in the empirical world by looking at patternsin how data are paired together.</p>
+<p>In my opinion the ‘first’ (see how I am using order there 😉) type of order to become familiar with is a <a href="https://en.wikipedia.org/wiki/Partially_ordered_set">partial order</a>. They come in a non-strict variety where the relation is <a href="https://en.wikipedia.org/wiki/Reflexive_relation">reflexive</a>, <a href="https://en.wikipedia.org/wiki/Antisymmetric_relation">antisymmetric</a>, and <a href="https://en.wikipedia.org/wiki/Transitive_relation">transitive</a>. A strict partial order has <a href="https://en.wikipedia.org/wiki/Reflexive_relation#Irreflexive_relation">irreflexivity</a> instead of reflexivity and <a href="https://en.wikipedia.org/wiki/Asymmetric_relation">asymmetry</a> instead of antisymmetry.</p>
+<p>What is particularly noteworthy is the fact that order is representable without not only ranks but numbers altogether! Order from an Order Theory perspective is not about numbers so much as patterns about how things are paired together. This offers an approach to studying order in the empirical world by looking at patterns in how data are paired together.</p>
 <div class="callout-danger">
 <p>It is a common misconception that mathematics is inherently or only about numbers or about calculation.</p>
 </div>
 </section>
 <section id="a-non-rank-based-approach" class="level1">
 <h1>A Non-Rank-Based Approach</h1>
-<p>So what’s the entrypoint for data analysis? Network analysis. Network analysis is the study of empirical <a href="https://en.wikipedia.org/wiki/Graph_theory">graphs</a>. Note that the edge set of a graph is relation, and also notice that it can be <em>any</em> (homogenous) relation on the vertex set including orders. So some graphs have edge sets that are orders.</p>
+<p>So what’s the entrypoint for data analysis? Network analysis. Network analysis is the study of empirical <a href="https://en.wikipedia.org/wiki/Graph_theory">graphs</a>. Note that the edge set of a graph is a relation, and also notice that it can be <em>any</em> (homogeneous) relation on the vertex set including orders. So some graphs have edge sets that are orders.</p>
 <p>What sort of graphs can we study through network analysis with order theory in mind?</p>
 <p>Suppose we have observed a collection of pairs. We can take those pairs to be the edges of a <a href="https://en.wikipedia.org/wiki/Directed_graph">directed graph (digraph)</a>. With this directed graph we can consider a <a href="https://en.wikipedia.org/wiki/Reachability">reachability relation</a> on its nodes which is a partial order when the digraph is acyclic and otherwise will be a <a href="https://en.wikipedia.org/wiki/Preorder">preorder</a>. With this reachability relation in hand we can compute various counting, probability, or other measures/functions on it that describe how orderly the structure of the network is.</p>
-<p>Okay, but networks often change structure. Some of these changes may be quite predictable while others are random with respect to what we know. We need statistics once again! The formal definition of a <a href="https://en.wikipedia.org/wiki/Random_variable#Definition">random variable</a> says nothing about whether its image or domain are numbers or not. The pure math only supposes any set with certain operations (the <a href="https://en.wikipedia.org/wiki/Zermelo%E2%80%93Fraenkel_set_theory">ZFC</a> axioms are more than enough). Indeed, we can have random <em>things</em> which are not numbers. This naturally brings us to the notion of random networks. Explicitly assigning a probability to each possible network is often infeasible except on a relatively small space of networks. Instead it can be more feasible to model a conditional likelihood for when the edges or vertices are observed. Richard McElreath has a delightful example which I’ve been able to adapt to a healthcare setting:</p>
+<p>Okay, but networks often change structure. Some of these changes may be quite predictable while others are random with respect to what we know. We need statistics once again! The formal definition of a <a href="https://en.wikipedia.org/wiki/Random_variable#Definition">random variable</a> says nothing about whether its image or domain are numbers or not. The pure math only supposes any set with certain operations (the <a href="https://en.wikipedia.org/wiki/Zermelo%E2%80%93Fraenkel_set_theory">ZFC</a> axioms are more than enough). Indeed, we can have random <em>things</em> which are not numbers. This naturally brings us to the notion of random networks. Explicitly assigning a probability to each possible network is often infeasible except on a relatively small space of networks. Instead it can be more feasible to model a conditional likelihood for when the edges or vertices are observed. Richard McElreath has a delightful example <span class="citation" data-cites="mcelreath2020">(<a href="#ref-mcelreath2020" role="doc-biblioref">McElreath 2020</a>)</span> which I’ve been able to adapt to a healthcare setting:</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/hnYhJzYAQ60?si=YDV2s3ocyNZ5fZDD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
-<p>With a random network we should expect our descriptions of the ordinliness of our data to vary according to some distribtuion.</p>
+<p>With a random network we should expect our descriptions of the orderliness of our data to vary according to some distribution.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -225,12 +244,17 @@ Tip
 </section>
 <section id="concluding-thoughts" class="level1">
 <h1>Concluding Thoughts</h1>
-<p>Personally, I think we’ve barely scratched the surface of studying order in an empirical setting. I’m excited by the possiblities for applications of order theory. Order can be studied without ranks, but I don’t think ranks are inherently problematic either and may enhance certain analyses. I tried to specifically <em>not</em> use ranks in this post, but there are some additional things we can add to that random/dynamic network analysis that <em>do</em> involve ranks.</p>
+<p>Personally, I think we’ve barely scratched the surface of studying order in an empirical setting. I’m excited by the possibilities for applications of order theory. Order can be studied without ranks, but I don’t think ranks are inherently problematic either and may enhance certain analyses. I tried to specifically <em>not</em> use ranks in this post, but there are some additional things we can add to that random/dynamic network analysis that <em>do</em> involve ranks.</p>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-mcelreath2020" class="csl-entry" role="listitem">
+McElreath, Richard. 2020. <em>Statistical Rethinking: A Bayesian Course with Examples in r and Stan</em>. 2nd ed. CRC Press.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

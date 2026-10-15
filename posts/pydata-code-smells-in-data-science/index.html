@@ -28,7 +28,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -172,7 +191,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>This post is my notes from the video <em>Laszlo Sragner - Code Smells in Data Science: What can we do about them? | PyData London 2023</em>. I don’t necessary agree with all the points made, but I echo them as they’re delivered.</p>
+<p>This post is my notes from the video <em>Laszlo Sragner - Code Smells in Data Science: What can we do about them? | PyData London 2023</em>. I don’t necessarily agree with all the points made, but I echo them as they’re delivered.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/QJ4Z9KpdjIo?si=e9FoCuZ2JLC7HbXM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
 </section>
@@ -196,7 +215,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Rename variables</li>
 <li>Extract helpers</li>
 </ul></li>
-<li>Excess varaibles
+<li>Excess variables
 <ul>
 <li>Inline</li>
 <li>Comprehensions</li>
@@ -207,7 +226,7 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 <li>Too many levels: if branches
 <ul>
-<li>Extract gaurd clauses</li>
+<li>Extract guard clauses</li>
 </ul></li>
 <li>Too many levels: for loops
 <ul>
@@ -233,7 +252,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>Long parameter lists</li>
 <li>Data clumps</li>
-<li>Primative obsession</li>
+<li>Primitive obsession</li>
 </ul></li>
 <li>Couplers -&gt; Extract method
 <ul>
@@ -281,9 +300,9 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>Programming is communication</li>
 <li>Concentrate on the dataflow</li>
-<li>Identity problem areas</li>
+<li>Identify problem areas</li>
 <li>Prepare the code</li>
-<li>Identity code smells</li>
+<li>Identify code smells</li>
 <li>Use refactoring recipes</li>
 <li>Evaluate the TCO of code</li>
 <li>Establish a culture</li>
@@ -293,7 +312,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="commentary" class="level2">
 <h2 class="anchored" data-anchor-id="commentary">Commentary</h2>
 <p>I agree that programming is sometimes a form of communication. It can be a form of communication to others or yourself in the future. There is no objective way to do this. Some person will look at a piece of code and then decide it is very clear, but another person could look at that code and decide that it is very unclear. How code is written for communication matters, but it matters in a statistical way. And yet high-quality empirical research to characterize this is rare because producing such studies requires an extraordinary amount of work.</p>
-<p>Communication doesn’t necessarily require a language, at least in the linguist’s sense of the term. You can communicate with pets or wildlife that do not have a language. For computer programmers a useful language is obviously the source code. But not just the source code. Patrick Viafore’s <em>Robust Python: Write clean and maintainable code</em> discusses multiple modes of communication (executable) code, comments,version control history, tests, wikis, in-project documentation, video recordings, design documentation, agile boards, email, instant messaging, direct communication, talks, code review, and meetings. Each of these modes vary by their cost and the degree of proximity required. Some modes are synchronous, and others asychronous.</p>
+<p>Communication doesn’t necessarily require a language, at least in the linguist’s sense of the term. You can communicate with pets or wildlife that do not have a language. For computer programmers a useful language is obviously the source code. But not just the source code. Patrick Viafore’s <em>Robust Python: Write clean and maintainable code</em> <span class="citation" data-cites="viafore2021">(<a href="#ref-viafore2021" role="doc-biblioref">Viafore 2021</a>)</span> discusses multiple modes of communication (executable) code, comments, version control history, tests, wikis, in-project documentation, video recordings, design documentation, agile boards, email, instant messaging, direct communication, talks, code review, and meetings. Each of these modes vary by their cost and the degree of proximity required. Some modes are synchronous, and others asynchronous.</p>
 <p>I’ve heard this “we read more than we write” claim before. I don’t know if it is true in general. On some projects I have read way more than I coded, and other times I coded pretty much the whole time. I suspect this just depends too much on context.</p>
 <p>Having standardized solutions to well-understood issues makes sense. Issues that are not well-understood are not ready for a standard solution.</p>
 <p>Productivity is definitely an important aspect of programming that the end-users/clients often appreciate. As long as it is genuine productivity and not just speed running towards something mediocre or worse.</p>
@@ -306,9 +325,14 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-viafore2021" class="csl-entry" role="listitem">
+Viafore, Patrick. 2021. <em>Robust Python: Write Clean and Maintainable Code</em>. O’Reilly Media.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

@@ -28,7 +28,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -200,14 +219,13 @@ window.Quarto = {
 
 
 <p>This post is just some spitballing around the idea of quantifying the memory of a distribution.</p>
-<p>The exponential distribution is the only distribution with the memorylessnss property. What this means is that</p>
-<p>What this means is that</p>
+<p>The exponential distribution is the only distribution with the memorylessness property <span class="citation" data-cites="casella2002 feller1971">(<a href="#ref-casella2002" role="doc-biblioref">Casella and Berger 2002</a>; <a href="#ref-feller1971" role="doc-biblioref">Feller 1971</a>)</span>. What this means is that</p>
 <p><span class="math display">\[Pr[T &gt; t + s \mid T &gt; s] = Pr[T &gt; t]\]</span></p>
 <p>for all <span class="math inline">\(s,t \geq 0\)</span>.</p>
 <p>What I would suggest calling the “memoryless gap” is simply the difference:</p>
 <p><span class="math display">\[\mathcal{R}_T(s,t) = Pr[T &gt; t + s \mid T &gt; s] - Pr[T &gt; t]\]</span></p>
 <p>Note that in general <span class="math inline">\(\mathcal{R}_{T}(s,t)\)</span> is a function both of the variable <span class="math inline">\(t\)</span> and the added translation parameter <span class="math inline">\(s\)</span>, so the memoryless gap is a surface. For the case of the exponential it is a plane over <span class="math inline">\(\mathbb{R}^2\)</span> with elevation of zero.</p>
-<p>As it is defined in terms of the excedence probabilites, one primarily needs to know a cumulative distribution function for the variable of interest.</p>
+<p>As it is defined in terms of the exceedance probabilities, one primarily needs to know a cumulative distribution function for the variable of interest.</p>
 <p><span class="math display">\[
 \begin{align}
     \mathcal{R}_{X}(s,x) \triangleq &amp;  \frac{1 - F_{X}(x + s)}{1 - F_{X}(x)} - (1 - F_X(x)) \\
@@ -223,11 +241,25 @@ window.Quarto = {
 <p>or</p>
 <p><span class="math display">\[\mathcal{R}(s,x)^2\]</span></p>
 <p>could help us find where the distribution has the least memory regardless of sign.</p>
-<p>A property like this makes me wonder about optimization objectives. Could there be any modelling benefit to finding a least-memory parametrization of a distribution? Or using the memoryless gap as a regularization term analogous to lasso/ridge?</p>
+<p>A property like this makes me wonder about optimization objectives. Could there be any modelling benefit to finding a least-memory parametrization of a distribution? Or using the memoryless gap as a regularization term analogous to lasso <span class="citation" data-cites="tibshirani1996">(<a href="#ref-tibshirani1996" role="doc-biblioref">Tibshirani 1996</a>)</span>/ridge <span class="citation" data-cites="hoerl1970">(<a href="#ref-hoerl1970" role="doc-biblioref">Hoerl and Kennard 1970</a>)</span>?</p>
 
 
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-casella2002" class="csl-entry" role="listitem">
+Casella, George, and Roger L. Berger. 2002. <em>Statistical Inference</em>. 2nd ed. Duxbury.
+</div>
+<div id="ref-feller1971" class="csl-entry" role="listitem">
+Feller, William. 1971. <em>An Introduction to Probability Theory and Its Applications</em>. 2nd ed. Vol. 2. Wiley.
+</div>
+<div id="ref-hoerl1970" class="csl-entry" role="listitem">
+Hoerl, Arthur E., and Robert W. Kennard. 1970. <span>“Ridge Regression: Biased Estimation for Nonorthogonal Problems.”</span> <em>Technometrics</em> 12 (1): 55–67. <a href="https://doi.org/10.1080/00401706.1970.10488634">https://doi.org/10.1080/00401706.1970.10488634</a>.
+</div>
+<div id="ref-tibshirani1996" class="csl-entry" role="listitem">
+Tibshirani, Robert. 1996. <span>“Regression Shrinkage and Selection via the Lasso.”</span> <em>Journal of the Royal Statistical Society: Series B (Methodological)</em> 58 (1): 267–88. <a href="https://doi.org/10.1111/j.2517-6161.1996.tb02080.x">https://doi.org/10.1111/j.2517-6161.1996.tb02080.x</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

@@ -63,7 +63,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -246,7 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="key-concepts">Key Concepts</h3>
 <p>The major difference is the introduction of enums for driving events and parking events rather than just having a single type of event. Let’s break down the key concepts anyway.</p>
 <p>First, there are events implemented using an <code>Event</code> struct which always have two types of data: <code>time</code> and <code>event_type</code>. The <code>time</code> datum is the time that the event is scheduled to elapse. The <code>event_type</code> essentially provides a flag for how to update the state of the simulated car.</p>
-<p>The <code>Environment</code> struct manages the simulation, including the event schedule is is implemented as a reverse binary heap (<code>BinaryHeap</code> combined with <code>Reverse</code>).</p>
+<p>The <code>Environment</code> struct manages the simulation, including the event schedule which is implemented as a reverse binary heap (<code>BinaryHeap</code> combined with <code>Reverse</code>) <span class="citation" data-cites="cormen2009">(<a href="#ref-cormen2009" role="doc-biblioref">Cormen et al. 2009</a>)</span>.</p>
 <p>Lastly, is the use of Rust’s enums. Here they are used to define the two types of events: <code>Parking</code> and <code>Driving</code>.</p>
 </section>
 <section id="implementation" class="level3">
@@ -259,7 +278,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">std::collections::</span>BinaryHeap<span class="op">;</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">std::cmp::</span>Reverse<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>Ordering</code> provides traits that we’ll use for implementing the ordering of events in the event schedule. <code>BinaryHeap</code> and <code>Reverse</code> are useful for implementing the event schedule itself.</p>
-<p>Next I defined different types of events. Maybe it would be more logical to define the existence of events first, but we’re just going in the order of my code event if that is a little weird. I defined different types of events as a <code>EventType</code> enumeration. I also used the <code>derive</code> attribute to attach traits related to debugging and comparison of events.</p>
+<p>Next I defined different types of events. Maybe it would be more logical to define the existence of events first, but we’re just going in the order of my code even if that is a little weird. I defined different types of events as a <code>EventType</code> enumeration. I also used the <code>derive</code> attribute to attach traits related to debugging and comparison of events.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>derive<span class="at">(</span><span class="bu">Debug</span><span class="op">,</span> <span class="bu">PartialEq</span><span class="op">,</span> <span class="bu">PartialOrd</span><span class="at">)]</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> EventType <span class="op">{</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    Parking<span class="op">,</span></span>
@@ -366,7 +385,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="performance" class="level1">
 <h1>Performance</h1>
-<p>I am curious about the relative performance the simpy example compared to the Rust example. We can run each example a bunch of times to obtain distributions. Since this car example should be compatible with PyPy, a just in time compiled interpreter for a restriction implementation of Python, we will use that as well as the CPython interpreter. We’ll collect up a bunch of results for both Python and Rust.</p>
+<p>I am curious about the relative performance of the SimPy example compared to the Rust example. We can run each example a bunch of times to obtain distributions. Since this car example should be compatible with PyPy, a just in time compiled interpreter for a restricted implementation of Python, we will use that as well as the CPython interpreter. We’ll collect up a bunch of results for both Python and Rust.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Benchmark the simpy car example against its Rust implementation.</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">The simpy ``car.py`` example is run many times under CPython (and under PyPy</span></span>
@@ -511,9 +530,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Overall it is clear that Rust is substantially faster than the Python-based implementations, which is no surprise. Rust is statically typed, and doesn’t have a garbage collector.</p>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-cormen2009" class="csl-entry" role="listitem">
+Cormen, Thomas H., Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein. 2009. <em>Introduction to Algorithms</em>. 3rd ed. The MIT Press.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

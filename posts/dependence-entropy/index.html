@@ -28,7 +28,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -204,31 +223,36 @@ window.Quarto = {
 <p><span class="math display">\[\phi(x_1, \ldots, x_n) \triangleq F_{X_1, \ldots, X_n}(x_1, \ldots, x_n) - \prod_{j=1}^n F_{X_j}(x_j)\]</span></p>
 <p>where</p>
 <p><span class="math display">\[F_{X_1, \ldots, X_n}\]</span></p>
-<p>is the joint <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function">CDF</a>{:target=“_blank”}over the random variables</p>
+<p>is the joint <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function">CDF</a>{:target=“_blank”} over the random variables</p>
 <p><span class="math display">\[X_1, \ldots, X_n\]</span></p>
 <p>and</p>
 <p><span class="math display">\[F_{X_j}(x_j)\]</span></p>
 <p>is the marginal CDF of the <span class="math inline">\(j\)</span>th variable. That is, the independence gap directly quantifies (in a signed way) the statistical dependence about a point <span class="math display">\[(x_1, \ldots, x_n)\]</span> based on the definition of statistical independence.</p>
-<p>The independence gap whose range can be generally taken to be the real-interval <span class="math display">\[[-1,1]\]</span>. As such, it has <a href="https://en.wikipedia.org/wiki/Positive_and_negative_parts">positive and negative parts</a>{:target=“_blank”}:</p>
+<p>The independence gap has a range that can be generally taken to be the real interval <span class="math display">\[[-1,1]\]</span>. As such, it has <a href="https://en.wikipedia.org/wiki/Positive_and_negative_parts">positive and negative parts</a>{:target=“_blank”}:</p>
 <p><span class="math display">\[\phi^+(x_1, \ldots, x_n) = \frac{\|\phi(x_1, \ldots, x_n)\| + \phi(x_1, \ldots, x_n)}{2}\]</span></p>
 <p><span class="math display">\[\phi^-(x_1, \ldots, x_n) = \frac{\|\phi(x_1, \ldots, x_n)\| - \phi(x_1, \ldots, x_n)}{2}\]</span></p>
 <p>It follows immediately that</p>
 <p><span class="math display">\[0 \leq \phi^+(x_1, \ldots, x_n) \leq \|\phi(x_1, \ldots, x_n)\|\]</span></p>
 <p>and</p>
 <p><span class="math display">\[0 \leq \phi^-(x_1, \ldots, x_n) \leq \|\phi(x_1, \ldots, x_n)\|.\]</span></p>
-<p>which allows us to normalize (when the denominator is non-zero) the totality of the positive and negative parts of the independence gap:</p>
+<p>This allows us to normalize (when the denominator is non-zero) the totality of the positive and negative parts of the independence gap:</p>
 <p><span class="math display">\[\rho_+ = \frac{\int_{\Omega} \phi^+(x_1, \ldots, x_n) d \Omega}{\int_{\Omega} \|\phi(x_1, \ldots, x_n)\| d \Omega}\]</span></p>
 <p><span class="math display">\[\rho_- = \frac{\int_{\Omega} \phi^-(x_1, \ldots, x_n) d \Omega}{\int_{\Omega} \|\phi(x_1, \ldots, x_n)\| d \Omega}\]</span></p>
 <p>which I’ll call the <strong>positive dependence measure</strong> and <strong>negative dependence measure</strong> respectively. These functions quantify the amount of positive and negative statistical dependence as ratios.</p>
 <p>Now I can define the <strong>dependence entropy</strong> to be</p>
 <p><span class="math display">\[H\left(F_{X_1, \ldots, X_n}\right) \triangleq -\left( \rho_- \log \rho_- + \rho_+ \log \rho_+ \right)\]</span></p>
-<p>which is <a href="https://en.wikipedia.org/wiki/Entropy_(information_theory)">Shannon’s entropy</a>{:target=“_blank”} of the dependence ratios.</p>
+<p>which is <a href="https://en.wikipedia.org/wiki/Entropy_(information_theory)">Shannon’s entropy</a>{:target=“_blank”} of the dependence ratios <span class="citation" data-cites="shannon1948">(<a href="#ref-shannon1948" role="doc-biblioref">Shannon 1948</a>)</span>.</p>
 <p>Similarly, the <strong>normalized dependence entropy</strong> can be computed as</p>
 <p><span class="math display">\[\mathcal{H}\left(F_{X_1, \ldots, X_n}\right) \triangleq \frac{H\left(F_{X_1, \ldots, X_n}\right)}{\log 2}.\]</span></p>
 
 
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-shannon1948" class="csl-entry" role="listitem">
+Shannon, Claude E. 1948. <span>“A Mathematical Theory of Communication.”</span> <em>Bell System Technical Journal</em> 27 (3): 379–423. <a href="https://doi.org/10.1002/j.1538-7305.1948.tb01338.x">https://doi.org/10.1002/j.1538-7305.1948.tb01338.x</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

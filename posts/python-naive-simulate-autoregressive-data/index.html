@@ -239,8 +239,8 @@ window.Quarto = {
 
 
 
-<p>In this post I will show you how to simulate an autoregressive (AR) process using Matplotlib and NumPy.</p>
-<p>First, let’s define a function which pseudorandomly generates the data sequence. We’ll set an intercept parameter to set a consistent offset of the series from zero, and a sequence of autoregressive coefficients. The order of the coefficients entails the lag order that they are each applied to, so if you want to skip a lag order you can just set it to zero. Some AR series are noisier than others, and you can set that level of noise using the <code>noise</code> parameter. In this model we assume that the noise is a stationary normal distribution:</p>
+<p>In this post I will show you how to simulate an <a href="https://en.wikipedia.org/wiki/Autoregressive_model">autoregressive (AR) process</a> using Matplotlib and NumPy.</p>
+<p>First, let’s define a function which pseudorandomly generates the data sequence. We’ll set an intercept parameter to set a consistent offset of the series from zero, and a sequence of autoregressive coefficients. The order of the coefficients entails the lag order that they are each applied to, so if you want to skip a lag order you can just set it to zero. Some AR series are noisier than others, and you can set that level of noise using the <code>noise</code> parameter. In this model we assume that the noise is a <a href="https://en.wikipedia.org/wiki/Stationary_process">stationary</a> normal distribution:</p>
 <p><span class="math display">\[\epsilon_t \sim \mathcal{N}(0,\sigma)\]</span></p>
 <p>for all <span class="math inline">\(t\)</span>.</p>
 <p>The following implementation is a generalization of the implementation provided in <a href="https://www.pymc.io/projects/examples/en/latest/time_series/Forecasting_with_structural_timeseries.html#generate-fake-autoregressive-data"><em>Generate Fake Autoregressive Data</em></a> in which I have allowed for any number of time lags. I have also allowed a user-provided random number generator to be passed.</p>

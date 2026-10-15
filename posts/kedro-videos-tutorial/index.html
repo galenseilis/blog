@@ -63,7 +63,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -285,7 +304,7 @@ window.Quarto = {
   <li><a href="#make-complex-kedro-pipelines---merge-different-dataframes-in-kedro" id="toc-make-complex-kedro-pipelines---merge-different-dataframes-in-kedro" class="nav-link" data-scroll-target="#make-complex-kedro-pipelines---merge-different-dataframes-in-kedro">Make complex Kedro pipelines - Merge different dataframes in Kedro</a></li>
   <li><a href="#make-complex-kedro-pipelines---master-parameters-in-kedro" id="toc-make-complex-kedro-pipelines---master-parameters-in-kedro" class="nav-link" data-scroll-target="#make-complex-kedro-pipelines---master-parameters-in-kedro">Make complex Kedro pipelines - Master parameters in Kedro</a></li>
   <li><a href="#make-complex-kedro-pipelines---apply-versioning-to-datasets" id="toc-make-complex-kedro-pipelines---apply-versioning-to-datasets" class="nav-link" data-scroll-target="#make-complex-kedro-pipelines---apply-versioning-to-datasets">Make complex Kedro pipelines - Apply versioning to datasets</a></li>
-  <li><a href="#make-complex-kedro-pipelines---reuse-your-kedro-pipeline-using-namespaces" id="toc-make-complex-kedro-pipelines---reuse-your-kedro-pipeline-using-namespaces" class="nav-link" data-scroll-target="#make-complex-kedro-pipelines---reuse-your-kedro-pipeline-using-namespaces">make complex Kedro pipelines - Reuse your Kedro pipeline using namespaces</a></li>
+  <li><a href="#make-complex-kedro-pipelines---reuse-your-kedro-pipeline-using-namespaces" id="toc-make-complex-kedro-pipelines---reuse-your-kedro-pipeline-using-namespaces" class="nav-link" data-scroll-target="#make-complex-kedro-pipelines---reuse-your-kedro-pipeline-using-namespaces">Make complex Kedro pipelines - Reuse your Kedro pipeline using namespaces</a></li>
   <li><a href="#make-complex-kedro-pipelines---accelerate-your-kedro-pipeline-using-runners" id="toc-make-complex-kedro-pipelines---accelerate-your-kedro-pipeline-using-runners" class="nav-link" data-scroll-target="#make-complex-kedro-pipelines---accelerate-your-kedro-pipeline-using-runners">Make complex Kedro pipelines - Accelerate your Kedro pipeline using runners</a></li>
   <li><a href="#make-complex-kedro-pipelines---create-kedro-datasets-dynamically-using-factories" id="toc-make-complex-kedro-pipelines---create-kedro-datasets-dynamically-using-factories" class="nav-link" data-scroll-target="#make-complex-kedro-pipelines---create-kedro-datasets-dynamically-using-factories">Make complex Kedro pipelines - Create Kedro datasets dynamically using factories</a></li>
   <li><a href="#ship-your-kedro-project-to-production---define-your-own-kedro-environments" id="toc-ship-your-kedro-project-to-production---define-your-own-kedro-environments" class="nav-link" data-scroll-target="#ship-your-kedro-project-to-production---define-your-own-kedro-environments">Ship your Kedro project to production - Define your own Kedro environments</a></li>
@@ -320,7 +339,7 @@ window.Quarto = {
 <li>It was created internally at <a href="https://www.mckinsey.com/capabilities/quantumblack/how-we-help-clients">Quantum Black</a>, acquired by <a href="https://www.mckinsey.com/">McKinsey &amp; Company</a>, in 2017.</li>
 <li>It was originally being used for internal projects for clients.</li>
 <li>In 2019 kedro was open-sourced.</li>
-<li>Later than 2019, Kedro was donated to the Linunx Foundation and AI Data Initiative.</li>
+<li>Later than 2019, Kedro was donated to the Linux Foundation and AI Data Initiative.</li>
 </ul>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
@@ -361,17 +380,17 @@ window.Quarto = {
 </ul></li>
 <li>Data Catalog
 <ul>
-<li>The core declative IO abstraction layer.</li>
+<li>The core declarative IO abstraction layer.</li>
 <li>The data catalog in hard drive space is specified by one or more YAML files.</li>
 </ul></li>
 <li>Nodes + Pipelines
 <ul>
 <li>Constructs which enable data-centric workflows.</li>
-<li>The Pipelines at a mathematical level of abstraction are directed acyclic graphs where:
+<li>The Pipelines at a mathematical level of abstraction are <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">directed acyclic graphs</a> where:
 <ul>
 <li>the nodes are functions,</li>
 <li>the in-edges are inputs to the function,</li>
-<li>and the out-nodes are the outputs of a function.</li>
+<li>and the out-edges are the outputs of a function.</li>
 </ul></li>
 <li>If you want to perform cyclic compositions of functions you must do so with unique sets of names to the input/outputs.
 <ul>
@@ -430,7 +449,7 @@ window.Quarto = {
 </ul></li>
 <li>Pipeline visualizations &amp; experiment tracking
 <ul>
-<li>Kedro pipeline visualizations shows a blueprint of your developing data and machine-learning workflows,</li>
+<li>Kedro pipeline visualizations show a blueprint of your developing data and machine-learning workflows,</li>
 <li>provides data lineage,</li>
 <li>keeps track of machine-learning experiments,</li>
 <li>and makes it easier to collaborate with business stake holders.</li>
@@ -531,7 +550,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="introduction-to-kedro---kedro-and-data-orchestrators">Introduction to Kedro - Kedro and data orchestrators</h2>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/_HH8SCmCP_Q?si=g5xXbadQxwSU_n3y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
-<p>Kedro is a : - Data science development framework - Machine learning engineering framework - Pipeline framework Kedro is not a: - Full-stack MLOPs framework - Orchestrator - Kedro has been described as a <a href="https://www.reddit.com/r/dataengineering/comments/1152wow/which_ml_orchestration_tool_fits_my_use_case/">ML orchestration tool</a>. - Replacement for data infrastructure</p>
+<p>Kedro is a: - Data science development framework - Machine learning engineering framework - Pipeline framework Kedro is not a: - Full-stack MLOPs framework - Orchestrator - Kedro has been described as a <a href="https://www.reddit.com/r/dataengineering/comments/1152wow/which_ml_orchestration_tool_fits_my_use_case/">ML orchestration tool</a>. - Replacement for data infrastructure</p>
 <ul>
 <li>The Kedro team cares about how teams write code for <a href="https://docs.aws.amazon.com/whitepapers/latest/build-secure-enterprise-ml-platform/data-science-experimentation-environment.html">data science experiments</a>.</li>
 <li>Kedro focuses on the <a href="https://www.coursera.org/articles/what-is-machine-learning-engineer">machine learning engineering</a> part of developing data science code and leaves <a href="https://en.wikipedia.org/wiki/MLOps">MLOPs</a> to tools like
@@ -603,7 +622,7 @@ window.Quarto = {
 </div>
 <section id="kedro-on-databricks" class="level3">
 <h3 class="anchored" data-anchor-id="kedro-on-databricks">Kedro on Databricks</h3>
-<p>Multiple workflows are supported, both IDE-based and notebook-base: - Direct development on Databricks Notebooks - Local IDE work and synchronization with Databricks Repos (depicted below). - Package and deploy to Databricks Jobs.</p>
+<p>Multiple workflows are supported, both IDE-based and notebook-based: - Direct development on Databricks Notebooks - Local IDE work and synchronization with Databricks Repos (depicted below). - Package and deploy to Databricks Jobs.</p>
 <p>Example: Develop on local <a href="https://aws.amazon.com/what-is/ide/">IDE</a> and synchronize with <a href="https://www.databricks.com/product/repos">Databricks Repos</a> using <a href="https://docs.databricks.com/en/archive/dev-tools/dbx/dbx.html">dbx</a>: - Versioning with <a href="https://git-scm.com/">https://git-scm.com/</a>. - Also see <a href="https://docs.databricks.com/en/repos/index.html">Git integration with Databricks Repos</a>. - <a href="https://delta.io/">Delta Lake</a> for <a href="https://www.databricks.com/glossary/data-lakehouse">lakehouses</a></p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
@@ -785,7 +804,7 @@ DatabricksRepos --&gt; 2
 </tbody>
 </table>
 <ul>
-<li>There is a <a href="https://kedro-mlflow.readthedocs.io/en/stable/">Kedro-MLFlow plugin</a>to allow MLFlow to be readily used with Kedro.</li>
+<li>There is a <a href="https://kedro-mlflow.readthedocs.io/en/stable/">Kedro-MLFlow plugin</a> to allow MLFlow to be readily used with Kedro.</li>
 <li>When should you <strong>NOT</strong> use Kedro?
 <ul>
 <li>Notebook-based workflows:
@@ -803,7 +822,7 @@ DatabricksRepos --&gt; 2
 <li>Overhead for experimental projects:
 <ul>
 <li>For pilots and experiments not intended for production, Kedro adds unnecessary boilerplate and structure.</li>
-<li>For experimentation, notesbooks may be more appropriate.</li>
+<li>For experimentation, notebooks may be more appropriate.</li>
 </ul></li>
 <li>Transitioning from existing standards:
 <ul>
@@ -916,7 +935,7 @@ DatabricksRepos --&gt; 2
 <li><code>notebooks</code> is a directory for putting notebooks (e.g.&nbsp;<a href="https://jupyter.org/">Jupyter notebooks</a>).</li>
 <li><code>src</code> contains all the source code of the Kedro project.
 <ul>
-<li>It contains the required files (e.g.&nbsp;<code>__init__.py</code>‘s’) so that the project can be built as a Python package.</li>
+<li>It contains the required files (e.g.&nbsp;<code>__init__.py</code>’s) so that the project can be built as a Python package.</li>
 </ul></li>
 </ul>
 </section>
@@ -1083,7 +1102,7 @@ Note
 <li>Appending this string to the name does not have any influence on how Micromamba prepares the environment. It is just for us humans. 😊</li>
 </ul></li>
 <li><code>python=3.10</code> is used by <code>micromamba</code> to prepare the environment for Python 3.10.</li>
-<li>The <code>-c conda-forge</code> is to indicate that we using the <a href="https://conda-forge.org/">Conda-Forge repository</a> for our Python packages.</li>
+<li>The <code>-c conda-forge</code> is to indicate that we are using the <a href="https://conda-forge.org/">Conda-Forge repository</a> for our Python packages.</li>
 <li>The <code>-y</code> just means to automatically accept any triggered <code>[Y/n]</code> options.</li>
 </ul>
 <p>After running the above command, you should get something like this:</p>
@@ -1204,7 +1223,7 @@ Note
 <p>And likewise, you can check what version of pip you are running:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">spaceflights310</span><span class="kw">)</span> <span class="ex">$</span> pip <span class="at">--version</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> 23.3.1 from /home/galen/.local/lib/python3.10/site-packages/pip <span class="er">(</span><span class="ex">python</span> 3.10<span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Additionally, you can check <strong>where</strong> your environment’s installations of Python and pip and located:</p>
+<p>Additionally, you can check <strong>where</strong> your environment’s installations of Python and pip are located:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">spaceflights310</span><span class="kw">)</span> <span class="ex">$</span> which python</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/galen/micromamba/envs/spaceflights310/bin/python</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">spaceflights310</span><span class="kw">)</span> <span class="ex">$</span> which pip</span>
@@ -1234,9 +1253,9 @@ Note
 <p>It doesn’t have much to show us at this point because we have an entirely-vanilla install of Kedro. I ended up using <code>v0.18.14</code> instead of <code>v0.18.13</code>, but that’s okay. 👌</p>
 <p>In <a href="https://en.wikipedia.org/wiki/Software_versioning">software versioning</a> they usually have a semantics similar to this:</p>
 <p><span class="math display">\[\underbrace{\texttt{M}}_{\text{Major}}.\underbrace{\texttt{m}}_{\text{Minor}}.\underbrace{\texttt{p}}_{\text{Patch}}\]</span></p>
-<p>So with <code>v0.18.14</code> instead of <code>v0.18.13</code> we have only a small difference. If your curious you can read about the changes in different releases <a href="https://github.com/kedro-org/kedro/releases">here</a>.</p>
+<p>So with <code>v0.18.14</code> instead of <code>v0.18.13</code> we have only a small difference. If you’re curious you can read about the changes in different releases <a href="https://github.com/kedro-org/kedro/releases">here</a>.</p>
 <p>Currently we have Kedro installed, but we don’t have a Kedro project. Remember that folder system we went over earlier? Now it is time to make that!</p>
-<p>Because the spaceflights project is a prebuilt project that is ready to be used, we could setup up by merely running:</p>
+<p>Because the spaceflights project is a prebuilt project that is ready to be used, we could set up by merely running:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">spaceflights310</span><span class="kw">)</span> <span class="ex">$</span> kedro new <span class="at">--starter</span><span class="op">=</span>spaceflights</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>But it will be more illustrative if we go over the steps of how to setup the project from scratch. (<a href="https://scratch.mit.edu/">Not this Scratch</a>!)</p>
 <p>So instead, let us run the following command to merely make a starting project with only the defaults done for us.</p>
@@ -1357,7 +1376,7 @@ Tip
 </div>
 </div>
 <p>Now that we have the notebook interface open, go to the <code>notebooks</code> directory in the interface (not the CLI). Following with the tutorial, create a notebook called <code>first-exploration.ipynb</code>. Note that creating this notebook has created and renamed a notebook <code>Untitled.ipynb</code> to <code>first-exploration.ipynb</code> in your <code>notebooks</code> directory on your system.</p>
-<p>Sadly, at the time of writing, I don’t have embedding Jupyter Notebooks setup on my blog. So I am going to use the prompt <code>(spaceflights310):JN&gt;</code> to signify that we looking at commands in a Jupyter Notebook environment.</p>
+<p>Sadly, at the time of writing, I don’t have embedding Jupyter Notebooks setup on my blog. So I am going to use the prompt <code>(spaceflights310):JN&gt;</code> to signify that we are looking at commands in a Jupyter Notebook environment.</p>
 <p>First thing we can do is load the Kedro-IPython extension:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>(spaceflights310):JN<span class="op">&gt;</span> <span class="op">%</span>load_ext kedro.ipython</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">12</span><span class="op">/</span><span class="dv">17</span><span class="op">/</span><span class="dv">23</span> <span class="dv">14</span>:<span class="dv">0</span><span class="er">8</span>:<span class="dv">12</span>] INFO     Resolved project path <span class="im">as</span>: <span class="op">/</span>home<span class="op">/</span>galen<span class="op">/</span>projects<span class="op">/</span>spaceflights.           <span class="fu">__init__</span>.py:<span class="dv">139</span></span>
@@ -1368,8 +1387,8 @@ Tip
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>                    INFO     Defined <span class="kw">global</span> variable <span class="st">'context'</span>, <span class="st">'session'</span>, <span class="st">'catalog'</span> <span class="kw">and</span>            <span class="fu">__init__</span>.py:<span class="dv">109</span></span>
 <span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>                             <span class="co">'pipelines'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li>You can see in the above output that loading the extension how loaded some information into our project including <code>context</code>, <code>session</code>, <code>catalog</code>, and <code>pipelines</code>.</li>
-<li>Both <code>context</code>, <code>session</code> and session provide a bunch of information we’ll get back to.</li>
+<li>You can see in the above output that loading the extension has loaded some information into our project including <code>context</code>, <code>session</code>, <code>catalog</code>, and <code>pipelines</code>.</li>
+<li>Both <code>context</code> and <code>session</code> provide a bunch of information we’ll get back to.</li>
 <li>The <code>catalog</code> gives us access to all of the datasets that we will declare to be available.</li>
 <li><code>pipelines</code> should currently be a dictionary with an empty <code>Pipeline</code> instance:</li>
 </ul>
@@ -1389,7 +1408,7 @@ Note
 <p>Although, note the section <a href="https://ipython.org/#jupyter-and-the-future-of-ipython" title="Permalink to this headline">Jupyter and the future of IPython</a> on the ipython site.</p>
 </div>
 </div>
-<p>So back to our <code>(spaceflights310) $</code>, prompt we can start IPython with the command:</p>
+<p>So back to our <code>(spaceflights310) $</code> prompt we can start IPython with the command:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">spaceflights310</span><span class="kw">)</span> <span class="ex">$</span> ipython</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You should see a CLI like this:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>$ ipython</span>
@@ -1411,7 +1430,7 @@ Note
 <h2 class="anchored" data-anchor-id="get-started-with-kedro---set-up-the-kedro-data-catalog">Get started with Kedro - Set up the Kedro Data Catalog</h2>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/rl2cncGxyts?si=2ryduPkd7eiXWiVV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
-<p>The <code>context</code>, <code>session</code>, <code>catalog</code>, and <code>pipelines</code> that we encountered in the last tutorial have not been prepared to contain any useful information yet. But not we’ll get the Catalog up and running. If you have not been following along in the Kedro docs, we are at the <a href="https://docs.kedro.org/en/stable/tutorial/set_up_data.html">Set up the data</a> section.</p>
+<p>The <code>context</code>, <code>session</code>, <code>catalog</code>, and <code>pipelines</code> that we encountered in the last tutorial have not been prepared to contain any useful information yet. But now we’ll get the Catalog up and running. If you have not been following along in the Kedro docs, we are at the <a href="https://docs.kedro.org/en/stable/tutorial/set_up_data.html">Set up the data</a> section.</p>
 <ul>
 <li>There are three datasets that we care about for this example:
 <ul>
@@ -1420,10 +1439,10 @@ Note
 <li><code>shuttles.xlsx</code></li>
 </ul></li>
 </ul>
-<p>Let’s go get that data. I’m just going to download those files from <a href="https://github.com/WaylonWalker/kedro-spaceflights/tree/feature/project-template/data/01_raw">here</a>and put them in my own <code>data/01_raw</code> path. You should be able to see the following:</p>
+<p>Let’s go get that data. I’m just going to download those files from <a href="https://github.com/WaylonWalker/kedro-spaceflights/tree/feature/project-template/data/01_raw">here</a> and put them in my own <code>data/01_raw</code> path. You should be able to see the following:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">spaceflights310</span><span class="kw">)</span> <span class="ex">$</span> ls data/01_raw/</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ex">companies.csv</span> &nbsp;reviews.csv &nbsp;shuttles.xlsx</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Now create a new Jupyter Notebook titled <code>data-exploration.ipynb</code>, and install the following command using the following magic command:</p>
+<p>Now create a new Jupyter Notebook titled <code>data-exploration.ipynb</code>, and run the following command using the magic command:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>(spaceflights310):JN<span class="op">&gt;</span> <span class="op">%</span>pip install kedro<span class="op">-</span>datasets[pandas]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>What the above does is install some useful dependencies for this tutorial that assume we’re primarily using <a href="https://pandas.pydata.org/">Pandas</a>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1445,7 +1464,7 @@ Tip
 </ul>
 </div>
 </div>
-<p>Alright, so you <em>still</em> cannot access those data files in Kedro just yet until your register them in the catalog. Where is the catalog? <code>conf/base/catalog.yml</code>.</p>
+<p>Alright, so you <em>still</em> cannot access those data files in Kedro just yet until you register them in the catalog. Where is the catalog? <code>conf/base/catalog.yml</code>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">companies</span><span class="kw">:</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> pandas.CSVDataset</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">filepath</span><span class="kw">:</span><span class="at"> data/01_raw/companies.csv</span></span>
@@ -1460,7 +1479,7 @@ Tip
 <span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">load_args</span><span class="kw">:</span></span>
 <span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">engine</span><span class="kw">:</span><span class="at"> openpyxl</span><span class="co"> # Use modern Excel engine (the default since Kedro 0.18.0)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In most cases you need to provide at least a name for each data source, the type of data source which must be a valid Kedro dataset class, and the filepath. You can see for the <code>xlsx</code> file that we require an additional <code>load_args</code> which will tell Pandas to use the <code>openpyxl</code> package for parsing the Excel file. When you get into external/remote data sources (e.g.&nbsp;SQL databases) you will see that it is possible to register data sources in the catalog to pull remote data for you.</p>
-<p>Let’s hop back into our <code>data-exploration.ipynb</code> notebook to load the Kedro-ipython extension.</p>
+<p>Let’s hop back into our <code>data-exploration.ipynb</code> notebook to load the Kedro-IPython extension.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>(spaceflights310):JN<span class="op">&gt;</span> <span class="op">%</span>load_ext kedro.ipython</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">12</span><span class="op">/</span><span class="dv">17</span><span class="op">/</span><span class="dv">23</span> <span class="dv">15</span>:<span class="dv">49</span>:<span class="dv">25</span>] INFO     Resolved project path <span class="im">as</span>: <span class="op">/</span>home<span class="op">/</span>galen<span class="op">/</span>projects<span class="op">/</span>spaceflights.           <span class="fu">__init__</span>.py:<span class="dv">139</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                             To <span class="bu">set</span> a different path, run <span class="st">'</span><span class="sc">%r</span><span class="st">eload_kedro &lt;project_root&gt;'</span></span>
@@ -1687,7 +1706,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Ever wondered what <code>type(type)</code> should return? The answer is <code>type</code>, making it <code>type</code> a <a href="https://en.wikipedia.org/wiki/Fixed_point_(mathematics)">fixed point</a>of itself. This has to do with how classes work in Python, but that is a story for another time. See <a href="https://realpython.com/python-metaclasses/">Real Python: Python Metaclasses</a>for some introductory background info.</p>
+<p>Ever wondered what <code>type(type)</code> should return? The answer is <code>type</code>, making <code>type</code> a <a href="https://en.wikipedia.org/wiki/Fixed_point_(mathematics)">fixed point</a> of itself. This has to do with how classes work in Python, but that is a story for another time. See <a href="https://realpython.com/python-metaclasses/">Real Python: Python Metaclasses</a> for some introductory background info.</p>
 </div>
 </div>
 <p>We can also load the other data sets:</p>
@@ -2170,7 +2189,7 @@ Tip
 <span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="dv">77094</span>     <span class="va">True</span></span>
 <span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="dv">77095</span>     <span class="va">True</span></span>
 <span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>Name: iata_approved, Length: <span class="dv">77096</span>, dtype: <span class="bu">bool</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>There is a nice property here that <code>values == t</code> will be <code>True</code> and otherwise <code>False</code>, which happens to coincide with whenever the value in the <code>iata_approved</code> is <code>f</code>. Except – oooops! Consider this check for unique values:</p>
+<p>There is a nice property here that <code>values == t</code> will be <code>True</code> and otherwise <code>False</code>, which happens to coincide with whenever the value in the <code>iata_approved</code> column is <code>f</code>. Except – oooops! Consider this check for unique values:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>(spaceflights310):JN<span class="op">&gt;</span> companies[<span class="st">'iata_approved'</span>].unique()</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>array([<span class="st">'f'</span>, <span class="st">'t'</span>, nan], dtype<span class="op">=</span><span class="bu">object</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The tutorial does not mention those <code>nan</code> values. Maybe there is a good reason for that, but in a real analysis we would pursue this further.</p>
@@ -2197,13 +2216,13 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>I strongly suggest that if you have missing data that you learn about the statistical side of it. Missing data is a less obvious problem in most cases than using <code>pandas.DataFrame.dropna()</code>. Not thinking about the causality of the missingness can confound your results.</p>
-<p>An excellent introduction to this is Richard McElreath’s <em>Statistical Rethinking 2023 - 18 -Missing Data</em>:</p>
+<p>I strongly suggest that if you have missing data that you learn about the statistical side of it. Missing data is a less obvious problem in most cases than using <code>pandas.DataFrame.dropna()</code>. Not thinking about the causality of the missingness can confound your results <span class="citation" data-cites="mcelreath2020">(<a href="#ref-mcelreath2020" role="doc-biblioref">McElreath 2020</a>)</span>.</p>
+<p>An excellent introduction to this is Richard McElreath’s <em>Statistical Rethinking 2023 - 18 - Missing Data</em>:</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Oeq6GChHOzc?si=oAdNGjzLy6C09-gB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
 </div>
 </div>
-<p>Anyway, you may want to overwrite the original column to save computer memory and/or name proliforation.</p>
+<p>Anyway, you may want to overwrite the original column to save computer memory and/or name proliferation.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>(spaceflights310):JN<span class="op">&gt;</span> companies[<span class="st">'iata_approved'</span>] <span class="op">=</span> companies[<span class="st">'iata_approved'</span>] <span class="op">==</span> <span class="st">'t'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can double check that the new type is <code>bool</code> by again looking at the output of <code>pandas.DataFrame.dtypes</code>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>companies.dtypes</span>
@@ -2238,10 +2257,10 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The Pandas <code>NaN</code> should further not be confused with Pandas’ <code>NA</code>. See <a href="https://pandas.pydata.org/docs/user_guide/missing_data.html#missing-data-na">Experimental <code>NA</code> scalar to denote missing values</a>for more information.</p>
+<p>The Pandas <code>NaN</code> should further not be confused with Pandas’ <code>NA</code>. See <a href="https://pandas.pydata.org/docs/user_guide/missing_data.html#missing-data-na">Experimental <code>NA</code> scalar to denote missing values</a> for more information.</p>
 </div>
 </div>
-<p>We can achieve this by replacing the string value <code>"%"</code> with an empty string <code>""</code>. This might seem like a <a href="https://www.dictionary.com/e/slang/weird-flex-but-okay/">weird flex</a>to replace a string character with an empty string character if you’re not used to programming, but it is a common practice that doesn’t have any logical issues provided that you think carefully about what an <a href="https://en.wikipedia.org/wiki/Empty_string">empty string</a> is.</p>
+<p>We can achieve this by replacing the string value <code>"%"</code> with an empty string <code>""</code>. This might seem like a <a href="https://www.dictionary.com/e/slang/weird-flex-but-okay/">weird flex</a> to replace a string character with an empty string character if you’re not used to programming, but it is a common practice that doesn’t have any logical issues provided that you think carefully about what an <a href="https://en.wikipedia.org/wiki/Empty_string">empty string</a> is.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>(spaceflights310):JN<span class="op">&gt;</span> companies[<span class="st">"company_rating"</span>] <span class="op">=</span> (</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>    companies[<span class="st">"company_rating"</span>].<span class="bu">str</span></span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>    .replace(<span class="st">"%"</span>, <span class="st">""</span>)</span>
@@ -2266,7 +2285,7 @@ Warning
 <span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>dtypes: <span class="bu">bool</span>(<span class="dv">1</span>), float64(<span class="dv">2</span>), int64(<span class="dv">1</span>), <span class="bu">object</span>(<span class="dv">1</span>)</span>
 <span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>memory usage: <span class="fl">2.4</span><span class="op">+</span> MB</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You can see that <code>company_rating</code> is now <code>float64</code>, and that there are 47187 out of 77096 non-null entries in that column.</p>
-<p>In a real analysis we would want to take a look at all of the columns, which would likely be feasible since there are only 2 additional ones to look at. But for this tutorial let’s move on the <code>shuttles</code> data set.</p>
+<p>In a real analysis we would want to take a look at all of the columns, which would likely be feasible since there are only 2 additional ones to look at. But for this tutorial let’s move on to the <code>shuttles</code> data set.</p>
 <p>The tutorial asks us to do the same thing with <code>d_check_complete</code> and <code>moon_clearance_complete</code> as we did with <code>iata_approved</code>. It also asks us to do a very similar thing with <code>price</code> as we did with <code>company_rating</code>. Let’s make use of <code>assign</code> to do all this in one chain.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>(spaceflights310):JN<span class="op">&gt;</span> shuttles <span class="op">=</span> shuttles.assign(</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>    d_check_complete<span class="op">=</span>shuttles[<span class="st">"d_check_complete"</span>] <span class="op">==</span> <span class="st">"t"</span>,</span>
@@ -2285,7 +2304,7 @@ Warning
 <iframe width="560" height="315" src="https://www.youtube.com/embed/VFcrvnnNas4?si=TcBZl0-7aefm2sn_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
 <ul>
-<li>At this junction we are aiming to refactor some of the commands we wrote in our Jupyter notebook <code>data-exploration.ipynb</code> so that they are suitable for being used in a Kedro pipeline.</li>
+<li>At this juncture we are aiming to refactor some of the commands we wrote in our Jupyter notebook <code>data-exploration.ipynb</code> so that they are suitable for being used in a Kedro pipeline.</li>
 <li>For example, we could re-write those cases where we checked <code>col == "t"</code> to be a Python function which we could re-use.</li>
 </ul>
 <p>Here is an attempted implementation.</p>
@@ -2320,7 +2339,7 @@ Warning
 <span id="cb53-29"><a href="#cb53-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(char, <span class="bu">str</span>):</span>
 <span id="cb53-30"><a href="#cb53-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f'</span><span class="sc">{</span>char<span class="sc">}</span><span class="ss"> must be of type `str`, but got </span><span class="sc">{</span><span class="bu">type</span>(char)<span class="sc">}</span><span class="ss">.'</span>)</span>
 <span id="cb53-31"><a href="#cb53-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x <span class="op">==</span> char</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>I’ve generalized somewhat from the tutorial to only default to checking for <code>"t"</code>, but passing in other values for <code>char</code> will extend the capabilities of this function. You may also note that I have used type hinting which you can learn about in the <a href="https://docs.python.org/3/library/typing.html">standard library</a>or <a href="https://peps.python.org/pep-0008/#other-recommendations">PEP8</a>or <a href="https://realpython.com/lessons/type-hinting/">Real Python: Type Hinting</a>. Type hints do not coerce types nor do they enforce the types, so as a quick solution I have included a <code>raise</code> statement. Some other options include <code>Enums</code> (with some careful thought) or more readily we could have simply used an <code>assert</code>. The docstrings are <a href="https://google.github.io/styleguide/pyguide.html">Google’s Style</a>, if you are unfamiliar.</p>
+<p>I’ve generalized somewhat from the tutorial to only default to checking for <code>"t"</code>, but passing in other values for <code>char</code> will extend the capabilities of this function. You may also note that I have used type hinting which you can learn about in the <a href="https://docs.python.org/3/library/typing.html">standard library</a> or <a href="https://peps.python.org/pep-0008/#other-recommendations">PEP8</a> or <a href="https://realpython.com/lessons/type-hinting/">Real Python: Type Hinting</a>. Type hints do not coerce types nor do they enforce the types, so as a quick solution I have included a <code>raise</code> statement. Some other options include <code>Enums</code> (with some careful thought) or more readily we could have simply used an <code>assert</code>. The docstrings are <a href="https://google.github.io/styleguide/pyguide.html">Google’s Style</a>, if you are unfamiliar.</p>
 <p>And likewise here is an implementation of the <code>str --&gt; float</code> examples via dropping characters before casting to a float.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> List</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -2524,7 +2543,7 @@ Warning
 </iframe>
 <ul>
 <li>Last time we wrote our functions in <code>nodes.py</code> to define the nodes of our Kedro pipeline.</li>
-<li>Now we will glue together the nodes by defining a directed acylclic graph in Kedro.</li>
+<li>Now we will glue together the nodes by defining a directed acyclic graph in Kedro.</li>
 </ul>
 <p>Your file will start off looking like this:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
@@ -2578,7 +2597,7 @@ Warning
 <span id="cb60-22"><a href="#cb60-22" aria-hidden="true" tabindex="-1"></a>            name<span class="op">=</span><span class="st">"preprocess_shuttles"</span></span>
 <span id="cb60-23"><a href="#cb60-23" aria-hidden="true" tabindex="-1"></a>        ),</span>
 <span id="cb60-24"><a href="#cb60-24" aria-hidden="true" tabindex="-1"></a>    ])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The above illustrates something that I don’t particular love; repetitive and highly similar naming. Let us refactor this to a loop:</p>
+<p>The above illustrates something that I don’t particularly love; repetitive and highly similar naming. Let us refactor this to a loop:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="co">This is a boilerplate pipeline 'data_processing'</span></span>
 <span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="co">generated using Kedro 0.18.14</span></span>
@@ -2638,11 +2657,11 @@ Warning
 <li>Last time we ran the pipeline, but we didn’t actually produce anything.</li>
 <li>We just did some processing steps that were summarily forgotten after the pipeline finished running.
 <ul>
-<li>These types of data set is called a <code>MemoryDataset</code></li>
+<li>This type of data set is called a <code>MemoryDataset</code></li>
 </ul></li>
 <li>Time to go back to the catalog!</li>
 </ul>
-<p>Let’s add these entries to the <code>catalog.yml</code>. The <code>pq</code> file extension is for the <a href="https://parquet.apache.org/">Apache Parquet</a>format, which is considered one of the fast-to-load data formats due to how information is stored.</p>
+<p>Let’s add these entries to the <code>catalog.yml</code>. The <code>pq</code> file extension is for the <a href="https://parquet.apache.org/">Apache Parquet</a> format, which is considered one of the fast-to-load data formats due to how information is stored.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb65"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">preprocessed_companies</span><span class="kw">:</span></span>
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">type</span><span class="kw">:</span><span class="at"> pandas.ParquetDataSet</span></span>
 <span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">filepath</span><span class="kw">:</span><span class="at"> data/02_intermediate/preprocessed_companies.pq</span></span>
@@ -2674,7 +2693,7 @@ Warning
 <ul>
 <li><a href="https://github.com/kedro-org/kedro-viz"><code>kedro-viz</code></a> is a plugin for Kedro to show us a high-level view of our Kedro pipelines.
 <ul>
-<li>Check out this <a href="https://demo.kedro.org/">demo</a>if you are just passing through without coding along.</li>
+<li>Check out this <a href="https://demo.kedro.org/">demo</a> if you are just passing through without coding along.</li>
 </ul></li>
 <li>With our pipeline built we know there is a DAG there, but we would like to see the DAG.</li>
 </ul>
@@ -2749,21 +2768,21 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>You can reload Kedro in an iPython session using <code>%reload_kedro</code> as an iPython magic command.</p>
+<p>You can reload Kedro in an IPython session using <code>%reload_kedro</code> as an IPython magic command.</p>
 </div>
 </div>
 <p>You can load a Kedro project’s parameters using the following:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>catalog.load(<span class="st">"params"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You can further specify loading an entry in Kedro parameters using a colon:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>catalog.load(<span class="st">"params:a"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This does assume that you have an instance of the catalog loaded. This will occur automatically in a Kedro Jpuyter notebook, but you may need to import and call some callables from Kedro when doing this from a script.</p>
+<p>This does assume that you have an instance of the catalog loaded. This will occur automatically in a Kedro Jupyter notebook, but you may need to import and call some callables from Kedro when doing this from a script.</p>
 </section>
 <section id="make-complex-kedro-pipelines---master-parameters-in-kedro" class="level2">
 <h2 class="anchored" data-anchor-id="make-complex-kedro-pipelines---master-parameters-in-kedro">Make complex Kedro pipelines - Master parameters in Kedro</h2>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/eIA12RQMlFY?si=Uuk7bUV8ErOAJJyX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
 </iframe>
 <ul>
-<li>Each pipelines will <em>de facto</em> have is own parameters file in YAML format.</li>
+<li>Each pipeline will <em>de facto</em> have its own parameters file in YAML format.</li>
 </ul>
 <p>Suppose we have a parameters file like this:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb72"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_options</span><span class="kw">:</span></span>
@@ -2852,7 +2871,7 @@ Note
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb75"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">regressor</span><span class="kw">:</span></span>
 <span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> pickle.PickleDataset</span></span>
 <span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">filepath</span><span class="kw">:</span><span class="at"> data/06_models/regressor.pkl</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We may want to version the model, which Kedro parameters allows us to do as a versioned dataset.</p>
+<p>We may want to version the model, which Kedro parameters allow us to do as a versioned dataset.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb76"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">regressor</span><span class="kw">:</span></span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> pickle.PickeDataset</span></span>
 <span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">filepath</span><span class="kw">:</span><span class="at"> data/06_models/regressor.pkl</span></span>
@@ -2867,12 +2886,12 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>For the unversioned dataset we will find a <code>yaml</code> file <code>data/06_models/regressor.pkl</code> whereas for the versioned counterpart <code>data/06_models/regressor.pkl</code> is actually a directory. This is a potential source of confusion because the paths appear to be identical when they are not, leading to confusion between what is a folder file vs a non-folder file.</p>
+<p>For the unversioned dataset we will find a file <code>data/06_models/regressor.pkl</code> whereas for the versioned counterpart <code>data/06_models/regressor.pkl</code> is actually a directory. This is a potential source of confusion because the paths appear to be identical when they are not, leading to confusion between what is a folder file vs a non-folder file.</p>
 </div>
 </div>
 </section>
 <section id="make-complex-kedro-pipelines---reuse-your-kedro-pipeline-using-namespaces" class="level2">
-<h2 class="anchored" data-anchor-id="make-complex-kedro-pipelines---reuse-your-kedro-pipeline-using-namespaces">make complex Kedro pipelines - Reuse your Kedro pipeline using namespaces</h2>
+<h2 class="anchored" data-anchor-id="make-complex-kedro-pipelines---reuse-your-kedro-pipeline-using-namespaces">Make complex Kedro pipelines - Reuse your Kedro pipeline using namespaces</h2>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/cYHHVAoWZ2E?si=LYgJEGAzjveTEXbi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
 </iframe>
 <p>We can use namespaces to adjust pipelines as desired.</p>
@@ -2972,7 +2991,7 @@ Warning
 </iframe>
 <p>Kedro environments are basically distinct sets of configurations that you can have within a single Kedro project. By default you will see the <code>conf/</code> path contains <code>local/</code> and <code>base/</code>. You can add more configurations of your own.</p>
 <ol type="1">
-<li>Create a new subdirectrory of <code>conf/</code> named whatever you want. In this case we will call it <code>test/</code>, but you can call it other things too.</li>
+<li>Create a new subdirectory of <code>conf/</code> named whatever you want. In this case we will call it <code>test/</code>, but you can call it other things too.</li>
 </ol>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb82"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mkdir conf/test</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="2" type="1">
@@ -2990,7 +3009,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>There is an idea of there of defining <a href="https://github.com/kedro-org/kedro/discussions/3871">hierarchical configurations of environments</a>, but at the time of writing that has not been implemented.</p>
+<p>There is an idea of defining <a href="https://github.com/kedro-org/kedro/discussions/3871">hierarchical configurations of environments</a>, but at the time of writing that has not been implemented.</p>
 </div>
 </div>
 </section>
@@ -2998,7 +3017,7 @@ Note
 <h2 class="anchored" data-anchor-id="ship-your-kedro-project-to-production---use-s3-and-miniio-cloud-storages-with-kedro">Ship your Kedro project to production - Use S3 and MiniIO cloud storages with Kedro</h2>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/TkoBEQIdHbA?si=Nsugj1WdknOI7R3z" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
 </iframe>
-<p>The <a href="https://filesystem-spec.readthedocs.io/en/latest/"><code>fsspec</code> library</a> allows for a unified interface to specify locations of files. This can be particularly handy if you have files that life on different computing systems. Kedro uses this library for this very purpose in its datasets so that you can specify file paths that are not on the local system.</p>
+<p>The <a href="https://filesystem-spec.readthedocs.io/en/latest/"><code>fsspec</code> library</a> allows for a unified interface to specify locations of files. This can be particularly handy if you have files that live on different computing systems. Kedro uses this library for this very purpose in its datasets so that you can specify file paths that are not on the local system.</p>
 <blockquote class="blockquote">
 <p><a href="https://min.io/">MinIO AIStor</a> is designed to allow enterprises to consolidate all of their data on a single, private cloud namespace. Architected using the same principles as the hyperscalers, AIStor delivers performance at scale at a fraction of the cost compared to the public cloud.</p>
 </blockquote>
@@ -3053,7 +3072,7 @@ Tip
 </div>
 <p>Now you can use the Kedro Airflow plugin to generate a script:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb91"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> kedro airflow create <span class="at">--target-dir</span><span class="op">=</span>dags/ <span class="at">--env</span><span class="op">=</span>airflow</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>In the <code>dags/</code> path you’ll find a script such as <code>spaceflights_baseline_dag.py</code>. One of the classes defined in this script is <code>KedroOperator</code> which defines an Airflow operator which will runs components of the Kedro project within the Airflow environment.</p>
+<p>In the <code>dags/</code> path you’ll find a script such as <code>spaceflights_baseline_dag.py</code>. One of the classes defined in this script is <code>KedroOperator</code> which defines an Airflow operator which will run components of the Kedro project within the Airflow environment.</p>
 <p>Now that you have this script, you can copy it into your <code>airflow/dags/</code> directory. One choice of path is <code>~/airflow/dags/</code> if you are on Linux.</p>
 </section>
 <section id="continue-your-kedro-journey" class="level2">
@@ -3064,7 +3083,7 @@ Tip
 <li>There are many ways to use Kedro.</li>
 <li>There is a Slack channel for Kedro.</li>
 </ul>
-<p>The current curriculum for the software envineering principles for data science:</p>
+<p>The current curriculum for the software engineering principles for data science:</p>
 <ul>
 <li>Why is software engineering necessary for data science?</li>
 <li>Writing Python functions and the refactoring cycle for Jupyter notebooks.</li>
@@ -3087,14 +3106,19 @@ Warning
 <p>Often the set of practices is indefinite or only partially defined, or discovered, leading to the usual <a href="https://plato.stanford.edu/entries/induction-problem/">problem of empirical induction</a>.</p>
 <p>For any given finite set of practices we can consider comparing them exhausitvely. It could still be the case that the requisite time, attention, energy and other resources required to actually decide which is the best practice among that set.</p>
 <p>Furthermore, there is a typical issue that arises even among relatively small sets of practices: the existence of tradeoffs. When we have tradeoffs we have a situation in which there is a set of mutually non-dominating options. This should not be confused with the notion of these options being equally good. Rather each non-dominated option being the best according to one objective will also be worse (but not necessarily ‘the worst’) in terms of another objective.</p>
-<p>When we restrict our thinking to a Pareto order on our objectives then the set of such mutually undominating options is called a <a href="https://en.wikipedia.org/wiki/Pareto_front">Pareto front</a>. Real-world objectivse may have a more complicated ordering, but the existence of tradeoffs remains a plausible possibility.</p>
+<p>When we restrict our thinking to a Pareto order on our objectives then the set of such mutually non-dominating options is called a <a href="https://en.wikipedia.org/wiki/Pareto_front">Pareto front</a>. Real-world objectives may have a more complicated ordering, but the existence of tradeoffs remains a plausible possibility.</p>
 </div>
 </div>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-mcelreath2020" class="csl-entry" role="listitem">
+McElreath, Richard. 2020. <em>Statistical Rethinking: A Bayesian Course with Examples in r and Stan</em>. 2nd ed. Chapman; Hall/CRC. <a href="https://doi.org/10.1201/9780429029608">https://doi.org/10.1201/9780429029608</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

@@ -27,7 +27,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -162,7 +181,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>This post is about a fascinating talk about Richard McElreath. I’ve taken some notes below which focus on some of the general statistical and causal points which I think would transfer to other areas I am interested in.</p>
+<p>This post is about a fascinating talk by Richard McElreath. I’ve taken some notes below which focus on some of the general statistical and causal points which I think would transfer to other areas I am interested in.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Ez3o3uWRSyY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
 <ul>
@@ -175,7 +194,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Systemic Problems
 <ul>
 <li>Poor knowledge of and integration with theory</li>
-<li>Methological sloppiness</li>
+<li>Methodological sloppiness</li>
 <li>Analytical ignorance
 <ul>
 <li>A lot of the data is observational and the wrong statistical tools are being used.</li>
@@ -187,7 +206,7 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 <li>Symptoms of poor training, poor standards, betrayal of our students and the public</li>
 </ul></li>
-<li>Fraud is not the same thing as thing as systemic issues.
+<li>Fraud is not the same thing as systemic issues.
 <ul>
 <li>Individuals are not to blame for systemic issues, nor small teams of people.
 <ul>
@@ -196,7 +215,7 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 <li>Individuals can be guilty of fraud.</li>
 </ul></li>
-<li>Ignoring unmeasured confounds is a common problem.</li>
+<li>Ignoring unmeasured confounds is a common problem <span class="citation" data-cites="holland1986 rubin1974">(<a href="#ref-holland1986" role="doc-biblioref">Holland 1986</a>; <a href="#ref-rubin1974" role="doc-biblioref">Rubin 1974</a>)</span>.</li>
 <li>Sometimes little-to-no validation of the methodology.</li>
 <li>Issues occur with ignoring the relationship between estimate uncertainty and sample size.</li>
 <li>Measurements are not always valid.</li>
@@ -209,19 +228,19 @@ ul.task-list li input[type="checkbox"] {
 <li>Sometimes the measurements of model/theory performance are arbitrary.</li>
 <li>In many cases there is not a sensible null model, making various forms of null-hypothesis testing dubious in those cases.
 <ul>
-<li>Instead we should be developing generative models of how we think the phenomena works.</li>
-<li>Should compare plausible models rather than null models.</li>
+<li>Instead we should be developing generative models of how we think the phenomena work.</li>
+<li>Should compare plausible models rather than null models <span class="citation" data-cites="mcelreath2020">(<a href="#ref-mcelreath2020" role="doc-biblioref">McElreath 2020</a>)</span>.</li>
 </ul></li>
 <li>Some data sets are too noisy to make a useful inference from.</li>
 <li>PNAS is not a rigorously peer-reviewed journal even though it is a popular venue.</li>
 <li>The literature is not a pile of facts.</li>
 <li>Retraction should not be shameful, and not every paper which is retracted is due to fraud.</li>
-<li>Mistreatment of missing values is a concern for the validty of some studies.
+<li>Mistreatment of missing values is a concern for the validity of some studies.
 <ul>
-<li>E.g. replacing missing values by zero is not a usesful default.</li>
+<li>E.g. replacing missing values by zero is not a useful default.</li>
 <li>The appropriate way to handle missing data depends on what causes it to go missing.
 <ul>
-<li>A causal model is needed to rigorously address missingness.</li>
+<li>A causal model is needed to rigorously address missingness <span class="citation" data-cites="rubin1974 pearl2009">(<a href="#ref-rubin1974" role="doc-biblioref">Rubin 1974</a>; <a href="#ref-pearl2009" role="doc-biblioref">Pearl 2009</a>)</span>.</li>
 <li>In some cases the causal relations imply that missingness <em>cannot</em> be accounted for rigorously.</li>
 </ul></li>
 </ul></li>
@@ -229,23 +248,23 @@ ul.task-list li input[type="checkbox"] {
 <li>Forecasting alone is not a substitute for causal inference.</li>
 <li>There is a difference between process error and observation error which is sometimes ignored.
 <ul>
-<li>E.g. A system of stochastic differential equations have their own process noise that must be accounted for when simulating the system. But then taking an observation/measurement itself can introduce noise that should be accounted for as well.</li>
-<li>Observation error does not propogate whereas process error does.</li>
+<li>E.g. A system of stochastic differential equations has its own process noise that must be accounted for when simulating the system. But then taking an observation/measurement itself can introduce noise that should be accounted for as well.</li>
+<li>Observation error does not propagate whereas process error does.</li>
 </ul></li>
-<li>Akaike’s information criterion and similar metrics do not account for any aspect of causality, so selecting models based on them does not generally give the best causal model even if it gives the most predictive model among a collection of models.</li>
+<li>Akaike’s information criterion <span class="citation" data-cites="akaike1974">(<a href="#ref-akaike1974" role="doc-biblioref">Akaike 1974</a>)</span> and similar metrics do not account for any aspect of causality, so selecting models based on them does not generally give the best causal model even if it gives the most predictive model among a collection of models.</li>
 <li>Using principal components in a regression model reduces the interpretability of the model, and doesn’t make any consideration of causality.</li>
 <li>Events that are thousands of years apart are less likely, if not never, to be the direct causal effect of something today. There should be some kind of mediator variable to represent intermediate effects.
 <ul>
-<li>Although I agree with that, isn’t there are weird gaps argument we need to avoid? If I have X-&gt;Y and I change that to X-&gt;L-&gt;Y, what stops me from thinking there should be even more intermediates? My guess is additional latent variables might not be statistically identifiable but I should double check that.</li>
+<li>Although I agree with that, isn’t there a weird gaps argument we need to avoid? If I have X-&gt;Y and I change that to X-&gt;L-&gt;Y, what stops me from thinking there should be even more intermediates? My guess is additional latent variables might not be statistically identifiable but I should double check that.</li>
 </ul></li>
-<li>Data duplication can be a problem. Sometimes statistics are performed in way that ignores that the observations are statisitcally dependent with one another.
+<li>Data duplication can be a problem. Sometimes statistics are performed in a way that ignores that the observations are statistically dependent with one another.
 <ul>
 <li>Mixed effects and stochastic processes such as Gaussian processes can allow for some forms of dependence.</li>
 <li>Otherwise the statistical power can be massively inflated.</li>
 </ul></li>
 <li>Just having lots of data does not remedy many of the issues that come up in statistical and causal analysis.</li>
 <li>See <a href="https://www.cambridge.org/core/journals/american-political-science-review/article/abs/explaining-causal-findings-without-bias-detecting-and-assessing-direct-effects/D11BEB8666E913A0DCD7D0B9872F5D11">Acharya, Blackwell and Sen 2016</a> for a paper that strongly emphasizes addressing confounds.</li>
-<li>Sometimes we use tree models when the real phenomena is not a single tree in its abstract structure
+<li>Sometimes we use tree models when the real phenomenon is not a single tree in its abstract structure
 <ul>
 <li>e.g.&nbsp;biological evolution
 <ul>
@@ -259,14 +278,14 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>Actually, I don’t agree with this. I think that they must exist in some sense. But sure, they’re maps for a territory. They’re models that do not capture everything about the phenomena we’re interested in.</li>
 </ul></li>
-<li>Moto: Honest methods for modest questions
+<li>Motto: Honest methods for modest questions
 <ul>
-<li>Sometimes we can be deincentivised for being honest.</li>
+<li>Sometimes we can be disincentivized for being honest.</li>
 </ul></li>
 <li>Simple 4-step plan for honest cultural evolutions sch…
 <ol type="1">
 <li>What are we trying to learn?</li>
-<li>What is the ideal data for doing so? PROVE WITH A NON-NULL MODEL, NOT RHETOTIC.</li>
+<li>What is the ideal data for doing so? PROVE WITH A NON-NULL MODEL, NOT RHETORIC.</li>
 <li>What data do we have or can get?</li>
 <li>What causes the differences between (2) and (3)?</li>
 <li>[Optional] Is there a statistical way to use (2-4) to do (1)? VALIDATE WITH SYNTHETIC DATA.</li>
@@ -275,7 +294,24 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-akaike1974" class="csl-entry" role="listitem">
+Akaike, Hirotugu. 1974. <span>“A New Look at the Statistical Model Identification.”</span> <em>IEEE Transactions on Automatic Control</em> 19 (6): 716–23. <a href="https://doi.org/10.1109/TAC.1974.1100705">https://doi.org/10.1109/TAC.1974.1100705</a>.
+</div>
+<div id="ref-holland1986" class="csl-entry" role="listitem">
+Holland, Paul W. 1986. <span>“Statistics and Causal Inference.”</span> <em>Journal of the American Statistical Association</em> 81 (396): 945–60. <a href="https://doi.org/10.1080/01621459.1986.10478354">https://doi.org/10.1080/01621459.1986.10478354</a>.
+</div>
+<div id="ref-mcelreath2020" class="csl-entry" role="listitem">
+McElreath, Richard. 2020. <em>Statistical Rethinking: A Bayesian Course with Examples in r and Stan</em>. 2nd ed. CRC Press.
+</div>
+<div id="ref-pearl2009" class="csl-entry" role="listitem">
+Pearl, Judea. 2009. <em>Causality: Models, Reasoning, and Inference</em>. 2nd ed. Cambridge University Press.
+</div>
+<div id="ref-rubin1974" class="csl-entry" role="listitem">
+Rubin, Donald B. 1974. <span>“Estimating Causal Effects of Treatments in Randomized and Nonrandomized Studies.”</span> <em>Journal of Educational Psychology</em> 66 (5): 688–701. <a href="https://doi.org/10.1037/h0037350">https://doi.org/10.1037/h0037350</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

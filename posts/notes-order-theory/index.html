@@ -262,7 +262,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="essential-definitions-and-examples">Essential Definitions and Examples</h2>
 <blockquote class="blockquote">
 <p><strong>Definition</strong></p>
-<p>A partial order is a pair <span class="math inline">\((X, \leq)\)</span> composed of a set <span class="math inline">\(X\)</span> called the ground set and <span class="math inline">\(\leq\)</span> is a binary relation with the following relation: - reflexivity: <span class="math inline">\(x \leq x\ \forall x \in X\)</span> - transitivity: <span class="math inline">\(x \leq y \land y \leq z \implies x \leq z\  \forall x,y,z \in X\)</span> - antisymmtry: <span class="math inline">\(x \leq y \land y \leq x \implies x = y\  \forall x,y \in X\)</span></p>
+<p>A partial order is a pair <span class="math inline">\((X, \leq)\)</span> composed of a set <span class="math inline">\(X\)</span> called the ground set and <span class="math inline">\(\leq\)</span> is a binary relation with the following properties: - reflexivity: <span class="math inline">\(x \leq x\ \forall x \in X\)</span> - transitivity: <span class="math inline">\(x \leq y \land y \leq z \implies x \leq z\  \forall x,y,z \in X\)</span> - antisymmetry: <span class="math inline">\(x \leq y \land y \leq x \implies x = y\  \forall x,y \in X\)</span></p>
 </blockquote>
 <p>Let us consider an example of a partial order and some of the ways we can represent them.</p>
 <blockquote class="blockquote">
@@ -337,7 +337,7 @@ Tip
 </div>
 <div class="callout-body-container callout-body">
 <blockquote class="blockquote">
-<p>The previous example only required a relatively small subset of the Cartesian <span class="math inline">\(X \times X\)</span>. When you a have too many elements in <span class="math inline">\(X\)</span> to deal with by hand, one quick Python script to make the pairs in a format suitable for <span class="math inline">\(\LaTeX\)</span> is the following:</p>
+<p>The previous example only required a relatively small subset of the Cartesian product <span class="math inline">\(X \times X\)</span>. When you have too many elements in <span class="math inline">\(X\)</span> to deal with by hand, one quick Python script to make the pairs in a format suitable for <span class="math inline">\(\LaTeX\)</span> is the following:</p>
 </blockquote>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Format all ordered pairs of a five element set for use in LaTeX."""</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -355,7 +355,7 @@ Tip
 </div>
 <blockquote class="blockquote">
 <p><strong>Definition</strong></p>
-<p>A strict partial order is a pair <span class="math inline">\((X, &lt;)\)</span> composed of a set <span class="math inline">\(X\)</span> called the ground set and <span class="math inline">\(&lt;\)</span> is a binary relation with the following relation: - transitivity: <span class="math inline">\(x &lt; y \land y &lt; z \implies x &lt; z\  \forall x,y,z \in X\)</span> - asymmetry: <span class="math inline">\(\lnot (x &lt; y \land y &lt; x) \  \forall x,y \in X\)</span></p>
+<p>A strict partial order is a pair <span class="math inline">\((X, &lt;)\)</span> composed of a set <span class="math inline">\(X\)</span> called the ground set and <span class="math inline">\(&lt;\)</span> is a binary relation with the following properties: - transitivity: <span class="math inline">\(x &lt; y \land y &lt; z \implies x &lt; z\  \forall x,y,z \in X\)</span> - asymmetry: <span class="math inline">\(\lnot (x &lt; y \land y &lt; x) \  \forall x,y \in X\)</span></p>
 </blockquote>
 <blockquote class="blockquote">
 <p><strong>Proposition</strong></p>
@@ -405,7 +405,7 @@ Tip
 </blockquote>
 <blockquote class="blockquote">
 <p><strong>Definition</strong></p>
-<p>A graph <span class="math inline">\(G = (V, E)\)</span> whose edge set <span class="math inline">\(E\)</span> is the set of incomparable pairs of a partial order is called the comparability graph.</p>
+<p>A graph <span class="math inline">\(G = (V, E)\)</span> whose edge set <span class="math inline">\(E\)</span> is the set of incomparable pairs of a partial order is called the incomparability graph.</p>
 </blockquote>
 <blockquote class="blockquote">
 <p><strong>Example</strong> Suppose we have the strict partial order <span class="math inline">\(\\{(a,c), (a,e), (b,c), (b,d), (b,e), (d,e)\\}\)</span>, then its incomparability graph (AKA cocomparability graph) would look like:</p>
@@ -502,7 +502,7 @@ Tip
 </div>
 <blockquote class="blockquote">
 <p><strong>Definition</strong></p>
-<p>A cover diagram is a drawing of the directed graph representing a cover relation such that the edges are cover pairs <span class="math inline">\((x,y)\)</span>. Edges are drawn in such a way that <span class="math inline">\(x\)</span> is below <span class="math inline">\(y\)</span> (in the graph embedding) ad the edge is <span class="math inline">\(y\)</span>-monotone.</p>
+<p>A cover diagram is a drawing of the directed graph representing a cover relation such that the edges are cover pairs <span class="math inline">\((x,y)\)</span>. Edges are drawn in such a way that <span class="math inline">\(x\)</span> is below <span class="math inline">\(y\)</span> (in the graph embedding) and the edge is <span class="math inline">\(y\)</span>-monotone.</p>
 </blockquote>
 <blockquote class="blockquote">
 <p><strong>Example</strong></p>
@@ -597,7 +597,7 @@ Tip
 </blockquote>
 <blockquote class="blockquote">
 <p><strong>Definition</strong></p>
-<p>A lower bound <span class="math inline">\(a \in S\)</span> is called an infinum (or greatest lower bound, or meet) of <span class="math inline">\(S\)</span> if for all lower bounds <span class="math inline">\(y \in S\)</span> we have <span class="math inline">\(y \leq a\)</span>.</p>
+<p>A lower bound <span class="math inline">\(a \in S\)</span> is called an infimum (or greatest lower bound, or meet) of <span class="math inline">\(S\)</span> if for all lower bounds <span class="math inline">\(y \in S\)</span> we have <span class="math inline">\(y \leq a\)</span>.</p>
 </blockquote>
 <blockquote class="blockquote">
 <p><strong>Definition</strong></p>
@@ -609,7 +609,7 @@ Tip
 </blockquote>
 <blockquote class="blockquote">
 <p><strong>Definition</strong></p>
-<p>A finite poset on <span class="math inline">\(S\)</span> is a lattice if every subset of <span class="math inline">\(S\)</span> has an unique least upper bound (aka join or supremum) denoted <span class="math inline">\(\lor\)</span> and an unique greatest lower bound (aka meet or infinum) denoted <span class="math inline">\(\land\)</span>.</p>
+<p>A finite poset on <span class="math inline">\(S\)</span> is a <a href="https://en.wikipedia.org/wiki/Lattice_(order)">lattice</a> if every subset of <span class="math inline">\(S\)</span> has a unique least upper bound (aka join or supremum) denoted <span class="math inline">\(\lor\)</span> and a unique greatest lower bound (aka meet or infimum) denoted <span class="math inline">\(\land\)</span>.</p>
 </blockquote>
 <blockquote class="blockquote">
 <p><strong>Definition</strong></p>
@@ -623,7 +623,7 @@ Tip
 </blockquote>
 <blockquote class="blockquote">
 <p><strong>Proposition</strong></p>
-<p>The down-set lattice of <span class="math inline">\(P\)</span> is a distributive lattice.</p>
+<p>The down-set lattice of <span class="math inline">\(P\)</span> is a <a href="https://en.wikipedia.org/wiki/Distributive_lattice">distributive lattice</a>.</p>
 <p><strong>Proof (Hint)</strong> Take <span class="math inline">\(\lor\)</span> to be <span class="math inline">\(\cup\)</span> and <span class="math inline">\(\land\)</span> to be <span class="math inline">\(\cap\)</span>.</p>
 </blockquote>
 <blockquote class="blockquote">
@@ -636,9 +636,10 @@ Tip
 <h1>References</h1>
 <ul>
 <li><a href="https://www.youtube.com/playlist?list=PL5rqYzyihIQ0nzfnsEKxxedCpbNQoifgg">Lectures: Introduction to Order Theory, Fall 2020</a></li>
-<li><a href="https://page.math.tu-berlin.de/~felsner/Lehre/dsIII20-21.html">Introduction to Order Theorie</a></li>
+<li><a href="https://page.math.tu-berlin.de/~felsner/Lehre/dsIII20-21.html">Introduction to Order Theory</a></li>
 <li><a href="https://piotrmicek.staff.tcs.uj.edu.pl/introduction-to-order-theory-2020/">Introduction to order theory</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Infimum_and_supremum">Infinum and Supremum</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Infimum_and_supremum">Infimum and Supremum</a></li>
+<li><a href="https://www.cambridge.org/us/universitypress/subjects/mathematics/algebra/introduction-lattices-and-order-2nd-edition">Introduction to Lattices and Order</a> by Davey &amp; Priestley (2002)</li>
 </ul>
 
 

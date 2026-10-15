@@ -63,7 +63,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -238,7 +257,7 @@ window.Quarto = {
 
 
 <p>My goal in this post is just to show a little trick to computing a collection of functions in a way that satisfies some partial order.</p>
-<p>It is often the case that a collection of functions of methods need to be executed in a computer program. Some functions must be executed before or after each other while other pairs of functions it doesn’t matter what order you execute them. This constitutes a <a href="https://en.wikipedia.org/wiki/Partially_ordered_set">partial order</a> on the collection of functions. A common case is when there is a <a href="https://en.wikipedia.org/wiki/Mutual_exclusion">mutual exclusion</a>on a shared resource, or ensuring a transformation of some database satisfies the <a href="https://en.wikipedia.org/wiki/ACID">ACID</a> principles.</p>
+<p>It is often the case that a collection of functions or methods need to be executed in a computer program. Some functions must be executed before or after each other while for other pairs of functions it doesn’t matter what order you execute them. This constitutes a <a href="https://en.wikipedia.org/wiki/Partially_ordered_set">partial order</a> on the collection of functions. A common case is when there is a <a href="https://en.wikipedia.org/wiki/Mutual_exclusion">mutual exclusion</a> on a shared resource, or ensuring a transformation of some database satisfies the <a href="https://en.wikipedia.org/wiki/ACID">ACID</a> principles.</p>
 <p>Here is an example. Suppose we have the following collection of functions:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> time <span class="im">import</span> time</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -257,7 +276,7 @@ window.Quarto = {
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> x5():</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'x5: </span><span class="sc">{</span>time()<span class="sc">}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>(Okay, these are pretty boring functions but it doesn’t really matter what they do for this post.)</p>
-<p>And let’s say that there are constraints where some of the functions need to be executed according to an order relation represented by the follow <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">directed acyclic graph</a>. That is <span class="math inline">\(x1 \rightarrow x2\)</span> means that <span class="math inline">\(x2\)</span> must be computed <strong>after</strong> <span class="math inline">\(x1\)</span>.</p>
+<p>And let’s say that there are constraints where some of the functions need to be executed according to an order relation represented by the following <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">directed acyclic graph</a>. That is <span class="math inline">\(x1 \rightarrow x2\)</span> means that <span class="math inline">\(x2\)</span> must be computed <strong>after</strong> <span class="math inline">\(x1\)</span>.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -303,8 +322,8 @@ x4 --&gt; x5
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>g.add_edge(x2, x5)</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>g.add_edge(x3, x4)</span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>g.add_edge(x4, x5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Let’s assume that each of our functions are ready to be calculated as soon as the ones that come before it in the DAG have been executed. For the function <code>x1</code> there are no ancestors, so we’ll start there. Once we execute <code>x1</code> we could execute either <code>x2</code> or <code>x3</code> in any order. Once we have execute <code>x3</code> we can execute <code>x4</code>. Finally, when <code>x2</code> and <code>x4</code> are executed we can execute <code>x5</code>. One way to keep this organized is to collect the functions into a sequence of batches of functions that will satisfy the partial ordering if we ensure that all functions in a given batch are executed before moving onto the next batch.</p>
-<p>When these batches are aligned with the partial ordering in a certain sense we can call them “topological generations”. We can obtain the topological generations from an instance of <code>nx.DiGraph</code> using <code>nx.topological_generations</code>:</p>
+<p>Let’s assume that each of our functions are ready to be calculated as soon as the ones that come before it in the DAG have been executed. For the function <code>x1</code> there are no ancestors, so we’ll start there. Once we execute <code>x1</code> we could execute either <code>x2</code> or <code>x3</code> in any order. Once we have executed <code>x3</code> we can execute <code>x4</code>. Finally, when <code>x2</code> and <code>x4</code> are executed we can execute <code>x5</code>. One way to keep this organized is to collect the functions into a sequence of batches of functions that will satisfy the partial ordering if we ensure that all functions in a given batch are executed before moving onto the next batch.</p>
+<p>When these batches are aligned with the partial ordering in a certain sense we can call them “topological generations” <span class="citation" data-cites="cormen2009">(<a href="#ref-cormen2009" role="doc-biblioref">Cormen et al. 2009</a>)</span>. We can obtain the topological generations from an instance of <code>nx.DiGraph</code> using <code>nx.topological_generations</code>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>&gt;&gt;&gt; list(nx.topological_generations(g))</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>[[&lt;function x1 at 0x7f80acb27c70&gt;], [&lt;function x2 at 0x7f80acbe2f80&gt;, &lt;function x3 at 0x7f80ac09a4d0&gt;], [&lt;function x4 at 0x7f80a6fc8790&gt;], [&lt;function x5 at 0x7f80a6fc8820&gt;]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>So our first approximation can simply be to define a function <code>caller</code> that calls its input, loop over the topological generations, then loop over the functions in each topological generation, and call them using <code>caller</code>.</p>
@@ -329,7 +348,12 @@ x4 --&gt; x5
 
 
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-cormen2009" class="csl-entry" role="listitem">
+Cormen, Thomas H., Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein. 2009. <em>Introduction to Algorithms</em>. 3rd ed. MIT Press.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

@@ -63,7 +63,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -238,7 +257,7 @@ window.Quarto = {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>This post looks at implementing a simple simulation described in the SImPy documentation using the Ciw Python package.</p>
+<p>This post looks at implementing a simple simulation described in the SimPy documentation using the Ciw Python package <span class="citation" data-cites="palmer2019">(<a href="#ref-palmer2019" role="doc-biblioref">Palmer et al. 2019</a>)</span>.</p>
 </section>
 <section id="simpy-simulation" class="level2">
 <h2 class="anchored" data-anchor-id="simpy-simulation">SimPy Simulation</h2>
@@ -277,7 +296,7 @@ window.Quarto = {
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ciw</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We ‘could’ just use the <code>ciw.dists.Deterministic</code> and a simple loop achieve the same output, but that would seem to ignore how Ciw is motivated. Ciw is for queueing models, so let’s keep to that aim. Instead of taking the easy way, let’s map our understanding of the clock problem into being a queueing network problem so that we can follow the typical Ciw workflow.</p>
+<p>We ‘could’ just use the <code>ciw.dists.Deterministic</code> and a simple loop to achieve the same output, but that would seem to ignore how Ciw is motivated. Ciw is for queueing models, so let’s keep to that aim. Instead of taking the easy way, let’s map our understanding of the clock problem into being a queueing network problem so that we can follow the typical Ciw workflow.</p>
 <p>Let us take each clock to be a node in a queueing network. We will consider the case of two clocks as per the original example.</p>
 <p>Our clocks are not self-contained like ordinary clocks. They require an input signal to tell them when to tick. We will call these discrete units of signal “packets”. The clocks and the inputs/outputs act as completely separate systems, so for our two clocks we can assume the following routing matrix:</p>
 <p><span class="math display">\[R = \begin{bmatrix}0 &amp; 0 \\ 0 &amp; 0 \end{bmatrix}\]</span></p>
@@ -290,7 +309,7 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Each clock has a single ticker, i.e. one server per node."""</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>number_of_tickers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We can treat each completed tick of these clocks as the completion of a service. Each clock completes a tick at an exact deterministic rate, so the inter-arrival times of ticks are <a href="https://en.wikipedia.org/wiki/Degenerate_distribution#Constant_random_variable">constant random variables</a>.We can think of these service times mathematically as</p>
+<p>We can treat each completed tick of these clocks as the completion of a service. Each clock completes a tick at an exact deterministic rate, so the inter-arrival times of ticks are <a href="https://en.wikipedia.org/wiki/Degenerate_distribution#Constant_random_variable">constant random variables</a>. We can think of these service times mathematically as</p>
 <p><span class="math display">\[T_{\text{service}} \sim \delta \left( s \right)\]</span></p>
 <p>where <span class="math inline">\(\delta\)</span> is the <a href="https://en.wikipedia.org/wiki/Dirac_delta_function">Dirac delta distribution</a> and <span class="math inline">\(s\)</span> the “speed parameter” for the clock’s ticks. We can store our clock speeds in a list:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""The speeds (tick rates) of the fast and slow clocks."""</span></span>
@@ -298,7 +317,7 @@ window.Quarto = {
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>clock_speeds <span class="op">=</span> [<span class="fl">0.5</span>, <span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In order to ensure that each ticker has a correctly-timed packet we must consider the arrival times of packets onto the queue. If we provide too few packets then the clock won’t keep time; ticks will be delayed. If we provide more packets than necessary then we will start to have a queue filling up with packets which is a waste of memory. Instead we should have packets arrive at the same rate that they are needed. Thus the arrival rate will also equal:</p>
 <p><span class="math display">\[T_{\text{arrivals}} \sim \delta \left( s \right)\]</span></p>
-<p>Because the order of the packets doesn’t matter, the <a href="https://en.wikipedia.org/wiki/Network_scheduler">service discipline</a>doesn’t either. We’ll allow Ciw to use its default of first-come, first-serve, but it wouldn’t matter if we used something else.</p>
+<p>Because the order of the packets doesn’t matter, the <a href="https://en.wikipedia.org/wiki/Network_scheduler">service discipline</a> doesn’t either. We’ll allow Ciw to use its default of first-come, first-serve, but it wouldn’t matter if we used something else.</p>
 <p>Just because we have the rates of change correct doesn’t mean that we are starting in the correct state. The last, and trickiest, business of this exercise is to start the system with the correct number of packets. If it takes <span class="math inline">\(s\)</span> units of time for a packet to arrive and it takes another <span class="math inline">\(s\)</span> units of time for a packet to be processed into a tick, then each packet has a sojourn time of <span class="math inline">\(2s\)</span>. Which means that at the start of the simulation there will be a delay before the clocks start ticking. We could chalk this up to simulation <a href="https://ciw.readthedocs.io/en/latest/Tutorial-I/tutorial_iv.html">warm-up</a>, but let’s get this right. What we can do is have a distribution that</p>
 <p><span class="math display">\[f(t; s, c, \ell) = \begin{cases} \delta \left( 0 \right) &amp; t \leq 0 \land c &lt; \ell \\ \delta \left( s \right) &amp; \text{Otherwise} \end{cases}\]</span></p>
 <p>where <span class="math inline">\(t\)</span> is the simulation time, <span class="math inline">\(c \in \mathbb{N}_0\)</span> is a count of how many times the distribution has been used at or before <span class="math inline">\(t = 0\)</span>, and <span class="math inline">\(\ell \in \mathbb{N}_0\)</span> is the maximum number of times that we will allow this distribution to be used for <span class="math inline">\(t \leq 0\)</span>. Kinda weird, right? What it specifies is that we can pass packets into the system that take zero units of time to arrive and zero units of time to process. That will allow us to have a couple of packets run straight away! One implementation of Python for this looks like this:</p>
@@ -425,9 +444,14 @@ window.Quarto = {
 <p>Ciw can definitely handle this toy simulation of a pair of clocks, but it is not the most naturally suited tool for this example. It is a bit like coordinating the <a href="https://doom.fandom.com/wiki/BFG-10000">BFG-10000</a> to take aim at a squirrel; more work than needed but gets the job done.</p>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-palmer2019" class="csl-entry" role="listitem">
+Palmer, Geraint I., Vincent A. Knight, Paul R. Harper, and Asyl L. Hawa. 2019. <span>“Ciw: An Open-Source Discrete Event Simulation Library.”</span> <em>Journal of Simulation</em> 13 (1): 68–82. <a href="https://doi.org/10.1080/17477778.2018.1473909">https://doi.org/10.1080/17477778.2018.1473909</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

@@ -28,7 +28,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -173,14 +192,22 @@ ul.task-list li input[type="checkbox"] {
 <p>I watched this <a href="https://youtube.com/shorts/tBFErdYD1wU?si=GudeTQq0rwEmbLVm">YouTube short</a> by VSauce (Michael Stevens). It describes <a href="https://en.wikipedia.org/wiki/Optography">optography</a> which is an obscure topic of obtaining images from the retinas of certain animals including humans and rabbits.</p>
 <p>I wonder if there is a way to use machine learning to get useful information from optograms. There are some substantial challenges to this.</p>
 <p>The first is likely to be a lack of data. I tried searching online for a dataset of optograms and didn’t find anything substantial.</p>
-<p>A second related issue is having additional information paired to optograms, such as classes for classification or continuous variables as regression targets. Maybe an unsupervised approach could produce something interesting for the optograms themselves.</p>
+<p>A second related issue is having additional information paired with optograms, such as classes for classification or continuous variables as regression targets. Maybe an unsupervised approach could produce something interesting for the optograms themselves.</p>
 <p>A third issue is the unusual ethical and privacy concerns that may arise from obtaining and extracting information from optograms.</p>
-<p>But if one were take the approach of supervised machine learning, I think a Bayesian convolutional neural network approach would be interesting. Why convolutional neural networks? Well, the translationally equivariant operation of the convolution operator is efficient for images. Why Bayesian? Bayesian inference would allow us to put prior information into the problem that may be difficult to represent using data.</p>
+<p>But if one were to take the approach of supervised machine learning, I think a Bayesian convolutional neural network approach would be interesting. Why convolutional neural networks? Well, the translationally equivariant operation of the convolution operator is efficient for images <span class="citation" data-cites="lecun1998">(<a href="#ref-lecun1998" role="doc-biblioref">LeCun et al. 1998</a>)</span>. Why Bayesian? Bayesian inference <span class="citation" data-cites="gelman2013">(<a href="#ref-gelman2013" role="doc-biblioref">Gelman et al. 2013</a>)</span> would allow us to put prior information into the problem that may be difficult to represent using data.</p>
 <p>Machine learning for optography sounds pretty cool to me from a sci-fi perspective, but it comes with a bunch of issues both technical and ethical.</p>
 
 
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-gelman2013" class="csl-entry" role="listitem">
+Gelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2013. <em>Bayesian Data Analysis</em>. 3rd ed. CRC Press.
+</div>
+<div id="ref-lecun1998" class="csl-entry" role="listitem">
+LeCun, Yann, Léon Bottou, Yoshua Bengio, and Patrick Haffner. 1998. <span>“Gradient-Based Learning Applied to Document Recognition.”</span> <em>Proceedings of the IEEE</em> 86 (11): 2278–324. <a href="https://doi.org/10.1109/5.726791">https://doi.org/10.1109/5.726791</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
