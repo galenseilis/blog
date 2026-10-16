@@ -10,7 +10,2640 @@
 <atom:link href="https://galenseilis.github.io/blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog by a technology and math enthusiast!</description>
 <generator>quarto-1.10.19</generator>
-<lastBuildDate>Mon, 15 Jun 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 16 Oct 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Ellipse Intersections and Locating a Moose Between Fixes</title>
+  <dc:creator>Galen Seilis</dc:creator>
+  <link>https://galenseilis.github.io/blog/posts/ellipse-intersections-for-moose-movement/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>A GPS collar on a moose hands us a sequence of points: a latitude, a longitude, and a time. What it does not hand us is the path between those points. Between two consecutive fixes the moose could have wandered, rested, circled back, or run in a straight line, and all we observe is where it was at the two endpoints.</p>
+<p>This is a familiar gap in movement ecology, and there is a classical geometric answer to a sharply-posed version of the question: <em>if the moose can move no faster than some maximum speed, where could it possibly have been between the two fixes?</em> The answer is an ellipse. And once we have ellipses for two animals, intersecting them gives a cheap first test of whether those animals could have crossed paths at all.</p>
+<p>This post works through the geometry, the code, and the honesty required: the whole construction leans on an assumed maximum speed, and that assumption deserves scrutiny.</p>
+<section id="the-ellipse-between-two-fixes" class="level2">
+<h2 class="anchored" data-anchor-id="the-ellipse-between-two-fixes">The ellipse between two fixes</h2>
+<p>Let a moose be observed at position <img src="https://latex.codecogs.com/png.latex?x_0"> at time <img src="https://latex.codecogs.com/png.latex?t_0"> and at position <img src="https://latex.codecogs.com/png.latex?x_1"> at time <img src="https://latex.codecogs.com/png.latex?t_1">. Write the interval length as</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5CDelta%20t%20=%20t_1%20-%20t_0."></p>
+<p>Suppose the moose can never travel faster than a maximum speed <img src="https://latex.codecogs.com/png.latex?v_%7B%5Cmax%7D">. A point <img src="https://latex.codecogs.com/png.latex?p"> was <em>possible</em> for the moose at some moment in the interval only if there is a route from <img src="https://latex.codecogs.com/png.latex?x_0">, through <img src="https://latex.codecogs.com/png.latex?p">, then on to <img src="https://latex.codecogs.com/png.latex?x_1">, whose total length fits in the time available. The shortest such route is two straight segments, so the condition is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5ClVert%20p%20-%20x_0%20%5CrVert%20+%20%5ClVert%20p%20-%20x_1%20%5CrVert%20%5Cle%20v_%7B%5Cmax%7D%5C,%5CDelta%20t."></p>
+<p>That inequality is precisely the definition of the interior of an ellipse with foci at the two fixes. The sum of distances to the foci is constant, and here the constant is the total distance the moose can cover. So the set of possible positions is a filled ellipse whose foci are the two fixes, with</p>
+<p><img src="https://latex.codecogs.com/png.latex?2a%20=%20v_%7B%5Cmax%7D%5C,%5CDelta%20t,%20%5Cqquad%20c%20=%20%5Cfrac%7B%5ClVert%20x_1%20-%20x_0%20%5CrVert%7D%7B2%7D,%20%5Cqquad%20b%20=%20%5Csqrt%7Ba%5E2%20-%20c%5E2%7D,"></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?a"> is the semi-major axis, <img src="https://latex.codecogs.com/png.latex?c"> the focal distance, and <img src="https://latex.codecogs.com/png.latex?b"> the semi-minor axis. The major axis lies along the line joining the fixes. This object has a name in time geography: the <strong>potential path area</strong> for a single time step. It is a <em>region of possibility</em>, not a probability distribution, and not a path.</p>
+<p>Some immediate consequences fall out of the formula. If <img src="https://latex.codecogs.com/png.latex?v_%7B%5Cmax%7D%5C,%5CDelta%20t%20%3C%20%5ClVert%20x_1%20-%20x_0%20%5CrVert"> then the inequality can never hold and the ellipse does not exist: the fixes are mutually inconsistent with the speed assumption, which usually means the speed bound is too low or the fixes carry enough error to make the implied speed misleading. And as <img src="https://latex.codecogs.com/png.latex?%5CDelta%20t"> grows, the ellipse grows linearly in its long direction, so the method loses power exactly when fixes are sparse.</p>
+</section>
+<section id="drawing-and-intersecting-ellipses" class="level2">
+<h2 class="anchored" data-anchor-id="drawing-and-intersecting-ellipses">Drawing and intersecting ellipses</h2>
+<p>Analytic ellipse intersections are fiddly, but computational geometry libraries handle them directly. The script below builds an ellipse by buffering a point to a unit disc and then scaling, rotating, and translating it with Shapely, computes the foci, and takes the set operations we care about: intersection for the shared area, difference for the exclusive areas.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> math</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb1-3"></span>
+<span id="cb1-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> shapely.geometry <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Point</span>
+<span id="cb1-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> shapely.affinity <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> scale, rotate, translate</span>
+<span id="cb1-6"></span>
+<span id="cb1-7"></span>
+<span id="cb1-8"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> ellipse(cx, cy, a, b, angle_deg, resolution<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">256</span>):</span>
+<span id="cb1-9">    e <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Point(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>).<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">buffer</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, quad_segs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>resolution)</span>
+<span id="cb1-10">    e <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> scale(e, a, b)</span>
+<span id="cb1-11">    e <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> rotate(e, angle_deg, origin<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>))</span>
+<span id="cb1-12">    e <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> translate(e, cx, cy)</span>
+<span id="cb1-13">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> e</span>
+<span id="cb1-14"></span>
+<span id="cb1-15"></span>
+<span id="cb1-16"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> ellipse_foci(cx, cy, a, b, angle_deg):</span>
+<span id="cb1-17">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb1-18"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    Return the two foci of an ellipse.</span></span>
+<span id="cb1-19"></span>
+<span id="cb1-20"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    The ellipse has:</span></span>
+<span id="cb1-21"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        center = (cx, cy)</span></span>
+<span id="cb1-22"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        semi-major axis = a</span></span>
+<span id="cb1-23"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        semi-minor axis = b</span></span>
+<span id="cb1-24"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        rotation = angle_deg</span></span>
+<span id="cb1-25"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    """</span></span>
+<span id="cb1-26">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> b:</span>
+<span id="cb1-27">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">raise</span> <span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">ValueError</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"This function expects a &gt;= b."</span>)</span>
+<span id="cb1-28"></span>
+<span id="cb1-29">    c <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> math.sqrt(a<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> b<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb1-30"></span>
+<span id="cb1-31">    theta <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> math.radians(angle_deg)</span>
+<span id="cb1-32"></span>
+<span id="cb1-33">    dx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> c <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> math.cos(theta)</span>
+<span id="cb1-34">    dy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> c <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> math.sin(theta)</span>
+<span id="cb1-35"></span>
+<span id="cb1-36">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> [</span>
+<span id="cb1-37">        (cx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> dx, cy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> dy),</span>
+<span id="cb1-38">        (cx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> dx, cy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> dy),</span>
+<span id="cb1-39">    ]</span>
+<span id="cb1-40"></span>
+<span id="cb1-41"></span>
+<span id="cb1-42"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-43"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Define ellipses</span></span>
+<span id="cb1-44"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-45"></span>
+<span id="cb1-46"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Ellipse 1</span></span>
+<span id="cb1-47">e1_cx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb1-48">e1_cy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb1-49">e1_a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span></span>
+<span id="cb1-50">e1_b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span></span>
+<span id="cb1-51">e1_angle <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span></span>
+<span id="cb1-52"></span>
+<span id="cb1-53">e1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ellipse(</span>
+<span id="cb1-54">    e1_cx,</span>
+<span id="cb1-55">    e1_cy,</span>
+<span id="cb1-56">    e1_a,</span>
+<span id="cb1-57">    e1_b,</span>
+<span id="cb1-58">    e1_angle,</span>
+<span id="cb1-59">)</span>
+<span id="cb1-60"></span>
+<span id="cb1-61"></span>
+<span id="cb1-62"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Get Ellipse 1 foci</span></span>
+<span id="cb1-63">foci1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ellipse_foci(</span>
+<span id="cb1-64">    e1_cx,</span>
+<span id="cb1-65">    e1_cy,</span>
+<span id="cb1-66">    e1_a,</span>
+<span id="cb1-67">    e1_b,</span>
+<span id="cb1-68">    e1_angle,</span>
+<span id="cb1-69">)</span>
+<span id="cb1-70"></span>
+<span id="cb1-71"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Use the first focus of Ellipse 1 as a focus of Ellipse 2.</span></span>
+<span id="cb1-72">shared_focus <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> foci1[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb1-73"></span>
+<span id="cb1-74"></span>
+<span id="cb1-75"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-76"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Define Ellipse 2 so that it shares a focus with Ellipse 1</span></span>
+<span id="cb1-77"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-78"></span>
+<span id="cb1-79">e2_a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span></span>
+<span id="cb1-80">e2_b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb1-81">e2_angle <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">35</span></span>
+<span id="cb1-82"></span>
+<span id="cb1-83"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># For an ellipse:</span></span>
+<span id="cb1-84"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#</span></span>
+<span id="cb1-85"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#     c = sqrt(a^2 - b^2)</span></span>
+<span id="cb1-86"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#</span></span>
+<span id="cb1-87"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># and the distance from the center to either focus is c.</span></span>
+<span id="cb1-88"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#</span></span>
+<span id="cb1-89"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># The shared focus is:</span></span>
+<span id="cb1-90"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#</span></span>
+<span id="cb1-91"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#     center - c * direction</span></span>
+<span id="cb1-92"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#</span></span>
+<span id="cb1-93"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Therefore:</span></span>
+<span id="cb1-94"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#</span></span>
+<span id="cb1-95"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#     center = shared_focus + c * direction</span></span>
+<span id="cb1-96"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#</span></span>
+<span id="cb1-97"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># where "direction" is the direction of the major axis.</span></span>
+<span id="cb1-98"></span>
+<span id="cb1-99">e2_c <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> math.sqrt(e2_a<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> e2_b<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb1-100"></span>
+<span id="cb1-101">theta2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> math.radians(e2_angle)</span>
+<span id="cb1-102"></span>
+<span id="cb1-103">direction2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (</span>
+<span id="cb1-104">    math.cos(theta2),</span>
+<span id="cb1-105">    math.sin(theta2),</span>
+<span id="cb1-106">)</span>
+<span id="cb1-107"></span>
+<span id="cb1-108">e2_cx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> shared_focus[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> e2_c <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> direction2[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb1-109">e2_cy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> shared_focus[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> e2_c <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> direction2[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb1-110"></span>
+<span id="cb1-111">e2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ellipse(</span>
+<span id="cb1-112">    e2_cx,</span>
+<span id="cb1-113">    e2_cy,</span>
+<span id="cb1-114">    e2_a,</span>
+<span id="cb1-115">    e2_b,</span>
+<span id="cb1-116">    e2_angle,</span>
+<span id="cb1-117">)</span>
+<span id="cb1-118"></span>
+<span id="cb1-119"></span>
+<span id="cb1-120"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Get Ellipse 2 foci</span></span>
+<span id="cb1-121">foci2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ellipse_foci(</span>
+<span id="cb1-122">    e2_cx,</span>
+<span id="cb1-123">    e2_cy,</span>
+<span id="cb1-124">    e2_a,</span>
+<span id="cb1-125">    e2_b,</span>
+<span id="cb1-126">    e2_angle,</span>
+<span id="cb1-127">)</span>
+<span id="cb1-128"></span>
+<span id="cb1-129"></span>
+<span id="cb1-130"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-131"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Print focus information</span></span>
+<span id="cb1-132"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-133"></span>
+<span id="cb1-134"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Ellipse 1 foci:"</span>)</span>
+<span id="cb1-135"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i, (x, y) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(foci1, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>):</span>
+<span id="cb1-136">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  F</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>i<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">: (</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.6f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">, </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>y<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.6f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">)"</span>)</span>
+<span id="cb1-137"></span>
+<span id="cb1-138"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Ellipse 2 foci:"</span>)</span>
+<span id="cb1-139"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i, (x, y) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(foci2, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>):</span>
+<span id="cb1-140">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  F</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>i<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">: (</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.6f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">, </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>y<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.6f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">)"</span>)</span>
+<span id="cb1-141"></span>
+<span id="cb1-142"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Shared focus: (</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>shared_focus[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.6f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">, </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>shared_focus[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.6f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">)"</span>)</span>
+<span id="cb1-143"></span>
+<span id="cb1-144"></span>
+<span id="cb1-145"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-146"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Compute regions</span></span>
+<span id="cb1-147"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-148"></span>
+<span id="cb1-149">intersection <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> e1.intersection(e2)</span>
+<span id="cb1-150">e1_only <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> e1.difference(e2)</span>
+<span id="cb1-151">e2_only <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> e2.difference(e1)</span>
+<span id="cb1-152"></span>
+<span id="cb1-153"></span>
+<span id="cb1-154"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Areas</span></span>
+<span id="cb1-155">area_e1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> e1.area</span>
+<span id="cb1-156">area_e2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> e2.area</span>
+<span id="cb1-157">area_intersection <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> intersection.area</span>
+<span id="cb1-158">area_e1_only <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> e1_only.area</span>
+<span id="cb1-159">area_e2_only <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> e2_only.area</span>
+<span id="cb1-160"></span>
+<span id="cb1-161"></span>
+<span id="cb1-162"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Ellipse 1 area:       </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>area_e1<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.6f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb1-163"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Ellipse 2 area:       </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>area_e2<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.6f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb1-164"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Intersection area:    </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>area_intersection<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.6f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb1-165"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Ellipse 1 only area:  </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>area_e1_only<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.6f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb1-166"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Ellipse 2 only area:  </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>area_e2_only<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.6f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb1-167"></span>
+<span id="cb1-168"></span>
+<span id="cb1-169"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-170"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Plot</span></span>
+<span id="cb1-171"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-172"></span>
+<span id="cb1-173">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>))</span>
+<span id="cb1-174"></span>
+<span id="cb1-175"></span>
+<span id="cb1-176"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> plot_geometry(geometry, ax, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span>kwargs):</span>
+<span id="cb1-177">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> geometry.is_empty:</span>
+<span id="cb1-178">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span></span>
+<span id="cb1-179"></span>
+<span id="cb1-180">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> geometry.geom_type <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Polygon"</span>:</span>
+<span id="cb1-181">        polygons <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [geometry]</span>
+<span id="cb1-182">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span>:</span>
+<span id="cb1-183">        polygons <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>(geometry.geoms)</span>
+<span id="cb1-184"></span>
+<span id="cb1-185">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> polygon <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> polygons:</span>
+<span id="cb1-186">        x, y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> polygon.exterior.xy</span>
+<span id="cb1-187">        ax.fill(x, y, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span>kwargs)</span>
+<span id="cb1-188"></span>
+<span id="cb1-189"></span>
+<span id="cb1-190"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-191"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Fill regions</span></span>
+<span id="cb1-192"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-193"></span>
+<span id="cb1-194">plot_geometry(</span>
+<span id="cb1-195">    e1_only,</span>
+<span id="cb1-196">    ax,</span>
+<span id="cb1-197">    color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cornflowerblue"</span>,</span>
+<span id="cb1-198">    alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65</span>,</span>
+<span id="cb1-199">)</span>
+<span id="cb1-200"></span>
+<span id="cb1-201">plot_geometry(</span>
+<span id="cb1-202">    e2_only,</span>
+<span id="cb1-203">    ax,</span>
+<span id="cb1-204">    color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"salmon"</span>,</span>
+<span id="cb1-205">    alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65</span>,</span>
+<span id="cb1-206">)</span>
+<span id="cb1-207"></span>
+<span id="cb1-208">plot_geometry(</span>
+<span id="cb1-209">    intersection,</span>
+<span id="cb1-210">    ax,</span>
+<span id="cb1-211">    color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mediumseagreen"</span>,</span>
+<span id="cb1-212">    alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>,</span>
+<span id="cb1-213">)</span>
+<span id="cb1-214"></span>
+<span id="cb1-215"></span>
+<span id="cb1-216"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-217"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Draw ellipse boundaries</span></span>
+<span id="cb1-218"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-219"></span>
+<span id="cb1-220"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> geometry, color, label <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> [</span>
+<span id="cb1-221">    (e1, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"blue"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Ellipse 1"</span>),</span>
+<span id="cb1-222">    (e2, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Ellipse 2"</span>),</span>
+<span id="cb1-223">]:</span>
+<span id="cb1-224">    x, y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> geometry.exterior.xy</span>
+<span id="cb1-225">    ax.plot(</span>
+<span id="cb1-226">        x,</span>
+<span id="cb1-227">        y,</span>
+<span id="cb1-228">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color,</span>
+<span id="cb1-229">        linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb1-230">        label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>label,</span>
+<span id="cb1-231">    )</span>
+<span id="cb1-232"></span>
+<span id="cb1-233"></span>
+<span id="cb1-234"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-235"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Draw centers</span></span>
+<span id="cb1-236"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-237"></span>
+<span id="cb1-238">ax.scatter(</span>
+<span id="cb1-239">    e1_cx,</span>
+<span id="cb1-240">    e1_cy,</span>
+<span id="cb1-241">    color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"blue"</span>,</span>
+<span id="cb1-242">    marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"+"</span>,</span>
+<span id="cb1-243">    s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>,</span>
+<span id="cb1-244">    linewidths<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb1-245">    zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>,</span>
+<span id="cb1-246">)</span>
+<span id="cb1-247"></span>
+<span id="cb1-248">ax.scatter(</span>
+<span id="cb1-249">    e2_cx,</span>
+<span id="cb1-250">    e2_cy,</span>
+<span id="cb1-251">    color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red"</span>,</span>
+<span id="cb1-252">    marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"+"</span>,</span>
+<span id="cb1-253">    s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>,</span>
+<span id="cb1-254">    linewidths<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb1-255">    zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>,</span>
+<span id="cb1-256">)</span>
+<span id="cb1-257"></span>
+<span id="cb1-258"></span>
+<span id="cb1-259"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-260"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Draw foci</span></span>
+<span id="cb1-261"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-262"></span>
+<span id="cb1-263"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Ellipse 1 foci</span></span>
+<span id="cb1-264"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i, (x, y) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(foci1, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>):</span>
+<span id="cb1-265">    ax.scatter(</span>
+<span id="cb1-266">        x,</span>
+<span id="cb1-267">        y,</span>
+<span id="cb1-268">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"blue"</span>,</span>
+<span id="cb1-269">        marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>,</span>
+<span id="cb1-270">        s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">90</span>,</span>
+<span id="cb1-271">        linewidths<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>,</span>
+<span id="cb1-272">        zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">11</span>,</span>
+<span id="cb1-273">    )</span>
+<span id="cb1-274"></span>
+<span id="cb1-275">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Don't duplicate the label for the shared focus.</span></span>
+<span id="cb1-276">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> (x, y) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!=</span> shared_focus:</span>
+<span id="cb1-277">        ax.annotate(</span>
+<span id="cb1-278">            <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"F</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>i<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> (E1)"</span>,</span>
+<span id="cb1-279">            (x, y),</span>
+<span id="cb1-280">            xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>),</span>
+<span id="cb1-281">            textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"offset points"</span>,</span>
+<span id="cb1-282">            color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"darkblue"</span>,</span>
+<span id="cb1-283">            fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>,</span>
+<span id="cb1-284">            fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>,</span>
+<span id="cb1-285">        )</span>
+<span id="cb1-286"></span>
+<span id="cb1-287"></span>
+<span id="cb1-288"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Ellipse 2 foci</span></span>
+<span id="cb1-289"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i, (x, y) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(foci2, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>):</span>
+<span id="cb1-290">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Shared focus gets a special marker.</span></span>
+<span id="cb1-291">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> math.isclose(x, shared_focus[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], abs_tol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-9</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">and</span> math.isclose(</span>
+<span id="cb1-292">        y, shared_focus[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], abs_tol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-9</span></span>
+<span id="cb1-293">    ):</span>
+<span id="cb1-294">        ax.scatter(</span>
+<span id="cb1-295">            x,</span>
+<span id="cb1-296">            y,</span>
+<span id="cb1-297">            color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"purple"</span>,</span>
+<span id="cb1-298">            marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"*"</span>,</span>
+<span id="cb1-299">            s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">180</span>,</span>
+<span id="cb1-300">            edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"black"</span>,</span>
+<span id="cb1-301">            linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>,</span>
+<span id="cb1-302">            zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>,</span>
+<span id="cb1-303">            label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Shared focus"</span>,</span>
+<span id="cb1-304">        )</span>
+<span id="cb1-305"></span>
+<span id="cb1-306">        ax.annotate(</span>
+<span id="cb1-307">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Shared focus</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">(E1 &amp; E2)"</span>,</span>
+<span id="cb1-308">            (x, y),</span>
+<span id="cb1-309">            xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">35</span>),</span>
+<span id="cb1-310">            textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"offset points"</span>,</span>
+<span id="cb1-311">            color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"purple"</span>,</span>
+<span id="cb1-312">            fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>,</span>
+<span id="cb1-313">            fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>,</span>
+<span id="cb1-314">            ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"left"</span>,</span>
+<span id="cb1-315">        )</span>
+<span id="cb1-316"></span>
+<span id="cb1-317">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span>:</span>
+<span id="cb1-318">        ax.scatter(</span>
+<span id="cb1-319">            x,</span>
+<span id="cb1-320">            y,</span>
+<span id="cb1-321">            color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red"</span>,</span>
+<span id="cb1-322">            marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>,</span>
+<span id="cb1-323">            s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">90</span>,</span>
+<span id="cb1-324">            linewidths<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>,</span>
+<span id="cb1-325">            zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">11</span>,</span>
+<span id="cb1-326">        )</span>
+<span id="cb1-327"></span>
+<span id="cb1-328">        ax.annotate(</span>
+<span id="cb1-329">            <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"F</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>i<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> (E2)"</span>,</span>
+<span id="cb1-330">            (x, y),</span>
+<span id="cb1-331">            xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>),</span>
+<span id="cb1-332">            textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"offset points"</span>,</span>
+<span id="cb1-333">            color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"darkred"</span>,</span>
+<span id="cb1-334">            fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>,</span>
+<span id="cb1-335">            fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>,</span>
+<span id="cb1-336">        )</span>
+<span id="cb1-337"></span>
+<span id="cb1-338"></span>
+<span id="cb1-339"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-340"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Label regions</span></span>
+<span id="cb1-341"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-342"></span>
+<span id="cb1-343"></span>
+<span id="cb1-344"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> label_region(geometry, text, ax, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span>kwargs):</span>
+<span id="cb1-345">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> geometry.is_empty:</span>
+<span id="cb1-346">        point <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> geometry.representative_point()</span>
+<span id="cb1-347">        ax.annotate(</span>
+<span id="cb1-348">            text,</span>
+<span id="cb1-349">            (point.x, point.y),</span>
+<span id="cb1-350">            ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>,</span>
+<span id="cb1-351">            va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>,</span>
+<span id="cb1-352">            <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span>kwargs,</span>
+<span id="cb1-353">        )</span>
+<span id="cb1-354"></span>
+<span id="cb1-355"></span>
+<span id="cb1-356">label_region(</span>
+<span id="cb1-357">    e1_only,</span>
+<span id="cb1-358">    <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Ellipse 1 only</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>area_e1_only<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.3f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>,</span>
+<span id="cb1-359">    ax,</span>
+<span id="cb1-360">    fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">11</span>,</span>
+<span id="cb1-361">    color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"darkblue"</span>,</span>
+<span id="cb1-362">)</span>
+<span id="cb1-363"></span>
+<span id="cb1-364">label_region(</span>
+<span id="cb1-365">    e2_only,</span>
+<span id="cb1-366">    <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Ellipse 2 only</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>area_e2_only<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.3f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>,</span>
+<span id="cb1-367">    ax,</span>
+<span id="cb1-368">    fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">11</span>,</span>
+<span id="cb1-369">    color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"darkred"</span>,</span>
+<span id="cb1-370">)</span>
+<span id="cb1-371"></span>
+<span id="cb1-372">label_region(</span>
+<span id="cb1-373">    intersection,</span>
+<span id="cb1-374">    <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Overlap</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>area_intersection<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.3f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>,</span>
+<span id="cb1-375">    ax,</span>
+<span id="cb1-376">    fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">11</span>,</span>
+<span id="cb1-377">    color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"darkgreen"</span>,</span>
+<span id="cb1-378">    fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>,</span>
+<span id="cb1-379">)</span>
+<span id="cb1-380"></span>
+<span id="cb1-381"></span>
+<span id="cb1-382"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-383"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Formatting</span></span>
+<span id="cb1-384"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-385"></span>
+<span id="cb1-386">ax.set_aspect(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"equal"</span>, adjustable<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"box"</span>)</span>
+<span id="cb1-387">ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>)</span>
+<span id="cb1-388">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y"</span>)</span>
+<span id="cb1-389">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Overlap of Two Arbitrarily Oriented Ellipses</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">with a Shared Focus"</span>)</span>
+<span id="cb1-390"></span>
+<span id="cb1-391">ax.legend()</span>
+<span id="cb1-392">ax.grid(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.25</span>)</span>
+<span id="cb1-393"></span>
+<span id="cb1-394">plt.tight_layout()</span>
+<span id="cb1-395"></span>
+<span id="cb1-396"></span>
+<span id="cb1-397"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-398"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Save instead of displaying</span></span>
+<span id="cb1-399"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ------------------------------------------------------------------</span></span>
+<span id="cb1-400"></span>
+<span id="cb1-401">output_file <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ellipse_intersection.png"</span></span>
+<span id="cb1-402"></span>
+<span id="cb1-403">fig.savefig(</span>
+<span id="cb1-404">    output_file,</span>
+<span id="cb1-405">    dpi<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">600</span>,</span>
+<span id="cb1-406">    bbox_inches<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tight"</span>,</span>
+<span id="cb1-407">    facecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>,</span>
+<span id="cb1-408">)</span>
+<span id="cb1-409"></span>
+<span id="cb1-410">plt.close(fig)</span>
+<span id="cb1-411"></span>
+<span id="cb1-412"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Saved plot to: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>output_file<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+<p>The example uses two arbitrarily oriented ellipses that happen to share a focus, and reports the areas of each ellipse only, each intersection, and the overlap. Sharing a focus is a nice special case to look at because the foci are the anchor points of the construction, and it makes the geometry easy to read off the figure.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://galenseilis.github.io/blog/posts/ellipse-intersections-for-moose-movement/figures/ellipse_intersection.png" class="img-fluid figure-img"></p>
+<figcaption>Overlap of two arbitrarily oriented ellipses with a shared focus</figcaption>
+</figure>
+</div>
+<p>For the moose question the shared-focus case has a natural interpretation: if two consecutive fixes of a single moose happened to coincide with one focus of two successive ellipses, then the two intervals are stitched together at that point. More generally, for a single animal we get a chain of ellipses, one per interval, and the union of those ellipses is the animal’s potential path area across the whole tracking period.</p>
+</section>
+<section id="two-moose-could-they-have-met" class="level2">
+<h2 class="anchored" data-anchor-id="two-moose-could-they-have-met">Two moose: could they have met?</h2>
+<p>Now give two moose each a pair of fixes over the same interval, and give each its own maximum speed. Moose A gets ellipse <img src="https://latex.codecogs.com/png.latex?E_A"> and moose B gets <img src="https://latex.codecogs.com/png.latex?E_B">. A first, purely spatial question:</p>
+<ul>
+<li>If <img src="https://latex.codecogs.com/png.latex?E_A%20%5Ccap%20E_B%20=%20%5Cvarnothing">, then there is no location that both animals could have occupied during the interval, so under these assumptions a meeting is <strong>ruled out</strong>. This is a genuinely useful negative result.</li>
+<li>If <img src="https://latex.codecogs.com/png.latex?E_A%20%5Ccap%20E_B%20%5Cneq%20%5Cvarnothing">, then a shared location is possible, and it is tempting to conclude that an interaction was possible. That conclusion is too quick.</li>
+</ul>
+<p>The reason is that the ellipse is time-agnostic. It is the union, over every moment in the interval, of the positions the animal could have occupied. Two animals can have overlapping ellipses while being at the same place at disjoint times, which is not an interaction at all.</p>
+<p>The sharper question uses the time axis. A moose that must be at <img src="https://latex.codecogs.com/png.latex?x_0"> at <img src="https://latex.codecogs.com/png.latex?t_0"> and at <img src="https://latex.codecogs.com/png.latex?x_1"> at <img src="https://latex.codecogs.com/png.latex?t_1"> can be at a point <img src="https://latex.codecogs.com/png.latex?p"> at time <img src="https://latex.codecogs.com/png.latex?t"> only if it can get there and still get to <img src="https://latex.codecogs.com/png.latex?x_1"> afterwards:</p>
+<p><img src="https://latex.codecogs.com/png.latex?t_0%20+%20%5Cfrac%7B%5ClVert%20p%20-%20x_0%20%5CrVert%7D%7Bv_%7B%5Cmax%7D%7D%20%5C;%5Cle%5C;%20t%20%5C;%5Cle%5C;%20t_1%20-%20%5Cfrac%7B%5ClVert%20p%20-%20x_1%20%5CrVert%7D%7Bv_%7B%5Cmax%7D%7D."></p>
+<p>That is a window of possible presence at <img src="https://latex.codecogs.com/png.latex?p">. The two moose could have met at <img src="https://latex.codecogs.com/png.latex?p"> only if their windows overlap, that is, if</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cmax%5Cbigl(%5Ctext%7Blo%7D_A,%20%5Ctext%7Blo%7D_B%5Cbigr)%20%5C;%5Cle%5C;%20%5Cmin%5Cbigl(%5Ctext%7Bhi%7D_A,%20%5Ctext%7Bhi%7D_B%5Cbigr)."></p>
+<p>A meeting is possible if such a <img src="https://latex.codecogs.com/png.latex?p"> exists anywhere in the overlap region. The script below builds the reachable ellipses, intersects them, and then grids the overlap looking for points where both windows overlap. It runs three cases: an overlap that does support a common time, an overlap that exists in space but never in time, and no overlap at all.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Could two moose have been in the same place at the same time?</span></span>
+<span id="cb2-2"></span>
+<span id="cb2-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">Given a pair of fixes per moose (position at the start and at the end of an</span></span>
+<span id="cb2-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">interval), a maximum travel speed, and the length of the interval, each moose</span></span>
+<span id="cb2-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">gets an ellipse of positions it could have occupied during the interval.</span></span>
+<span id="cb2-6"></span>
+<span id="cb2-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">This script:</span></span>
+<span id="cb2-8"></span>
+<span id="cb2-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">1. builds those reachable ellipses for two moose,</span></span>
+<span id="cb2-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">2. intersects them,</span></span>
+<span id="cb2-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">3. asks a stricter question than "do the ellipses overlap": is there a point</span></span>
+<span id="cb2-12"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">   in the overlap where *both* moose could have been present at a *common*</span></span>
+<span id="cb2-13"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">   time?</span></span>
+<span id="cb2-14"></span>
+<span id="cb2-15"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">A moose that starts at ``fix0`` at time ``t0`` and must be at ``fix1`` at time</span></span>
+<span id="cb2-16"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">``t1`` can be at point ``p`` at time ``t`` only if it has enough time to reach</span></span>
+<span id="cb2-17"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">``p`` and still enough time left to reach ``fix1``::</span></span>
+<span id="cb2-18"></span>
+<span id="cb2-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    t0 + |p - fix0| / v  &lt;=  t  &lt;=  t1 - |fix1 - p| / v</span></span>
+<span id="cb2-20"></span>
+<span id="cb2-21"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">So for each moose we get a window of times at which it could have been at ``p``,</span></span>
+<span id="cb2-22"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">and the two moose could have met at ``p`` only if those windows overlap.</span></span>
+<span id="cb2-23"></span>
+<span id="cb2-24"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">Three scenarios are reported:</span></span>
+<span id="cb2-25"></span>
+<span id="cb2-26"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">* an overlap that also supports a common time,</span></span>
+<span id="cb2-27"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">* an overlap that exists in space but never in time,</span></span>
+<span id="cb2-28"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">* no overlap at all, so a meeting is ruled out under that speed assumption.</span></span>
+<span id="cb2-29"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb2-30"></span>
+<span id="cb2-31"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> math</span>
+<span id="cb2-32"></span>
+<span id="cb2-33"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb2-34"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb2-35"></span>
+<span id="cb2-36"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> shapely.affinity <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> rotate, scale, translate</span>
+<span id="cb2-37"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> shapely.geometry <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Point</span>
+<span id="cb2-38"></span>
+<span id="cb2-39"></span>
+<span id="cb2-40"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> ellipse(cx, cy, a, b, angle_deg, resolution<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">256</span>):</span>
+<span id="cb2-41">    e <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Point(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>).<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">buffer</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, quad_segs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>resolution)</span>
+<span id="cb2-42">    e <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> scale(e, a, b)</span>
+<span id="cb2-43">    e <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> rotate(e, angle_deg, origin<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>))</span>
+<span id="cb2-44">    e <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> translate(e, cx, cy)</span>
+<span id="cb2-45">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> e</span>
+<span id="cb2-46"></span>
+<span id="cb2-47"></span>
+<span id="cb2-48"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> reachable_ellipse(fix0, fix1, v_max, dt):</span>
+<span id="cb2-49">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Positions visitable between two fixes without exceeding ``v_max``.</span></span>
+<span id="cb2-50"></span>
+<span id="cb2-51"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    ``fix0`` and ``fix1`` are (x, y) pairs in kilometres, ``v_max`` is in</span></span>
+<span id="cb2-52"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    kilometres per hour, and ``dt`` is in hours.</span></span>
+<span id="cb2-53"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    """</span></span>
+<span id="cb2-54">    (x0, y0), (x1, y1) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> fix0, fix1</span>
+<span id="cb2-55"></span>
+<span id="cb2-56">    separation <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> math.hypot(x1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> x0, y1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> y0)</span>
+<span id="cb2-57">    a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> v_max <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> dt <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb2-58"></span>
+<span id="cb2-59">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> separation:</span>
+<span id="cb2-60">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">raise</span> <span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">ValueError</span>(</span>
+<span id="cb2-61">            <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Fixes are </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>separation<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.3f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> km apart but the moose can cover at "</span></span>
+<span id="cb2-62">            <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"most </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> a<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.3f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> km in </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>dt<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> h at </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>v_max<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> km/h."</span></span>
+<span id="cb2-63">        )</span>
+<span id="cb2-64"></span>
+<span id="cb2-65">    b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> math.sqrt(a<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> (separation <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb2-66">    angle <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> math.degrees(math.atan2(y1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> y0, x1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> x0))</span>
+<span id="cb2-67">    cx, cy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (x0 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> x1) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, (y0 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> y1) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb2-68"></span>
+<span id="cb2-69">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> ellipse(cx, cy, a, b, angle)</span>
+<span id="cb2-70"></span>
+<span id="cb2-71"></span>
+<span id="cb2-72"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> presence_window(p, fix0, fix1, v_max, t0, t1):</span>
+<span id="cb2-73">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Times in [t0, t1] at which the moose could be at point ``p``."""</span></span>
+<span id="cb2-74">    lo <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> t0 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> math.dist(p, fix0) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> v_max</span>
+<span id="cb2-75">    hi <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> t1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> math.dist(p, fix1) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> v_max</span>
+<span id="cb2-76">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> lo, hi</span>
+<span id="cb2-77"></span>
+<span id="cb2-78"></span>
+<span id="cb2-79"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> simultaneous_points(region, fixes_a, fixes_b, v_max_a, v_max_b, t0, t1, step<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.05</span>):</span>
+<span id="cb2-80">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Grid the overlap region for points where both presence windows overlap."""</span></span>
+<span id="cb2-81">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> region.is_empty:</span>
+<span id="cb2-82">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> []</span>
+<span id="cb2-83"></span>
+<span id="cb2-84">    minx, miny, maxx, maxy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> region.bounds</span>
+<span id="cb2-85"></span>
+<span id="cb2-86">    points <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb2-87">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> x <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> np.arange(minx, maxx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> step, step):</span>
+<span id="cb2-88">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> y <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> np.arange(miny, maxy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> step, step):</span>
+<span id="cb2-89">            p <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (x, y)</span>
+<span id="cb2-90">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> region.contains(Point(p)):</span>
+<span id="cb2-91">                <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">continue</span></span>
+<span id="cb2-92"></span>
+<span id="cb2-93">            lo_a, hi_a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> presence_window(p, fixes_a[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], fixes_a[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], v_max_a, t0, t1)</span>
+<span id="cb2-94">            lo_b, hi_b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> presence_window(p, fixes_b[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], fixes_b[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], v_max_b, t0, t1)</span>
+<span id="cb2-95"></span>
+<span id="cb2-96">            lo <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>(lo_a, lo_b)</span>
+<span id="cb2-97">            hi <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">min</span>(hi_a, hi_b)</span>
+<span id="cb2-98"></span>
+<span id="cb2-99">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> lo <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;=</span> hi:</span>
+<span id="cb2-100">                points.append((x, y, lo, hi))</span>
+<span id="cb2-101"></span>
+<span id="cb2-102">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> points</span>
+<span id="cb2-103"></span>
+<span id="cb2-104"></span>
+<span id="cb2-105"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> polygons(geometry):</span>
+<span id="cb2-106">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> geometry.is_empty:</span>
+<span id="cb2-107">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> []</span>
+<span id="cb2-108">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> geometry.geom_type <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Polygon"</span>:</span>
+<span id="cb2-109">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> [geometry]</span>
+<span id="cb2-110">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>(geometry.geoms)</span>
+<span id="cb2-111"></span>
+<span id="cb2-112"></span>
+<span id="cb2-113"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> plot_scenario(ax, scenario):</span>
+<span id="cb2-114">    fixes_a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> scenario[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fixes_a"</span>]</span>
+<span id="cb2-115">    fixes_b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> scenario[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fixes_b"</span>]</span>
+<span id="cb2-116">    v_a, v_b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> scenario[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"v_a"</span>], scenario[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"v_b"</span>]</span>
+<span id="cb2-117">    t0, t1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> scenario[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"t0"</span>], scenario[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"t1"</span>]</span>
+<span id="cb2-118"></span>
+<span id="cb2-119">    e_a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> reachable_ellipse(fixes_a[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], fixes_a[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], v_a, t1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> t0)</span>
+<span id="cb2-120">    e_b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> reachable_ellipse(fixes_b[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], fixes_b[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], v_b, t1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> t0)</span>
+<span id="cb2-121">    overlap <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> e_a.intersection(e_b)</span>
+<span id="cb2-122">    simultaneous <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> simultaneous_points(overlap, fixes_a, fixes_b, v_a, v_b, t0, t1)</span>
+<span id="cb2-123"></span>
+<span id="cb2-124">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> polygon <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> polygons(e_a.difference(e_b)):</span>
+<span id="cb2-125">        x, y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> polygon.exterior.xy</span>
+<span id="cb2-126">        ax.fill(x, y, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cornflowerblue"</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65</span>)</span>
+<span id="cb2-127">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> polygon <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> polygons(e_b.difference(e_a)):</span>
+<span id="cb2-128">        x, y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> polygon.exterior.xy</span>
+<span id="cb2-129">        ax.fill(x, y, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"salmon"</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65</span>)</span>
+<span id="cb2-130">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> polygon <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> polygons(overlap):</span>
+<span id="cb2-131">        x, y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> polygon.exterior.xy</span>
+<span id="cb2-132">        ax.fill(x, y, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mediumseagreen"</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>)</span>
+<span id="cb2-133"></span>
+<span id="cb2-134">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> geometry, color, name <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> [</span>
+<span id="cb2-135">        (e_a, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"blue"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Moose A reachable"</span>),</span>
+<span id="cb2-136">        (e_b, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Moose B reachable"</span>),</span>
+<span id="cb2-137">    ]:</span>
+<span id="cb2-138">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> polygon <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> polygons(geometry):</span>
+<span id="cb2-139">            x, y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> polygon.exterior.xy</span>
+<span id="cb2-140">            ax.plot(x, y, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>name)</span>
+<span id="cb2-141"></span>
+<span id="cb2-142">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> simultaneous:</span>
+<span id="cb2-143">        pts <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([(x, y) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> x, y, _, _ <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> simultaneous])</span>
+<span id="cb2-144">        ax.scatter(</span>
+<span id="cb2-145">            pts[:, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>],</span>
+<span id="cb2-146">            pts[:, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>],</span>
+<span id="cb2-147">            s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>,</span>
+<span id="cb2-148">            color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"darkgreen"</span>,</span>
+<span id="cb2-149">            alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.55</span>,</span>
+<span id="cb2-150">            label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Possible meeting place"</span>,</span>
+<span id="cb2-151">            zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>,</span>
+<span id="cb2-152">        )</span>
+<span id="cb2-153"></span>
+<span id="cb2-154">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> fix <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> fixes_a:</span>
+<span id="cb2-155">        ax.scatter(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>fix, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"blue"</span>, marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"+"</span>, s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">130</span>, linewidths<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span>
+<span id="cb2-156">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> fix <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> fixes_b:</span>
+<span id="cb2-157">        ax.scatter(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>fix, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red"</span>, marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>, s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">70</span>, linewidths<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span>
+<span id="cb2-158"></span>
+<span id="cb2-159">    ax.set_aspect(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"equal"</span>, adjustable<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"box"</span>)</span>
+<span id="cb2-160">    ax.set_title(scenario[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"label"</span>])</span>
+<span id="cb2-161">    ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"km"</span>)</span>
+<span id="cb2-162">    ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"km"</span>)</span>
+<span id="cb2-163">    ax.grid(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.25</span>)</span>
+<span id="cb2-164">    ax.legend(loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"upper right"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb2-165"></span>
+<span id="cb2-166"></span>
+<span id="cb2-167"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> main():</span>
+<span id="cb2-168">    t0, t1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span></span>
+<span id="cb2-169"></span>
+<span id="cb2-170">    scenarios <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb2-171">        {</span>
+<span id="cb2-172">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"label"</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Overlap with a common time"</span>,</span>
+<span id="cb2-173">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fixes_a"</span>: ((<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span>), (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span>)),</span>
+<span id="cb2-174">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fixes_b"</span>: ((<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span>), (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span>)),</span>
+<span id="cb2-175">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"v_a"</span>: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6.0</span>,</span>
+<span id="cb2-176">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"v_b"</span>: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6.0</span>,</span>
+<span id="cb2-177">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"t0"</span>: t0,</span>
+<span id="cb2-178">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"t1"</span>: t1,</span>
+<span id="cb2-179">        },</span>
+<span id="cb2-180">        {</span>
+<span id="cb2-181">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"label"</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Overlap in space but not in time"</span>,</span>
+<span id="cb2-182">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fixes_a"</span>: ((<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span>), (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span>)),</span>
+<span id="cb2-183">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fixes_b"</span>: ((<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9.0</span>), (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span>)),</span>
+<span id="cb2-184">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"v_a"</span>: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.0</span>,</span>
+<span id="cb2-185">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"v_b"</span>: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.0</span>,</span>
+<span id="cb2-186">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"t0"</span>: t0,</span>
+<span id="cb2-187">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"t1"</span>: t1,</span>
+<span id="cb2-188">        },</span>
+<span id="cb2-189">        {</span>
+<span id="cb2-190">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"label"</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"No overlap: meeting ruled out"</span>,</span>
+<span id="cb2-191">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fixes_a"</span>: ((<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span>), (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span>)),</span>
+<span id="cb2-192">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fixes_b"</span>: ((<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.0</span>), (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.0</span>)),</span>
+<span id="cb2-193">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"v_a"</span>: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.0</span>,</span>
+<span id="cb2-194">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"v_b"</span>: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.0</span>,</span>
+<span id="cb2-195">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"t0"</span>: t0,</span>
+<span id="cb2-196">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"t1"</span>: t1,</span>
+<span id="cb2-197">        },</span>
+<span id="cb2-198">    ]</span>
+<span id="cb2-199"></span>
+<span id="cb2-200">    fig, axes <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">18</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>))</span>
+<span id="cb2-201"></span>
+<span id="cb2-202">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> ax, scenario <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">zip</span>(axes, scenarios):</span>
+<span id="cb2-203">        plot_scenario(ax, scenario)</span>
+<span id="cb2-204"></span>
+<span id="cb2-205">        e_a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> reachable_ellipse(</span>
+<span id="cb2-206">            scenario[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fixes_a"</span>][<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], scenario[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fixes_a"</span>][<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], scenario[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"v_a"</span>], t1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> t0</span>
+<span id="cb2-207">        )</span>
+<span id="cb2-208">        e_b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> reachable_ellipse(</span>
+<span id="cb2-209">            scenario[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fixes_b"</span>][<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], scenario[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fixes_b"</span>][<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], scenario[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"v_b"</span>], t1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> t0</span>
+<span id="cb2-210">        )</span>
+<span id="cb2-211">        overlap <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> e_a.intersection(e_b)</span>
+<span id="cb2-212">        simultaneous <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> simultaneous_points(</span>
+<span id="cb2-213">            overlap,</span>
+<span id="cb2-214">            scenario[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fixes_a"</span>],</span>
+<span id="cb2-215">            scenario[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fixes_b"</span>],</span>
+<span id="cb2-216">            scenario[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"v_a"</span>],</span>
+<span id="cb2-217">            scenario[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"v_b"</span>],</span>
+<span id="cb2-218">            t0,</span>
+<span id="cb2-219">            t1,</span>
+<span id="cb2-220">        )</span>
+<span id="cb2-221"></span>
+<span id="cb2-222">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>scenario[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'label'</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-223">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  Moose A ellipse area: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>e_a<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>area<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:9.3f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> km^2"</span>)</span>
+<span id="cb2-224">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  Moose B ellipse area: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>e_b<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>area<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:9.3f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> km^2"</span>)</span>
+<span id="cb2-225">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  Overlap area:         </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>overlap<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>area<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:9.3f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> km^2"</span>)</span>
+<span id="cb2-226"></span>
+<span id="cb2-227">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> overlap.is_empty:</span>
+<span id="cb2-228">            <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"  Verdict: no shared place, so no meeting under this v_max"</span>)</span>
+<span id="cb2-229">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">elif</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> simultaneous:</span>
+<span id="cb2-230">            <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"  Verdict: shared places exist, but never at a shared time"</span>)</span>
+<span id="cb2-231">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span>:</span>
+<span id="cb2-232">            best <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>(simultaneous, key<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> row: row[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> row[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>])</span>
+<span id="cb2-233">            x, y, lo, hi <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> best</span>
+<span id="cb2-234">            <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  Candidate meeting places on grid: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(simultaneous)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-235">            <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(</span>
+<span id="cb2-236">                <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  Widest window at (</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.2f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">, </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>y<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.2f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">) km: t in [</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>lo<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.3f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">, </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>hi<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.3f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">] h"</span></span>
+<span id="cb2-237">            )</span>
+<span id="cb2-238"></span>
+<span id="cb2-239">    fig.suptitle(</span>
+<span id="cb2-240">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Reachable ellipses for two moose over t in [0, 2] h under three assumptions"</span></span>
+<span id="cb2-241">    )</span>
+<span id="cb2-242">    fig.tight_layout()</span>
+<span id="cb2-243"></span>
+<span id="cb2-244">    output_file <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"figures/cooccurrence_feasibility.png"</span></span>
+<span id="cb2-245">    fig.savefig(output_file, dpi<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">300</span>, bbox_inches<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tight"</span>, facecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>)</span>
+<span id="cb2-246">    plt.close(fig)</span>
+<span id="cb2-247">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Saved plot to: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>output_file<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-248"></span>
+<span id="cb2-249"></span>
+<span id="cb2-250"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">__name__</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"__main__"</span>:</span>
+<span id="cb2-251">    main()</span></code></pre></div></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://galenseilis.github.io/blog/posts/ellipse-intersections-for-moose-movement/figures/cooccurrence_feasibility.png" class="img-fluid figure-img"></p>
+<figcaption>Three two-moose scenarios: a feasible meeting place, an overlap that never coincides in time, and a meeting ruled out</figcaption>
+</figure>
+</div>
+<p>The three panels make the point better than prose. In the first, the fast-moving animals have fat ellipses that overlap generously and there are many candidate meeting places, with the widest window at roughly <img src="https://latex.codecogs.com/png.latex?(3.0,%201.2)"> km lasting from about <img src="https://latex.codecogs.com/png.latex?t%20=%200.54"> h to <img src="https://latex.codecogs.com/png.latex?t%20=%201.64"> h. In the second, one moose is committed to crossing the interval eastwards and the other southwards, and the small overlap near the shared endpoint is only reachable by the first animal at the start of the interval and by the second at the end, so the spatial overlap never coincides with a temporal overlap. In the third, the two corridors are far enough apart that even a generous speed limit leaves the ellipses disjoint, so the meeting is impossible under that speed bound.</p>
+</section>
+<section id="strengths" class="level2">
+<h2 class="anchored" data-anchor-id="strengths">Strengths</h2>
+<ul>
+<li><strong>Cheap and closed-form.</strong> Two fixes, one speed, and a formula give an answer. No fitting, no simulation, no parameters beyond the speed bound.</li>
+<li><strong>Interpretable and auditable.</strong> Every component has a physical meaning, and a biologist can argue with the speed assumption directly rather than interpreting a fitted diffusion coefficient.</li>
+<li><strong>Sound for ruling things out.</strong> A non-intersection is a real, assumption-conditional impossibility result. That makes the method a good screen before committing to expensive movement models.</li>
+<li><strong>Composable.</strong> Ellipses chain across intervals into a potential path area for a whole tracking period, and the same formula generalises to any distance metric you like.</li>
+<li><strong>Bridges behavior and data.</strong> It turns sparse telemetry into an explicit statement about what interaction is and is not consistent with the data.</li>
+</ul>
+</section>
+<section id="limitations" class="level2">
+<h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
+<p>The most consequential assumption is <strong>the maximum speed itself</strong>, and it cuts both ways. If <img src="https://latex.codecogs.com/png.latex?v_%7B%5Cmax%7D"> is too high, the ellipses inflate and the test almost never rules anything out; if it is too low, feasible meetings are falsely excluded and the fixes look impossible. Real moose speeds depend on terrain, snow depth, season, sex, presence of a calf, and whether the animal was fleeing a predator or crossing a road. There is no single correct value, and the honest approach is to report results across a range of plausible speeds and to show where conclusions flip. The examples above make this concrete: the same fix pairs give a permitted meeting at one speed and a ruled-out meeting at another.</p>
+<p>Beyond the speed assumption:</p>
+<ul>
+<li><strong>Barriers and habitat.</strong> The construction assumes straight-line reachability and ignores lakes, rivers, cliffs, highways, and fences. It can therefore be optimistic in exactly the places where a landscape matters. Least-cost or path-based distances can fix this, but then the reachable region is generally not an ellipse anymore.</li>
+<li><strong>It is a region, not a path.</strong> The ellipse is the union of positions across all moments, so it is much larger than any real trajectory, and it grows linearly with the interval. For widely spaced fixes it may be uselessly large.</li>
+<li><strong>Location error propagates.</strong> Fixes are uncertain, so the foci are really discs of error rather than points, and the true region is the ellipse dilated by roughly that error radius. Fix error can also make the implied speed exceed <img src="https://latex.codecogs.com/png.latex?v_%7B%5Cmax%7D">, producing the “impossible” case above. A proper treatment inflates the ellipses and reports intervals rather than point estimates.</li>
+<li><strong>Geometry versus probability.</strong> The method makes no statement about likelihood. It answers “could” rather than “did” or “probably”. Interaction also requires more than co-location; two moose standing in the same meadow at the same minute have not necessarily interacted.</li>
+<li><strong>Temporal resolution and aliasing.</strong> Whether an interaction is even detectable depends on the sampling interval relative to how long an encounter lasts. Coarse sampling gives large ellipses and weak power; fine sampling gives short intervals and narrow ellipses but more of them.</li>
+<li><strong>Independence assumptions.</strong> With two independently tracked animals, both the movement and the error are typically treated as independent, which may fail when both carry the same satellite clock error or move in response to the same weather.</li>
+<li><strong>Planar approximation.</strong> Coordinates must be projected into a local metric frame, and distances should be computed in that frame rather than in raw degrees.</li>
+</ul>
+</section>
+<section id="what-i-would-do-with-this-in-practice" class="level2">
+<h2 class="anchored" data-anchor-id="what-i-would-do-with-this-in-practice">What I would do with this in practice</h2>
+<p>Use the ellipses as the first pass. They are fast, transparent, and they fail safely in the sense that a non-intersection is informative. Then bring in the machinery that does the hard parts: continuous-time movement models or Brownian-bridge movement models to replace “possible” with a probability, a landscape cost surface to replace straight-line distance, and a proper error model in place of point fixes. The ellipse construction earns its place by telling you, quickly, which pairs of animals and which intervals are even worth the effort.</p>
+<p>The broader lesson is the same one that shows up whenever data are sparse: the connection between two observations is not an observation, and any inference about what happened in between is only as good as the assumptions you are willing to defend. The maximum-speed ellipse is a very defensible assumption, as long as you remember it is an assumption and not a fact.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Mathematics</category>
+  <category>Geometry</category>
+  <category>Computational Geometry</category>
+  <category>Python</category>
+  <category>Shapely</category>
+  <category>Wildlife Ecology</category>
+  <category>Movement Ecology</category>
+  <category>GPS Telemetry</category>
+  <category>Moose</category>
+  <category>Time Geography</category>
+  <guid>https://galenseilis.github.io/blog/posts/ellipse-intersections-for-moose-movement/</guid>
+  <pubDate>Fri, 16 Oct 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Python Module Imports Can Pass Data Too</title>
   <dc:creator>Galen Seilis</dc:creator>
@@ -14514,428 +17147,6 @@ Scissors --&gt;|Beats| Paper
   <category>Dot</category>
   <guid>https://galenseilis.github.io/blog/posts/rust-petgraph-dot-example/</guid>
   <pubDate>Thu, 08 Aug 2024 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>How to Naïvely Generate Autoregressive Time Series Data in Python</title>
-  <dc:creator>Galen Seilis</dc:creator>
-  <link>https://galenseilis.github.io/blog/posts/python-naive-simulate-autoregressive-data/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>In this post I will show you how to simulate an <a href="https://en.wikipedia.org/wiki/Autoregressive_model">autoregressive (AR) process</a> using Matplotlib and NumPy.</p>
-<p>First, let’s define a function which pseudorandomly generates the data sequence. We’ll set an intercept parameter to set a consistent offset of the series from zero, and a sequence of autoregressive coefficients. The order of the coefficients entails the lag order that they are each applied to, so if you want to skip a lag order you can just set it to zero. Some AR series are noisier than others, and you can set that level of noise using the <code>noise</code> parameter. In this model we assume that the noise is a <a href="https://en.wikipedia.org/wiki/Stationary_process">stationary</a> normal distribution:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cepsilon_t%20%5Csim%20%5Cmathcal%7BN%7D(0,%5Csigma)"></p>
-<p>for all <img src="https://latex.codecogs.com/png.latex?t">.</p>
-<p>The following implementation is a generalization of the implementation provided in <a href="https://www.pymc.io/projects/examples/en/latest/time_series/Forecasting_with_structural_timeseries.html#generate-fake-autoregressive-data"><em>Generate Fake Autoregressive Data</em></a> in which I have allowed for any number of time lags. I have also allowed a user-provided random number generator to be passed.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">"""Naively simulate autoregressive (AR) time series data."""</span></span>
-<span id="cb1-2"></span>
-<span id="cb1-3"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> np</span>
-<span id="cb1-4"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> typing <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> List</span>
-<span id="cb1-5"></span>
-<span id="cb1-6"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> simulate_ar(</span>
-<span id="cb1-7">    intercept: <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">float</span>,</span>
-<span id="cb1-8">    coefs: List[<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">float</span>],</span>
-<span id="cb1-9">    noise: <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">float</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span>,</span>
-<span id="cb1-10">    warmup: <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">int</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>,</span>
-<span id="cb1-11">    steps: <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">int</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">200</span>,</span>
-<span id="cb1-12">    rng<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">None</span></span>
-<span id="cb1-13">    ) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span> np.ndarray:</span>
-<span id="cb1-14">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">"""Simulates an autoregressive (AR) time series.</span></span>
-<span id="cb1-15"></span>
-<span id="cb1-16"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">    Args:</span></span>
-<span id="cb1-17"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">        intercept (float): The intercept term of the AR process.</span></span>
-<span id="cb1-18"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">        coefs (List[float]): List of coefficients for the lagged terms.</span></span>
-<span id="cb1-19"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">        noise (float, optional): The standard deviation of the Gaussian noise. Default is 0.3.</span></span>
-<span id="cb1-20"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">        warmup (int, optional): Number of initial steps to discard to allow the process to stabilize. Default is 10.</span></span>
-<span id="cb1-21"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">        steps (int, optional): Number of steps to simulate after the warmup period. Default is 200.</span></span>
-<span id="cb1-22"></span>
-<span id="cb1-23"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">    Returns:</span></span>
-<span id="cb1-24"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">        np.ndarray: Simulated AR time series data of length `steps`.</span></span>
-<span id="cb1-25"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">    """</span></span>
-<span id="cb1-26">    rng <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.random.default_rng() <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> rng <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">is</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">None</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">else</span> rng</span>
-<span id="cb1-27">    max_lag <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(coefs)</span>
-<span id="cb1-28">    draws <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.zeros(warmup <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> steps)</span>
-<span id="cb1-29">    draws[:max_lag] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> intercept</span>
-<span id="cb1-30">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> step <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">range</span>(max_lag, warmup <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> steps):</span>
-<span id="cb1-31">        draws[step] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> intercept <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> rng.normal(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, noise)</span>
-<span id="cb1-32">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> lag, coef <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">enumerate</span>(coefs, start<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>):</span>
-<span id="cb1-33">            draws[step] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+=</span> coef <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> draws[step <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span> lag]</span>
-<span id="cb1-34">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> draws[warmup:]</span></code></pre></div></div>
-<p>Let us set a seed for reproducibility.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">"""Set a seed for reproducible simulation."""</span></span>
-<span id="cb2-2"></span>
-<span id="cb2-3"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> np</span>
-<span id="cb2-4"></span>
-<span id="cb2-5">RANDOM_SEED <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2018</span></span>
-<span id="cb2-6">rng <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.random.default_rng(RANDOM_SEED)</span></code></pre></div></div>
-<p>Now let’s choose some parameters.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">"""Choose the true parameters of the autoregressive process."""</span></span>
-<span id="cb3-2"></span>
-<span id="cb3-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># True parameters of the AR process</span></span>
-<span id="cb3-4">intercept <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span></span>
-<span id="cb3-5">coefs <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.1</span>, <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span>]  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Example coefficients for AR process with 3 lags</span></span></code></pre></div></div>
-<p>Now let us simulate the AR process.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">"""Simulate the autoregressive process using the seeded generator and parameters."""</span></span>
-<span id="cb4-2"></span>
-<span id="cb4-3"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> os</span>
-<span id="cb4-4"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> sys</span>
-<span id="cb4-5"></span>
-<span id="cb4-6">sys.path.insert(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, os.path.dirname(os.path.abspath(<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">__file__</span>)))</span>
-<span id="cb4-7"></span>
-<span id="cb4-8"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> simulate_ar <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> simulate_ar</span>
-<span id="cb4-9"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> seed <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> rng</span>
-<span id="cb4-10"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> parameters <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> intercept, coefs</span>
-<span id="cb4-11"></span>
-<span id="cb4-12">ar_data <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> simulate_ar(intercept, coefs, warmup<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2018</span>, steps<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">200</span>, rng<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>rng)</span></code></pre></div></div>
-<p>Finally, let us plot the simulated data using Matplotlib.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">"""Plot the simulated autoregressive data and save the figure."""</span></span>
-<span id="cb5-2"></span>
-<span id="cb5-3"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> os</span>
-<span id="cb5-4"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> sys</span>
-<span id="cb5-5"></span>
-<span id="cb5-6"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> matplotlib <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> pyplot <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> plt</span>
-<span id="cb5-7"></span>
-<span id="cb5-8">sys.path.insert(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, os.path.dirname(os.path.abspath(<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">__file__</span>)))</span>
-<span id="cb5-9"></span>
-<span id="cb5-10"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> simulate <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> ar_data</span>
-<span id="cb5-11"></span>
-<span id="cb5-12">fig, ax <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>))</span>
-<span id="cb5-13">ax.set_title(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Generated Autoregressive Timeseries"</span>, fontsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">15</span>)</span>
-<span id="cb5-14">ax.plot(ar_data)</span>
-<span id="cb5-15">ax.set_xlabel(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Time'</span>)</span>
-<span id="cb5-16">ax.set_ylabel(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Signal'</span>)</span>
-<span id="cb5-17"></span>
-<span id="cb5-18">os.makedirs(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"figures"</span>, exist_ok<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span>)</span>
-<span id="cb5-19">fig.savefig(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"figures/autoregressive_timeseries.png"</span>, dpi<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">300</span>, bbox_inches<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"tight"</span>)</span>
-<span id="cb5-20">plt.show()</span></code></pre></div></div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://galenseilis.github.io/blog/posts/python-naive-simulate-autoregressive-data/figures/autoregressive_timeseries.png" class="img-fluid figure-img"></p>
-<figcaption>Generated Autoregressive Timeseries</figcaption>
-</figure>
-</div>
-<p>This implementation is not particularly efficient in terms of computing resources. Although performance is influenced by many things, a large factor is the presence of an ordinary <code>for</code> loop. Upon every iteration of the loop the Python interpreter will check that all types are still valid, which is a waste of computing resources when you can assume that they are. Perhaps I will write a more efficient function, but this example should be suitable for examples and tinkering for now.</p>
-<hr>
-<p>Here is the output data for the example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">"""Print the simulated autoregressive data for the example."""</span></span>
-<span id="cb6-2"></span>
-<span id="cb6-3"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> os</span>
-<span id="cb6-4"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> sys</span>
-<span id="cb6-5"></span>
-<span id="cb6-6">sys.path.insert(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, os.path.dirname(os.path.abspath(<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">__file__</span>)))</span>
-<span id="cb6-7"></span>
-<span id="cb6-8"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> simulate <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> ar_data</span>
-<span id="cb6-9"></span>
-<span id="cb6-10"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(ar_data)</span></code></pre></div></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1">[6.941708   6.3155875  6.79896769 6.62115125 6.64690478 6.79654732</span>
-<span id="cb7-2"> 6.32163015 6.72852581 6.35004628 6.89721308 6.92979629 6.97466588</span>
-<span id="cb7-3"> 6.47919687 6.24134393 6.91045418 6.43927381 6.55083547 6.53331397</span>
-<span id="cb7-4"> 6.44255904 6.58915744 6.4923775  7.07488836 6.32039603 7.21035304</span>
-<span id="cb7-5"> 6.27709664 7.0134047  6.68872494 6.97816857 6.75025929 7.00950853</span>
-<span id="cb7-6"> 6.39465926 6.68118717 6.85268958 6.46779684 6.76181945 7.29674199</span>
-<span id="cb7-7"> 6.64142503 6.58699206 6.72707155 5.87192126 6.49363922 6.28287734</span>
-<span id="cb7-8"> 7.18342675 6.70507765 6.94382677 6.39717353 6.49306093 7.02621907</span>
-<span id="cb7-9"> 6.8610425  6.87523356 6.7267247  6.46888024 6.8280871  6.7789368</span>
-<span id="cb7-10"> 6.77176061 6.58257732 6.33784174 6.808397   6.62658717 7.53212642</span>
-<span id="cb7-11"> 6.59001865 7.09541224 6.4240351  6.40443905 6.08217251 7.13828813</span>
-<span id="cb7-12"> 7.09221513 7.08928927 6.21026942 6.76872715 6.28272682 6.77029136</span>
-<span id="cb7-13"> 6.46984318 7.0331383  6.85807573 6.64286023 6.3238929  7.03278515</span>
-<span id="cb7-14"> 6.54674528 6.97528036 7.11517396 6.22263056 6.74882539 6.66139963</span>
-<span id="cb7-15"> 7.0783666  6.23980551 6.67212967 6.46792713 6.66990209 6.77251836</span>
-<span id="cb7-16"> 6.94614928 6.83357381 6.89816709 6.15734245 6.86025094 6.93488203</span>
-<span id="cb7-17"> 6.46304183 6.91241082 6.47560317 6.89390062 7.12772216 6.41811335</span>
-<span id="cb7-18"> 7.40498293 6.42844055 7.2251552  6.87492573 6.15158164 6.82079686</span>
-<span id="cb7-19"> 6.790811   6.90070107 6.37238571 6.42500936 6.56438666 6.35378324</span>
-<span id="cb7-20"> 7.26239073 6.54888149 6.80957892 6.20860224 7.48779131 6.84955546</span>
-<span id="cb7-21"> 6.94570356 6.72697226 6.27613628 6.89544594 6.75888508 7.07931692</span>
-<span id="cb7-22"> 6.66666166 6.3180758  6.19398727 7.09355878 6.49304741 7.55478488</span>
-<span id="cb7-23"> 6.35099042 6.92931065 6.00868397 6.86902339 6.99545602 6.95783505</span>
-<span id="cb7-24"> 6.64467603 6.47337945 6.78201172 6.63753378 7.48158873 6.51522663</span>
-<span id="cb7-25"> 7.05250727 6.39296225 7.3519113  6.66425586 6.48041592 6.17408598</span>
-<span id="cb7-26"> 6.45883478 6.22486773 6.54137246 6.34066406 6.96759892 6.72473722</span>
-<span id="cb7-27"> 6.98529234 6.58060658 6.59542768 6.54721287 6.88949907 6.43898143</span>
-<span id="cb7-28"> 7.00231541 6.1544984  6.68328599 6.12233025 6.16702292 6.64338878</span>
-<span id="cb7-29"> 7.31158216 6.90580583 6.62631565 6.80756359 6.87177271 6.57651991</span>
-<span id="cb7-30"> 6.29329644 6.78533065 6.8948178  6.61792592 7.0182514  6.22628874</span>
-<span id="cb7-31"> 6.86051622 6.49121734 7.16799008 6.20211378 7.30671013 6.12323977</span>
-<span id="cb7-32"> 7.34758837 6.16358606 6.88596075 6.71944393 6.36211338 7.12466492</span>
-<span id="cb7-33"> 6.27294854 7.01723785 6.84008439 6.80771285 5.93900768 6.51765076</span>
-<span id="cb7-34"> 6.92400731 6.54072599]</span></code></pre></div></div>
-
-
-
- ]]></description>
-  <category>Python</category>
-  <category>Statistics</category>
-  <category>Stochastic Processes</category>
-  <category>Autoregressive</category>
-  <category>Time Series</category>
-  <category>Matplotlib</category>
-  <category>NumPy</category>
-  <guid>https://galenseilis.github.io/blog/posts/python-naive-simulate-autoregressive-data/</guid>
-  <pubDate>Wed, 31 Jul 2024 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
