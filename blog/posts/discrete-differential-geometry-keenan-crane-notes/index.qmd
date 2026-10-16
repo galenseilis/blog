@@ -270,3 +270,47 @@ This is given by the gradient,
 $$\nabla_b \ell = \frac{b-a}{\ell},$$ 
 
 which will point in the exact same direction as the direction of the vector from a to b.
+
+#### Steiner formula as a discrete curvature
+
+The [Steiner formula](https://en.wikipedia.org/wiki/Parallel_curve#Steiner_formula) describes what happens to the area of a region when it is offset outward by a distance $r$. For a convex planar region with area $A_0$ and perimeter $P$:
+
+$$A(r) = A_0 + r P + \pi r^2.$$
+
+The coefficients are not incidental: the linear coefficient is the perimeter, and the constant in front of $r^2$ encodes the total curvature of the boundary (for a convex planar region the total turning is $2\pi$, and $\frac{1}{2} \cdot 2\pi = \pi$). The parallel-curve version says the same thing first-order: the length of an offset at distance $r$ is $L(r) = \int (1 + r \kappa(s))\, ds$, so the first variation of length under normal motion is governed by the integral of curvature — the same smooth fact that motivated the length variation construction above.
+
+Applying the strategy, we offset a polygon instead of a smooth region. Move every edge outward by $r$, joining the offset edges at each vertex with a circular arc of radius $r$ and angle equal to the exterior turning angle $\theta_i$ at that vertex. Each edge sweeps a rectangle of area $r \ell_i$, and each vertex sweeps a circular sector of area $\frac{\theta_i}{2} r^2$, so exactly:
+
+$$A(r) = A_0 + r P + \left( \sum_{i} \frac{\theta_i}{2} \right) r^2.$$
+
+This is the discrete Steiner formula, and a discrete curvature has arrived as a *coefficient*: the turning angles from our first construction are precisely what the quadratic term measures. If you did not know the turning angles of a polygon you could recover their sum by measuring the areas of two offsets and differencing, which is a satisfying internal consistency between two of the four constructions.
+
+Note what kind of quantity this gives us. The Steiner route hands us total curvature of the whole curve rather than curvature at a point, echoing the earlier observation that discrete quantities often come integrated rather than pointwise. To compare against smooth pointwise curvature we need to divide by a length scale: for a smooth curve sampled with spacing $h$ the turning at a vertex satisfies $\theta_i \approx \kappa(s_i) h$, so $\theta_i / h$ (or $\theta_i$ divided by an average of the two adjacent edge lengths) converges to $\kappa(s_i)$ as the sampling is refined.
+
+#### Osculating circle as a discrete curvature
+
+In the smooth setting the [osculating circle](https://en.wikipedia.org/wiki/Osculating_circle) at a point is the circle that agrees with the curve to second order there, and the curvature is the reciprocal of that circle's radius: $\kappa = 1/R$, with the sign carried by which side of the curve the circle sits on.
+
+The most direct discrete translation is to take three consecutive vertices $\gamma_{i-1}, \gamma_i, \gamma_{i+1}$ and fit the circle through them (their circumcircle), defining
+
+$$\kappa^{O}_i \triangleq \frac{\operatorname{sign}(\theta_i)}{R_i}$$
+
+where $R_i$ is the circumradius. Some pleasant properties fall out immediately:
+
+- three collinear vertices are treated as having zero curvature, because the circumradius is infinite — the "flat is flat" behaviour we wanted;
+- a regular $n$-gon inscribed in a circle of radius $R$ has circumradius exactly $R$ at every vertex, so this definition reproduces the exact curvature of the circle being approximated;
+- the sign convention is inherited from the turning angle, so the two constructions agree about orientation by construction.
+
+The trade-offs are the usual "no free lunch" variety. The circumcircle fit uses only three points and is therefore noise-sensitive — a small perturbation of $\gamma_i$ moves the circumcircle substantially, especially when the three points are nearly collinear. One response is to fit a circle in the least-squares sense to a wider window of vertices, trading locality (and exact interpolation) for stability. Which of these you want depends on whether your downstream computation cares more about faithfulness to the sampled data or about smooth behaviour of the resulting curvature field.
+
+## Choosing Between the Constructions
+
+We now have four routes — turning angle, length variation, Steiner formula, osculating circle — leading to discrete curvatures that are non-equivalent on any *finite* discretization. The differences are visible in the behaviours we have noticed: the turning-angle version is naturally an integrated quantity indexed by vertices, the length-variation version comes from a gradient with respect to vertex positions (making it the natural one for optimization and variational problems), the Steiner version reports global totals, and the osculating-circle version gives a pointwise estimate that reproduces circle geometry exactly.
+
+All of them converge to the smooth notion under refinement, which was the second of our three criteria for a "good" discrete definition; they differ in exactly the ways that the other two criteria (which smooth properties are preserved, and how efficiently the quantity computes) predict. Picking one is therefore not a matter of finding the correct definition — there isn't one — but of matching the preserved property to the problem: turning angles and length variation for geometric processing and flow, Steiner coefficients for global or integral statements, osculating fits when you need a radius of curvature to hand to something else.
+
+## Closing
+
+What I find most striking about working through this example is how much of the smooth theory survives the trip: the definitions stop being equivalent, but none of them becomes useless, and the relationships between them (length variation as the gradient of a functional whose expansion *is* the Steiner polynomial, turning angles as the primitive behind the total-curvature term) are if anything easier to see in the discrete setting because you can compute every term. That, I take it, is the grand vision of DDG in miniature: not a degraded copy of differential geometry, but a setting in which the same ideas are directly manipulable.
+
+I have been following Keenan Crane's *Discrete Differential Geometry* course notes [@crane2023ddg] for this material, and the curvature-of-plane-curves example is his; any errors in the presentation above are mine.

@@ -43,7 +43,7 @@ Know the definition of a graph, and related terms such as *vertices*, *edges* an
 
 > DEFINITION *Markovian Parents*: Let $V = \{X_1, \ldots, X_n \}$ be an ordered set of variables, and let $P(v)$ be the joint probability distribution on these variables. A set of variables $PA_j$ is said to be Markovian parents of $X_j$ if $PA_j$ is a minimal set of predecessors of $X_j$ that renders $X_j$ independent of all its other predecessors. In other words, $P(x_j \mid pa_j) = P(x_j | x_1, \ldots, x_{j-1}) and such that no proper subset of $PA_j$ satisfies the above expression.
 
-> DEFINITION *Markov Compatibility*: If a probability function $P$ admits the factorizatoin of $P(x_1, \ldots, x_n) = \prod_{i} P(x_j \mid pa_i)$ relate to a DAG $G$, we say that $G$ and $P$, or that $G$ represents $P$, or that $P$ is Markov relative to $G$.
+> DEFINITION *Markov Compatibility*: If a probability function $P$ admits the factorization of $P(x_1, \ldots, x_n) = \prod_{i} P(x_j \mid pa_i)$ related to a DAG $G$, we say that $G$ represents $P$, or that $P$ is Markov relative to $G$.
 
 > DEFINITION *d-separation* A *path* $p$ is said to be d-separated by a set of nodes $Z$ if and only if:
 1. $p$ contains a chain $i \rightarrow m \rightarrow j$ or a fork $i \leftarrow m \rightarrow j$ such that the middle node $m \in Z$ or
@@ -53,6 +53,44 @@ Know the definition of a graph, and related terms such as *vertices*, *edges* an
 
 > THEOREM: Probabilistic Implications of d-Separation
 >
-> If sets $X$ and $Y$ are d-separated by $Z$ ina DAG $G$, then $X$ is independent of $Y$ conditional on $Z$ in every distribution compatible with $G$. Conversely, if $X$ and $Y$ are not d-separated by $Z$ in a DAG G, then $X$ and $Y$ are dependent conditional on $Z$ in at least one distribution compatible with $G$.
+> If sets $X$ and $Y$ are d-separated by $Z$ in a DAG $G$, then $X$ is independent of $Y$ conditional on $Z$ in every distribution compatible with $G$. Conversely, if $X$ and $Y$ are not d-separated by $Z$ in a DAG $G$, then $X$ and $Y$ are dependent conditional on $Z$ in at least one distribution compatible with $G$.
 
+## Interventions
 
+> DEFINITION *Intervention*: Let $X$ be a variable of interest, and let $x$ be a value in its range. The intervention $do(X := x)$ denotes an operation that replaces the structural equation for $X$ with the constant $X := x$, deleting every incoming arrow into $X$ in the graph.
+
+The point of the definition is that intervening is not the same as conditioning. Conditioning on $X = x$ keeps the mechanisms that made $X$ take the value $x$ and selects the cases where they did; intervening sets $X$ by fiat, which corresponds to a *modified* graph in which the parents of $X$ no longer influence anything downstream through $X$. The two operations agree only in special cases (roughly, when the conditioning set blocks the relevant back-door paths, which is what the adjustment criteria below are for).
+
+> DEFINITION *Causal Effect*: The causal effect of $X$ on $Y$ is the contrast between $\Pr [Y \mid do(X := x)]$ and $\Pr [Y \mid do(X := x^\prime)]$ for relevant values $x, x^\prime$.
+
+The distribution $\Pr [y \mid do(x)]$ is read off the modified graph, and a large part of Pearl's book is about which graphical properties let you translate such interventional quantities into ordinary conditional probabilities you could estimate from data.
+
+## The Adjustment Criteria
+
+> THEOREM *Back-Door Criterion*: A set of variables $Z$ satisfies the back-door criterion relative to an ordered pair $(X,Y)$ in a DAG $G$ if: (1) no node in $Z$ is a descendant of $X$, and (2) $Z$ blocks every path between $X$ and $Y$ that starts with an arrow into $X$.
+
+> THEOREM *Back-Door Adjustment*: If $Z$ satisfies the back-door criterion relative to $(X,Y)$, then the causal effect of $X$ on $Y$ is identifiable by
+>
+> $$\Pr [y \mid do(x)] = \sum_{z} \Pr [y \mid x, z] \Pr [z].$$
+
+Condition (1) keeps the adjustment set from being a mediator (or otherwise downstream of the treatment), and condition (2) blocks the paths that would otherwise open a back-door route from $X$ to $Y$. When no such $Z$ is available from the observed variables, one may still be able to use the front-door criterion, which identifies the effect through a mediator that lies entirely on a causal path from $X$ to $Y$ while the confounding path is blocked by construction.
+
+## Do-Calculus
+
+> RULES *Do-Calculus*:
+>
+> 1. *Insertion/deletion of observations*: $\Pr [y \mid do(x), z, w] = \Pr [y \mid do(x), w]$ if $Z$ is d-separated from $Y$ given $X$ and $W$ in the graph where arrows into $X$ are removed.
+> 2. *Action/observation exchange*: $\Pr [y \mid do(x), do(z), w] = \Pr [y \mid do(x), z, w]$ if $Y$ is d-separated from $Z$ given $X$ and $W$ in the graph where arrows into $X$ are removed along with arrows out of $Z$.
+> 3. *Insertion/deletion of actions*: $\Pr [y \mid do(x), do(z), w] = \Pr [y \mid do(x), w]$ if $Y$ is d-separated from $Z$ given $X$ and $W$ in the graph where arrows into $Z$ and the parents of $X$ are removed.
+
+These three rules are the complete calculus for manipulating interventional expressions. The completeness theorem says that if an effect is identifiable at all by graphical methods then repeated application of these three rules will do it — which makes them worth knowing even if one never applies them by hand, since modern identification algorithms are exactly automated sequences of these steps.
+
+## Counterfactuals
+
+> DEFINITION *Structural Counterfactual*: Given a structural causal model $\mathcal{M}$, the counterfactual variable $Y_{x}(u)$ is obtained by (1) *abduction*: conditioning the model on the evidence $U = u$ that explains the observed situation, (2) *action*: replacing the equations for the intervened variables with $X := x$, and (3) *prediction*: solving the modified model for $Y$.
+
+Counterfactuals are where the definitions reach the third rung of what Pearl calls the [ladder of causation](https://en.wikipedia.org/wiki/Causal_model#Causal_ladder): answering questions of the form "what would have happened to *this* unit had the treatment been different?" requires a model of the individual units (the exogenous variables), not merely of the population-level distributions. Probabilities of causation, such as "the fraction of cases where the exposure was necessary (or sufficient) for the outcome", are counterfactual quantities and, as Pearl and Tian's results show, they generally require more assumptions than effect identification does.
+
+## Conclusions
+
+The sequence above is deliberate: probability and graph theory are the vocabulary, d-separation is the bridge from graphs to conditional independence, interventions are the notion of cause that the graphs are meant to formalize, the adjustment criteria and do-calculus are the machinery that turns causal questions into estimable ones, and counterfactuals are the extension to reasoning about individual unobserved alternatives. If you can say where a definition lives in that sequence, you can usually say what it is for.

@@ -10,7 +10,7 @@ The early stages of this post began when I [answered a question](https://stats.s
 
 The [kinetic energy](https://en.wikipedia.org/wiki/Kinetic_energy) of a classical object is given by
 
-$$E_K \triangleq \frac{m}{2} \vert| \frac{\partial s(t)}{\partial t} \vert|_2^2$$
+$$E_K \triangleq \frac{m}{2} \left\Vert \frac{\partial s(t)}{\partial t} \right\Vert_2^2$$
 
 where $m$ is the object's mass and $s(t)$ is the position vector as a function of time $t$.
 
@@ -22,7 +22,7 @@ where $\vec x, \vec y \in \mathbb{R}^n$, $\cdot$ is the dot product, and $\odot$
 
 In the kinetic energy the
 
-$$\vert| \frac{\partial s(t)}{\partial t} \vert|_2^2$$
+$$\left\Vert \frac{\partial s(t)}{\partial t} \right\Vert_2^2$$
 
 factor can be equivalently written
 
@@ -32,29 +32,67 @@ By the correspondence between dot products and projected Hadamard products we ca
 
 # A Correspondence
 
+The relation $\vec x \cdot \vec y = \left( \vec x \odot \vec y \right) \cdot \vec 1$ says that a dot product can always be decomposed into two stages:
+
+1. an *element-wise* stage, where each component of $\vec x$ meets only the corresponding component of $\vec y$, producing $n$ independent scalar products, and
+2. a *reduction* stage, where those $n$ scalars are summed into one number by taking the inner product with $\vec 1$.
+
+This decomposition is worth sitting with because the two stages do completely different jobs. The element-wise stage is where the *geometry of the individual degrees of freedom* lives — component $i$ of the product only knows about component $i$ of each vector. The reduction stage is where those contributions are pooled into a single scalar measure. In array programming terms this is simply a `multiply` followed by a `sum`, and the fact that the ordinary dot product factorizes this way is what will let me peel kinetic energy apart below.
+
 # Zest
 
 The next step to defining the zest of this object is to simply drop the dot product with $\vec 1$, defining the zest to be
 
 $$\vec z \triangleq \frac{m}{2} \left( \frac{\partial s(t)}{\partial t} \odot \frac{\partial s(t)}{\partial t} \right)$$
 
-The components of the zest are bounded due to the [Cauchy-Schwarz inequality](https://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality).
+So where the kinetic energy is a scalar, the zest is a vector with one component per degree of freedom, and the kinetic energy is recovered by reducing the zest:
+
+$$E_K = \vec z \cdot \vec 1.$$
+
+Physically the $i$-th component of $\vec z$ is the portion of the kinetic energy attributable to the $i$-th component of the motion — the energy along coordinate axis $i$, so to speak. Nothing here is beyond ordinary practice (people have always spoken of "the energy in this direction"); the point of naming it is that the element-wise/reduction split makes the bookkeeping explicit.
+
+The components of the zest are bounded due to the [Cauchy-Schwarz inequality](https://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality). Each component is $\frac{m}{2} \dot s_i^2$, and if we consider two such zests then their component-wise pairing is controlled in the usual Cauchy-Schwarz fashion rather than being unbounded relative to the vectors that produced them.
 
 # Apparent Energy
 
-$$\left(O A \vec z \right) \vec 1$$
+$$\left(O A \vec z \right) \cdot \vec 1$$
+
+Here $A$ and $O$ denote generic linear maps — for instance $A$ could be a mixing or selection of the degrees of freedom (as a measurement apparatus might perform) and $O$ a further observation applied to the result. The *apparent energy* is then the scalar we would read off after reducing the transformed zest.
+
+Two properties are worth noting. First, if $O A$ is a permutation of the components (a relabelling of degrees of freedom) then the apparent energy equals the true energy, because a permutation preserves the sum. Second, in general $O A$ need not preserve the sum, need not preserve non-negativity of the components, and can therefore produce an apparent energy that differs from — or even exceeds or undershoots — the mechanical energy that actually exists. That is precisely what you would expect from an instrument: it reports energy *as your apparatus is capable of registering it*, and only under favourable circumstances does that coincide with the quantity you wanted.
 
 # Cross Zest
 
+The zest of a single motion assumed the velocity was *one* vector. Motions frequently decompose, though: a drift plus a fluctuation, a body frame plus a transported frame, a signal plus interference. Substituting $\vec v = \vec u + \vec w$ into the definition and expanding the Hadamard square gives
 
-The components of the cross zest are bounded due to the [Cauchy-Schwarz inequality](https://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality).
+$$\vec z(\vec u + \vec w) = \frac{m}{2}(\vec u \odot \vec u) + \frac{m}{2}(\vec w \odot \vec w) + \frac{m}{2}(\vec u \odot \vec w + \vec w \odot \vec u).$$
+
+The first two terms are the zests of the parts; the remainder is what I will call the *cross zest* of the two contributions:
+
+$$\vec z_{\times}(\vec u, \vec w) \triangleq \frac{m}{2}(\vec u \odot \vec w + \vec w \odot \vec u) = m (\vec u \odot \vec w).$$
+
+Note that $\vec z_{\times}$ is anti-symmetric in its two arguments ($\vec z_{\times}(\vec u, \vec w) = -\vec z_{\times}(\vec w, \vec u)$) and is exactly the term that makes the energy of a sum different from the sum of the energies. In the language of the correspondence section, cross zest is what the element-wise stage produces *before* reduction when the inputs are mixed; whether it survives into the total depends on the reduction.
+
+The components of the cross zest are bounded due to the [Cauchy-Schwarz inequality](https://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality): each component is $m u_i w_i$, and $|u_i w_i| \leq \frac{1}{2}(u_i^2 + w_i^2)$, so no component of the cross zest can exceed (up to the factor $m$) the size of the individual zests that produced it. The cross terms are bounded guests rather than unbounded ones.
+
 # Multizest
+
+For several contributions to the same motion we can continue the expansion. With masses $m_1, \ldots, m_n$ and velocities $\frac{\partial s_1(t)}{\partial t}, \ldots, \frac{\partial s_n(t)}{\partial t}$ the $n$-wise interaction term takes the following form:
 
 $$\vec z \triangleq \frac{1}{2^n} \sqrt{\prod_{i=1}^n m_i} \bigodot_{i=1}^n \frac{\partial \vec s_i(t)}{\partial t}$$
 
-The components of the multizest vector are bounded due to the generalized [Hölder inequality](https://en.wikipedia.org/wiki/H%C3%B6lder%27s_inequality) for sums.
+where $\bigodot_{i=1}^n$ denotes the $n$-ary Hadamard product (component-wise multiplication across all $n$ contributions).
+
+The components of the multizest vector are bounded due to the generalized [Hölder inequality](https://en.wikipedia.org/wiki/H%C3%B6lder%27s_inequality) for sums, which is the natural generalization of the Cauchy-Schwarz bounds used for the zest and cross zest cases.
 
 # Relation to Array Functions
 
-Notice that
+Notice that everything in this post has been an ordinary array program in disguise:
 
+- the Hadamard square $\vec v \odot \vec v$ is an element-wise ufunc such as `np.square(v)`,
+- the reduction $\vec z \cdot \vec 1$ is a summation such as `np.sum(z)`,
+- and the kinetic energy is just their composition, `np.sum(np.square(v)) * m / 2`.
+
+Writing kinetic energy as *map-then-reduce* rather than as a single norm is useful in practice for the same reason map-then-reduce is useful everywhere: the mapped intermediate (the zest) is inspectable. You can plot the distribution of zest across components, compare zests from two different motions component by component, or differentiate the components separately when doing sensitivity analysis — all things that are awkward to do once the components have already been collapsed into the scalar $E_K$. Conversely, if you only ever need the scalar, the reduction is one `sum` away, so nothing is lost by keeping the zest representation around.
+
+The element-wise stage and the reduction stage also have different invariances, which is the deeper content of the correspondence: permutations of the components leave both stages intact, but a general linear mixing leaves the reduction intact only when the mixing preserves the all-ones vector. That asymmetry is what makes the apparent energy section above come out the way it does, and it is, I think, a neat little illustration of why element-wise operations and reductions deserve to be thought of as separate concepts even though every dot product glues them back together.

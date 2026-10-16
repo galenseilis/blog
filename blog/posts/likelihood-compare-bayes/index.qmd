@@ -1,5 +1,5 @@
 ---
-title: "Introduction"
+title: "Comparing SciPy Distributions and PyMC Models"
 author: "Galen Seilis"
 date: "2024-05-04"
 draft: true
@@ -16,7 +16,7 @@ SciPy's and PyMC's distributions are based on similar, but distinct, concepts.
 
 By default SciPy uses [maximum likelihood estimation](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation) (MLE). Although it also supports [method of moments](https://en.wikipedia.org/wiki/Method_of_moments_(statistics)), I will focus on MLE in comparison to probabilistic Bayesian inference.
 
-A [likelihood](https://en.wikipedia.org/wiki/Likelihood_function) is a function of both an [realization of a random variable](https://en.wikipedia.org/wiki/Realization_(probability)) (also see [random variate](https://en.wikipedia.org/wiki/Random_variate)) and a parameter $\theta$.
+A [likelihood](https://en.wikipedia.org/wiki/Likelihood_function) is a function of both a [realization of a random variable](https://en.wikipedia.org/wiki/Realization_(probability)) (also see [random variate](https://en.wikipedia.org/wiki/Random_variate)) and a parameter $\theta$.
 
 Abstractly this is denoted as 
 
@@ -26,7 +26,7 @@ $$\mathcal{L}(x \mid \theta)$$
 
 PyMC is a Bayesian [probabilistic programming](https://en.wikipedia.org/wiki/Probabilistic_programming) package. It starts with the notion of defining a mathematical model in code and then using Markov Chain Monte Carlo (MCMC) methods to sample from that mathematical model. It can also perform [variational Bayesian inference](https://en.wikipedia.org/wiki/Variational_Bayesian_methods).
 
-The core mathematical notion in PyMC is Bayes' theorem $$\Pr [A \mid B] = \frac{\Pr [B \mid A] \Pr [A]}{\Pr [B]}.$ 
+The core mathematical notion in PyMC is Bayes' theorem $$\Pr [A \mid B] = \frac{\Pr [B \mid A] \Pr [A]}{\Pr [B]}.$$
 
 ### Comparison
 
@@ -34,12 +34,47 @@ There are some comparisons that can be drawn between Bayesian inference and MLE.
 
 Bayes' rule can be used by either Frequentists or Bayesians.
 
-In a maximum likelihood approach is we do not have a [prior](https://en.wikipedia.org/wiki/Prior_probability) or a [base rate](https://en.wikipedia.org/wiki/Base_rate). But is there something equivalent? Sort of.
+In a maximum likelihood approach we do not have a [prior](https://en.wikipedia.org/wiki/Prior_probability) or a [base rate](https://en.wikipedia.org/wiki/Base_rate). But is there something equivalent? Sort of.
 
 Maximum likelihood estimation from a Bayesian perspective is often equivalent to maximum *a posteriori* estimation with a uniform prior. When the parameter space is unbounded then MLE can be seen as a special case of  MAP where a uniform [improper prior](https://en.wikipedia.org/wiki/Prior_probability#Improper_priors) is being used.
+
+### Computational Comparison
+
+The conceptual differences show up concretely in how the two libraries are used. Fitting a normal distribution to some samples in SciPy:
+
+```python
+import numpy as np
+from scipy import stats
+
+data = np.array([...])
+
+mu_hat, sigma_hat = stats.norm.fit(data)  # MLE estimates
+```
+
+Modelling the same data in PyMC:
+
+```python
+import pymc as pm
+
+with pm.Model() as model:
+    mu = pm.Normal("mu", mu=0.0, sigma=10.0)
+    sigma = pm.HalfNormal("sigma", sigma=10.0)
+
+    pm.Normal("obs", mu=mu, sigma=sigma, observed=data)
+
+    idata = pm.sample()  # posterior samples of mu and sigma
+```
+
+Three differences are immediately visible:
+
+- SciPy's `fit` returns point estimates — the maximizers of the likelihood — whereas PyMC's `sample` returns *distributions* over the parameters (a posterior sample), from which point summaries are only a first step.
+- In the PyMC model the priors on `mu` and `sigma` are written down explicitly. They are part of the model whether or not you think carefully about them, which is the Bayesian criticism of the MLE viewpoint: the likelihood implicitly treats every parameter value as equally plausible.
+- The PyMC version is more code. For a one-distribution fit with plenty of data that extra code is buying relatively little; for a hierarchical or otherwise structured model it is buying the whole analysis.
 
 ## Conclusions
 
 In practice Bayesian inference is not a replacement for MLE, nor is MLE well-suited for all problems. Rather it is complementary to know both approaches because there are tradeoffs between them that may be better suited to certain problems.
 
-Therefore choosing between SciPy and PyMC
+Therefore choosing between SciPy and PyMC is not a choice between "frequentist" and "Bayesian" so much as a choice about how much structure you need the fit to carry and how much you want to see of the uncertainty around the parameters. If you want a fast point estimate of a standard distribution's parameters, SciPy's fitting is the lighter tool. If you want priors, partial pooling, posterior predictive checks, or a composed model of several likelihoods, PyMC is the tool that expresses that directly, and the price is a heavier computational method (MCMC instead of optimization) and more code to write.
+
+A pragmatic habit is to prototype the likelihood in SciPy first, where it is cheap to sanity check the shape of the problem, and then move to PyMC once the model needs to grow beyond a single distribution.

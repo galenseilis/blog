@@ -21,23 +21,69 @@ A straightforward approach is to just call `foo`:
 foo(x)
 ```
 
-# TODO: Produce an example pipeline for some choice of 'foo'
+The Kedro approach is to register `foo` as a node in a pipeline, provide a catalog entry for whatever `x` is, and execute the pipeline:
 
-There will always exist a `foo(x)` such that for a given set of hardware constraints it will be computable without Kedro but not computable with Kedro.
+```python
+from kedro.pipeline import node, Pipeline
+
+pipeline = Pipeline(
+    [
+        node(func=foo, inputs="x", outputs="y", name="foo_node"),
+    ]
+)
+```
+
+Both of these do the same work, but the second one does strictly more bookkeeping. That is the crux of the computational scalability concern: Kedro's abstractions are not free, so there will always exist a `foo(x)` such that for a given set of hardware constraints it will be computable without Kedro but not computable with Kedro. The direct call consumes only what `foo` and `x` consume. The pipeline additionally constructs node objects, consults the catalog, resolves inputs and outputs by name, and arranges for the result to be written (or held) according to the dataset that `y` refers to.
 
 We never get function calls and additional objects in memory for free. This is one of the lurking problems with aiming for generality in programs.
 
-The more nodes we have, the more overhead.
+The more nodes we have, the more overhead. To see this without hand-writing a large pipeline, we can generate a random DAG with [NetworkX](https://networkx.org/) and turn each node into a Kedro node:
 
-# TODO: Example of generating DAGs that run some function (e.g. `def identity(x): x`)
+```python
+import networkx as nx
+from kedro.pipeline import node, Pipeline
+from typing import Callable
 
-# TODO: Research and discuss how to deal with files that are too large to fit into memory. How would Kedro deal with this?
 
-Kedro also does a lot of file IO. Having the 
+def construct_kedro_pipeline(func: Callable, dag: nx.DiGraph) -> Pipeline:
+    if not nx.is_directed_acyclic_graph(dag):
+        raise ValueError(
+            "The provided graph is not a valid Directed Acyclic Graph (DAG)."
+        )
+
+    topological_order = list(nx.topological_sort(dag))
+    kedro_nodes = []
+
+    for node_name in topological_order:
+        input_edges = list(dag.predecessors(node_name))
+        output_edges = [node_name]
+
+        if input_edges:
+            kedro_nodes.append(
+                node(func=func, inputs=input_edges, outputs=output_edges)
+            )
+
+    return Pipeline(kedro_nodes)
+```
+
+With a function as cheap as:
+
+```python
+def identity(x):
+    return x
+```
+
+the pipeline objects themselves become a meaningful fraction of the total execution time as the node count grows. That is the "generating DAGs that run some function" thought experiment: pick any `func`, then compare the cost of calling it directly `n` times against the cost of constructing and running an `n`-node Kedro pipeline that does the same. The gap is the price of the framework, and the price grows with `n`.
+
+## Large Data That Does Not Fit In Memory
+
+The memory story is related. Kedro's "memory dataset" keeps data in memory between nodes, which is convenient but means that a pipeline holding `k` large intermediates simultaneously needs memory for all `k` of them. When a file/table dataset is used instead, Kedro writes the intermediate to storage and reads it back when the next node needs it. That trades memory pressure for I/O, and it also means the intermediate is durable and inspectable, which is often the point of using a tool like Kedro in the first place.
+
+For data too large to fit in memory even one dataset at a time, you are pushed toward chunked or streaming datasets (for example partitioned or lazy-loading dataset implementations), and toward designing nodes to operate on partitions rather than whole tables. Kedro supports this, but it is extra design work that a plain Python function would not have required. The same design work is exactly what a framework would have forced you to do anyway, so this is less a criticism of Kedro than a reminder that "distributed data" is not a problem Kedro dissolves.
 
 # Project Visualization
 
-I think that Kedro's visualization plugin ([Kedro Viz](https://github.com/kedro-org/kedro-viz)) can improve the experience of a developer coming onto a new project who wants to get a bird's eye view. 
+I think that Kedro's visualization plugin ([Kedro Viz](https://github.com/kedro-org/kedro-viz)) can improve the experience of a developer coming onto a new project who wants to get a bird's eye view.
 
 [*"Graphical perception is the human capacity for visually interpreting information on graphs and charts."*](https://en.wikipedia.org/wiki/Graphical_perception). There are *many* rules and aphorisms that have been proposed for how to ensure good visualisations. What makes a visualization 'good' depends on your goals, such as the emphasis of being persuasive rather than highly informational. With Kedro Viz the use case I envision is primarily to be informative.
 
@@ -54,10 +100,14 @@ While Kedro Viz is capable of visualizing very complicated pipelines, its practi
 
 # Project Complexity
 
-This is where Kedro has the best scalability properties, if you're careful. The data sources, node IO, and pipelines themselves are required to have names. If this is done well then I think Kedro can keep a rather complicated
+This is where Kedro has the best scalability properties, if you're careful. The data sources, node IO, and pipelines themselves are required to have names. If this is done well then I think Kedro can keep a rather complicated project navigable long after the same logic would have become an undifferentiated pile of Python modules.
 
-Having naming conventions can help with ensuring some level of regularity in what names exist. In some cases it may be able to define the naming rules algorithmically, thus allowing further automation in the creation and searching of complex Kedro projects.
+Having naming conventions can help with ensuring some level of regularity in what names exist. In some cases it may be able to define the naming rules algorithmically, thus allowing further automation in the creation and searching of complex Kedro projects. Names are also what the catalog, the viz tool, and error messages all use to refer to the same object, so a naming convention is a piece of project-wide infrastructure that pays off across those surfaces at once.
+
+There is a symmetry worth noting: the same framework that adds computational overhead at small scale is the thing that keeps project complexity manageable at large scale. The failure mode is at the extremes — a tiny project pays the overhead for no benefit, and a huge project can outgrow the visualization even while the naming discipline continues to help.
 
 # Conclusions
 
-While we examined Kedro in this particular 
+While we examined Kedro in this particular critique through the lenses of computation, visualization, and project complexity, the general lesson applies to any pipeline framework: abstractions impose per-unit costs and buy coordination benefits. Kedro is unusual only in how explicit it makes the tradeoff, by requiring names and datasets where a bare Python script would require nothing.
+
+My practical take is that the computational overheads are real but predictable — they scale with node count and with the size of the data you insist on holding in memory — while the coordination benefits are the reason to adopt Kedro in the first place. Choosing Kedro is choosing to pay the former in exchange for the latter, and it is worth being honest about which regime a given project is in.

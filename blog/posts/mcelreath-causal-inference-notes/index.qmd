@@ -1,5 +1,5 @@
 ---
-title: "Introduction"
+title: "Notes on McElreath's Causal Inference: Science Before Statistics"
 author: "Galen Seilis"
 date: "2024-06-20"
 draft: true
@@ -79,3 +79,7 @@ The answers to the following questions depend on the causal assumptions that we 
 - Regression models do not distinguish causes from confounds.
 - p-values are not causal statements.
 - AIC and similar model comparison functions are helpful for identifying purely predictive models, but will give no guarantees about preserving causality.
+
+## Closing
+
+These notes are my compressed record of the talk rather than a summary of the field — where I found a claim interesting I wrote down a pointer (usually a citation or a section of McElreath's materials) rather than an elaboration. The through-line I took away is the phrase in the last section: no causes in, no causes out. If a model is going to support causal claims then the causal structure has to be supplied by something other than the fit statistics.

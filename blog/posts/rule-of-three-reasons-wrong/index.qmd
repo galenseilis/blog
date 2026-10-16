@@ -7,3 +7,48 @@ draft: true
 ---
 
 Someone once told me a rule that they had learned from their mother. When presented with some piece of information or when a decision has to be made, list three reasons you could be wrong. Let's consider the tradeoffs of using this rule.
+
+# What the Rule Gets Right
+
+The rule is a nudge against [cognitive closure](https://en.wikipedia.org/wiki/Cognitive_closure) — the uncomfortable urge to just settle on an answer and move on. Merely being asked "in what way could this be wrong?" interrupts the automatic process of treating your first interpretation of a situation as the correct one. That interruption is where most of the value of the rule lives.
+
+Listing reasons you could be wrong is a small dose of [steel-manning](https://en.wikipedia.org/wiki/Steel_man) your own position before anyone else gets the chance to attack it. Relatedly, it is a weak form of a [pre-mortem](https://en.wikipedia.org/wiki/Pre-mortem): before committing to a decision, imagine that it has already failed and work backwards to plausible causes. Organizations that do this deliberately are usually trying to counteract [groupthink](https://en.wikipedia.org/wiki/Groupthink) and [overconfidence](https://en.wikipedia.org/wiki/Overconfidence_effect).
+
+There is also a social benefit. A person who can volunteer three specific ways they might be wrong is easier to trust than a person who asserts certainty, because the first person has demonstrated that they can hold their own belief at arm's length.
+
+# What the Rule Gets Wrong
+
+## Three Is Arbitrary
+
+Why three and not two, or five, or a dozen? Nothing about the epistemics of a situation knows that we wrote the number three down. If the real number of ways you could be wrong is one very likely way, then inventing two more reasons is [confabulation](https://en.wikipedia.org/wiki/Confabulation) — you will generate *something*, because the rule demands three, but the additional reasons may be padding rather than insight. Conversely if there are a dozen serious failure modes then three reasons lull you into thinking you have covered the space of possibilities when you have covered a quarter of it.
+
+## It Measures Effort, Not Accuracy
+
+The rule rewards the *production* of reasons. Produced reasons feel like due diligence, but the correct question is never "did I generate three reasons?" — it is "how likely am I to be wrong, and how much does it matter if I am?". A checklist that counts items cannot see the difference between a reason like "my source may have fabricated the data" and a reason like "I may be reading this sentence with the wrong emphasis".
+
+In that sense the rule is susceptible to what I would call *epistemic [checkbox](https://en.wikipedia.org/wiki/Checkbox) mentality*: completing the ritual substitutes for actually revising the probability of being wrong. If after listing three reasons you assign them all vanishing probability, then the exercise has changed nothing — and yet it still feels like you did something.
+
+## Anchoring and Availability
+
+The three reasons you invent will tend to be the ones that come to mind most easily, which are the ones you have recently seen, been warned about, or been embarrassed by before. This is exactly the [availability heuristic](https://en.wikipedia.org/wiki/Availability_heuristic) that a careful reasoner should be guarding against. The rule, applied naively, recruits that heuristic rather than correcting it.
+
+There is also an anchoring effect on how *seriously* the reasons are taken. Three reasons presented side by side tend to be treated as roughly comparable in weight, when in reality one of them might be a genuine risk worth mitigating and the other two might be remote contingencies.
+
+## It Can Be Gamed
+
+Because the rule is about generating statements rather than true considerations, it is trivially satisfiable with reasons that are unfalsifiable in practice ("I could be wrong because reality might be different than it appears"). People who want to *appear* careful without *being* careful will find the rule congenial for exactly that reason.
+
+# How I Would Use It
+
+I would not throw the rule away, but I would treat it as the *opening move* rather than the whole procedure:
+
+1. List the reasons you could be wrong — take as many as honestly come to mind rather than stopping at three.
+2. Put rough [credences](https://en.wikipedia.org/wiki/Credence_(epistemology)) on them. The point is not to be well-calibrated to two decimal places, but to force yourself to notice when one "reason" is actually quite likely.
+3. Ask what evidence would move those credences, and whether that evidence is obtainable. A reason that could never be checked is doing less work than one that could.
+4. Consider the consequences asymmetrically. Being wrong about a cheap, reversible decision is a different matter from being wrong about an expensive, irreversible one, and the amount of self-interrogation you owe should be proportional to the stakes rather than to the number three.
+
+# Conclusions
+
+The rule "imagine three ways you could be wrong" is a decent *attentional* nudge: it points your attention at your own fallibility at a moment when most people are not pointing it there. What it is not is an *evaluative* procedure — it does not tell you how likely you are to be wrong, which reason matters most, or what to do about any of them.
+
+Used as a starting prompt for a more careful analysis, it is a habit worth keeping. Used as a complete method of self-correction, it is a ritual that can be satisfied while leaving your beliefs untouched. The difference between the two uses is roughly the difference between asking yourself a question and actually listening to the answer.

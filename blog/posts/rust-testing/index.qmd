@@ -7,5 +7,185 @@ echo: true
 draft: true
 ---
 
+# Introduction
 
+Rust has a built-in test harness, so there is no need to reach for a third-party testing framework just to get started. Tests are ordinary Rust functions annotated with `#[test]`, and the `cargo` command-line tool knows how to discover and run them.
 
+In this post I will walk through the testing features using a small example project called `my_project`. The example project has:
+
+- unit tests living alongside the code they test,
+- an integration test living in its own directory, and
+- documentation tests living inside doc comments.
+
+# Unit Tests
+
+The conventional place to put unit tests is in the same file as the code under test, inside a module that is only compiled when the `test` [configuration](https://doc.rust-lang.org/reference/conditional-compilation.html#cfg) is active. That conditional compilation is what the `#[cfg(test)]` attribute is doing.
+
+Here is the library code for `my_project`, including its unit tests:
+
+```rust
+// src/lib.rs
+
+/// Adds two numbers together.
+///
+/// # Examples
+///
+/// ```
+/// let result = my_project::add(2, 3);
+/// assert_eq!(result, 5);
+/// ```
+pub fn add(a: i32, b: i32) -> i32 {
+    a + b
+}
+
+pub struct Rectangle {
+    pub width: u32,
+    pub height: u32,
+}
+
+impl Rectangle {
+    /// Returns the area of the rectangle.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let rect = my_project::Rectangle { width: 3, height: 4 };
+    /// assert_eq!(rect.area(), 12);
+    /// ```
+    pub fn area(&self) -> u32 {
+        self.width * self.height
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_add() {
+        assert_eq!(add(2, 3), 5);
+    }
+
+    #[test]
+    fn test_area() {
+        let rect = Rectangle { width: 3, height: 4 };
+        assert_eq!(rect.area(), 12);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_add_panic() {
+        panic!("This test should panic!");
+    }
+}
+```
+
+A few things are worth pointing out:
+
+- `use super::*;` imports the items from the parent module, i.e. the code being tested.
+- The `assert_eq!` macro checks for equality between two expressions and reports both values when the assertion fails. There are sibling macros such as `assert!` and `assert_ne!` for when you do not need a two-sided equality report.
+- The `#[should_panic]` attribute declares that the test is *expected* to panic. If the function under test does not panic then the test fails. This is handy for verifying that precondition checks actually fire.
+
+# Integration Tests
+
+Integration tests live in a `tests/` directory next to `src/`. Each file in that directory is compiled as its own separate [crate](https://doc.rust-lang.org/book/ch07-01-packages-and-crates.html), which means integration tests can only use the *public* interface of your library. That constraint is rather useful: if an integration test can be written then a downstream user could write it too.
+
+```rust
+// tests/integration_test.rs
+
+use my_project::{add, Rectangle};
+
+#[test]
+fn test_integration_add() {
+    assert_eq!(add(10, 20), 30);
+}
+
+#[test]
+fn test_integration_area() {
+    let rect = Rectangle { width: 5, height: 6};
+    assert_eq!(rect.area(), 30);
+}
+```
+
+If your `tests/` directory needs to share helper code between integration test files then you can either place the helpers in a `tests/common/mod.rs` module and `mod common;` it into each test file, or expose the helpers publicly from your library crate itself.
+
+# Documentation Tests
+
+Doc comments that contain code blocks are themselves tests. The Rust book calls these *documentation tests*. In the `# Examples` sections of `add` and `Rectangle::area` above the code blocks are fenced with triple backticks and no language tag; that is what marks them as runnable Rust.
+
+Documentation tests are compiled and executed along with the rest of your test suite, which means the examples in your documentation cannot silently rot away from the API they document. If `add(2, 3)` ever stops being `5` then the corresponding doc test fails.
+
+````rust
+/// Documentation tests can also use `ignore` or `no_run` attributes:
+///
+/// ```ignore
+/// this code is shown but not executed
+/// ```
+///
+/// ```no_run
+/// this code is compiled but not executed
+/// ```
+pub fn not_tested() {}
+````
+
+# Running the Tests
+
+Everything above is run with the `cargo test` command:
+
+```text
+$ cargo test
+   Compiling my_project v0.1.0 (/home/galen-seilis/syncthing_galen_seilis/bin/blog/blog/posts/rust-testing/my_project)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.81s
+     Running unittests src/lib.rs (target/debug/deps/my_project-c53c8ba4f0d2c185)
+
+running 3 tests
+test tests::test_add ... ok
+test tests::test_area ... ok
+test tests::test_add_panic - should panic ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/integration_test.rs (target/debug/deps/integration_test-f66e08a65b5487e2)
+
+running 2 tests
+test test_integration_add ... ok
+test test_integration_area ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests my_project
+
+running 2 tests
+test src/lib.rs - add (line 7) ... ok
+test src/lib.rs - Rectangle::area (line 25) ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+```
+
+Notice that `cargo test` runs three separate test targets: the unit tests, the integration tests, and the documentation tests. Each target reports its own pass/fail summary, and `cargo test` itself exits with a non-zero status if any target fails, which is what makes it friendly to [continuous integration](https://en.wikipedia.org/wiki/Continuous_integration) pipelines.
+
+You can filter which tests run by providing a substring of the test name, for example `cargo test test_add` runs only the tests whose names contain `test_add`, and `cargo test -- --ignored` runs only tests that have been marked with the `#[ignore]` attribute.
+
+# When Tests Should Return `Result`
+
+If the code you are testing returns a `Result` you can return one from the test function itself and use the `?` operator inside the test:
+
+```rust
+#[cfg(test)]
+mod result_tests {
+    #[test]
+    fn parse_number() -> Result<(), std::num::ParseIntError> {
+        let n: i32 = "42".parse()?;
+        assert_eq!(n, 42);
+        Ok(())
+    }
+}
+```
+
+Returning `Err` from a test is treated as a test failure, which is often tidier than unwrapping inside the test.
+
+# Conclusions
+
+The parts of Rust's testing story that I appreciate most are how much of it requires no external tooling at all, and how the language's module and crate boundaries give unit tests, integration tests, and documentation tests each a natural home. The `#[cfg(test)]` configuration also keeps test-only code out of production builds without any extra build system cooperation.
+
+Where I have wanted more than this, the usual answer has been to reach for established third-party crates (for property-based testing, benchmarking, code coverage, and so on), but those sit on top of the same `cargo test` entry point rather than replacing it.

@@ -6,12 +6,12 @@ categories: [pipelines]
 draft: true
 ---
 
-In some sense this blog post isn't about a new technology, or even something non-obvious to many Python programmers, but I think it gets overlooked as a simple way to obtain data directed acyclic graphs (DAGs) without any using any external DAG frameworks. The goal of this approach is to exploit a simplicity that many frameworks miss out on, rather than trying to match every feature that other frameworks have.
+In some sense this blog post isn't about a new technology, or even something non-obvious to many Python programmers, but I think it gets overlooked as a simple way to obtain data directed acyclic graphs (DAGs) without using any external DAG frameworks. The goal of this approach is to exploit a simplicity that many frameworks miss out on, rather than trying to match every feature that other frameworks have.
 
 
 This one has some pros and cons that interest me.
 
-Importing one module into another as a way of passing data can facilite language server protocol support that I don't expect from DAG frameworks. One of the problems that people are sometimes trying address with DAGs is to create data lineage, which is sometimes described as "data flow" or even just "dependency". Often data flow is attempted to be related through some framework-specific abstractions defined in terms of functions and classes, but with passing data through imports we get a form of data lineage that is quite simple.
+Importing one module into another as a way of passing data can facilitate language server protocol support that I don't expect from DAG frameworks. One of the problems that people are sometimes trying to address with DAGs is to create data lineage, which is sometimes described as "data flow" or even just "dependency". Often data flow is attempted to be related through some framework-specific abstractions defined in terms of functions and classes, but with passing data through imports we get a form of data lineage that is quite simple.
 
 
 Let's discuss a simple example involving only two modules `foo.py` and `bar.py` to start.
@@ -19,39 +19,113 @@ Let's discuss a simple example involving only two modules `foo.py` and `bar.py` 
 ```python
 # foo.py
 
-...
-
-data = load_data()
-
-...
+data = {1,2}
+print(data)
 ```
 
 ```python
 # bar.py
-import cool_transforms
 import foo
 
-cool_data = cool_transforms.the_coolest_transform(foo.data)
+print(f"{foo.data=} from {__file__}")
+data = foo.data.copy()
+data.update({10})
+print(f"{data=} from {__file__}")
 ```
 
+Running `bar.py` first executes `foo.py`, whose module-level code produces `foo.data`, and then `bar.py` reads it. The import statement *is* the data edge: there is no registry of node names, no stringly-typed input/output keys, and no framework object mediating the relationship. If a language server can resolve `foo.data` — which it can, since that is exactly what the [language server protocol](https://en.wikipedia.org/wiki/Language_Server_Protocol) is for — then it can also jump you to the definition of the data you are consuming.
 
-What about naming conventions? Well, that's a matter of further choosing conventions.
+We can extend the example with a third module `baz.py` which imports both:
 
-And what about having submodules? This can also be done in order to further organize code.
+```python
+# baz.py
+import bar
+import foo
 
-What about using functions? Use functions for functionality that is being reused.
+print(foo.data)
+print(bar.data)
+```
+
+Even though `bar.data` and `foo.data` are different objects (because `bar` defensively copied the set), the lineage is readable directly from the import statements. The resulting DAG is `foo` → `bar` → `baz` alongside `foo` → `baz`.
+
+What about naming conventions? Well, that's a matter of further choosing conventions. Module names become the node names of our data DAG, so the usual Python guidance about package layout does most of the work for us already.
+
+And what about having submodules? This can also be done in order to further organize code. A package such as `project/` with `project/load.py` and `project/transform.py` gives us a DAG whose shape is visible in the directory tree.
+
+What about using functions? Use functions for functionality that is being reused. The import DAG describes *where data comes from*; functions describe *how data is computed*. These are separate concerns that many frameworks conflate into a single "node" abstraction.
 
 ## Visualizing the import DAG
 
+Because the DAG is nothing more than the import relationships, any tool that can read Python's imports can draw it.
+
+- [pydeps](https://github.com/thebjorn/pydeps) renders a `dot` graph of module dependencies from a file or package. This is the tool I have used on this blog to produce dependency graphs of example projects.
+- [import-linter](https://github.com/jmoiron/import-linter) lets you declare contractual rules about which modules may import which other modules, and fails CI when a rule is violated. Contract enforcement is a nice complement to visualization: a picture shows you today's DAG, while a lint rule stops the DAG from quietly rotting.
+- Most IDEs will also show you an import graph or at least "find all references" for a module, which is often enough for day-to-day work.
+
+A pydeps invocation over a single module looks roughly like this:
+
+```bash
+$ pydeps foo.py --show-dot | dot -Tpng -o dependency_graph.png
+```
+
 ## Dynamic Import DAGs
+
+Nothing stops us from importing modules based on runtime information:
+
+```python
+import importlib
+
+module_name = choose_module_for_today()
+mod = importlib.import_module(module_name)
+```
+
+This is how a lot of plugin systems work, [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) being the canonical example. The DAG still exists — it is still "module A gave data to module B" — but its shape is now decided at runtime rather than being readable from static import statements.
+
+Dynamic imports are the main place where this approach asks something of you. If you want a *static* visualization of a DAG that is partly assembled at runtime, you need to either constrain which modules can be chosen (so they can be enumerated) or fall back to observing the imports as they happen (Python's import machinery supports that too, see the hooks section below). Frameworks such as Airflow face the same problem with their own DAG objects and solve it in much the same way: by requiring the DAG to be constructible without running the pipeline.
 
 ## Memory Management
 
-What about memory management? Won't the accumulation of variables result in a large consumption of memory? 
+What about memory management? Won't the accumulation of variables result in a large consumption of memory?
+
+The key fact is that a module is executed exactly once per process. After the first import, subsequent imports retrieve the *same* module object from [`sys.modules`](https://docs.python.org/3/library/sys.html#sys.modules) rather than re-executing the file. So `import foo` in a hundred places does not produce a hundred copies of `foo.data`, and there is no per-import accumulation to speak of.
+
+This gives us a useful way to reason about memory:
+
+- The peak memory attributable to module-level data is roughly the size of the data itself, paid once.
+- The data stays alive for the lifetime of the process, because `sys.modules` holds a strong reference. For data lineage purposes this is usually what you want, but it does mean that a pipeline which loads several large datasets as module-level objects pays for all of them simultaneously.
+- `importlib.reload(foo)` re-executes the module, which replaces the module-level names and drops the old objects (assuming nothing else references them). This is a deliberate act of discarding lineage, not something that happens implicitly.
+- Import cycles do not corrupt anything: Python inserts a partially-initialized module object into `sys.modules` before executing the body, which is why an import cycle can hand you an object missing some attributes rather than recursing forever.
+
+If your module-level data is genuinely too large to hold in memory, then passing it through imports was the wrong transport for that particular datum and you should hand it off through a file format with lazy or streaming access instead. The import DAG then describes which module *decided what the file contains*, while the file itself carries the bulk data. Frameworks with catalog objects are effectively formalizing the same split; here it is just "whatever you `pickle`/`to_parquet`/write to disk".
 
 ## Logging
+
+Modules can own their own loggers by convention:
+
+```python
+import logging
+
+logger = logging.getLogger(__name__)
+```
+
+Because `__name__` follows the module's position in the import DAG, the logger names that appear in your output *are* the DAG. A log line from `mypkg.bar` tells you not only that something happened but where in the data lineage it happened, and `logging.getLogger("mypkg")` lets you adjust verbosity for an entire subtree of the DAG in one call.
+
+Import order also gives logs a natural chronology: dependencies execute before dependents, so the first thing a module logs happens before anything that imports it logs anything. That ordering falls out of the DAG for free instead of being configured.
 
 ## Hooks
 
 - Import hooks are a thing in Python.
 
+They live on [`sys.meta_path`](https://docs.python.org/3/library/sys.html#sys.meta_path) (consulted by `import` to find a module) and [`sys.path_hooks`](https://docs.python.org/3/library/sys.html#sys.path_hooks) (consulted to search a path entry). A hook can intercept an import in order to:
+
+- trace or log imports, which is one way to *observe* the dynamic import DAG rather than statically analyzing it,
+- load modules from places that are not plain files (databases, archives, network resources),
+- instrument modules on the way in, for example by rewriting them for coverage measurement or hot reload.
+
+The existence of these hooks is a good sign for the "imports as DAG" idea: the language treats the import system as a first-class, extensible substrate rather than as a private implementation detail, which is precisely the property that lets us lean on it for data lineage.
+
+# Conclusions
+
+Passing data through imports gives us a data DAG with three notable properties: it is written in ordinary Python (so tooling, type checkers, and language servers understand it without any plugin), its structure is visible in the file layout (so the lineage is legible in code review), and it requires no runtime framework at all.
+
+The costs are equally plain. The DAG can only carry what Python objects can carry, dynamic wiring requires either enumeration or import hooks to see statically, and holding data at module level pins it in memory for the life of the process. When those costs are acceptable — which is more often than the framework-requiring framing suggests — the humble import statement is a data lineage mechanism you already have.

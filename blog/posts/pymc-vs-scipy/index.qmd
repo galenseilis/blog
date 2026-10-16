@@ -24,11 +24,55 @@ However, in my experience so far I have had less difficulty in building complex 
 
 While there's nothing that guarantees this empirical induction, I find that there is a tendency for PyMC to offer more flexibility in modelling. Like SciPy, it provides classes to define custom probability distributions. SciPy does not give explicit support to building complicated models such as structural equation models or hierarchical models, but it is possible to develop such models.
 
+## Computational Examples
+
+The theory section would be hollow without seeing the two workflows side by side. Fitting and sampling from a normal distribution with SciPy:
+
+```python
+import numpy as np
+from scipy import stats
+
+rng = np.random.default_rng(seed=1234)
+data = rng.normal(loc=5.0, scale=2.0, size=200)
+
+loc_hat, scale_hat = stats.norm.fit(data)  # maximum likelihood estimates
+print(loc_hat, scale_hat)
+
+# sample from the fitted distribution
+draws = stats.norm.rvs(loc=loc_hat, scale=scale_hat, size=1000, random_state=rng)
+```
+
+The same job in PyMC:
+
+```python
+import pymc as pm
+
+with pm.Model() as model:
+    loc = pm.Normal("loc", mu=0.0, sigma=10.0)
+    scale = pm.HalfNormal("scale", sigma=10.0)
+
+    pm.Normal("obs", mu=loc, sigma=scale, observed=data)
+
+    idata = pm.sample()
+    pm.sample_posterior_predictive(idata, extend_inferencedata=True)
+```
+
+What differs in practice:
+
+- SciPy returns point estimates; PyMC returns a posterior (an `InferenceData` object of draws), from which estimates, intervals, and derived quantities are computed rather than reported by `fit`.
+- The PyMC version states its priors out loud. `loc ~ Normal(0, 10)` affects the answer for small samples; `stats.norm.fit` makes an equivalent (implicit) choice without displaying it.
+- The SciPy `draws` above ignore parameter uncertainty — they are draws from the *fitted* distribution, analogous to a parametric bootstrap at the point estimates. `sample_posterior_predictive` carries the parameter uncertainty into the replicated data.
+- For composed models (mixtures, hierarchical structure) the PyMC code grows with the model's structure, whereas the SciPy route grows into hand-written likelihoods, an optimizer call, and your own uncertainty propagation.
+
+## Conclusions
+
+Neither tool subsumes the other. SciPy is the lighter dependency for fitting or drawing from standard distributions and for quick point estimates on large data; PyMC is the tool that expresses priors, composition, and posterior uncertainty directly, paid for with MCMC's computational cost and more modelling code. In practice I prototype a likelihood in SciPy to check the shape of the problem cheaply, and reach for PyMC when the model needs to grow beyond a single distribution or when the question I am asking is about uncertainty rather than about a point.
+
 Sources:
 - https://www.pymc.io/projects/docs/en/stable/api/distributions/generated/pymc.Flat.html
 - https://www.pymc.io/projects/docs/en/latest/api/distributions/generated/pymc.HalfFlat.html
 - https://discourse.pymc.io/t/what-does-pm-flat-really-do/14483
 - https://discourse.pymc.io/t/is-the-mode-of-a-parameter-in-a-model-with-only-pm-flat-priors-a-maximimum-likelihood-estimate/14490
 - https://stackoverflow.com/questions/78536889/how-to-implement-a-mixture-of-gamma-distributions-in-python-without-bayes
-- https://stats.stackexchange.com/questions/648090/is-there-a-likelihood-penalization-or-improper-prior-to-remove-bias-of-estimat
+- https://stats.stackexchange.com/questions/648090/
 

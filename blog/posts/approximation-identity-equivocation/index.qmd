@@ -89,7 +89,7 @@ Loosely speaking the squeeze theorem allows us to say something about the limit 
 
 Here is a formal description of the squeeze theorem.
 
-> Let $I$ be an interval containing the point $a$. Let $g,f$ and $h$ be functions defined on $I$, except possibly at $a$ itself. Suppose that for every $x$ in $I$ and $x \neq a$ we have $$g(x) \leq f(x) \leq h(x)$$ and also suppose that $$\lim_{x \rightarrow a} g(x) = \lim_{x \rightarrow a} = L,$$ then $$\lim_{x \rightarrow a} f(x) = L.$$
+> Let $I$ be an interval containing the point $a$. Let $g,f$ and $h$ be functions defined on $I$, except possibly at $a$ itself. Suppose that for every $x$ in $I$ and $x \neq a$ we have $$g(x) \leq f(x) \leq h(x)$$ and also suppose that $$\lim_{x \rightarrow a} g(x) = \lim_{x \rightarrow a} h(x) = L,$$ then $$\lim_{x \rightarrow a} f(x) = L.$$
 
 So how is this an approximation? The reason has to do with what we mean by limit.
 
@@ -99,7 +99,7 @@ Identity is an [equivalence relation](https://en.wikipedia.org/wiki/Equivalence_
 
 Although it is couched in mathematical jargon, I find the mathematical notion of an ["equivalence relation"](https://en.wikipedia.org/wiki/Equivalence_relation) to be a clear way to define what one could mean by "equivalent".
 
-An equivalence relation is, like many things in standard mathematics, a collection with some sort of structure. We will clarify what that structure is in a moment. Begin with a set $S$. A homogeneous binary relation $R$ on $S$ is a subset of the Cartesian product of $S$ with itself. The Cartesian product is the set of all ordered pairs $S \times S = \{ (a,b) \mid a \in S \land b \in S \}$. An equivalence relation is a homogeneous binary relation which is reflexive, transitive, and symmetric. A homogeneous binary relation $R$ on $S$ is reflexive if $(x,x) \in R$ for all $x$ in $S$. A homogeneous binary relation is transitive if, for all $x,y,z \in S$, we have $(x,y) \in R \land (y,z) \in R implies (x,z) \in R$. Lastly, a homogeneous binary relation is symmetric if, for all $x,y \in S$, it holds that $(x,y) \in R \implies (y,x) \in R$.
+An equivalence relation is, like many things in standard mathematics, a collection with some sort of structure. We will clarify what that structure is in a moment. Begin with a set $S$. A homogeneous binary relation $R$ on $S$ is a subset of the Cartesian product of $S$ with itself. The Cartesian product is the set of all ordered pairs $S \times S = \{ (a,b) \mid a \in S \land b \in S \}$. An equivalence relation is a homogeneous binary relation which is reflexive, transitive, and symmetric. A homogeneous binary relation $R$ on $S$ is reflexive if $(x,x) \in R$ for all $x$ in $S$. A homogeneous binary relation is transitive if, for all $x,y,z \in S$, we have $(x,y) \in R \land (y,z) \in R \implies (x,z) \in R$. Lastly, a homogeneous binary relation is symmetric if, for all $x,y \in S$, it holds that $(x,y) \in R \implies (y,x) \in R$.
 
 So is an approximation relation also transitive? No, not in general.
 
@@ -122,15 +122,17 @@ It is a pretty simple fallacy. It involves one premise and one conclusion.
 
 # Examples
 
-Example: Reporting time imprecisely.
-Example: Normal approximation in statistics.
-Example: Physical distances.
+**Reporting time imprecisely.** Suppose an event starts at 3:07 and a speaker says it began "around a quarter past three". The spoken phrase is an approximation of the timestamp, and in most conversations nobody is harmed by treating the two as interchangeable. Trouble starts when the approximation is quietly promoted to an identity: if a second speaker records that the talk *did* begin at 3:15 — now treated as the actual time rather than as a rounded description — and a third speaker subtracts the two times to conclude that the talk ran seven minutes shorter than it did, then a chain of reasoning built on exact equality has been run on an approximation. Each individual substitution felt innocuous; the accumulated substitution did not.
+
+**Normal approximation in statistics.** The [central limit theorem](https://en.wikipedia.org/wiki/Central_limit_theorem) and related results license us to use a normal distribution where the true sampling distribution is not exactly normal. The approximation is often excellent in the regimes we care about, which is what makes the equivocation tempting: because the normal approximation performs so well in practice, we start to write and reason as if $S_n$ *were* normal. Consequences include using $z$-based intervals where a $t$-distribution was warranted, forgetting that a bounded variable has a bounded normal approximation only approximately, or reporting a tail probability to more digits than the approximation itself can justify. The approximation justified a calculation; it did not upgrade the object being calculated about into the thing it merely resembles.
+
+**Physical distances.** A map at 1:50000 says two towns are 4.0 cm apart, i.e. 2.0 km apart — as an approximation of a curve-length along roads. Using that figure to plan a route is fine; asserting that the towns *are* exactly 2.0 km apart, and then doing arithmetic as if that were an identity (subtracting a third measurement taken with a tape measure, say), imports a precision that the original representation never had. A related everyday version is rounding: if each of five segments is rounded to the nearest metre before being summed rather than after, the identity "$\text{sum of roundings} = \text{rounding of sum}$" is assumed without comment, and it simply is not true.
 
 # Practical Significance
 
 In my experience the distinction between approximation and identity most often becomes important in the context of numerical computing [@goldberg1991]. Typical computers can represent binary numbers exactly. When we add two numbers it is not guaranteed that the sum will equal the correct value. In some cases this is ignorable, but sometimes it is not. One of the tricks I have learned, when it matters, is to add up smaller numbers together and aggregate up towards adding bigger numbers. The trick doesn't always work, but sometimes it helps you avoid the numerical problem that a small number plus a big number is the same big number you started with...
 
-That is, for two numbers $a$ and $b$ for which neither number is zero it is possible to obtain $a + b = b$. You might then be tempted to subtract $b$ from both sides to obtain $a = 0$. This reasoning works quite well for dealing.
+That is, for two numbers $a$ and $b$ for which neither number is zero it is possible to obtain $a + b = b$. You might then be tempted to subtract $b$ from both sides to obtain $a = 0$. This reasoning works quite well for dealing with real numbers under exact arithmetic, where additive inverses exist and subtraction undoes addition. In floating-point arithmetic the trouble is that the premise is not the real-number statement it appears to be: $a + b = b$ can be the *computed* result of an addition that was rounded (when $a$ is small relative to $b$), even though for exact reals it would force $a = 0$. Applying the exact inference to the rounded output then "confirms" $a = 0$, and the check you might reach for is no help — subtracting $b$ from the rounded sum returns $0$ regardless of what $a$ was. The tempting inference mirrors a rule we learned in school; what has been silently replaced is the exact arithmetic the rule presupposes.
 
 
 # The Brass Tacks

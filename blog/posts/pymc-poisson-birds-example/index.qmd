@@ -162,3 +162,20 @@ Here is the model diagram:
 ```
 
 ![Model Posterior Distribution Sampling Trace Plot](./figures/flower_visits_trace.png)
+
+## Interpreting the Fit
+
+The model above is a *cell-means* Poisson model: there is one rate parameter $\lambda$ per (location, species) pair, each with its own independent `Exponential(1)` prior, and each observation is a Poisson draw from the rate of the cell it belongs to. There are no covariates beyond the two categorical factors, so the posterior for each cell can be read on its own.
+
+Two features of this particular data set deserve comment before trusting the numbers:
+
+- **The design is unbalanced.** Of the nine possible (location, species) combinations, only six appear in the data: `Rose` occurs at `RA` only, and `Blackberry` occurs at `RN` and `UN` only. For the three cells with no observations the likelihood contributes nothing, so the posterior *is* the prior. With `Exponential(1)` those cells will report a rate near 1 visit, while their observed neighbours have rates in the tens or hundreds. Anything decided about those three cells is a statement about the prior, not about flower visits — the honest fix is either to collect the missing cells or to model the two factors with shared structure (additive or interaction effects) so that information pools across cells.
+- **The Poisson assumption carries a testable implication.** A Poisson likelihood has mean equal to variance, and the raw summaries above already hint at dispersion beyond that within some cells (e.g. `RN`/`Blackberry` with a mean near 179 and a visible spread). The standard follow-up is a posterior predictive check — simulate replicated `flower_visits` from the fitted model and compare summaries such as the variance or the proportion of zeros against the observed data. If the fit systematically under-disperses, a negative binomial (or similar overdispersed) likelihood is the usual next model.
+
+The trace plot and `az.summary` output are where I check the mechanics: `r_hat` near 1 and adequate `ess` for each $\lambda$ cell indicate the sampler explored the posterior adequately. With this model's modest parameter count that should be unremarkable, but it is worth confirming rather than assuming.
+
+## Conclusions
+
+The exercise runs the full path from a scraped table of counts to a posterior over rates, which is the part of Bayesian modelling that tools like PyMC are genuinely good at: the model code reads like the data-generating story (a rate per location-species cell, counts Poisson around it), and the output is a distribution per cell rather than a single number.
+
+The two caveats above are also the general lessons. Unbalanced data means some parameters are identified by their priors rather than by observations, and a Poisson likelihood quietly commits you to a mean-variance relationship that real count data often violates. Both are visible from this model's own outputs, which is exactly what a model evaluation section is for.

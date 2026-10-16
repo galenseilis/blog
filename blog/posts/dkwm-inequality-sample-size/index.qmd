@@ -7,6 +7,12 @@ bibliography: references.bib
 draft: true
 ---
 
+## Introduction
+
+A question that arises before data collection, and occasionally before a simulation study, is: *how many samples do I need?* For parametric questions there are classical formulae that depend on the distribution you assume you are drawing from. The DKW(M) inequality offers a distribution-free alternative with a slightly different flavour: instead of bounding the error of a particular estimator of a particular parameter, it bounds the error of the entire [empirical cumulative distribution function](https://en.wikipedia.org/wiki/Empirical_distribution_function) against the population CDF, simultaneously for all $x$. 
+
+If you can tolerate an absolute error of $\epsilon$ in the estimated CDF with failure probability no larger than $1 - \alpha$, then the DKW(M) inequality converts directly into a required sample size $n$ without assuming anything about the underlying distribution beyond independence. This post derives those bounds in the univariate and multivariate cases, considers what they are useful for, and notes where they are pessimistic.
+
 ## Derivations of Sample Size Bounds
 
 In this section I am going to cover the mathematics needed to derive the sample size bounds.
@@ -79,6 +85,16 @@ Now let us consider the Taylor series of $f$ at $n_*$.
 
 Since this Taylor series goes on forever, we can choose a finite number of terms as an approximation of $f$. We know that this produces a polynomial which is guaranteed to have no more roots than the degree of the polynomial because of the [fundamental theorem of algebra](https://en.wikipedia.org/wiki/Fundamental_theorem_of_algebra). There will always be exactly the degree number of roots on the complex plane, but we only care about non-negative real roots.
 
+## A Worked Example
+
+Let us compute the univariate bound for a concrete choice: suppose we want the empirical CDF to be within $\epsilon = 0.01$ of the true CDF everywhere, with probability at least $\alpha = 0.95$. Then
+
+$$n \geq \left\lceil \frac{\ln 2 - \ln (1 - 0.95)}{2 (0.01)^2} \right\rceil = \left\lceil \frac{0.6931 + 2.9957}{0.0002} \right\rceil = 18445.$$
+
+So roughly eighteen and a half thousand IID samples buy you a uniform 1% error guarantee on the CDF at the 95% level. Compare this with what is often quoted for a *pointwise* error: the bound here holds for *all* $x$ simultaneously, which is a much stronger statement than an error bar at any single quantile, and the price of that strength is the larger $n$.
+
+Two quick sanity checks on the formula: increasing the desired accuracy $\epsilon$ makes $n$ grow quadratically (halving $\epsilon$ quadruples the requirement), and increasing the confidence $\alpha$ makes $n$ grow only logarithmically (going from 95% to 99% grows the numerator from $\ln 2 - \ln 0.05 \approx 3.69$ to $\ln 2 - \ln 0.01 \approx 5.30$, i.e. a factor of about 1.4 in the required sample size). This asymmetry is a useful rule of thumb: accuracy is expensive, confidence is comparatively cheap.
+
 ## Applications
 
 A plausible application is to prescribe the sample size for simulations, including discrete event simulation.
@@ -94,3 +110,10 @@ There are two substantial limitations of these sample size bounds.
 The first comes from the assumption of the theorem that we must be considering independent sampling.
 
 The second limitation is that the bound will tend to be quite large. In a sense this limitation comes from the generality of this bound. Some distributions converge more slowly than others, and such a general bound must hold for even the most slowly converging distributions.
+
+
+## Conclusions
+
+The DKW(M) inequality turns a question that people often answer with folklore ("you need thirty samples per parameter", "ten events per variable") into an explicit tradeoff between three quantities: the sample size $n$, the uniform accuracy $\epsilon$, and the confidence $\alpha$. The resulting bounds are distribution-free, easy to compute in the univariate case, and conservative in a way that is honest about their generality.
+
+My suggested use is as an outer bound and a communication device. If your realistic requirement is far below the DKW(M) number, you know you have room to spare; if your requirement is far above it, no amount of hoping will close the gap and you need either more samples or a narrower (distributional) assumption. And when you report an empirical CDF or a survival curve, the DKW(M) band $\pm \epsilon$ around the eCDF is a convenient honest picture of what the sample can support.

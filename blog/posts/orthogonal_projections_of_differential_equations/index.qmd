@@ -1,5 +1,5 @@
 ---
-title: "Exponential Decay"
+title: "Orthogonal Projections of Differential Equations"
 author: "Galen Seilis"
 date: "2024-06-13"
 draft: true
@@ -8,6 +8,18 @@ draft: true
 I have a speculation about where empirical distributions come from which has been a topic of personal rumination for me since the first year of my MSc thesis (*circa* 2020). It isn't scientific as far as I know, but it is the kind of thing that entertains me over a glass of beer.
 
 The basic idea is to come up with a mathematical relationship between a hypothetical deterministic data generating process and empirical distributions. I'll focus on examples using differential equations.
+
+## The Idea
+
+The mechanism I have in mind has three ingredients, none of which is random by itself:
+
+1. a deterministic trajectory $s(t)$ produced by a differential equation,
+2. a *measurement schedule* — the times $t_1, t_2, \ldots$ at which we write down the state, and
+3. an *observation map* — the part of the state we actually record. Observing only some of the state variables is precisely an [orthogonal projection](https://en.wikipedia.org/wiki/Projection_(linear_algebra)#Orthogonal_projection) onto a coordinate subspace (followed, in practice, by whatever units conversion the instrument performs).
+
+Record the projected values $P\, s(t_1), P\, s(t_2), \ldots$ and you have an empirical cumulative distribution function, regardless of how the trajectory was produced. So the question "where does the empirical distribution come from?" can be rephrased as: *which parts of the deterministic system, after projection and sampling, are responsible for the shape of that eCDF?* For [ergodic](https://en.wikipedia.org/wiki/Ergodic_theory) systems there is a classical answer lurking: the time average along the trajectory converges to an average against the [invariant measure](https://en.wikipedia.org/wiki/Invariant_measure) of the system, so the histogram of samples converges to the pushforward of that invariant measure through the observation map. The empirical distribution is then not a property of the equations alone, nor of the projection alone, but of the pair.
+
+The examples below are a catalogue of deterministic systems to think this through with. I have chosen a spread of behaviours — decay, oscillation, chaos, compartmental flow, switching — because the speculation is more interesting when the deterministic dynamics are varied.
 
 ## [Exponential Decay](https://en.wikipedia.org/wiki/Exponential_decay)
 
@@ -118,9 +130,9 @@ $$\frac{dn}{dt} = \alpha_n (1 - n) - \beta_n n$$
 
 A [double pendulum](https://en.wikipedia.org/wiki/Double_pendulum) exhibits complex dynamic behavior and is described by a system of second-order differential equations. Here I converted it to a system of first-order differential equations.
 
-$$\frac{\theta_1}{dt} = \omega_1$$
-$$\frac{\theta_2}{dt} = \omega_2$$
-$$\frac{\omega_1}{dt} = \frac{-g(2m_1+m_2)\sin (\theta_1) - m_2 g \sin (\theta_1 - 2 \theta_2) - 2 \sin (\theta_1 - \theta_2) m_2 (\omega_2^2 L_2 + \omega_1^2 L_1 \cos (\theta_1 - \theta_2)}{L1 (2m_1 + m_2 - m_2 \cos(2 \theta_1 - 2 \theta_2))}$$
+$$\frac{d\theta_1}{dt} = \omega_1$$
+$$\frac{d\theta_2}{dt} = \omega_2$$
+$$\frac{\omega_1}{dt} = \frac{-g(2m_1+m_2)\sin (\theta_1) - m_2 g \sin (\theta_1 - 2 \theta_2) - 2 \sin (\theta_1 - \theta_2) m_2 (\omega_2^2 L_2 + \omega_1^2 L_1 \cos (\theta_1 - \theta_2))}{L_1 (2m_1 + m_2 - m_2 \cos(2 \theta_1 - 2 \theta_2))}$$
 $$\frac{d\omega_2}{dt} = \frac{2 \sin (\theta_1 - \theta_2) (\omega_1^2 L_1 (m_1 + m_2) + g(m_1 + m_2) \cos (\theta_1) + \omega_2^2 L_2 m_2 \cos (\theta_1 - \theta_2))}{L_2 (2 m_1 + m_2 - m_2 \cos (2 \theta_1 - 2 \theta_2))}$$
 
 ```python
@@ -172,3 +184,20 @@ $$h(x) = m_1 x + \frac{1}{2} (m_0 - m_1) (|x+1| - |x- 1|)$$
 ```python
 {{< include ./scripts/script_13.py >}}
 ```
+
+## Reading the Catalogue
+
+Each of the systems above produces, from entirely deterministic rules, trajectories whose sampled and projected values have recognisable distributions:
+
+- Exponential decay gives a distribution of readings whose shape is dictated by how often you sample — sample uniformly in time and the eCDF of $x(t)$ is inherited from the decay curve directly.
+- The oscillators (Van der Pol, Brusselator, FitzHugh-Nagumo, simple harmonic, Hodgkin-Huxley) spend their time near particular parts of a limit cycle, so a projected coordinate's histogram reflects the fraction of the cycle spent at each amplitude — slow sections pile up probability mass, fast sections shed it.
+- The chaotic systems (Lorenz, Rössler, Chua, double pendulum) are the most striking cases: sensitive dependence makes individual trajectories unpredictable, yet the sampled values fill out a stable distribution-shaped object (the attractor's invariant measure, projected down). The distribution is *more* deterministic than the trajectory.
+- The compartmental models (SIR, SEIR) produce readings whose distribution is shaped by the geometry of the flow between compartments and by when you chose to look.
+
+In every case the empirical distribution is manufactured by the same three-part recipe: dynamics, schedule, projection. Change which coordinate you project onto and you get a different empirical distribution from the same system; change the schedule (e.g. sample once per period versus uniformly in time) and you get another. That sensitivity is, I think, the interesting part: the empirical distribution is not a hidden property waiting to be read off the differential equation, but a joint property of the system and the observation.
+
+## Closing
+
+I promised at the start that this speculation is not scientific as far as I know, and I will keep that promise: I have not derived a general result connecting a deterministic data generating process to the eCDF of its observations, and the ergodic-theory statement above only applies once you have already committed to a particular system and a stationary sampling scheme.
+
+What the catalogue suggests to me is a modest rephrasing of the question I started with. Rather than asking where empirical distributions *come from*, it can be useful to ask which deterministic systems, sampled and projected in the ways we actually sample and project, would *reproduce* the empirical distribution in front of you. Sometimes the answer will be "no plausible deterministic story", which is itself informative. And sometimes — particularly with chaotic systems — the answer will be a deterministic system whose distribution is stable long before its trajectories are, which is the kind of situation that makes me reach for a beer and a fresh sheet of paper.

@@ -47,7 +47,7 @@ It is important that `kedro-databricks` is added as a dependency. This can be do
 Now we can sync our dependencies:
 
 ```bash
-$ uv syncG
+$ uv sync
 ```
 
 Once your dependencies are synced, you can run the databricks plugin for kedro:
@@ -65,7 +65,7 @@ The `kedro-databricks` plugin provides three commands:
 Let's start by running the initialization command:
 
 ```bash
-$ kedro datasets init
+$ kedro databricks init
 ```
 
 The above command will prompt you for your cloud provider. In the demo there were three options: Azure, AWS, and GCP. Once you enter your cloud provider and continue, a `databricks.yml` file will be created at the root of your Kedro project. The `databricks.yml` file is an asset bundle definition. You can read more about what this is at [*What are Databricks Asset Bundles*](https://docs.databricks.com/aws/en/dev-tools/bundles). There will also be a `databricks.yml` located at `/conf/base/databricks.yml`, which allows you to provide overrides to the `databricks.yml` bundle definition located at your project root.
@@ -106,4 +106,8 @@ The Kedro Databricks plugin may not be completely stable as it is relatively new
 Kedro provides a databricks dataset. Sometimes it is beneficial to define your own databricks datasets for kedro to accommodate specific business requirements.
 :::
 
+# Conclusions
 
+The workflow the plugin provides is the familiar three-beat pattern of infrastructure tools: initialize the integration (`init`), translate your project into the cloud provider's own deployment vocabulary (`bundle`), and push it (`deploy`). The part I find genuinely nice is that the Databricks asset bundle that comes out the other end is an ordinary YAML artifact that you can read, diff, and version — the Kedro pipeline graph is not hidden behind a proprietary API.
+
+The cautions above are the honest counterweight: the plugin is young, Databricks itself keeps moving underneath it, and the authentication/deployment step is where most of the surprising errors will come from (many of which have nothing to do with Kedro at all). I would treat this setup as a good default for a team already standardized on both Kedro and Databricks, and as a source of ideas — rather than a hard dependency — for anyone else.

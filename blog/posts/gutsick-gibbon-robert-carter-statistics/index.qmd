@@ -1,5 +1,5 @@
 ---
-title: "DRAFT - Gutsick Gibbon and Dr. Carter on Normality and Weighted Averages"
+title: "Gutsick Gibbon and Dr. Carter on Normality and Weighted Averages"
 author: "Galen Seilis"
 date: "2024-06-20"
 categories: [Statistics]
@@ -102,7 +102,7 @@ Remember I mentioned that weighted averages can be represented as scalar project
 
 We know that the minimum and maximum of a collection of [exchangeable random variables](https://en.wikipedia.org/wiki/Exchangeable_random_variables#Definition) $S = \{ X_1, \ldots, X_n \}$ grows in size because the prediction interval for some random variables $Y$, also exchangeable with the elements of $S$, satisfies 
 
-$$\Pr \left[ Y \in  \right [\min S, \max S]] = \frac{n-1}{n+1}$$
+$$\Pr \left[ Y \in [\min S, \max S] \right] = \frac{n-1}{n+1}$$
 
 where $n$ is the sample size. This is clearly an increasing function in $n$, so the interval will get wider with sample size.
 
@@ -129,6 +129,23 @@ The primary reason I would use a weighted average is to produce a [shrunk estima
 Additionally, special cases of weighted averaging can be formulated as the [law of total expectation](https://en.wikipedia.org/wiki/Law_of_total_expectation), which is sometimes useful.
 
 #### Are weighted averages sufficient for controlling for sequence length?
+
+No, and it is worth being precise about what weighting by length does and does not do.
+
+Suppose each observation $i$ is a sequence of length $x_i$ carrying some total $y_i$, and you are interested in a rate or proportion. There are two different averages in play:
+
+- the *unweighted* average of the per-sequence ratios $\frac{1}{n} \sum_i \frac{y_i}{x_i}$, which treats every sequence as one vote, and
+- the *pooled* ratio $\frac{\sum_i y_i}{\sum_i x_i}$, which treats every base as one vote.
+
+The pooled ratio is itself a weighted average of the per-sequence ratios, using the sequence lengths as weights:
+
+$$\frac{\sum_i y_i}{\sum_i x_i} = \frac{\sum_i x_i \left( \frac{y_i}{x_i} \right)}{\sum_i x_i} = \bar r_{\vec w} \quad \text{with } w_i = x_i.$$
+
+So weighting by sequence length does exactly one thing: it switches your estimand from "the average of the per-sequence quantities" to "the average per base (or per unit of length)". Neither is the automatically correct one — they answer different questions, and if the two disagree then that disagreement is information (long sequences have systematically different ratios than short ones), not something to be smoothed away.
+
+What weighting *cannot* do is control for sequence length as a confounder. If length is associated with the outcome *and* with some other covariate that differs between your groups of interest, then length-weighting does not remove that confounding; you would need to model or stratify on the confounder itself, in which case the weighting is at best an ingredient of that model. Nor does weighting address non-independence between sequences (for instance [phylogenetic non-independence](https://en.wikipedia.org/wiki/Phylogenetic_independence) in comparative genomics), measurement error in the sequences, or selection effects in which sequences ended up in the sample at all. "Control for" is doing a lot of quiet work in the phrase "control for sequence length", and a weighting is not sufficient to earn it in general.
+
+There is also the related point from the section above: weighting cannot rescue a quantity that does not exist. If the per-sequence ratios have no expectation in the population then weighting them together does not conjure one.
 
 #### Are weighted averages only applied to data?
 
@@ -160,4 +177,31 @@ $$f(x) = \int_{\Omega} w(a) p(x;a) da$$
 
 ### What are similarity measures?
 
+A *similarity measure* is a function that takes two objects and returns a number indicating how alike they are, while a *dissimilarity* (or *distance*) measure does the opposite. The two are two sides of the same idea: in many settings a dissimilarity $d$ induces a similarity such as $s(x,y) = 1 - \frac{d(x,y)}{\max d}$, provided the dissimilarity has been normalized.
+
+Examples that show up constantly in statistics and data analysis include:
+
+- [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance) and the other [Minkowski distances](https://en.wikipedia.org/wiki/Minkowski_distance), for numeric vectors where magnitude matters,
+- [cosine similarity](https://en.wikipedia.org/wiki/Cosine_similarity), for comparing direction while ignoring magnitude,
+- the [Pearson correlation](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient), which is a similarity between *centered* vectors,
+- the [Jaccard index](https://en.wikipedia.org/wiki/Jaccard_index), for sets,
+- and divergences such as [Kullback-Leibler divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) and the [Wasserstein distance](https://en.wikipedia.org/wiki/Wasserstein_metric), which compare distributions rather than single observations.
+
+The last category is the relevant one for the discussion above. When someone asks "is this distribution normal?" — one of the questions lurking in the video — the formalized versions of that question are exactly similarity/dissimilarity measures between your empirical distribution and a normal distribution: the [Kolmogorov-Smirnov statistic](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test) is the supremum of the difference between the two CDFs, the [Anderson-Darling statistic](https://en.wikipedia.org/wiki/Anderson%E2%80%93Darling_test) is a weighting of that difference which emphasizes the tails, and a Q-Q plot is a visual similarity assessment. Because a weighted average changes the distribution of the data, it also changes these similarity measures — which is one reason weighted and unweighted versions of the "same" dataset can disagree about normality.
+
 ### What makes a good similarity measure?
+
+There is no single answer; a good similarity measure is one that agrees with *your notion of relevant sameness for the task at hand*. That said, some properties are commonly wanted:
+
+- **Invariance to what you consider irrelevant.** If two images are the same picture shifted by a few pixels and you do not care about position, then your similarity should not care either. Choosing invariances (translation, rotation, scale, monotone reparameterization) is most of the design work.
+- **Sensitivity to what you do care about.** The flip side of the previous point: a measure that ignores the feature distinguishing your two classes is useless no matter how principled it is.
+- **Familiar structural laws, when you need them.** If you need the measure to behave like a metric — identity of indiscernibles, symmetry, the [triangle inequality](https://en.wikipedia.org/wiki/Triangle_inequality) — then verify those. Not every similarity is a metric (KL divergence is neither symmetric nor the zero-of-equality kind), and sometimes you deliberately want a non-metric.
+- **Robustness to contamination.** Outliers, noise, and heavy tails can dominate naive similarities (compare how much one outlier moves a mean-based correlation versus a rank-based one).
+- **Alignment with the downstream decision.** Ultimately a similarity measure is evaluated by whether decisions based on it are good ones, so the empirical test is whether it separates or ranks the things your application needs separated or ranked.
+- **Computational and numerical practicality.** A similarity you cannot compute at your data's scale, or that underflows/overflows in the relevant regime, is not much of a measure.
+
+# Conclusions
+
+The statistics discussed in the video — how good a sample is, whether averages are legitimate, when weighting helps, what normality even means — are all questions about *which assumptions about a distribution you are willing to make*, and the commentary I have added here is mostly a plea to state those assumptions out loud. The DKW(M) inequality gives an honest accounting of what a sample size buys you for the CDF; the linearity (or non-linearity) of expectation tells you exactly when an average of averages is the average you wanted; weighting is a change of estimand rather than a correction ritual; and normality judgments are similarity measures whose answers move when you reweight the data.
+
+None of this requires taking a side in the surrounding dispute. It requires only that the arithmetic mean, the weighted mean, the ratio of sums, and the phrase "controlling for" each be held to what they actually denote.
