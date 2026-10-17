@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Galen Seilis">
+<meta name="dcterms.date" content="2026-10-16">
+
+<title>Moose Movement in Relation to Roads – Galen’s Blog</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-55617497126496852ff9f5a59253c640.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Galen’s Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../presentations.html"> 
+<span class="menu-text">Presentations</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/galenseilis"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://bsky.app/profile/galen-seilis.bsky.social"> <i class="bi bi-bluesky" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Moose Movement in Relation to Roads</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Mathematics</div>
+                <div class="quarto-category">Statistics</div>
+                <div class="quarto-category">Movement Ecology</div>
+                <div class="quarto-category">Road Ecology</div>
+                <div class="quarto-category">Wildlife Ecology</div>
+                <div class="quarto-category">Resource Selection</div>
+                <div class="quarto-category">Step Selection Functions</div>
+                <div class="quarto-category">Hidden Markov Models</div>
+                <div class="quarto-category">Stochastic Processes</div>
+                <div class="quarto-category">Moose</div>
+                <div class="quarto-category">Literature Review</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Galen Seilis </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 16, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>A moose that walks onto a highway is a public-safety problem, a conservation problem, and a modelling problem all at once. Because a moose has a high centre of mass and long, brittle legs, a collision at highway speed sends the body through the windscreen rather than over the bonnet; in Maine, collisions with moose accounted for about 15% of reported animal collisions but roughly half of the human injuries and 14 of 17 fatalities over a five-year period <span class="citation" data-cites="mmwr2006">(<a href="#ref-mmwr2006" role="doc-biblioref">Centers for Disease Control and Prevention 2006</a>)</span>. Reported counts exceed 800 collisions per year in Alaska alone <span class="citation" data-cites="adotpf2018">(<a href="#ref-adotpf2018" role="doc-biblioref">Alaska Department of Transportation and Public Facilities 2018</a>)</span>. The same animal is also, for most of the year, trying <em>not</em> to be near a road: roads carry traffic, hunters, and wolves, all of which raise mortality risk, yet roadsides offer salt, early green-up, and thin snow that lower foraging and travel costs. Moose movement in relation to roads is therefore not one phenomenon but a competition between avoidance and attraction, resolved differently by season, sex, traffic volume, road class, snow depth, and the presence or absence of predators.</p>
+<p>This post reviews how that competition has been modelled. A recurring observation in methodological reviews of movement ecology is that the field’s apparent disagreement about whether moose avoid or prefer roads reflects, in large part, differences in what each model <em>measures</em>. A resource selection function estimates relative selection given a chosen availability set; a step selection function estimates the same thing but defines availability by the movement kernel; an integrated step selection function estimates selection and movement jointly; a continuous-time stochastic model estimates drift and diffusion fields and yields a stationary distribution; a hidden Markov model estimates behaviour-specific selection; and a collision-risk model estimates a hazard on road segments. These are not competing estimates of one number. They are estimates of different functionals, and the mathematics identifies which functional each model targets and under what assumptions it is identified.</p>
+<p>Throughout, positions live in a domain <span class="math inline">\(\Omega \subseteq \mathbb{R}^2\)</span> and roads are a set <span class="math inline">\(R \subset \Omega\)</span> that we treat as a union of curves,</p>
+<p><span class="math display">\[R = \bigcup_{k} \gamma_k\!\left([0, L_k]\right), \qquad d_R(x) = \inf_{r \in R} \lVert x - r \rVert,\]</span></p>
+<p>with <span class="math inline">\(d_R\)</span> the distance-to-road field. The whole review can be read as a catalogue of the different ways <span class="math inline">\(d_R\)</span>, and its cousin the crossing event, enter a likelihood.</p>
+<p>This post complements earlier posts on this blog: <a href="https://galenseilis.github.io/blog/posts/ellipse-intersections-for-moose-movement/">the ellipse method</a> for bounding a path between fixes, <a href="https://galenseilis.github.io/blog/posts/fokker-planck-moose-movement/">the Ornstein-Uhlenbeck model</a>, and <a href="https://galenseilis.github.io/blog/posts/general-fokker-planck-moose-movement/">the general Fokker-Planck model</a>. Where the continuous-time framework below overlaps those posts, the derivation is kept short and the reader is pointed back.</p>
+<section id="what-is-being-estimated" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-being-estimated">What is being estimated?</h2>
+<p>Before comparing models it is worth naming the estimands, because most disputes in the moose-road literature are disputes about which one is intended.</p>
+<ol type="1">
+<li><strong>Relative selection.</strong> The ratio of used to available density at a location, <span class="math display">\[w(x) = \frac{u(x)}{a(x)},\]</span> where <span class="math inline">\(u\)</span> is the intensity of use and <span class="math inline">\(a\)</span> is the intensity of availability. This is a dimensionless quantity, defined only up to a positive constant, and meaningful only relative to the availability measure <span class="math inline">\(a\)</span> <span class="citation" data-cites="manly1993 boyce1999relating">(<a href="#ref-manly1993" role="doc-biblioref">Manly et al. 1993</a>; <a href="#ref-boyce1999relating" role="doc-biblioref">Boyce and McDonald 1999</a>)</span>.</li>
+<li><strong>The movement kernel.</strong> The distribution of a step, <span class="math inline">\(\varphi(r, \theta)\)</span>, as a function of step length <span class="math inline">\(r\)</span> and turning angle <span class="math inline">\(\theta\)</span>, possibly depending on habitat.</li>
+<li><strong>Crossing intensity.</strong> The expected number of crossings of the road network per unit time, <span class="math display">\[\Lambda_{\text{cross}} = \mathbb{E}\!\left[\#\{t : X_t \in R, X \text{ crosses } R \text{ at } t\}\right].\]</span></li>
+<li><strong>Collision hazard.</strong> The expected number of moose-vehicle collisions per unit time and unit road length, <span class="math inline">\(\lambda_{\text{MVC}}(s, t)\)</span>, on segment <span class="math inline">\(s\)</span> at time <span class="math inline">\(t\)</span>.</li>
+</ol>
+<p>Frameworks 1–2 are <em>selection</em> models; 3–4 are <em>exposure/risk</em> models. The bridge between them is the flux of the animal across the road line, the quantity on which the exposure models and the selection models differ most sharply. The same crossing event is approached from the deterministic side in the <a href="https://galenseilis.github.io/blog/posts/ellipse-intersections-for-moose-movement/">ellipse-bounding method</a>: given a maximum speed and two fixes, it determines which road crossings are even physically possible.</p>
+</section>
+<section id="the-observation-layer-comes-first" class="level2">
+<h2 class="anchored" data-anchor-id="the-observation-layer-comes-first">The observation layer comes first</h2>
+<p>Every model above is fitted to GPS telemetry, and GPS telemetry is not the position process. It is the position process composed with an error and missingness mechanism. Writing the truth as <span class="math inline">\(X(t)\)</span> and the fixes as <span class="math inline">\(Y_i\)</span> at times <span class="math inline">\(t_i\)</span>,</p>
+<p><span class="math display">\[Y_i = X(t_i) + \varepsilon_i, \qquad \varepsilon_i \sim F_i,\]</span></p>
+<p>where the error distribution <span class="math inline">\(F_i\)</span> is <em>not</em> homogeneous: it depends on canopy closure, terrain, collar orientation, and whether the animal is moving or bedded <span class="citation" data-cites="moen1996 deon2005">(<a href="#ref-moen1996" role="doc-biblioref">Moen et al. 1996</a>; <a href="#ref-deon2005" role="doc-biblioref">D’Eon and Delparte 2005</a>)</span>. Fix success is likewise selective. If <span class="math inline">\(R_i \in \{0,1\}\)</span> indicates whether a scheduled fix succeeded, then <span class="math inline">\(p_{\text{fix}}(x) = \mathbb{P}(R_i = 1 \mid X(t_i) = x)\)</span> varies with habitat, and ignoring it biases habitat selection estimates; the standard correction is to model fix success as a function of habitat and reweight, or to include it as a detection layer <span class="citation" data-cites="frair2004">(<a href="#ref-frair2004" role="doc-biblioref">Frair et al. 2004</a>)</span>. Taken together, these studies establish a point that has become standard in the movement ecology literature: <em>the telemetry device is itself a habitat-selective sampler</em> <span class="citation" data-cites="moen1996 deon2005 frair2004">(<a href="#ref-moen1996" role="doc-biblioref">Moen et al. 1996</a>; <a href="#ref-deon2005" role="doc-biblioref">D’Eon and Delparte 2005</a>; <a href="#ref-frair2004" role="doc-biblioref">Frair et al. 2004</a>)</span>.</p>
+<p>Three consequences of this observation layer matter specifically for roads.</p>
+<p><strong>Attraction to the truth by measurement.</strong> Because <span class="math inline">\(d_R\)</span> has a kink (and zero set) on the roads themselves, additive error is not innocuous. For any <span class="math inline">\(Y = X + \varepsilon\)</span>,</p>
+<p><span class="math display">\[d_R(Y) \le d_R(X) + \lVert \varepsilon \rVert,\]</span></p>
+<p>so fixes near a road are pushed systematically <em>away</em> from the road by roughly <span class="math inline">\(\mathbb{E}\lVert\varepsilon\rVert\)</span>, while fixes far from a road can be pushed either way. If the estimated selection gradient is <span class="math inline">\(\hat\beta_R\)</span> on <span class="math inline">\(d_R(Y)\)</span> while the true one is <span class="math inline">\(\beta_R\)</span> on <span class="math inline">\(d_R(X)\)</span>, the discrepancy is classical attenuation plus a road-mediated contamination term, and its sign depends on the local density of animals at intermediate distances. In practice authors either discard fixes within a radius of the estimated error or use a spatial error model; the point is that the choice must be made explicitly.</p>
+<p><strong>False and missed crossings.</strong> Define the crossing event of a recorded step as</p>
+<p><span class="math display">\[C_i = \mathbf{1}\!\left\{\ [Y_{i-1}, Y_i] \cap R \neq \emptyset\ \right\}.\]</span></p>
+<p>A true crossing can be missed if both endpoints are displaced to the same side, and a false crossing can appear if either endpoint is displaced across the road. The probability of a false crossing is therefore bounded below by</p>
+<p><span class="math display">\[\mathbb{P}(C_i = 1 \mid \text{no true crossing}) \ \gtrsim\ \mathbb{P}\!\left(d_R(X_{i-1}) &lt; \lVert\varepsilon_{i-1}\rVert\right) + \mathbb{P}\!\left(d_R(X_i) &lt; \lVert\varepsilon_i\rVert\right).\]</span></p>
+<p>With location errors of tens of metres, moose that spend time within a road-effect zone of the same order are misclassified at non-negligible rates. For this reason, crossing counts are usually reported alongside a stated error model, and the <a href="https://galenseilis.github.io/blog/posts/ellipse-intersections-for-moose-movement/">ellipse method</a> for bounding paths provides a hard, error-free check on which crossings are even possible.</p>
+<p><strong>Fix rate is a scale filter.</strong> A consequential observation-level choice is the time between fixes, <span class="math inline">\(\Delta t\)</span>. Let <span class="math inline">\(p_u(\Delta t)\)</span> and <span class="math inline">\(p_a(\Delta t)\)</span> be the probabilities that a <em>used</em> and an <em>available</em> step, respectively, cross a road during an interval of length <span class="math inline">\(\Delta t\)</span>. A step selection model can only detect a road effect through the contrast between these two probabilities, and the relevant contrast is on the log-odds scale,</p>
+<p><span class="math display">\[\beta_R \propto \operatorname{logit} p_u(\Delta t) - \operatorname{logit} p_a(\Delta t).\]</span></p>
+<p>Now let <span class="math inline">\(\Delta t \to 0\)</span>: both probabilities tend to zero, and the step never resolves the road. Let <span class="math inline">\(\Delta t \to \infty\)</span>: both probabilities tend to one, and again the contrast vanishes. Information about road selection is concentrated at intermediate fix rates, where <span class="math inline">\(p\)</span> is bounded away from both <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>. Thurfjell, Ciuti and Boyce make exactly this argument with hypothetical moose: 15- and 30-minute fixes never cross the road and suggest pure avoidance, while 45- and 60-minute fixes produce steps that cut across it and can suggest preference <span class="citation" data-cites="thurfjell2014">(<a href="#ref-thurfjell2014" role="doc-biblioref">Thurfjell et al. 2014</a>)</span>. Their example indicates how the scale of observation, rather than the biology, can drive the answer. Results of this kind should be read with the fix rate attached.</p>
+</section>
+<section id="resource-selection-functions-use-versus-availability" class="level2">
+<h2 class="anchored" data-anchor-id="resource-selection-functions-use-versus-availability">Resource selection functions: use versus availability</h2>
+<p>The oldest and still most common framework compares where an animal was <em>used</em> to what was <em>available</em>. Let <span class="math inline">\(u(x)\)</span> and <span class="math inline">\(a(x)\)</span> be the use and availability intensities. The selection function is</p>
+<p><span class="math display">\[w(x) = \frac{u(x)}{a(x)},\]</span></p>
+<p>and in the exponential (log-linear) family</p>
+<p><span class="math display">\[w(x) = \exp\!\left(\beta^{\top} x\right),\]</span></p>
+<p>where <span class="math inline">\(x = (x_1, \dots, x_p)\)</span> is a vector of covariates, one of which is typically <span class="math inline">\(d_R\)</span> or a road-density covariate <span class="math inline">\(\rho_R\)</span> in a buffer. Availability is usually implemented as a sample of points drawn from the study area or from within each home range, and the model is fitted by logistic regression in a case-control design: used units as cases, available units as controls. Under that design the slope <span class="math inline">\(\beta\)</span> is consistently estimated even though the intercept is only identified up to the marginal case proportion <span class="citation" data-cites="manly1993 boyce1999relating">(<a href="#ref-manly1993" role="doc-biblioref">Manly et al. 1993</a>; <a href="#ref-boyce1999relating" role="doc-biblioref">Boyce and McDonald 1999</a>)</span>.</p>
+<p>The relative nature of <span class="math inline">\(w\)</span> is a defining property of the framework rather than a technical nuisance: two researchers who define availability differently — one sampling uniformly over the study area, one sampling within a 95% minimum convex polygon per individual — are not estimating the same <span class="math inline">\(\beta_R\)</span>, and both are estimating something real. Johnson’s hierarchy codifies this <span class="citation" data-cites="johnson1980">(<a href="#ref-johnson1980" role="doc-biblioref">Johnson 1980</a>)</span>: selection of a home range within the geographic range (second order), of patches within the home range (third order), of food items within patches (fourth order). Moose-road studies sit mostly at the second and third orders, and the covariate that means “avoidance” at one order is often a different object than the covariate that means “avoidance” at another.</p>
+<p>Three refinements recur in the moose literature.</p>
+<p><strong>Functional responses.</strong> The coefficient on a road covariate is usually not constant across the population or the landscape. Writing <span class="math inline">\(\beta_R = f(\rho_R)\)</span> for the road density at the home-range scale lets selection itself depend on the context in which the animal chooses, which is the <em>functional response</em> in habitat selection <span class="citation" data-cites="vanbeest2015">(<a href="#ref-vanbeest2015" role="doc-biblioref">Beest et al. 2015</a>)</span>. Beyer and colleagues found exactly this threshold behaviour in moose: avoidance of roads strengthens above a road-density threshold, and the response differs by season and time of day <span class="citation" data-cites="beyer2013functional">(<a href="#ref-beyer2013functional" role="doc-biblioref">Beyer et al. 2013</a>)</span>. Finnegan and colleagues found functional responses to seismic lines and pipelines but, at the population level, indifference to roads, with individual variation doing the work <span class="citation" data-cites="finnegan2023">(<a href="#ref-finnegan2023" role="doc-biblioref">Finnegan et al. 2023</a>)</span>.</p>
+<p><strong>Individual variation.</strong> Selection coefficients vary among individuals. A random-effects specification,</p>
+<p><span class="math display">\[\beta_{ik} = \beta_k + b_{ik}, \qquad b_i \sim \mathcal{N}(0, \Sigma),\]</span></p>
+<p>with <span class="math inline">\(b_i\)</span> the individual deviation vector, is the mixed conditional-logistic model developed for exactly these matched use-availability designs <span class="citation" data-cites="duchesne2010">(<a href="#ref-duchesne2010" role="doc-biblioref">Duchesne et al. 2010</a>)</span>. The two-stage alternative — fit each animal separately, then analyse the coefficient estimates — is simpler and gives the same population mean with a between-individual variance estimate <span class="citation" data-cites="gillies2011">(<a href="#ref-gillies2011" role="doc-biblioref">Gillies et al. 2011</a>)</span>. The distinction matters for roads because the coefficient of interest is often a <em>variance</em> in road avoidance, not just its mean: some moose in a herd of collared animals are habitual road users and some are not.</p>
+<p><strong>Probability versus relative intensity.</strong> If one wants the actual probability that an available unit is used rather than a ratio, the exponential model must be normalized,</p>
+<p><span class="math display">\[\mathbb{P}(\text{use} \mid \text{available at } x) = \frac{w(x)\, a(x)}{\int_\Omega w(y)\, a(y)\, dy}.\]</span></p>
+<p>This is the resource selection probability function, and unlike <span class="math inline">\(w\)</span> it is an absolute quantity, but it requires a correctly normalized availability measure over a bounded domain <span class="citation" data-cites="manly1993">(<a href="#ref-manly1993" role="doc-biblioref">Manly et al. 1993</a>)</span>. Most published moose-road “RSFs” are relative selection functions, and the difference explains why their coefficients cannot be compared across studies with different availability domains.</p>
+</section>
+<section id="step-selection-making-availability-the-movement-kernel" class="level2">
+<h2 class="anchored" data-anchor-id="step-selection-making-availability-the-movement-kernel">Step selection: making availability the movement kernel</h2>
+<p>The critique of use-availability RSFs is that a uniform availability set is not what the animal could have reached. A moose cannot materialize on the far side of a lake or beyond a ridge in the next hour. Step selection functions replace the abstract availability set with the <em>reachable</em> set implied by the observed movement, and in doing so they make the movement kernel part of the model <span class="citation" data-cites="fortin2005">(<a href="#ref-fortin2005" role="doc-biblioref">Fortin et al. 2005</a>)</span>.</p>
+<p>Let <span class="math inline">\(X_{i-1}\)</span> be the current location and write a step by its polar coordinates</p>
+<p><span class="math display">\[s_i = \left(r_i, \theta_i\right), \qquad r_i = \lVert X_i - X_{i-1}\rVert, \qquad \theta_i = \angle(X_i - X_{i-1}).\]</span></p>
+<p>The step-selection model assumes that the density of a used step is proportional to a selection weight times a movement kernel,</p>
+<p><span class="math display">\[p_{\text{use}}(s) \ \propto \ w\!\left(x(s)\right)\, \varphi(s), \qquad \varphi(s) = f(r)\, h(\theta),\]</span></p>
+<p>where typically <span class="math inline">\(f\)</span> is a gamma or exponential density on step length and <span class="math inline">\(h\)</span> a von Mises density on turning angle,</p>
+<p><span class="math display">\[f(r \mid \lambda) = \frac{1}{\lambda} e^{-r/\lambda}, \qquad h(\theta \mid \kappa) = \frac{e^{\kappa \cos\theta}}{2\pi I_0(\kappa)},\]</span></p>
+<p>with <span class="math inline">\(I_0\)</span> the modified Bessel function. Availability is generated by sampling from the <em>same</em> kernel <span class="math inline">\(\varphi\)</span> around each observed start point, and the model is fitted by conditional logistic regression: for each used step <span class="math inline">\(s_i^{\text{u}}\)</span> and <span class="math inline">\(J\)</span> available steps <span class="math inline">\(s_i^{(1)}, \dots, s_i^{(J)}\)</span>,</p>
+<p><span class="math display">\[\mathcal{L}(\beta) = \prod_{i=1}^{n} \frac{\exp\!\left(\beta^{\top} x(s_i^{\text{u}})\right)}{\exp\!\left(\beta^{\top} x(s_i^{\text{u}})\right) + \sum_{j=1}^{J} \exp\!\left(\beta^{\top} x(s_i^{(j)})\right)}.\]</span></p>
+<p>Because the movement kernel <span class="math inline">\(\varphi\)</span> is common to the numerator and every denominator term, it cancels: the conditional likelihood identifies <span class="math inline">\(\beta\)</span> without committing to the movement parameters. This cancellation is what makes the method attractive, and also the source of its main caveat. The appealing part is that SSF coefficients have a clean interpretation as log relative selection, exactly as in the RSF, but with availability defined by movement. The caveat is that the cancellation is only valid if the availability kernel used to <em>sample</em> is the true movement kernel, or at least proportional to it on the support that matters. Under misspecification the cancelled factor does not cancel and <span class="math inline">\(\beta\)</span> is biased; Forester, Im and Rathouz showed this in simulation and showed that including step length (and turning angle) as covariates absorbs much of the misspecification, because the movement attributes then enter the linear predictor explicitly <span class="citation" data-cites="forester2009">(<a href="#ref-forester2009" role="doc-biblioref">Forester et al. 2009</a>)</span>.</p>
+<p>There is an equivalent and, for our purposes, more revealing way to write the same model. The used-step process is an inhomogeneous Poisson point process on the step space with intensity</p>
+<p><span class="math display">\[\lambda(s) = w\!\left(x(s)\right)\, \varphi_0(s),\]</span></p>
+<p>conditioned on one point per stratum. In this form the SSF is the discrete-time cousin of a continuous-time selection model, and the two can be made to agree at fine temporal resolution. It is also the form in which the road covariate question becomes sharp.</p>
+<p><strong>Where is the road covariate measured?</strong> This is the point on which moose-road SSFs most often differ, and it is not a cosmetic choice. A linear feature can enter at the step’s endpoint, <span class="math inline">\(x(s) = d_R(X_i)\)</span>; along the path, <span class="math inline">\(x(s) = \int_0^1 d_R\!\left(X_{i-1} + u\,(X_i - X_{i-1})\right) du\)</span>; or through a buffer around the path. Endpoints capture <em>being near</em> a road; path integrals capture <em>crossing</em> it. Thurfjell and colleagues make the argument geometrically: if a wolf walks along a road but the mapped road is a vector without width, no endpoint will ever land exactly on the road, and endpoint measurement underestimates selection for linear features; if instead a road is avoided, only path- or buffer-based covariates register the crossing <span class="citation" data-cites="thurfjell2014">(<a href="#ref-thurfjell2014" role="doc-biblioref">Thurfjell et al. 2014</a>)</span>. For moose, whose response to roads can change sign depending on whether the animal is lingering or traversing, this covariate definition can determine the sign of the estimated effect. The SSF literature can therefore report avoidance and attraction for the same animal, depending on whether the covariate of interest is a distance at the endpoint or an integral along the step.</p>
+<p><strong>Relative step selection strength.</strong> Because <span class="math inline">\(w\)</span> is exponential, the effect size for comparing two steps is a log ratio,</p>
+<p><span class="math display">\[\log \mathrm{RSS}(s_1, s_2) = \beta^{\top}\!\left(x(s_1) - x(s_2)\right),\]</span></p>
+<p>the relative selection strength, which can be plotted against one covariate while holding the rest fixed <span class="citation" data-cites="avgar2017rss">(<a href="#ref-avgar2017rss" role="doc-biblioref">Avgar et al. 2017</a>)</span>. Prokopenko, Boyce and Avgar use precisely this device for elk responding to roads, giving curves of relative selection as a function of distance to road and time of day, and showing that the same coefficient can encode avoidance at one hour and neutrality at another <span class="citation" data-cites="prokopenko2016">(<a href="#ref-prokopenko2016" role="doc-biblioref">Prokopenko et al. 2016</a>)</span>.</p>
+</section>
+<section id="integrated-step-selection-estimating-movement-and-selection-together" class="level2">
+<h2 class="anchored" data-anchor-id="integrated-step-selection-estimating-movement-and-selection-together">Integrated step selection: estimating movement and selection together</h2>
+<p>The SSF’s movement kernel cancels, which is convenient for inference about <span class="math inline">\(\beta\)</span> but leaves the model unable to predict movement. The integrated step selection function (iSSF, also iSSA) estimates both the selection and movement components in one conditional likelihood <span class="citation" data-cites="avgar2016issa">(<a href="#ref-avgar2016issa" role="doc-biblioref">Avgar et al. 2016</a>)</span>. The used-step density is</p>
+<p><span class="math display">\[p_{\text{use}}(s) \ \propto \ \exp\!\left(\beta^{\top} x(s)\right) f\!\left(r \mid \lambda\!\left(x(s)\right)\right) h\!\left(\theta \mid \kappa\!\left(x(s)\right)\right),\]</span></p>
+<p>and, crucially, the movement parameters <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\kappa\)</span> are treated as functions of habitat and estimated jointly with <span class="math inline">\(\beta\)</span>, rather than being fixed by the sampling procedure. In the simplest case the linear predictor becomes</p>
+<p><span class="math display">\[\log w(s) = \beta^{\top} x(s) + \log f\!\left(r \mid \lambda\right) + \log g\!\left(\theta \mid \kappa\right),\]</span></p>
+<p>which shows that an iSSF is an SSF with the movement terms moved inside the linear predictor. The parameter <span class="math inline">\(\lambda\)</span> is a mean step length (a speed), and <span class="math inline">\(\kappa\)</span> a directional persistence; estimating them as functions of <span class="math inline">\(d_R\)</span> answers a biologically different question from the RSF, namely whether moose <em>move faster</em> (or more directionally) near roads. That is the “haste” hypothesis — animals traversing a risky neighbourhood at speed rather than lingering — and it is not testable with a plain RSF.</p>
+<p>The payoff of integrating movement is predictive. Once <span class="math inline">\(\beta\)</span>, <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\kappa\)</span> are known, the model is a mechanistic, habitat-dependent random walk with redistribution kernel</p>
+<p><span class="math display">\[K(x, dy) = \frac{w(y)\, f\!\left(\lVert y - x\rVert \mid \lambda(y)\right) h\!\left(\theta_{y} \mid \kappa(y)\right) dy}{\int_\Omega w(z)\, f\!\left(\lVert z - x\rVert\right) h\!\left(\theta_z\right) dz},\]</span></p>
+<p>and the stationary utilization distribution is the solution of the balance equation</p>
+<p><span class="math display">\[p_\infty(y) = \int_\Omega p_\infty(x)\, K(x, dy).\]</span></p>
+<p>This is an eigenvalue problem for the chain, and solving it by simulation is the standard “scaling up” from step decisions to space use <span class="citation" data-cites="avgar2016issa potts2023scale">(<a href="#ref-avgar2016issa" role="doc-biblioref">Avgar et al. 2016</a>; <a href="#ref-potts2023scale" role="doc-biblioref">Potts and Börger 2023</a>)</span>. The stationary distribution turns out to have the same functional form as an RSF weight, which is the deep reason the two families keep agreeing empirically despite being fitted to different data <span class="citation" data-cites="moorcroft2008 potts2020diffusion">(<a href="#ref-moorcroft2008" role="doc-biblioref">Moorcroft and Barnett 2008</a>; <a href="#ref-potts2020diffusion" role="doc-biblioref">Potts and Schlägel 2020</a>)</span>. For managers, the practical consequence is that an iSSF fitted to moose steps can be used to simulate the effect of a new road or a fence in silico, which an RSF cannot do without additional assumptions.</p>
+</section>
+<section id="continuous-time-from-step-models-to-diffusion-and-fokker-planck" class="level2">
+<h2 class="anchored" data-anchor-id="continuous-time-from-step-models-to-diffusion-and-fokker-planck">Continuous time: from step models to diffusion and Fokker-Planck</h2>
+<p>The discrete-time step models are approximations to a continuous process, and writing the continuous process explicitly buys a set of tools — boundary conditions, flux, stationary solutions — that the discrete models lack. The starting point is the Ito stochastic differential equation for position,</p>
+<p><span class="math display">\[dX_t = \mu(X_t, t)\, dt + \sigma(X_t, t)\, dW_t,\]</span></p>
+<p>whose density <span class="math inline">\(p(x, t)\)</span> obeys the Fokker-Planck equation</p>
+<p><span class="math display">\[\frac{\partial p}{\partial t} = -\nabla \cdot \left(\mu\, p\right) + \frac{1}{2} \partial_i \partial_j \left(D_{ij}\, p\right), \qquad D = \sigma \sigma^{\top}.\]</span></p>
+<p>This framework is developed in detail in the <a href="https://galenseilis.github.io/blog/posts/fokker-planck-moose-movement/">Ornstein-Uhlenbeck</a> and <a href="https://galenseilis.github.io/blog/posts/general-fokker-planck-moose-movement/">general Fokker-Planck</a> posts, including the OU reduction, the Boltzmann equilibrium <span class="math inline">\(p_\infty \propto \exp(-U/D)\)</span> for gradient drifts <span class="math inline">\(b = -\nabla U\)</span>, and nonlocal interaction terms. What matters here is the menu of ways to represent a road.</p>
+<p><strong>Roads as a drift field (taxis).</strong> Let <span class="math inline">\(c(x)\)</span> be an environmental cue, for instance <span class="math inline">\(c(x) = -d_R(x)\)</span> (so that smaller distance to road means larger cue) or a traffic-weighted density. The class of <em>diffusion-taxis</em> models adds a directed drift along the cue,</p>
+<p><span class="math display">\[\frac{\partial p}{\partial t} = \nabla \cdot \left(D\, \nabla p - \alpha\, p\, \nabla c\right) + (\text{nonlocal interaction terms}),\]</span></p>
+<p>with <span class="math inline">\(\alpha &gt; 0\)</span> attracting and <span class="math inline">\(\alpha &lt; 0\)</span> repelling. Potts and Schlägel showed that step selection analysis at fine temporal resolution parametrizes exactly this class, and that the steady-state utilization distribution has the same closed form as a resource selection function <span class="citation" data-cites="potts2020diffusion">(<a href="#ref-potts2020diffusion" role="doc-biblioref">Potts and Schlägel 2020</a>)</span>. This is the formal bridge between the movement-first and selection-first literatures: an RSF is (under regularity) the long-run distribution of a taxis process, and the coefficients are related by <span class="math inline">\(\beta = \alpha \nabla c / D\)</span> in the linear case. It also clarifies what a road coefficient means: it is a drift, not a preference, and it is only interpretable as a stationary preference if the process is ergodic and the domain bounded, which a real moose range with fences, highways and seasonal migration is not guaranteed to be.</p>
+<p><strong>Roads as a boundary.</strong> The alternative is to treat a road as a semi-permeable line and impose a boundary condition on the probability current <span class="math inline">\(J = \mu p - \frac{1}{2}\nabla \cdot (D p)\)</span>. A fully avoiding moose has a no-flux condition on <span class="math inline">\(R\)</span>,</p>
+<p><span class="math display">\[J \cdot n = 0 \quad \text{on } R,\]</span></p>
+<p>a crossing moose has a partial-flux or radiative condition, and a lethal crossing can be represented by a sink <span class="math inline">\(-\lambda(x) p\)</span> concentrated on <span class="math inline">\(R\)</span>, removing the tiny probability mass that enters the carriageway. These are exactly the barrier and sink devices built into the <a href="https://galenseilis.github.io/blog/posts/general-fokker-planck-moose-movement/">general Fokker-Planck model</a>, and they are the natural home for the <em>barrier</em> aspect of roads, which most step-based studies handle only implicitly through availability. A continuous-time formulation also separates observation error from process: the correlated random walk for the velocity,</p>
+<p><span class="math display">\[dX_t = V_t\, dt, \qquad dV_t = -\beta V_t\, dt + \Sigma\, dW_t,\]</span></p>
+<p>fitted to noisy fixes as a continuous-time correlated random walk, is the standard way to estimate movement parameters from error-contaminated telemetry without first cleaning the tracks <span class="citation" data-cites="johnson2008">(<a href="#ref-johnson2008" role="doc-biblioref">Johnson et al. 2008</a>)</span>. The moose-specific case is instructive: movement rates, and not merely positions, respond to roads, and a process model estimates rates directly.</p>
+</section>
+<section id="hidden-states-behaviour-changes-the-road-response" class="level2">
+<h2 class="anchored" data-anchor-id="hidden-states-behaviour-changes-the-road-response">Hidden states: behaviour changes the road response</h2>
+<p>A moose that is bedded, browsing, or travelling is, for modelling purposes, three different animals. Hidden Markov models make this explicit. Let <span class="math inline">\(Z_t \in \{1, \dots, K\}\)</span> be a latent behavioural state following a Markov chain with generator <span class="math inline">\(Q\)</span> and transition matrix <span class="math inline">\(\Gamma(\Delta t) = \exp(Q \Delta t)\)</span>, and let the observation (a step, or activity-sensor reading) have state-specific density <span class="math inline">\(f_k\)</span>. The likelihood is computed by the forward recursion</p>
+<p><span class="math display">\[\alpha_t(k) = f_k(y_t) \sum_{j=1}^{K} \alpha_{t-1}(j)\, \Gamma_{jk},\]</span></p>
+<p>and the resulting decoded states are the familiar “resting / foraging / travelling” tracks <span class="citation" data-cites="patterson2009 michelot2016">(<a href="#ref-patterson2009" role="doc-biblioref">Patterson et al. 2009</a>; <a href="#ref-michelot2016" role="doc-biblioref">Michelot et al. 2016</a>)</span>. State-space models do the same job in a Bayesian framework with process and observation error separated <span class="citation" data-cites="jonsen2005">(<a href="#ref-jonsen2005" role="doc-biblioref">Jonsen et al. 2005</a>)</span>.</p>
+<p>For roads the payoff is state-dependent selection. Allowing the road coefficient to differ by state,</p>
+<p><span class="math display">\[w_k(x) = \exp\!\left(\beta_k^{\top} x\right),\]</span></p>
+<p>tests the specific hypothesis that moose avoid roads while resting but use them as travel corridors while moving — a pattern that a single coefficient averages away. Combining an HMM with an integrated step-selection analysis is now standard, and has been applied directly to moose, linking behaviour-dependent selection to forage maps <span class="citation" data-cites="graf2026">(<a href="#ref-graf2026" role="doc-biblioref">Graf et al. 2026</a>)</span>. The methodological cost is identifiability: with <span class="math inline">\(K\)</span> states, <span class="math inline">\(K\)</span> road coefficients, and a transition matrix, a single track can support many explanations, and weakly informative priors or strong ecological constraints are needed.</p>
+</section>
+<section id="crossings-and-collisions-exposure-and-hazard" class="level2">
+<h2 class="anchored" data-anchor-id="crossings-and-collisions-exposure-and-hazard">Crossings and collisions: exposure and hazard</h2>
+<p>Selection models estimate where moose prefer to be. Collision models estimate where and when moose die. The bridge is the <em>crossing process</em>, and it is where the moose-road literature splits most sharply.</p>
+<p>The rate at which moose cross a road line is a flux. For the diffusion process above, the expected number of crossings of a small road element of normal <span class="math inline">\(n\)</span> per unit time is the outward normal component of the probability current integrated over the road,</p>
+<p><span class="math display">\[\Lambda_{\text{cross}} = \int_R \left(J \cdot n\right)^{+} d\ell, \qquad J = \mu p - \frac{1}{2} \nabla \cdot \left(D p\right).\]</span></p>
+<p>This quantity is not the same as selection for or against <span class="math inline">\(d_R\)</span>, and the difference is the reason two studies can report both avoidance and high crossing rates. An animal can avoid roads for long periods and still cross them when it must, and the crossing flux is controlled by the <em>drift toward and geometry of</em> the road, by snow that funnels movement, and by the arrangement of habitat on either side. Dussault and colleagues modelled crossing probability explicitly from moose telemetry and found movement rates elevated along highways — moose move faster near roads, consistent with haste rather than attraction <span class="citation" data-cites="dussault2007">(<a href="#ref-dussault2007" role="doc-biblioref">Dussault et al. 2007</a>)</span>. Laurian and colleagues described the behavioural profile of moose relative to a road network, including the elevated movement rates that accompany crossings <span class="citation" data-cites="laurian2008">(<a href="#ref-laurian2008" role="doc-biblioref">Laurian et al. 2008</a>)</span>.</p>
+<p>The hazard side multiplies crossing exposure by traffic. For a road segment, a first-order model is</p>
+<p><span class="math display">\[\lambda_{\text{MVC}}(s, t) = \Phi_{\text{traffic}}(s, t) \cdot p_{\text{encounter}}\!\left(\Lambda_{\text{cross}}(s, t), v\right),\]</span></p>
+<p>where <span class="math inline">\(\Phi_{\text{traffic}}\)</span> is vehicle flow and <span class="math inline">\(p_{\text{encounter}}\)</span> the probability that a crossing co-occurs with a vehicle within the reaction window, which decreases with animal speed and increases with traffic speed and flow. Empirically, collision risk rises with traffic volume up to a peak and then plateaus, and it rises with speed limit <span class="citation" data-cites="danks2010">(<a href="#ref-danks2010" role="doc-biblioref">Danks and Porter 2010</a>)</span>. The winter pattern is the clearest demonstration that movement and traffic must be modelled together: across the Arctic-boreal region, moose migrated to lower elevations as snow deepened, into shallower snow and higher road density, and collisions were 2.4 to 5.7 times more frequent in December–February than in early summer, with most occurring after dark <span class="citation" data-cites="cunningham2022">(<a href="#ref-cunningham2022" role="doc-biblioref">Cunningham et al. 2022</a>)</span>. Neither a movement model alone nor a traffic model alone reproduces that.</p>
+<p>Two modelling designs dominate the applied collision literature, and both are easy to misread.</p>
+<p>The <strong>case-control design at collision sites</strong> compares the landscape at reported collisions to random points along the same roads, giving a logistic model of the odds of collision given site covariates <span class="citation" data-cites="danks2010 wattles2018">(<a href="#ref-danks2010" role="doc-biblioref">Danks and Porter 2010</a>; <a href="#ref-wattles2018" role="doc-biblioref">Wattles et al. 2018</a>)</span>. Its limitation is that the denominator is a road-length sample, not an animal-exposure sample, so a strong “selection” for a roadside feature may reflect where moose cross rather than where they die, and a road with no reported collisions may simply have low traffic or low moose density. The remedy, pioneered for moose in Massachusetts, is to incorporate the road-crossing process estimated from telemetry as an offset or a component of the risk model, so that exposure and lethality are separated <span class="citation" data-cites="zeller2018">(<a href="#ref-zeller2018" role="doc-biblioref">Zeller et al. 2018</a>)</span>. This is the empirical realization of the flux decomposition above.</p>
+<p>The <strong>movement-informed design</strong> fits collision probability as a function of the phase of the animal’s movement (crossing versus not) and the environment, and has been used to show that collisions cluster where and when moose cross, not merely where they live <span class="citation" data-cites="laliberte2020">(<a href="#ref-laliberte2020" role="doc-biblioref">Laliberté and St-Laurent 2020</a>)</span>.</p>
+</section>
+<section id="comparing-the-frameworks" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-the-frameworks">Comparing the frameworks</h2>
+<p>The table below summarizes the frameworks as they appear in the literature. The “road enters as” column is the key: the frameworks estimate different functionals of the path rather than disagreeing about moose per se.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Framework</th>
+<th>Estimand</th>
+<th>Availability / baseline</th>
+<th>Road enters as</th>
+<th>Observation error</th>
+<th>Chief bias</th>
+<th>Moose-road exemplars</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Use-availability RSF</td>
+<td>relative selection <span class="math inline">\(w(x)\)</span></td>
+<td>fixed domain (home range or study area)</td>
+<td>endpoint covariate <span class="math inline">\(d_R\)</span> or density <span class="math inline">\(\rho_R\)</span></td>
+<td>usually ignored</td>
+<td>arbitrary availability; scale dependence</td>
+<td><span class="citation" data-cites="beyer2013functional">Beyer et al. (<a href="#ref-beyer2013functional" role="doc-biblioref">2013</a>)</span>; <span class="citation" data-cites="finnegan2023">Finnegan et al. (<a href="#ref-finnegan2023" role="doc-biblioref">2023</a>)</span></td>
+</tr>
+<tr class="even">
+<td>SSF</td>
+<td>relative selection at the step scale</td>
+<td>movement kernel <span class="math inline">\(\varphi(s)\)</span></td>
+<td>endpoint or path integral</td>
+<td>mostly ignored</td>
+<td>kernel misspecification; fix-rate sensitivity</td>
+<td><span class="citation" data-cites="fortin2005">Fortin et al. (<a href="#ref-fortin2005" role="doc-biblioref">2005</a>)</span>; <span class="citation" data-cites="prokopenko2016">Prokopenko et al. (<a href="#ref-prokopenko2016" role="doc-biblioref">2016</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>iSSF / iSSA</td>
+<td>joint selection and movement</td>
+<td>movement kernel, estimated</td>
+<td>movement parameters <span class="math inline">\(\lambda(x), \kappa(x)\)</span> and <span class="math inline">\(w(x)\)</span></td>
+<td>can be built in</td>
+<td>confounding movement with selection</td>
+<td><span class="citation" data-cites="avgar2016issa">Avgar et al. (<a href="#ref-avgar2016issa" role="doc-biblioref">2016</a>)</span>; <span class="citation" data-cites="graf2026">Graf et al. (<a href="#ref-graf2026" role="doc-biblioref">2026</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Diffusion-taxis / Fokker-Planck</td>
+<td>drift, diffusion, stationary UD</td>
+<td>mechanistic process</td>
+<td>drift field <span class="math inline">\(\alpha \nabla c\)</span> or boundary condition</td>
+<td>process vs.&nbsp;error separable</td>
+<td>hard to fit; strong structural assumptions</td>
+<td><span class="citation" data-cites="moorcroft2008">Moorcroft and Barnett (<a href="#ref-moorcroft2008" role="doc-biblioref">2008</a>)</span>; <span class="citation" data-cites="potts2020diffusion">Potts and Schlägel (<a href="#ref-potts2020diffusion" role="doc-biblioref">2020</a>)</span>; <span class="citation" data-cites="johnson2008">Johnson et al. (<a href="#ref-johnson2008" role="doc-biblioref">2008</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>HMM / state-space</td>
+<td>state-specific selection and transition</td>
+<td>state-specific kernels</td>
+<td>state-dependent <span class="math inline">\(\beta_k\)</span></td>
+<td>explicit</td>
+<td>identifiability; state number</td>
+<td><span class="citation" data-cites="patterson2009">Patterson et al. (<a href="#ref-patterson2009" role="doc-biblioref">2009</a>)</span>; <span class="citation" data-cites="michelot2016">Michelot et al. (<a href="#ref-michelot2016" role="doc-biblioref">2016</a>)</span>; <span class="citation" data-cites="jonsen2005">Jonsen et al. (<a href="#ref-jonsen2005" role="doc-biblioref">2005</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Crossing-flux</td>
+<td>expected crossings</td>
+<td>exposure process</td>
+<td>flux <span class="math inline">\(J \cdot n\)</span> across the line</td>
+<td>error inflates false crossings</td>
+<td>geometry and error</td>
+<td><span class="citation" data-cites="dussault2007">Dussault et al. (<a href="#ref-dussault2007" role="doc-biblioref">2007</a>)</span>; <span class="citation" data-cites="laurian2008">Laurian et al. (<a href="#ref-laurian2008" role="doc-biblioref">2008</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Collision hazard / case-control</td>
+<td>collision rate per road length</td>
+<td>road-length sample</td>
+<td>site covariates + exposure offset</td>
+<td>under-reporting</td>
+<td>denominator, exposure, reporting</td>
+<td><span class="citation" data-cites="danks2010">Danks and Porter (<a href="#ref-danks2010" role="doc-biblioref">2010</a>)</span>; <span class="citation" data-cites="wattles2018">Wattles et al. (<a href="#ref-wattles2018" role="doc-biblioref">2018</a>)</span>; <span class="citation" data-cites="zeller2018">Zeller et al. (<a href="#ref-zeller2018" role="doc-biblioref">2018</a>)</span>; <span class="citation" data-cites="laliberte2020">Laliberté and St-Laurent (<a href="#ref-laliberte2020" role="doc-biblioref">2020</a>)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Reading down the “road enters as” column, the apparent contradictions of the moose literature can be read as differences in estimand. Studies that measure endpoint distance tend to find avoidance or indifference; studies that measure movement rate find haste near roads; studies that measure crossing or collision find elevated hazard near roads at certain times. These are consistent statements about one animal.</p>
+</section>
+<section id="what-the-moose-literature-reports" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-moose-literature-reports">What the moose literature reports</h2>
+<p>With the estimands pinned down, the empirical picture reported in the literature is fairly coherent, and its variations are systematic rather than contradictory.</p>
+<p><strong>Avoidance is the population-level default in predator-rich, traffic-heavy landscapes.</strong> Moose avoid areas close to roads throughout the year in Quebec, with higher movement rates near roads and larger home ranges where road density is higher, and with the aversion stronger in winter <span class="citation" data-cites="laurian2008 gagnon2024">(<a href="#ref-laurian2008" role="doc-biblioref">Laurian et al. 2008</a>; <a href="#ref-gagnon2024" role="doc-biblioref">Gagnon et al. 2024</a>)</span>. Avoidance strengthens non-linearly with road density, with thresholds that differ by season and diel phase <span class="citation" data-cites="beyer2013functional">(<a href="#ref-beyer2013functional" role="doc-biblioref">Beyer et al. 2013</a>)</span>. Beyer’s Alberta moose were more selective at finer scales, which is the expected signature of a functional response.</p>
+<p><strong>Attraction appears where a resource is concentrated at the roadside.</strong> In eastern Poland, moose preferred roads at night in winter, plausibly for sodium from de-icing salt and for thinner snow on ploughed verges <span class="citation" data-cites="borowik2024">(<a href="#ref-borowik2024" role="doc-biblioref">Borowik et al. 2024</a>)</span>. Roadside mineral licks in British Columbia attract moose, with obvious collision consequences <span class="citation" data-cites="huxter2024">(<a href="#ref-huxter2024" role="doc-biblioref">Huxter et al. 2024</a>)</span>. The attraction is not a contradiction of avoidance; it is a seasonal, resource-driven taxis superimposed on a chronic risk-avoidance drift.</p>
+<p><strong>The sign of the road effect is often undetectable at the population mean.</strong> In the Alberta foothills, moose were indifferent to roads at the population level while responding to seismic lines and pipelines, with the individual variation carrying the signal <span class="citation" data-cites="finnegan2023">(<a href="#ref-finnegan2023" role="doc-biblioref">Finnegan et al. 2023</a>)</span>. This is exactly the situation in which a random-effects selection model is required, and in which a mean-only RSF reports a null that hides two well-separated behaviours.</p>
+<p><strong>Movement rate, not preference, may be the robust road response.</strong> The most reproducible effect across studies is that moose move faster near roads — the haste response — whereas the sign of the positional preference is study-specific <span class="citation" data-cites="dussault2007 laurian2008 gagnon2024">(<a href="#ref-dussault2007" role="doc-biblioref">Dussault et al. 2007</a>; <a href="#ref-laurian2008" role="doc-biblioref">Laurian et al. 2008</a>; <a href="#ref-gagnon2024" role="doc-biblioref">Gagnon et al. 2024</a>)</span>. This pattern motivates the use of integrated and continuous-time models, which estimate movement parameters directly, over pure selection models.</p>
+<p><strong>Collision risk is an exposure problem, not a preference problem.</strong> The winter migration result <span class="citation" data-cites="cunningham2022">(<a href="#ref-cunningham2022" role="doc-biblioref">Cunningham et al. 2022</a>)</span> and the Massachusetts crossing-exposure model <span class="citation" data-cites="zeller2018">(<a href="#ref-zeller2018" role="doc-biblioref">Zeller et al. 2018</a>)</span> both show that the collision rate is governed by where movement takes animals and when traffic is present, more than by any stable preference for roadsides. Case-control studies that ignore exposure will systematically attribute to preference what belongs to flux.</p>
+<p><strong>Roads are barriers whose permeability is scale-dependent.</strong> At very fine temporal resolution a road is a line that steps rarely cross, so a step model sees avoidance; at coarse resolution it is a feature every step crosses, so the model sees nothing. The permeability that matters ecologically — do moose cross, how often, and at what cost — is a property of the movement process on the scale of the reaction window, and continuous-time and hidden-state models are the frameworks that represent this permeability explicitly.</p>
+</section>
+<section id="open-problems" class="level2">
+<h2 class="anchored" data-anchor-id="open-problems">Open problems</h2>
+<p>Four problems cut across all the frameworks, and they are widely discussed in the methodological literature as issues of inference rather than of biology.</p>
+<p><strong>Availability is doing the work.</strong> In every selection model the road coefficient is defined relative to an availability measure, and the choice of that measure — study area versus home range versus step kernel versus diffusion process — changes the estimate. The unification result, that the stationary distribution of a diffusion-taxis process has the form of an RSF and can be parametrized by step selection analysis, tells us the frameworks are connected <span class="citation" data-cites="potts2020diffusion moorcroft2008 potts2023scale">(<a href="#ref-potts2020diffusion" role="doc-biblioref">Potts and Schlägel 2020</a>; <a href="#ref-moorcroft2008" role="doc-biblioref">Moorcroft and Barnett 2008</a>; <a href="#ref-potts2023scale" role="doc-biblioref">Potts and Börger 2023</a>)</span>, but it also means that reporting a road coefficient without its availability convention is reporting an incomplete quantity. Methodological reviews therefore call for reporting the availability kernel or domain alongside every road coefficient, as the iSSF literature now does for movement parameters.</p>
+<p><strong>Scale is a covariate choice, not a nuisance.</strong> Fix rate, buffer radius, and the width of the road-effect zone are all scale choices, and Thurfjell’s argument shows the road response can flip sign across them <span class="citation" data-cites="thurfjell2014">(<a href="#ref-thurfjell2014" role="doc-biblioref">Thurfjell et al. 2014</a>)</span>. A multi-scale or continuous-scale treatment — fitting selection as a function of the scale itself, or using the fix-rate sensitivity analysis they recommend — is the exception rather than the rule in the moose literature.</p>
+<p><strong>Observation error is still weakly handled.</strong> Given a location error comparable to the width of the road-effect zone, false crossings and attenuated gradients are first-order effects, not second-order ones <span class="citation" data-cites="moen1996 deon2005 frair2004">(<a href="#ref-moen1996" role="doc-biblioref">Moen et al. 1996</a>; <a href="#ref-deon2005" role="doc-biblioref">D’Eon and Delparte 2005</a>; <a href="#ref-frair2004" role="doc-biblioref">Frair et al. 2004</a>)</span>. Yet the majority of moose-road studies fit selection at the raw fixes, and collision studies rarely propagate telemetry error into the crossing exposure that drives the hazard. Continuous-time state-space models that estimate movement and error jointly <span class="citation" data-cites="johnson2008 jonsen2005">(<a href="#ref-johnson2008" role="doc-biblioref">Johnson et al. 2008</a>; <a href="#ref-jonsen2005" role="doc-biblioref">Jonsen et al. 2005</a>)</span> provide a principled treatment of this error and are less common in the moose-road literature.</p>
+<p><strong>Causality.</strong> Almost all of the evidence is observational, and traffic, road density, predators, forage, snow and hunting are confounded at the landscape scale. The models are good at describing the joint distribution of movement and roads and poor at isolating the effect of a change in the road environment. Two directions have been proposed: manipulating traffic (closures, seasonal speed limits) and measuring the response, and using the mechanistic models to generate testable counterfactual predictions. The iSSF and diffusion-taxis models are the members of this family that make falsifiable out-of-sample predictions about <em>new</em> road configurations, which is what a mitigation appraisal requires.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Moose movement in relation to roads is a well-posed problem only once the estimand is stated. Relative selection, movement rate, crossing flux, and collision hazard are four different functionals of the same trajectory, and the modelling frameworks of the literature — resource selection functions, step selection functions, integrated step selection, continuous-time diffusion and Fokker-Planck models, hidden Markov and state-space models, and collision hazard models — are estimators of those functionals under different assumptions about availability, scale, and observation error. The step selection family is the workhorse because it makes availability a movement kernel and estimates selection at the scale at which moose actually decide; the integrated form adds the ability to predict movement and hence to simulate interventions; the continuous-time diffusion-taxis formulation supplies the boundary conditions, flux, and stationary solutions needed to connect selection to exposure; and the collision models supply the denominator that turns movement into risk. The empirical record is less contradictory than it appears: moose avoid the chronic risks of roads, are drawn to roadside resources in specific seasons, traverse roads at speed when they cross, and die where those crossings coincide with traffic and darkness. The methodological literature suggests that further progress lies less in new model families than in using the connections between them — availability made explicit, scale treated as a modelled quantity, observation error propagated, and the mechanistic models used to generate testable counterfactual predictions.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-adotpf2018" class="csl-entry" role="listitem">
+Alaska Department of Transportation and Public Facilities. 2018. <em>Accident Reduction Factors Relating to Moose-Vehicle Collision Crash Types</em>. Alaska Department of Transportation; Public Facilities. <a href="https://rosap.ntl.bts.gov/view/dot/37066">https://rosap.ntl.bts.gov/view/dot/37066</a>.
+</div>
+<div id="ref-avgar2017rss" class="csl-entry" role="listitem">
+Avgar, Tal, Subhash R. Lele, Jonah L. Keim, and Mark S. Boyce. 2017. <span>“Relative Selection Strength: Quantifying Effect Size in Habitat- and Step-Selection Inference.”</span> <em>Ecology and Evolution</em> 7 (14): 5322–30. <a href="https://doi.org/10.1002/ece3.3122">https://doi.org/10.1002/ece3.3122</a>.
+</div>
+<div id="ref-avgar2016issa" class="csl-entry" role="listitem">
+Avgar, Tal, Jonathan R. Potts, Mark A. Lewis, and Mark S. Boyce. 2016. <span>“Integrated Step Selection Analysis: Bridging the Gap Between Resource Selection and Animal Movement.”</span> <em>Methods in Ecology and Evolution</em> 7 (5): 619–30. <a href="https://doi.org/10.1111/2041-210X.12528">https://doi.org/10.1111/2041-210X.12528</a>.
+</div>
+<div id="ref-vanbeest2015" class="csl-entry" role="listitem">
+Beest, Floris M. van, Philip D. McLoughlin, Atle Mysterud, and Ryan K. Brook. 2015. <span>“Functional Responses in Habitat Selection Are Density Dependent in a Large Herbivore.”</span> <em>Ecography</em> 39 (6): 515–23. <a href="https://doi.org/10.1111/ecog.01339">https://doi.org/10.1111/ecog.01339</a>.
+</div>
+<div id="ref-beyer2013functional" class="csl-entry" role="listitem">
+Beyer, Hawthorne L., Roberta Ung, Dennis L. Murray, and Marie-Josée Fortin. 2013. <span>“Functional Responses, Seasonal Variation and Thresholds in Behavioural Responses of Moose to Road Density.”</span> <em>Journal of Applied Ecology</em> 50 (2): 286–94. <a href="https://doi.org/10.1111/1365-2664.12042">https://doi.org/10.1111/1365-2664.12042</a>.
+</div>
+<div id="ref-borowik2024" class="csl-entry" role="listitem">
+Borowik, Tomasz, Rafał Kowalczyk, Mirosław Ratkiewicz, Weronika Maślanko, Norbert Duda, and Michał Żmihorski. 2024. <span>“A Highly Variable Habitat Selection in Moose Across Diel and Seasonal Scales.”</span> <em>Movement Ecology</em> 12 (1): 16. <a href="https://doi.org/10.1186/s40462-024-00508-3">https://doi.org/10.1186/s40462-024-00508-3</a>.
+</div>
+<div id="ref-boyce1999relating" class="csl-entry" role="listitem">
+Boyce, Mark S., and Lyman L. McDonald. 1999. <span>“Relating Populations to Habitats Using Resource Selection Functions.”</span> <em>Trends in Ecology &amp; Evolution</em> 14 (7): 268–72. <a href="https://doi.org/10.1016/S0169-5347(99)01593-1">https://doi.org/10.1016/S0169-5347(99)01593-1</a>.
+</div>
+<div id="ref-mmwr2006" class="csl-entry" role="listitem">
+Centers for Disease Control and Prevention. 2006. <span>“Injuries from Motor-Vehicle Collisions with Moose — Maine, 2000–2004.”</span> <em>Morbidity and Mortality Weekly Report</em> 55 (47). <a href="https://www.cdc.gov/mmwr/preview/mmwrhtml/mm5547a3.htm">https://www.cdc.gov/mmwr/preview/mmwrhtml/mm5547a3.htm</a>.
+</div>
+<div id="ref-cunningham2022" class="csl-entry" role="listitem">
+Cunningham, Calum X., Glen E. Liston, Adele K. Reinking, et al. 2022. <span>“Human and Animal Movements Combine with Snow to Increase Moose-Vehicle Collisions in Winter.”</span> <em>Environmental Research Letters</em> 17 (12): 125007. <a href="https://doi.org/10.1088/1748-9326/aca8bf">https://doi.org/10.1088/1748-9326/aca8bf</a>.
+</div>
+<div id="ref-deon2005" class="csl-entry" role="listitem">
+D’Eon, Robert G., and Danielle Delparte. 2005. <span>“Effects of Radio-Collar Position and Orientation on GPS Radio-Collar Performance, and the Implications of PDOP in Data Screening.”</span> <em>Journal of Applied Ecology</em> 42 (2): 383–88. <a href="https://doi.org/10.1111/j.1365-2664.2005.01010.x">https://doi.org/10.1111/j.1365-2664.2005.01010.x</a>.
+</div>
+<div id="ref-danks2010" class="csl-entry" role="listitem">
+Danks, Zachary D., and William F. Porter. 2010. <span>“Temporal, Spatial, and Landscape Habitat Characteristics of Moose–Vehicle Collisions in Western Maine.”</span> <em>The Journal of Wildlife Management</em> 74 (6): 1229–41. <a href="https://doi.org/10.2193/2008-358">https://doi.org/10.2193/2008-358</a>.
+</div>
+<div id="ref-duchesne2010" class="csl-entry" role="listitem">
+Duchesne, Thierry, Daniel Fortin, and Nicolas Courbin. 2010. <span>“Mixed Conditional Logistic Regression for Habitat Selection Studies.”</span> <em>Journal of Animal Ecology</em> 79 (3): 548–55. <a href="https://doi.org/10.1111/j.1365-2656.2010.01670.x">https://doi.org/10.1111/j.1365-2656.2010.01670.x</a>.
+</div>
+<div id="ref-dussault2007" class="csl-entry" role="listitem">
+Dussault, Christian, Jean-Pierre Ouellet, Catherine Laurian, Réhaume Courtois, Marius Poulin, and Laurier Breton. 2007. <span>“Moose Movement Rates Along Highways and Crossing Probability Models.”</span> <em>The Journal of Wildlife Management</em> 71 (7): 2338–45. <a href="https://doi.org/10.2193/2006-499">https://doi.org/10.2193/2006-499</a>.
+</div>
+<div id="ref-finnegan2023" class="csl-entry" role="listitem">
+Finnegan, Laura, Mark Hebblewhite, and Karine E. Pigeon. 2023. <span>“Whose Line Is It Anyway? Moose (<em>Alces Alces</em>) Response to Linear Features.”</span> <em>Ecosphere</em> 14 (8): e4636. <a href="https://doi.org/10.1002/ecs2.4636">https://doi.org/10.1002/ecs2.4636</a>.
+</div>
+<div id="ref-forester2009" class="csl-entry" role="listitem">
+Forester, James D., Hae Kyung Im, and Paul J. Rathouz. 2009. <span>“Accounting for Animal Movement in Estimation of Resource Selection Functions: Sampling and Data Analysis.”</span> <em>Ecology</em> 90 (12): 3554–65. <a href="https://doi.org/10.1890/08-0874.1">https://doi.org/10.1890/08-0874.1</a>.
+</div>
+<div id="ref-fortin2005" class="csl-entry" role="listitem">
+Fortin, Daniel, Hawthorne L. Beyer, Mark S. Boyce, Douglas W. Smith, Thierry Duchesne, and Julie S. Mao. 2005. <span>“Wolves Influence Elk Movements: Behavior Shapes a Trophic Cascade in Yellowstone National Park.”</span> <em>Ecology</em> 86 (5): 1320–30. <a href="https://doi.org/10.1890/04-0953">https://doi.org/10.1890/04-0953</a>.
+</div>
+<div id="ref-frair2004" class="csl-entry" role="listitem">
+Frair, Jacqueline L., Scott E. Nielsen, Evelyn H. Merrill, et al. 2004. <span>“Removing GPS Collar Bias in Habitat Selection Studies.”</span> <em>Journal of Applied Ecology</em> 41 (2): 201–12. <a href="https://doi.org/10.1111/j.0021-8901.2004.00902.x">https://doi.org/10.1111/j.0021-8901.2004.00902.x</a>.
+</div>
+<div id="ref-gagnon2024" class="csl-entry" role="listitem">
+Gagnon, Marianne, Frédéric Lesmerises, and Martin-Hugues St-Laurent. 2024. <span>“Temporal Variations in Female Moose Responses to Roads and Logging in the Absence of Wolves.”</span> <em>Ecology and Evolution</em> 14 (2): e10909. <a href="https://doi.org/10.1002/ece3.10909">https://doi.org/10.1002/ece3.10909</a>.
+</div>
+<div id="ref-gillies2011" class="csl-entry" role="listitem">
+Gillies, Chris S., Hawthorne L. Beyer, and Colleen Cassady St. Clair. 2011. <span>“Fine-Scale Movement Decisions of Tropical Forest Birds in a Fragmented Landscape.”</span> <em>Ecological Applications</em> 21 (3): 944–54. <a href="https://doi.org/10.1890/09-2090.1">https://doi.org/10.1890/09-2090.1</a>.
+</div>
+<div id="ref-graf2026" class="csl-entry" role="listitem">
+Graf, Lukas, Wiebke Neumann, Göran Ericsson, and Annika M. Felton. 2026. <span>“Linking Telemetry Data with Forage Availability Maps Advances Information for Moose Management.”</span> <em>Wildlife Biology</em>, ahead of print. <a href="https://doi.org/10.1002/wlb3.01635">https://doi.org/10.1002/wlb3.01635</a>.
+</div>
+<div id="ref-huxter2024" class="csl-entry" role="listitem">
+Huxter, Caleb T., Roy V. Rea, Ken A. Otter, and Gayle Hesse. 2024. <span>“Behaviours of Moose at Roadside Mineral Licks in British Columbia: Implications for Moose-Vehicle Collisions.”</span> <em>Applied Animal Behaviour Science</em> 275: 106292. <a href="https://doi.org/10.1016/j.applanim.2024.106292">https://doi.org/10.1016/j.applanim.2024.106292</a>.
+</div>
+<div id="ref-johnson2008" class="csl-entry" role="listitem">
+Johnson, Devin S., Joshua M. London, Mary-Anne Lea, and John W. Durban. 2008. <span>“Continuous-Time Correlated Random Walk Model for Animal Telemetry Data.”</span> <em>Ecology</em> 89 (5): 1208–15. <a href="https://doi.org/10.1890/07-1032.1">https://doi.org/10.1890/07-1032.1</a>.
+</div>
+<div id="ref-johnson1980" class="csl-entry" role="listitem">
+Johnson, Douglas H. 1980. <span>“The Comparison of Usage and Availability Measurements for Evaluating Resource Preference.”</span> <em>Ecology</em> 61 (1): 65–71. <a href="https://doi.org/10.2307/1937156">https://doi.org/10.2307/1937156</a>.
+</div>
+<div id="ref-jonsen2005" class="csl-entry" role="listitem">
+Jonsen, Ian D., Joanna Mills Flemming, and Ransom A. Myers. 2005. <span>“Robust State-Space Modeling of Animal Movement Data.”</span> <em>Ecology</em> 86 (11): 2874–80. <a href="https://doi.org/10.1890/04-1852">https://doi.org/10.1890/04-1852</a>.
+</div>
+<div id="ref-laliberte2020" class="csl-entry" role="listitem">
+Laliberté, Jérémie, and Martin-Hugues St-Laurent. 2020. <span>“In the Wrong Place at the Wrong Time: Moose and Deer Movement Patterns Influence Wildlife-Vehicle Collision Risk.”</span> <em>Accident Analysis &amp; Prevention</em> 135: 105365. <a href="https://doi.org/10.1016/j.aap.2019.105365">https://doi.org/10.1016/j.aap.2019.105365</a>.
+</div>
+<div id="ref-laurian2008" class="csl-entry" role="listitem">
+Laurian, Catherine, Christian Dussault, Jean-Pierre Ouellet, Réhaume Courtois, Marius Poulin, and Laurier Breton. 2008. <span>“Behavior of Moose Relative to a Road Network.”</span> <em>The Journal of Wildlife Management</em> 72 (7): 1550–57. <a href="https://doi.org/10.2193/2008-063">https://doi.org/10.2193/2008-063</a>.
+</div>
+<div id="ref-manly1993" class="csl-entry" role="listitem">
+Manly, Bryan F. J., Lyman L. McDonald, and Dana L. Thomas. 1993. <em>Resource Selection by Animals: Statistical Design and Analysis for Field Studies</em>. Chapman &amp; Hall.
+</div>
+<div id="ref-michelot2016" class="csl-entry" role="listitem">
+Michelot, Théo, Roland Langrock, and Toby A. Patterson. 2016. <span>“moveHMM: An r Package for the Statistical Modelling of Animal Movement Data Using Hidden Markov Models.”</span> <em>Methods in Ecology and Evolution</em> 7 (11): 1308–15. <a href="https://doi.org/10.1111/2041-210X.12578">https://doi.org/10.1111/2041-210X.12578</a>.
+</div>
+<div id="ref-moen1996" class="csl-entry" role="listitem">
+Moen, Ron, John Pastor, Yosef Cohen, and Charles C. Schwartz. 1996. <span>“Effects of Moose Movement and Habitat Use on GPS Collar Performance.”</span> <em>The Journal of Wildlife Management</em> 60 (3): 659–68. <a href="https://doi.org/10.2307/3802085">https://doi.org/10.2307/3802085</a>.
+</div>
+<div id="ref-moorcroft2008" class="csl-entry" role="listitem">
+Moorcroft, Paul R., and Alex Barnett. 2008. <span>“Mechanistic Home Range Models and Resource Selection Analysis: A Reconciliation and Unification.”</span> <em>Ecology</em> 89 (4): 1112–19. <a href="https://doi.org/10.1890/06-1985.1">https://doi.org/10.1890/06-1985.1</a>.
+</div>
+<div id="ref-patterson2009" class="csl-entry" role="listitem">
+Patterson, Toby A., Max Basson, Mark V. Bravington, and John S. Gunn. 2009. <span>“Classifying Movement Behaviour in Relation to Environmental Conditions Using Hidden Markov Models.”</span> <em>Journal of Animal Ecology</em> 78 (6): 1113–23. <a href="https://doi.org/10.1111/j.1365-2656.2009.01583.x">https://doi.org/10.1111/j.1365-2656.2009.01583.x</a>.
+</div>
+<div id="ref-potts2023scale" class="csl-entry" role="listitem">
+Potts, Jonathan R., and Luca Börger. 2023. <span>“How to Scale up from Animal Movement Decisions to Spatiotemporal Patterns: An Approach via Step Selection.”</span> <em>Journal of Animal Ecology</em> 92 (1): 16–29. <a href="https://doi.org/10.1111/1365-2656.13832">https://doi.org/10.1111/1365-2656.13832</a>.
+</div>
+<div id="ref-potts2020diffusion" class="csl-entry" role="listitem">
+Potts, Jonathan R., and Ulrike E. Schlägel. 2020. <span>“Parametrizing Diffusion-Taxis Equations from Animal Movement Trajectories Using Step Selection Analysis.”</span> <em>Methods in Ecology and Evolution</em> 11 (9): 1092–105. <a href="https://doi.org/10.1111/2041-210X.13406">https://doi.org/10.1111/2041-210X.13406</a>.
+</div>
+<div id="ref-prokopenko2016" class="csl-entry" role="listitem">
+Prokopenko, Christina M., Mark S. Boyce, and Tal Avgar. 2016. <span>“Characterizing Wildlife Behavioural Responses to Roads Using Integrated Step Selection Analysis.”</span> <em>Journal of Applied Ecology</em> 54 (2): 470–79. <a href="https://doi.org/10.1111/1365-2664.12768">https://doi.org/10.1111/1365-2664.12768</a>.
+</div>
+<div id="ref-thurfjell2014" class="csl-entry" role="listitem">
+Thurfjell, Henrik, Simone Ciuti, and Mark S. Boyce. 2014. <span>“Applications of Step-Selection Functions in Ecology and Conservation.”</span> <em>Movement Ecology</em> 2 (1): 4. <a href="https://doi.org/10.1186/2051-3933-2-4">https://doi.org/10.1186/2051-3933-2-4</a>.
+</div>
+<div id="ref-wattles2018" class="csl-entry" role="listitem">
+Wattles, David W., Katherine A. Zeller, and Stephen DeStefano. 2018. <span>“Response of Moose to a High-Density Road Network.”</span> <em>The Journal of Wildlife Management</em> 82 (5): 929–39. <a href="https://doi.org/10.1002/jwmg.21459">https://doi.org/10.1002/jwmg.21459</a>.
+</div>
+<div id="ref-zeller2018" class="csl-entry" role="listitem">
+Zeller, Katherine A., David W. Wattles, and Stephen DeStefano. 2018. <span>“Incorporating Road Crossing Data into Vehicle Collision Risk Models for Moose (<em>Alces Americanus</em>) in Massachusetts, USA.”</span> <em>Environmental Management</em> 62 (3): 518–28. <a href="https://doi.org/10.1007/s00267-018-1058-x">https://doi.org/10.1007/s00267-018-1058-x</a>.
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/galenseilis\.github\.io\/blog\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

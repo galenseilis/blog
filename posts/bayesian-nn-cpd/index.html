@@ -245,47 +245,40 @@ window.Quarto = {
 <p>and we’ll suppose that</p>
 <p><span class="math display">\[\mathcal{X} \sim \text{Exponential}(\mathcal{L})\]</span></p>
 <p>is our observed random variable.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">'''Toy example of tensor decomposition in PyMC.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Model construction for toy Bayesian CPD."""</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">This example only performs a rank-1 decomposition.</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pickle</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> arviz <span class="im">as</span> az</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pymc <span class="im">as</span> pm</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pytensor <span class="im">import</span> tensor <span class="im">as</span> at</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Prior Predictive Simulation</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>SIZE <span class="op">=</span> <span class="dv">3</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>u1 <span class="op">=</span> np.random.exponential(<span class="fl">0.001</span>, size<span class="op">=</span>SIZE)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>u2 <span class="op">=</span> np.random.exponential(<span class="fl">0.001</span>, size<span class="op">=</span>SIZE)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>u3 <span class="op">=</span> np.random.exponential(<span class="fl">0.001</span>, size<span class="op">=</span>SIZE)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.outer(u1, u2)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.outer(x, u3).reshape((SIZE,) <span class="op">*</span> <span class="dv">3</span>).flatten()</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Model Specification</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> pm.Model()</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> model:</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    u1 <span class="op">=</span> pm.Exponential(<span class="st">"u1"</span>, lam<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>SIZE)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    u2 <span class="op">=</span> pm.Exponential(<span class="st">"u2"</span>, lam<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>SIZE)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    u3 <span class="op">=</span> pm.Exponential(<span class="st">"u3"</span>, lam<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>SIZE)</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> at.outer(at.outer(u1, u2), u3).flatten()</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> pm.Exponential(<span class="st">"X"</span>, mu, shape<span class="op">=</span>SIZE <span class="op">*</span> <span class="dv">3</span>, observed<span class="op">=</span>x)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> __future__ <span class="im">import</span> annotations</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pymc <span class="im">as</span> pm</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pytensor <span class="im">import</span> tensor <span class="im">as</span> at</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simulate_data(size: <span class="bu">int</span> <span class="op">=</span> <span class="dv">3</span>) <span class="op">-&gt;</span> <span class="bu">tuple</span>[np.ndarray, <span class="bu">int</span>]:</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Simulate prior-predictive data for the toy example."""</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    rng <span class="op">=</span> np.random.default_rng(<span class="dv">0</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    u1 <span class="op">=</span> rng.exponential(<span class="fl">0.001</span>, size<span class="op">=</span>size)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    u2 <span class="op">=</span> rng.exponential(<span class="fl">0.001</span>, size<span class="op">=</span>size)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    u3 <span class="op">=</span> rng.exponential(<span class="fl">0.001</span>, size<span class="op">=</span>size)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.outer(u1, u2)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.outer(x, u3).reshape((size,) <span class="op">*</span> <span class="dv">3</span>).flatten()</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x, size</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> build_model(size: <span class="bu">int</span> <span class="op">=</span> <span class="dv">3</span>, observed: np.ndarray <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>) <span class="op">-&gt;</span> pm.Model:</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Build and return the PyMC model."""</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> pm.Model()</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> observed <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        observed, _ <span class="op">=</span> simulate_data(size)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> model:</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        u1 <span class="op">=</span> pm.Exponential(<span class="st">"u1"</span>, lam<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>size)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        u2 <span class="op">=</span> pm.Exponential(<span class="st">"u2"</span>, lam<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>size)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        u3 <span class="op">=</span> pm.Exponential(<span class="st">"u3"</span>, lam<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>size)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        mu <span class="op">=</span> at.outer(at.outer(u1, u2), u3).flatten()</span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sample from the posterior distribution</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> model:</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>        idata <span class="op">=</span> pm.sample(cores<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Save results for further analysis.</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">"test.pickle"</span>, <span class="st">"wb"</span>) <span class="im">as</span> handle:</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>        pickle.dump(idata, handle)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        pm.Exponential(<span class="st">"X"</span>, mu, shape<span class="op">=</span>observed.size, observed<span class="op">=</span>observed)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The more general cases of finite rank-<span class="math inline">\(r\)</span> decomposition should be built with a function or class that constructs it. One option is <a href="https://www.pymc.io/projects/experimental/en/latest/generated/pymc_experimental.model_builder.ModelBuilder.html"><code>pymc_experimental.model_builder.ModelBuilder</code></a>. I imagine such a class should have a parameter for the rank, a parameter for distribution(S) for the random vectors, and also a parameter for the distribution of the observations. A complicated case would be to specify the distribution of every random variable, but then the config alone for the model would be complicated. A possible partial solution for that is to default to assume that the input specifies a distribution family for all the random vectors, or if a dict is passed specifying modes then those distributions are used over the mode. I think specifying the distribution of every coefficient parameter and every element of every vector is sufficiently “custom” that one might as well use the default PyMC model construction class in a context wrapper.</p>
 
 

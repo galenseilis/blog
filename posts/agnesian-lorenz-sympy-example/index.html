@@ -258,24 +258,33 @@ window.Quarto = {
 <p><span class="math display">\[\frac{dx}{dt} = \sigma (y - x)\]</span></p>
 <p><span class="math display">\[\frac{dy}{dt} = x (\rho - z) - y\]</span></p>
 <p><span class="math display">\[\frac{dz}{dt} = xy - \beta z\]</span></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sympy <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> Symbol(<span class="st">"</span><span class="ch">\\</span><span class="st">sigma"</span>, real<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>rho <span class="op">=</span> Symbol(<span class="st">"</span><span class="ch">\\</span><span class="st">rho"</span>, real<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> Symbol(<span class="st">"</span><span class="ch">\\</span><span class="st">beta"</span>, real<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> Symbol(<span class="st">"t"</span>, real<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Function(<span class="st">"x"</span>)(t)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> Function(<span class="st">"y"</span>)(t)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> Function(<span class="st">"z"</span>)(t)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> [sigma <span class="op">*</span> (y <span class="op">-</span> x), x <span class="op">*</span> (rho <span class="op">-</span> z <span class="op">-</span> y), x <span class="op">*</span> y <span class="op">-</span> beta <span class="op">*</span> z]</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>dvdt <span class="op">=</span> [i.diff(t) <span class="cf">for</span> i <span class="kw">in</span> v]</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>agnesian1 <span class="op">=</span> latex(np.prod(dvdt))</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(agnesian1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Compute Agnesian order 1 for the Lorenz system with SymPy."""</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> __future__ <span class="im">import</span> annotations</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sympy <span class="im">import</span> Function, Symbol, latex, prod</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> agnesian_lorenz_order1() <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return the LaTeX string for A_t^1 for the Lorenz system.</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">    str</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">        LaTeX representation of the Agnesian of order one.</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    sigma <span class="op">=</span> Symbol(<span class="st">"</span><span class="ch">\\</span><span class="st">sigma"</span>, real<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    rho <span class="op">=</span> Symbol(<span class="st">"</span><span class="ch">\\</span><span class="st">rho"</span>, real<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    beta <span class="op">=</span> Symbol(<span class="st">"</span><span class="ch">\\</span><span class="st">beta"</span>, real<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> Symbol(<span class="st">"t"</span>, real<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> Function(<span class="st">"x"</span>)(t)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> Function(<span class="st">"y"</span>)(t)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> Function(<span class="st">"z"</span>)(t)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    v <span class="op">=</span> [sigma <span class="op">*</span> (y <span class="op">-</span> x), x <span class="op">*</span> (rho <span class="op">-</span> z <span class="op">-</span> y), x <span class="op">*</span> y <span class="op">-</span> beta <span class="op">*</span> z]</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    dvdt <span class="op">=</span> [i.diff(t) <span class="cf">for</span> i <span class="kw">in</span> v]</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> latex(prod(dvdt))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This trivially gives the result:</p>
 <p><span class="math display">\[\mathcal{A}_t^1 \vec v (t) = \sigma \left(\left(- \frac{d}{d t} y{\left(t \right)} - \frac{d}{d t} z{\left(t \right)}\right) x{\left(t \right)} + \left(\rho - y{\left(t \right)} - z{\left(t \right)}\right) \frac{d}{d t} x{\left(t \right)}\right) \left(- \frac{d}{d t} x{\left(t \right)} + \frac{d}{d t} y{\left(t \right)}\right) \left(- \beta \frac{d}{d t} z{\left(t \right)} + x{\left(t \right)} \frac{d}{d t} y{\left(t \right)} + y{\left(t \right)} \frac{d}{d t} x{\left(t \right)}\right)\]</span></p>
 
