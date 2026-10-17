@@ -8,12 +8,11 @@ categories: [Art, Music, Word Adjacency]
 Here are the lyrics of Rolling Down to Rio with punctuation and capitalization ignored:
 
 ```python
-{{< include ./scripts/lyrics.py >}}
+{{< include ./src/music_word_adjacency_rolling_down_to_rio/lyrics.py >}}
 ```
 
 ```python
-{{< include ./scripts/plot_word_adjacency.py >}}
+{{< include ./src/music_word_adjacency_rolling_down_to_rio/plot.py >}}
 ```
 
 ![Word Adjacency in Rolling Down to Rio](./figures/word-adjacency.png)
-

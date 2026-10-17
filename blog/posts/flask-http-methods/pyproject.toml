@@ -1,0 +1,45 @@
+[project]
+name = "flask-http-methods"
+version = "0.1.0"
+description = "Flask app demonstrating HTTP methods."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Galen Seilis" }]
+keywords = [
+    "flask",
+    "web-applications",
+    "url",
+    "http",
+]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+]
+dependencies = [
+    "flask>=3.0",
+]
+
+[project.scripts]
+flask-http-methods = "flask_http_methods.app:main"
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/flask_http_methods"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/flask_http_methods", "tests", "README.md", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff.lint.per-file-ignores]
+"src/flask_http_methods/*.py" = ["T201"]
+"tests/*.py" = ["S101"]

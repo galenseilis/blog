@@ -13,5 +13,5 @@ Since G in M/G/k can be any distribution with non-negative support, we will use 
 A [M/G/k queue](https://en.wikipedia.org/wiki/M/G/k_queue) as described can be implemented and simulated using Ciw [@kendall1953] in the following way.
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/m_g_k_queue_ciw/queue.py >}}
 ```

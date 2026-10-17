@@ -1,0 +1,47 @@
+[project]
+name = "permutive-cross-product"
+version = "0.1.0"
+description = "Permutive cross product constructions in 3D."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Galen Seilis" }]
+keywords = [
+    "sympy",
+    "linear-algebra",
+    "cross-product",
+    "permutations",
+]
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+dependencies = [
+    "pandas>=2.0",
+    "sympy>=1.12",
+]
+
+[project.scripts]
+permutive-cross-product = "permutive_cross_product.cli1:main"
+permutive-cross-product-4perm = "permutive_cross_product.cli2:main"
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/permutive_cross_product"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/permutive_cross_product", "tests", "README.md", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff.lint.per-file-ignores]
+"src/permutive_cross_product/*.py" = ["T201"]
+"tests/*.py" = ["S101"]

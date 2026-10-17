@@ -17,7 +17,7 @@ $$\frac{dy}{dt} = x (\rho - z) - y$$
 $$\frac{dz}{dt} = xy - \beta z$$
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/agnesian_lorenz_sympy_example/agnesian.py >}}
 ```
 
 This trivially gives the result:

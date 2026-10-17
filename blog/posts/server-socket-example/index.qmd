@@ -65,7 +65,7 @@ The sequence diagram serves as a starting point for understanding the intricacie
 Let's go over the first script:
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/server_socket_example/client.py >}}
 ```
 
 1. **Data Structure Definition:**
@@ -96,7 +96,7 @@ This script serves as the client-side component of a client-server interaction, 
 And now let's go over script 2.
 
 ```python
-{{< include ./scripts/script_2.py >}}
+{{< include ./src/server_socket_example/server.py >}}
 ```
 
 **Script Explanation:**

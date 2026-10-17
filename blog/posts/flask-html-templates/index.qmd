@@ -25,42 +25,19 @@ In this example I prepared two templates:
 The directory `templates` is in the same directory that the Flask application will be run. In `example_is_prime.html` I put
 
 ```html
-<h1>The number {{ number }} is a prime!</h1>
+{{< include ./templates/example_is_prime.html >}}
 ```
 
 and in `example_is_not_prime.html` I put
 
 ```html
-<h1>The number {{ number }} is not a prime!</h1>
+{{< include ./templates/example_is_not_prime.html >}}
 ```
 
 Note that neither of these files have the usual preamble that you'd find in an `index.html` file. That's taken care of behind the scenes. You can also see `{{ number }}` which specifies a variable name that is expected to come from [`render_template`](https://flask.palletsprojects.com/en/stable/api/#flask.render_template).
 
 ```python
-from flask import Flask, render_template
-
-def is_prime(n):
-    if n < 2:
-        return False
-    i = 2
-    while i*i <= n:
-        if n % i == 0:
-            return False
-        i += 1
-    return True
-
-
-app = Flask(__name__)
-
-@app.route('/primality/<int:number>')
-def display_primarily(number):
-    if is_prime(number):
-        return render_template('example_is_prime.html', number=number)
-    else:
-        return render_template('example_is_not_prime.html', number=number)
-
-if __name__ == '__main__':
-    app.run(debug=True)
+{{< include ./src/flask_html_templates/app.py >}}
 ```
 
 When you run this application you'll be able to enter various numbers in, and what will be displayed is a sentence telling you whether the number you provided in the URL is a prime number or not.

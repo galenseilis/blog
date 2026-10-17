@@ -1,0 +1,11 @@
+[tool.uv.workspace]
+members = [
+    "posts/ellipse-intersections-for-moose-movement",
+    "posts/general-fokker-planck-moose-movement",
+    "posts/fokker-planck-moose-movement/python",
+]
+
+[tool.uv.sources]
+moose-ellipse = { workspace = true }
+moose-fp = { workspace = true }
+moose-ou-fp = { workspace = true }

@@ -8,7 +8,7 @@ categories: [Discrete-Event-Simulation, Queueing-Networks, Ciw]
 The Ciw library allows for a stochastic matrix representing probabilities of transitioning from one service to another. Here is an example [from the documentation](https://ciw.readthedocs.io/en/latest/Tutorial-II/tutorial_v.html).
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/ciw_dirichlet_sampling_router_matrix/fixed_example.py >}}
 ```
 
 This example will only use a fixed stochastic matrix, however. If the probabilities were estimated from data or there is *a priori* uncertainty in the entries of the stochastic matrix then we might want to account for that.
@@ -18,7 +18,7 @@ Strictly-speaking, the Ciw library provides process-based routing customization 
 We can make a subclass from `list` and provide methods such that it samples new values whenever it is accessed!
 
 ```python
-{{< include ./scripts/script_2.py >}}
+{{< include ./src/ciw_dirichlet_sampling_router_matrix/random_dirichlet.py >}}
 ```
 
 Here is an example of indexing the same element of the instance and yet sampling different values! This is achieved by resampling from a Dirichlet distribution every time `__getitem__` is called.
@@ -37,7 +37,7 @@ However, sometimes `np.random.dirichlet` produces numbers that are merely 'close
 Here is an example of creating a list of instances of `RandomDirichletList` which Ciw accepts and uses in the simulation.
 
 ```python
-{{< include ./scripts/script_4.py >}}
+{{< include ./src/ciw_dirichlet_sampling_router_matrix/example.py >}}
 ```
 
 Here is the output!

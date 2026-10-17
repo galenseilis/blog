@@ -10,7 +10,7 @@ Although this [issue](https://github.com/CiwPython/Ciw/issues/98) has been consi
 Here is a small example of putting individuals on the waitlist.
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/ciw_hack_initialize_individuals/example_basic.py >}}
 ```
 
 Note that not everything about the individuals will be handled as an ordinary instance of `Individual` as they would be created in the arrival node with certain attributes assigned to them. We can take a look at how it affects the results by running `print(recs[recs.id_number <= 0].sort_values(by='id_number').to_markdown())` after running the previous code block in an interactive session. This produced the following table:
@@ -33,7 +33,7 @@ Notably, the `arrival_date` and `queue_size_at_arrival` at arrival are `False`. 
 Something a bit more insidious for this hack is that `self.simulation` internal to these custom instances of `Individual` will also be `False`. If you ever use service disciplines that require accessing something else about the system's state via the instance of `Simulation`, you will get errors or unexpected behaviour. Here is another version of the code that uses a service discipline to print out the default value of `self.simulation`.
 
 ```python
-{{< include ./scripts/script_2.py >}}
+{{< include ./src/ciw_hack_initialize_individuals/example_with_sim.py >}}
 ```
 
 The above will print out something like this:
@@ -53,7 +53,7 @@ The above will print out something like this:
 What we can do is assign the simulation instance to `self.simulation` when we initialize each instance of `Individual`. Here is an example:
 
 ```python
-{{< include ./scripts/script_4.py >}}
+{{< include ./src/ciw_hack_initialize_individuals/example_with_sim.py >}}
 ```
 
 The above will print out something like this:

@@ -1,0 +1,47 @@
+[project]
+name = "notes-order-theory"
+version = "0.1.0"
+description = "Figures and helpers from notes on order theory."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Galen Seilis" }]
+keywords = [
+    "order-theory",
+    "partial-order",
+    "cover-diagram",
+    "networkx",
+    "latex",
+]
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+dependencies = [
+    "matplotlib>=3.8",
+    "networkx>=3.0",
+]
+
+[project.scripts]
+notes-order-theory = "notes_order_theory.figures:main"
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/notes_order_theory"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/notes_order_theory", "tests", "README.md", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff.lint.per-file-ignores]
+"src/notes_order_theory/*.py" = ["T201", "PLR0915", "PLR0912", "PLR0913", "N803", "N806"]
+"tests/*.py" = ["S101"]

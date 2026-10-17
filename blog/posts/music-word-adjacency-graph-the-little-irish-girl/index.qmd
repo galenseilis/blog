@@ -8,12 +8,11 @@ categories: [Art, Music, Word Adjacency]
 Here are the lyrics of The Little Irish Girl with punctuation and capitalization ignored:
 
 ```python
-{{< include ./scripts/lyrics.py >}}
+{{< include ./src/music_word_adjacency_the_little_irish_girl/lyrics.py >}}
 ```
 
 ```python
-{{< include ./scripts/plot_word_adjacency.py >}}
+{{< include ./src/music_word_adjacency_the_little_irish_girl/plot.py >}}
 ```
 
 ![Word Adjacency in The Little Irish Girl](./figures/word-adjacency.png)
-

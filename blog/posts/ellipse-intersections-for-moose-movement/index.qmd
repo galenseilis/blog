@@ -1,7 +1,7 @@
 ---
 title: "Ellipse Intersections and Locating a Moose Between Fixes"
 author: "Galen Seilis"
-date: "2026-10-16"
+date: "2026-10-12"
 categories: [Mathematics, Geometry, Computational Geometry, Python, Shapely, Wildlife Ecology, Movement Ecology, GPS Telemetry, Moose, Time Geography]
 ---
 
@@ -34,7 +34,7 @@ Some immediate consequences fall out of the formula. If $v_{\max}\,\Delta t < \l
 Analytic ellipse intersections are fiddly, but computational geometry libraries handle them directly. The script below builds an ellipse by buffering a point to a unit disc and then scaling, rotating, and translating it with Shapely, computes the foci, and takes the set operations we care about: intersection for the shared area, difference for the exclusive areas.
 
 ```python
-{{< include ./scripts/ellipse_intersection.py >}}
+{{< include ./src/moose_ellipse/shared_focus.py >}}
 ```
 
 The example uses two arbitrarily oriented ellipses that happen to share a focus, and reports the areas of each ellipse only, each intersection, and the overlap. Sharing a focus is a nice special case to look at because the foci are the anchor points of the construction, and it makes the geometry easy to read off the figure.
@@ -63,7 +63,7 @@ $$\max\bigl(\text{lo}_A, \text{lo}_B\bigr) \;\le\; \min\bigl(\text{hi}_A, \text{
 A meeting is possible if such a $p$ exists anywhere in the overlap region. The script below builds the reachable ellipses, intersects them, and then grids the overlap looking for points where both windows overlap. It runs three cases: an overlap that does support a common time, an overlap that exists in space but never in time, and no overlap at all.
 
 ```python
-{{< include ./scripts/cooccurrence_feasibility.py >}}
+{{< include ./src/moose_ellipse/reach.py >}}
 ```
 
 ![Three two-moose scenarios: a feasible meeting place, an overlap that never coincides in time, and a meeting ruled out](./figures/cooccurrence_feasibility.png)

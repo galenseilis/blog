@@ -67,7 +67,7 @@ Note that notation such as $F^2(a)$ and $F^{F(a)}(b)$ denote exponentiation, not
 If you are interested in tinkering with your own choice of functions, here is the source code to generate the above table.
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/a_min_max_functional_from_normalization/functional.py >}}
 ```
 
 At a glance it may appear that our original functional is absent in the table, but noting that 

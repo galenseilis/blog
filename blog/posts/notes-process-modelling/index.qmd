@@ -274,13 +274,13 @@ See [business process mapping](https://en.wikipedia.org/wiki/Business_process_ma
 Here is a toy example implementing such a product using operator overloading of `*` by defining `__mul__`.
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/notes_process_modelling/lts.py >}}
 ```
 
 And here is an example usage:
 
 ```python
-{{< include ./scripts/script_2.py >}}
+{{< include ./src/notes_process_modelling/example.py >}}
 ```
 
 #  Process Modeling 09: Applying the Synchronous Product in Modelling 

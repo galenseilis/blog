@@ -22,7 +22,7 @@ $$\frac{dY(t)}{dt} = \mathbf{A} \vec Y(t)$$
 The code to compute this system is given below, using SciPy [@virtanen2020]:
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/sample_linear_random_ode/core.py >}}
 ```
 
 Here is the resulting plot. Since we chose the coefficient distributions somewhat haphazardly, it should not be surprising that no particular direction was preferred for this system.

@@ -1,0 +1,18 @@
+[package]
+name = "moose_ou"
+version = "0.1.0"
+edition = "2024"
+description = "Ornstein-Uhlenbeck simulation of virtual moose movement."
+readme = "README.md"
+keywords = [
+    "movement-ecology",
+    "ornstein-uhlenbeck",
+    "stochastic-processes",
+    "simulation",
+    "moose",
+]
+categories = ["simulation", "science"]
+
+[dependencies]
+rand = "0.10.2"
+rand_distr = "0.6.0"

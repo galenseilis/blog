@@ -22,11 +22,11 @@ $$\left[\begin{matrix}\frac{k \left(- \frac{2 e^{- r t}}{p_{0}^{2}} - \frac{2 \l
 
 Up until this point can be obtained readily with the following Python:
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/se_graveyard_convex_verhulst_params/hessian.py >}}
 ```
 
 To get the eigenvalues one would simply need to additionally call:
 ```python
-{{< include ./scripts/script_2.py >}}
+{{< include ./src/se_graveyard_convex_verhulst_params/eigenvalues.py >}}
 ```
 which seems to work... except that output is enormous. While I might just throw a bunch of randomly-selected values along with the usual corner cases (zero, $\pm$one, $\pm$infinity) into the eigenfunctions to look for negative values, I am hoping that asking here yields something more elegant.

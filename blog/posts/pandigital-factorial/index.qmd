@@ -1025,7 +1025,7 @@ The table is wide enough that scrolling left-to-right will be necessary... Sorry
 If you would like to tinker with the code that generated this result, here it is:
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/pandigital_factorial/pandigital.py >}}
 ```
 
 Happy pattern hunting!

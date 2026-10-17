@@ -18,7 +18,7 @@ $$T_{\text{Arrivals}} \sim \begin{cases}  \delta(\infty) & \text{Customers} \geq
 where $\delta(\infty)$ denotes a [Dirac delta distribution](https://en.wikipedia.org/wiki/Dirac_delta_function) centered at infinity. You can consider this an abuse of notation that simply indicates that arrivals stop after 5 customers, or you could take a couple of distinct approaches: one defining this concept in terms of limits or the other in terms of the [extended real numbers](https://en.wikipedia.org/wiki/Extended_real_number_line). We'll just stick to it being an informal abuse of notation here. In Python we'll define this as `MaxArrivalDist`:
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/ciw_simpy_bank_renege/max_arrival.py >}}
 ```
 
 Just so we don't simulate for too much or too little time, we can also set the termination condition of our simulation to be the number of customers that have left the system (i.e. have received service and left). Following the Ciw guide [*How to Simulate For a Certain Number of Customers*](https://ciw.readthedocs.io/en/latest/Guides/sim_numcusts.html) we can call the `simulate_until_max_customers(5, method='Finish')` method on an instance of `Simulation` to achieve this result. This way the `current_time` at the end of the simulation will be the amount of time for all five customers to sojourn.
@@ -35,14 +35,14 @@ Following Ciw guide [*How to Simulate Reneging Customers*](https://ciw.readthedo
 
 
 ```python
-{{< include ./scripts/script_2.py >}}
+{{< include ./src/ciw_simpy_bank_renege/network.py >}}
 ```
 
 How long should we expect this simulation to take? According to queueing theory, such a system is stable if $\rho \triangleq \frac{\lambda}{\mu} < 1$. In this case $\lambda = \frac{1}{10}$ and $\mu = \frac{1}{12}$ so $\rho = \frac{6}{5} > 1$. But there actually is something importantly different from this classic theoretical setting: we know ahead of time we're simulating for only 5 customers. So the theoretical concern of the length of the waitlist having unbounded asymptotic behaviour is not a concern here. That doesn't mean that the distribution is easy to estimate. One cannot, for example, simply add the random variables to get the correct distribution as that would ignore that there is waiting time on the queue and that some of the customers will renege. Instead, we'll simulate and record the simulation times that result.
 
 
 ```python
-{{< include ./scripts/script_3.py >}}
+{{< include ./src/ciw_simpy_bank_renege/runtime.py >}}
 ```
 
 The above code results in the plot:

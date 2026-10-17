@@ -9,5 +9,5 @@ bibliography: references.bib
 [Ciw](https://ciw.readthedocs.io/en/latest/) is a [Python](https://www.python.org/) package for [simulating](https://en.wikipedia.org/wiki/Discrete-event_simulation) [queueing networks](https://en.wikipedia.org/wiki/Queueing_theory). A [M/M/c queue](https://en.wikipedia.org/wiki/M/M/c_queue) can be implemented and simulated using Ciw [@kendall1953] in the following way.
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/m_m_c_queue_ciw/queue.py >}}
 ```

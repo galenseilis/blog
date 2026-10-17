@@ -32,7 +32,7 @@ $$\vec p_f (t) \triangleq \begin{bmatrix} \frac{\exp \left(\cos t + \sin t \righ
 Here is the decomposition using Python (NumPy):
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/parity_decomposition_in_python/parity.py >}}
 ```
 
 ![](./figures/example_parity_decomposition.png)

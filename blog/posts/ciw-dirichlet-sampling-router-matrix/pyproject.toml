@@ -1,0 +1,48 @@
+[project]
+name = "ciw-dirichlet-sampling-router-matrix"
+version = "0.1.0"
+description = "Dirichlet resampling for stochastic Ciw routing matrices."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Galen Seilis" }]
+keywords = [
+    "ciw",
+    "discrete-event-simulation",
+    "queueing-networks",
+    "dirichlet",
+]
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+dependencies = [
+    "ciw>=2.3.0",
+    "numpy>=1.26",
+    "pandas>=2.0",
+    "tabulate>=0.9.0",
+]
+
+[project.scripts]
+ciw-dirichlet-sampling-router-matrix = "ciw_dirichlet_sampling_router_matrix.example:main"
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ciw_dirichlet_sampling_router_matrix"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/ciw_dirichlet_sampling_router_matrix", "tests", "README.md", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff.lint.per-file-ignores]
+"src/ciw_dirichlet_sampling_router_matrix/*.py" = ["T201", "PLR0915", "PLR0912", "PLR0913", "N803", "N806"]
+"tests/*.py" = ["S101"]

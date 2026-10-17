@@ -8,7 +8,7 @@ categories: [Python, Asyncio, subprocess, Asynchronous Programming, Concurrent P
 We can define a "Hello, World" type of example using [Asyncio](https://docs.python.org/3/library/asyncio.html) as follows:
 
 ```python
-{{< include ./scripts/example.py >}}
+{{< include ./src/asyncio_hello_world/hello.py >}}
 ```
 
 If you try to run the above Python code directly in a Quarto code block, it will give an error:
@@ -22,13 +22,13 @@ So similar to what I have done with other languages, we can define a script whic
 With Python this is pretty straightforward because we don't need to consider compiling code ourselves, much less linking object files. The following is a good start:
 
 ```python
-{{< include ./scripts/run_python.py >}}
+{{< include ./src/asyncio_hello_world/runner.py >}}
 ```
 
-Putting this code in `./scripts/run_python.py`, we can call it like this:
+Putting this code in `./src/asyncio_hello_world/runner.py`, we can call it like this:
 
 ```python
-{{< include ./scripts/run_asyncio.py >}}
+{{< include ./src/asyncio_hello_world/cli.py >}}
 ```
 
 ```default

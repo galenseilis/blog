@@ -10,3 +10,5 @@ fonctions = "fonctions" # INFO: French
 Correspondance = "Correspondance" # INFO: French journal title
 Plas = "Plas" # INFO: Surname fragment in "VanderPlas"
 ois = "ois" # INFO: Fragment of "Francois" with TeX accent commands
+Hae = "Hae" # INFO: Korean given name, e.g. "Hae Kyung Im"
+americanus = "americanus" # INFO: Latin species epithet, e.g. "Alces americanus"

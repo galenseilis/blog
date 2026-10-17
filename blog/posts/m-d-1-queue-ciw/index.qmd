@@ -8,5 +8,5 @@ categories: [Simulation, Discrete-Event-Simulation, Queueing-Networks, Ciw]
 [Ciw](https://ciw.readthedocs.io/en/latest/) is a [Python](https://www.python.org/) package for [simulating](https://en.wikipedia.org/wiki/Discrete-event_simulation) [queueing networks](https://en.wikipedia.org/wiki/Queueing_theory). An [M/D/1 queue](https://en.wikipedia.org/wiki/M/D/1_queue) can be implemented and simulated using Ciw in the following way.
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/m_d_1_queue_ciw/simulate.py >}}
 ```

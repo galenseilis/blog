@@ -166,7 +166,7 @@ stateDiagram-v2
 The first thing we can readily model is the routing from one square to another. We can do this by just creating a list of lists representing the required stochastic matrix (AKA routing matrix). The ordinary state transitions (i.e. moving the player's piece) happen with equal probability for any of the six steps ahead of the current state. The jump spots send the piece to some other particular state with probability of one.
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/ciw_snakes_ladders/board.py >}}
 ```
 
 We only want new arrivals to the Snakes and Ladders game to occur once at the very beginning of the simulation. Thus all the arrival distributions except the first one should be set to `None`, which can be quickly written as `29 * [None]`. For the first square we can define a sequence of arrival times where the first time is zero and the second time is infinity. This can be given as `ciw.dists.Sequential([0, float('inf')])`. Here we are not really using infinity as a number with algebraic rules, but we rather assume that it is a token that entails that the second arrivals never occur. 
@@ -174,25 +174,25 @@ We only want new arrivals to the Snakes and Ladders game to occur once at the ve
 Putting these two steps together, we can simply concatenate these two types of arrival distributions as follows:
 
 ```python
-{{< include ./scripts/script_2.py >}}
+{{< include ./src/ciw_snakes_ladders/arrivals.py >}}
 ```
 
 Next we can consider the service distributions in Ciw. In this case these can be used to represent the amount of time until a player makes their next move. Whenever an ordinary move is made we can assume that it takes one discrete unit of time which can be represented by `ciw.dists.Deterministic(1)`. However, we need to account for jumpy positions which lead to another transition instantly. These should have a zero arrival time, which we can represent as `ciw.dists.Deterministic(0)`. Putting these together into a list we have:
 
 ```python
-{{< include ./scripts/script_3.py >}}
+{{< include ./src/ciw_snakes_ladders/services.py >}}
 ```
 
 Now let's consider the fact that we need some number of player pieces to enter the simulation at the start of the simulation. We already set the timing of these arrivals in the arrival distributions, but this does not specify how many pieces will arrive. For this example I have simply assumed that there are 6 players, but we could readily use any counting number of players. This is represented using `ciw.dists.Deterministic(6)`. In a similar fashion as before for the arrival distributions, we also set `None` to the other 29 positions so that pieces only arrive at the starting position of the game board. Putting these distributions together we have:
 
 ```python
-{{< include ./scripts/script_4.py >}}
+{{< include ./src/ciw_snakes_ladders/batching.py >}}
 ```
 
 We must make an assumption about the number of servers. In terms of our generalization of Snakes and Ladders this amounts to controlling how many pieces can leave a square at once. This could be changed for fun, however a natural assumption is that there is no such limit. This involves associating a `float('inf')` to each node for the number of servers, which can be done using multiple concatenation for all 30 squares:
 
 ```python
-{{< include ./scripts/script_5.py >}}
+{{< include ./src/ciw_snakes_ladders/servers.py >}}
 ```
 
 Another aspect that is tacit in the configuration is the queue capacities. The queueing aspect is completely unimportant for modelling a single square on a Snakes and Ladders board, so leaving the queue capacity at its default of infinite capacity ensures that pieces cannot block each other.
@@ -201,10 +201,10 @@ Another aspect that is tacit in the configuration is the queue capacities. The q
 Here is the complete example:
 
 ```python
-{{< include ./scripts/script_6.py >}}
+{{< include ./src/ciw_snakes_ladders/simulate.py >}}
 ```
 
-The above code results in `Player 3 is the winner!`.
+The above code results in `Player 1 is the winner!`.
 
 ## Conclusions
 

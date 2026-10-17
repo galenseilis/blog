@@ -76,7 +76,7 @@ $$\frac{df}{dn} := 0 \implies 0=\frac{1}{1+n_*} - 2 \epsilon^2 \iff n_* = \frac{
 Now let us consider the Taylor series of $f$ at $n_*$.
 
 ```python
-{{< include ./scripts/dkwm_taylor_series.py >}}
+{{< include ./src/dkwm_inequality_sample_size/taylor.py >}}
 ```
 
 ```default

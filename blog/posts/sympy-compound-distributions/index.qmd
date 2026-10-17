@@ -20,7 +20,7 @@ $$N \sim \text{Normal}(X, L)$$
 In SymPy we can represent this model as follows:
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/sympy_compound_distributions/compound.py >}}
 ```
 
 I'm looking forward to seeing more advancements in SymPy for statistics. Mathematical statistics can get particularly difficult when performed by hand. Having specialized classes with handy methods for distributions or [random variables](https://en.wikipedia.org/wiki/Random_variable) could be a huge benefit to bringing in reproducible mathematical derivations of [moments](https://en.wikipedia.org/wiki/Moment_(mathematics)) (e.g. [expectations](https://en.wikipedia.org/wiki/Expected_value)) and [distributions](https://en.wikipedia.org/wiki/Probability_distribution).

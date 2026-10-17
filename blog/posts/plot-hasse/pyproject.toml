@@ -1,0 +1,42 @@
+[project]
+name = "plot-hasse"
+version = "0.1.0"
+description = "Plotting Hasse diagrams with NetworkX."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Galen Seilis" }]
+keywords = ["networkx", "plotting", "hasse-diagram", "order-theory"]
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+dependencies = [
+    "matplotlib>=3.8",
+    "networkx>=3.2",
+    "numpy>=1.26",
+]
+
+[project.scripts]
+plot-hasse = "plot_hasse.core:main"
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/plot_hasse"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/plot_hasse", "tests", "README.md", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff.lint.per-file-ignores]
+"src/plot_hasse/*.py" = ["T201", "PLR0915", "PLR0912", "PLR0913", "N803", "N806"]
+"tests/*.py" = ["S101"]

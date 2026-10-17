@@ -11,18 +11,7 @@ In a previous post I showed how to start the most basic Flask web application. I
 $$n! \triangleq \prod_{i=1}^n i$$ when $n \geq 1$ and when $n=0$ then $0! \triangleq 1$ [@factorial2023]. We will set a dynamic URL which takes an integer for which the factorial will be calculated and displayed. We can specify this by passing `'/factorial/<int:number>'`. The prefix `/factorial/` is just to remind us that we're calculating the factorial of a number. The angle brackets `<TYPE:...>` indicate that something is unspecified input in between the brackets with type `TYPE`. In this case we want `<int: ...>` because the factorial function (not to be confused with its generalizations, like the gamma function) is defined only for non-negative integers. It is natural to use `number` since we expect a number, but other names are possible for this.  
 
 ```python
-from math import factorial
-
-from flask import Flask
-
-app = Flask(__name__)
-
-@app.route('/factorial/<int:number>')
-def calculate_factorial(number):
-    return str(factorial(number))
-
-if __name__ == '__main__':
-    app.run(debug=True)
+{{< include ./src/flask_dynamic_url/app.py >}}
 ```
 
 That's it. We're just taking the number, calculating its factorial, casting the result to a string, and returning it. Flask takes care of the rest.

@@ -1,5 +1,11 @@
 project:
   type: website
+  render:
+    # Render only Quarto documents. Markdown files that live alongside the
+    # posts (package docs, READMEs, licenses) are support material rather
+    # than blog pages, so they are excluded from the site and its listings.
+    - "*.qmd"
+    - "posts/**/*.qmd"
 
 website:
   description: "A blog by a technology and math enthusiast!" # Like we have not seen that before.

@@ -22,7 +22,7 @@ Let us say we have a curve $$y = f(x)$$, with a point $$p = (a, f(a))$$. A tange
 $$T_pC = \text{span} \{ \langle 1, f^{\prime} \rangle \} = \{ \langle c, c f^{\prime}(a) | c \in \mathbb{R} \}.$$
 
 ```python
-{{< include ./scripts/tangent_space_cubic.py >}}
+{{< include ./src/notes_differential_forms/tangent_space_cubic.py >}}
 ```
 
 ![Tangent space to a cubic curve](./figures/tangent_space_cubic.png)
@@ -51,7 +51,7 @@ Let $y = x^2$, then the coordinate vector is $(x,y)(p) = (a, a^2) \in C$. Simila
 
 
 ```python
-{{< include ./scripts/tangent_space_quadratic.py >}}
+{{< include ./src/notes_differential_forms/tangent_space_quadratic.py >}}
 ```
 
 ![Tangent space to a parabola](./figures/tangent_space_quadratic.png)
@@ -75,7 +75,7 @@ If you want to keep track of the tangent space at different points, you can deno
 Suppose we have $\langle 1, 2 \rangle_{(1,1)}$, we can think of the differentials as another set of axes as visualized below.
 
 ```python
-{{< include ./scripts/tangent_space_axes.py >}}
+{{< include ./src/notes_differential_forms/tangent_space_axes.py >}}
 ```
 
 ![Differential axes for a tangent vector](./figures/tangent_space_axes.png)

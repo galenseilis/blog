@@ -11,13 +11,13 @@ I asked ChatGPT:
 It responded by naming the chat session "Partial Order Plotting" and gave the following response:
 > Sure, here's a Python script that takes a networkx.DiGraph object representing a partial order and plots it according to the rules of a covering diagram using matplotlib library:
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/chatgpt_plot_covering_diagram/covering.py >}}
 ```
 
 > This function takes a `networkx.DiGraph` object `dg` as input, and it computes the levels of the partial order using `nx.topological_sort()`. It then assigns positions to the nodes based on their level and position within the level, and adds edges for the covering relations. Finally, it uses matplotlib to plot the graph with the covering relations highlighted in red.
 > You can call this function with your `networkx.DiGraph` object as follows:
 ```python
-{{< include ./scripts/script_2.py >}}
+{{< include ./src/chatgpt_plot_covering_diagram/full_example.py >}}
 ```
 > This will create a plot of the partial order with a covering diagram.
 
@@ -43,7 +43,7 @@ Offhand I don't know if the function is correct, but I would like to try some te
 Before doing that, I will replace `plt.show()` with `plt.savefig('chatgpt_cover_relation_plotter_output_test.png', dpi=300, transparent=True)` so I can comfortably embed the output on this blog post. And now let us run this case
 
 ```python
-{{< include ./scripts/script_3.py >}}
+{{< include ./src/chatgpt_plot_covering_diagram/failing_example.py >}}
 ```
 
 which should produce an output similar to this:

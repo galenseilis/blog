@@ -1,0 +1,270 @@
+---
+title: "Moose Movement in Relation to Roads"
+author: "Galen Seilis"
+date: "2026-10-16"
+categories: [Mathematics, Statistics, Movement Ecology, Road Ecology, Wildlife Ecology, Resource Selection, Step Selection Functions, Hidden Markov Models, Stochastic Processes, Moose, Literature Review]
+bibliography: references.bib
+---
+
+A moose that walks onto a highway is a public-safety problem, a conservation problem, and a modelling problem all at once. Because a moose has a high centre of mass and long, brittle legs, a collision at highway speed sends the body through the windscreen rather than over the bonnet; in Maine, collisions with moose accounted for about 15% of reported animal collisions but roughly half of the human injuries and 14 of 17 fatalities over a five-year period [@mmwr2006]. Reported counts exceed 800 collisions per year in Alaska alone [@adotpf2018]. The same animal is also, for most of the year, trying *not* to be near a road: roads carry traffic, hunters, and wolves, all of which raise mortality risk, yet roadsides offer salt, early green-up, and thin snow that lower foraging and travel costs. Moose movement in relation to roads is therefore not one phenomenon but a competition between avoidance and attraction, resolved differently by season, sex, traffic volume, road class, snow depth, and the presence or absence of predators.
+
+This post reviews how that competition has been modelled. A recurring observation in methodological reviews of movement ecology is that the field's apparent disagreement about whether moose avoid or prefer roads reflects, in large part, differences in what each model *measures*. A resource selection function estimates relative selection given a chosen availability set; a step selection function estimates the same thing but defines availability by the movement kernel; an integrated step selection function estimates selection and movement jointly; a continuous-time stochastic model estimates drift and diffusion fields and yields a stationary distribution; a hidden Markov model estimates behaviour-specific selection; and a collision-risk model estimates a hazard on road segments. These are not competing estimates of one number. They are estimates of different functionals, and the mathematics identifies which functional each model targets and under what assumptions it is identified.
+
+Throughout, positions live in a domain $\Omega \subseteq \mathbb{R}^2$ and roads are a set $R \subset \Omega$ that we treat as a union of curves,
+
+$$R = \bigcup_{k} \gamma_k\!\left([0, L_k]\right), \qquad d_R(x) = \inf_{r \in R} \lVert x - r \rVert,$$
+
+with $d_R$ the distance-to-road field. The whole review can be read as a catalogue of the different ways $d_R$, and its cousin the crossing event, enter a likelihood.
+
+This post complements earlier posts on this blog: [the ellipse method](https://galenseilis.github.io/blog/posts/ellipse-intersections-for-moose-movement/) for bounding a path between fixes, [the Ornstein-Uhlenbeck model](https://galenseilis.github.io/blog/posts/fokker-planck-moose-movement/), and [the general Fokker-Planck model](https://galenseilis.github.io/blog/posts/general-fokker-planck-moose-movement/). Where the continuous-time framework below overlaps those posts, the derivation is kept short and the reader is pointed back.
+
+## What is being estimated?
+
+Before comparing models it is worth naming the estimands, because most disputes in the moose-road literature are disputes about which one is intended.
+
+1. **Relative selection.** The ratio of used to available density at a location,
+$$w(x) = \frac{u(x)}{a(x)},$$
+where $u$ is the intensity of use and $a$ is the intensity of availability. This is a dimensionless quantity, defined only up to a positive constant, and meaningful only relative to the availability measure $a$ [@manly1993; @boyce1999relating].
+2. **The movement kernel.** The distribution of a step, $\varphi(r, \theta)$, as a function of step length $r$ and turning angle $\theta$, possibly depending on habitat.
+3. **Crossing intensity.** The expected number of crossings of the road network per unit time,
+$$\Lambda_{\text{cross}} = \mathbb{E}\!\left[\#\{t : X_t \in R, X \text{ crosses } R \text{ at } t\}\right].$$
+4. **Collision hazard.** The expected number of moose-vehicle collisions per unit time and unit road length, $\lambda_{\text{MVC}}(s, t)$, on segment $s$ at time $t$.
+
+Frameworks 1--2 are *selection* models; 3--4 are *exposure/risk* models. The bridge between them is the flux of the animal across the road line, the quantity on which the exposure models and the selection models differ most sharply. The same crossing event is approached from the deterministic side in the [ellipse-bounding method](https://galenseilis.github.io/blog/posts/ellipse-intersections-for-moose-movement/): given a maximum speed and two fixes, it determines which road crossings are even physically possible.
+
+## The observation layer comes first
+
+Every model above is fitted to GPS telemetry, and GPS telemetry is not the position process. It is the position process composed with an error and missingness mechanism. Writing the truth as $X(t)$ and the fixes as $Y_i$ at times $t_i$,
+
+$$Y_i = X(t_i) + \varepsilon_i, \qquad \varepsilon_i \sim F_i,$$
+
+where the error distribution $F_i$ is *not* homogeneous: it depends on canopy closure, terrain, collar orientation, and whether the animal is moving or bedded [@moen1996; @deon2005]. Fix success is likewise selective. If $R_i \in \{0,1\}$ indicates whether a scheduled fix succeeded, then $p_{\text{fix}}(x) = \mathbb{P}(R_i = 1 \mid X(t_i) = x)$ varies with habitat, and ignoring it biases habitat selection estimates; the standard correction is to model fix success as a function of habitat and reweight, or to include it as a detection layer [@frair2004]. Taken together, these studies establish a point that has become standard in the movement ecology literature: *the telemetry device is itself a habitat-selective sampler* [@moen1996; @deon2005; @frair2004].
+
+Three consequences of this observation layer matter specifically for roads.
+
+**Attraction to the truth by measurement.** Because $d_R$ has a kink (and zero set) on the roads themselves, additive error is not innocuous. For any $Y = X + \varepsilon$,
+
+$$d_R(Y) \le d_R(X) + \lVert \varepsilon \rVert,$$
+
+so fixes near a road are pushed systematically *away* from the road by roughly $\mathbb{E}\lVert\varepsilon\rVert$, while fixes far from a road can be pushed either way. If the estimated selection gradient is $\hat\beta_R$ on $d_R(Y)$ while the true one is $\beta_R$ on $d_R(X)$, the discrepancy is classical attenuation plus a road-mediated contamination term, and its sign depends on the local density of animals at intermediate distances. In practice authors either discard fixes within a radius of the estimated error or use a spatial error model; the point is that the choice must be made explicitly.
+
+**False and missed crossings.** Define the crossing event of a recorded step as
+
+$$C_i = \mathbf{1}\!\left\{\ [Y_{i-1}, Y_i] \cap R \neq \emptyset\ \right\}.$$
+
+A true crossing can be missed if both endpoints are displaced to the same side, and a false crossing can appear if either endpoint is displaced across the road. The probability of a false crossing is therefore bounded below by
+
+$$\mathbb{P}(C_i = 1 \mid \text{no true crossing}) \ \gtrsim\ \mathbb{P}\!\left(d_R(X_{i-1}) < \lVert\varepsilon_{i-1}\rVert\right) + \mathbb{P}\!\left(d_R(X_i) < \lVert\varepsilon_i\rVert\right).$$
+
+With location errors of tens of metres, moose that spend time within a road-effect zone of the same order are misclassified at non-negligible rates. For this reason, crossing counts are usually reported alongside a stated error model, and the [ellipse method](https://galenseilis.github.io/blog/posts/ellipse-intersections-for-moose-movement/) for bounding paths provides a hard, error-free check on which crossings are even possible.
+
+**Fix rate is a scale filter.** A consequential observation-level choice is the time between fixes, $\Delta t$. Let $p_u(\Delta t)$ and $p_a(\Delta t)$ be the probabilities that a *used* and an *available* step, respectively, cross a road during an interval of length $\Delta t$. A step selection model can only detect a road effect through the contrast between these two probabilities, and the relevant contrast is on the log-odds scale,
+
+$$\beta_R \propto \operatorname{logit} p_u(\Delta t) - \operatorname{logit} p_a(\Delta t).$$
+
+Now let $\Delta t \to 0$: both probabilities tend to zero, and the step never resolves the road. Let $\Delta t \to \infty$: both probabilities tend to one, and again the contrast vanishes. Information about road selection is concentrated at intermediate fix rates, where $p$ is bounded away from both $0$ and $1$. Thurfjell, Ciuti and Boyce make exactly this argument with hypothetical moose: 15- and 30-minute fixes never cross the road and suggest pure avoidance, while 45- and 60-minute fixes produce steps that cut across it and can suggest preference [@thurfjell2014]. Their example indicates how the scale of observation, rather than the biology, can drive the answer. Results of this kind should be read with the fix rate attached.
+
+## Resource selection functions: use versus availability
+
+The oldest and still most common framework compares where an animal was *used* to what was *available*. Let $u(x)$ and $a(x)$ be the use and availability intensities. The selection function is
+
+$$w(x) = \frac{u(x)}{a(x)},$$
+
+and in the exponential (log-linear) family
+
+$$w(x) = \exp\!\left(\beta^{\top} x\right),$$
+
+where $x = (x_1, \dots, x_p)$ is a vector of covariates, one of which is typically $d_R$ or a road-density covariate $\rho_R$ in a buffer. Availability is usually implemented as a sample of points drawn from the study area or from within each home range, and the model is fitted by logistic regression in a case-control design: used units as cases, available units as controls. Under that design the slope $\beta$ is consistently estimated even though the intercept is only identified up to the marginal case proportion [@manly1993; @boyce1999relating].
+
+The relative nature of $w$ is a defining property of the framework rather than a technical nuisance: two researchers who define availability differently — one sampling uniformly over the study area, one sampling within a 95% minimum convex polygon per individual — are not estimating the same $\beta_R$, and both are estimating something real. Johnson's hierarchy codifies this [@johnson1980]: selection of a home range within the geographic range (second order), of patches within the home range (third order), of food items within patches (fourth order). Moose-road studies sit mostly at the second and third orders, and the covariate that means "avoidance" at one order is often a different object than the covariate that means "avoidance" at another.
+
+Three refinements recur in the moose literature.
+
+**Functional responses.** The coefficient on a road covariate is usually not constant across the population or the landscape. Writing $\beta_R = f(\rho_R)$ for the road density at the home-range scale lets selection itself depend on the context in which the animal chooses, which is the *functional response* in habitat selection [@vanbeest2015]. Beyer and colleagues found exactly this threshold behaviour in moose: avoidance of roads strengthens above a road-density threshold, and the response differs by season and time of day [@beyer2013functional]. Finnegan and colleagues found functional responses to seismic lines and pipelines but, at the population level, indifference to roads, with individual variation doing the work [@finnegan2023].
+
+**Individual variation.** Selection coefficients vary among individuals. A random-effects specification,
+
+$$\beta_{ik} = \beta_k + b_{ik}, \qquad b_i \sim \mathcal{N}(0, \Sigma),$$
+
+with $b_i$ the individual deviation vector, is the mixed conditional-logistic model developed for exactly these matched use-availability designs [@duchesne2010]. The two-stage alternative — fit each animal separately, then analyse the coefficient estimates — is simpler and gives the same population mean with a between-individual variance estimate [@gillies2011]. The distinction matters for roads because the coefficient of interest is often a *variance* in road avoidance, not just its mean: some moose in a herd of collared animals are habitual road users and some are not.
+
+**Probability versus relative intensity.** If one wants the actual probability that an available unit is used rather than a ratio, the exponential model must be normalized,
+
+$$\mathbb{P}(\text{use} \mid \text{available at } x) = \frac{w(x)\, a(x)}{\int_\Omega w(y)\, a(y)\, dy}.$$
+
+This is the resource selection probability function, and unlike $w$ it is an absolute quantity, but it requires a correctly normalized availability measure over a bounded domain [@manly1993]. Most published moose-road "RSFs" are relative selection functions, and the difference explains why their coefficients cannot be compared across studies with different availability domains.
+
+## Step selection: making availability the movement kernel
+
+The critique of use-availability RSFs is that a uniform availability set is not what the animal could have reached. A moose cannot materialize on the far side of a lake or beyond a ridge in the next hour. Step selection functions replace the abstract availability set with the *reachable* set implied by the observed movement, and in doing so they make the movement kernel part of the model [@fortin2005].
+
+Let $X_{i-1}$ be the current location and write a step by its polar coordinates
+
+$$s_i = \left(r_i, \theta_i\right), \qquad r_i = \lVert X_i - X_{i-1}\rVert, \qquad \theta_i = \angle(X_i - X_{i-1}).$$
+
+The step-selection model assumes that the density of a used step is proportional to a selection weight times a movement kernel,
+
+$$p_{\text{use}}(s) \ \propto \ w\!\left(x(s)\right)\, \varphi(s), \qquad \varphi(s) = f(r)\, h(\theta),$$
+
+where typically $f$ is a gamma or exponential density on step length and $h$ a von Mises density on turning angle,
+
+$$f(r \mid \lambda) = \frac{1}{\lambda} e^{-r/\lambda}, \qquad h(\theta \mid \kappa) = \frac{e^{\kappa \cos\theta}}{2\pi I_0(\kappa)},$$
+
+with $I_0$ the modified Bessel function. Availability is generated by sampling from the *same* kernel $\varphi$ around each observed start point, and the model is fitted by conditional logistic regression: for each used step $s_i^{\text{u}}$ and $J$ available steps $s_i^{(1)}, \dots, s_i^{(J)}$,
+
+$$\mathcal{L}(\beta) = \prod_{i=1}^{n} \frac{\exp\!\left(\beta^{\top} x(s_i^{\text{u}})\right)}{\exp\!\left(\beta^{\top} x(s_i^{\text{u}})\right) + \sum_{j=1}^{J} \exp\!\left(\beta^{\top} x(s_i^{(j)})\right)}.$$
+
+Because the movement kernel $\varphi$ is common to the numerator and every denominator term, it cancels: the conditional likelihood identifies $\beta$ without committing to the movement parameters. This cancellation is what makes the method attractive, and also the source of its main caveat. The appealing part is that SSF coefficients have a clean interpretation as log relative selection, exactly as in the RSF, but with availability defined by movement. The caveat is that the cancellation is only valid if the availability kernel used to *sample* is the true movement kernel, or at least proportional to it on the support that matters. Under misspecification the cancelled factor does not cancel and $\beta$ is biased; Forester, Im and Rathouz showed this in simulation and showed that including step length (and turning angle) as covariates absorbs much of the misspecification, because the movement attributes then enter the linear predictor explicitly [@forester2009].
+
+There is an equivalent and, for our purposes, more revealing way to write the same model. The used-step process is an inhomogeneous Poisson point process on the step space with intensity
+
+$$\lambda(s) = w\!\left(x(s)\right)\, \varphi_0(s),$$
+
+conditioned on one point per stratum. In this form the SSF is the discrete-time cousin of a continuous-time selection model, and the two can be made to agree at fine temporal resolution. It is also the form in which the road covariate question becomes sharp.
+
+**Where is the road covariate measured?** This is the point on which moose-road SSFs most often differ, and it is not a cosmetic choice. A linear feature can enter at the step's endpoint, $x(s) = d_R(X_i)$; along the path, $x(s) = \int_0^1 d_R\!\left(X_{i-1} + u\,(X_i - X_{i-1})\right) du$; or through a buffer around the path. Endpoints capture *being near* a road; path integrals capture *crossing* it. Thurfjell and colleagues make the argument geometrically: if a wolf walks along a road but the mapped road is a vector without width, no endpoint will ever land exactly on the road, and endpoint measurement underestimates selection for linear features; if instead a road is avoided, only path- or buffer-based covariates register the crossing [@thurfjell2014]. For moose, whose response to roads can change sign depending on whether the animal is lingering or traversing, this covariate definition can determine the sign of the estimated effect. The SSF literature can therefore report avoidance and attraction for the same animal, depending on whether the covariate of interest is a distance at the endpoint or an integral along the step.
+
+**Relative step selection strength.** Because $w$ is exponential, the effect size for comparing two steps is a log ratio,
+
+$$\log \mathrm{RSS}(s_1, s_2) = \beta^{\top}\!\left(x(s_1) - x(s_2)\right),$$
+
+the relative selection strength, which can be plotted against one covariate while holding the rest fixed [@avgar2017rss]. Prokopenko, Boyce and Avgar use precisely this device for elk responding to roads, giving curves of relative selection as a function of distance to road and time of day, and showing that the same coefficient can encode avoidance at one hour and neutrality at another [@prokopenko2016].
+
+## Integrated step selection: estimating movement and selection together
+
+The SSF's movement kernel cancels, which is convenient for inference about $\beta$ but leaves the model unable to predict movement. The integrated step selection function (iSSF, also iSSA) estimates both the selection and movement components in one conditional likelihood [@avgar2016issa]. The used-step density is
+
+$$p_{\text{use}}(s) \ \propto \ \exp\!\left(\beta^{\top} x(s)\right) f\!\left(r \mid \lambda\!\left(x(s)\right)\right) h\!\left(\theta \mid \kappa\!\left(x(s)\right)\right),$$
+
+and, crucially, the movement parameters $\lambda$ and $\kappa$ are treated as functions of habitat and estimated jointly with $\beta$, rather than being fixed by the sampling procedure. In the simplest case the linear predictor becomes
+
+$$\log w(s) = \beta^{\top} x(s) + \log f\!\left(r \mid \lambda\right) + \log g\!\left(\theta \mid \kappa\right),$$
+
+which shows that an iSSF is an SSF with the movement terms moved inside the linear predictor. The parameter $\lambda$ is a mean step length (a speed), and $\kappa$ a directional persistence; estimating them as functions of $d_R$ answers a biologically different question from the RSF, namely whether moose *move faster* (or more directionally) near roads. That is the "haste" hypothesis — animals traversing a risky neighbourhood at speed rather than lingering — and it is not testable with a plain RSF.
+
+The payoff of integrating movement is predictive. Once $\beta$, $\lambda$ and $\kappa$ are known, the model is a mechanistic, habitat-dependent random walk with redistribution kernel
+
+$$K(x, dy) = \frac{w(y)\, f\!\left(\lVert y - x\rVert \mid \lambda(y)\right) h\!\left(\theta_{y} \mid \kappa(y)\right) dy}{\int_\Omega w(z)\, f\!\left(\lVert z - x\rVert\right) h\!\left(\theta_z\right) dz},$$
+
+and the stationary utilization distribution is the solution of the balance equation
+
+$$p_\infty(y) = \int_\Omega p_\infty(x)\, K(x, dy).$$
+
+This is an eigenvalue problem for the chain, and solving it by simulation is the standard "scaling up" from step decisions to space use [@avgar2016issa; @potts2023scale]. The stationary distribution turns out to have the same functional form as an RSF weight, which is the deep reason the two families keep agreeing empirically despite being fitted to different data [@moorcroft2008; @potts2020diffusion]. For managers, the practical consequence is that an iSSF fitted to moose steps can be used to simulate the effect of a new road or a fence in silico, which an RSF cannot do without additional assumptions.
+
+## Continuous time: from step models to diffusion and Fokker-Planck
+
+The discrete-time step models are approximations to a continuous process, and writing the continuous process explicitly buys a set of tools — boundary conditions, flux, stationary solutions — that the discrete models lack. The starting point is the Ito stochastic differential equation for position,
+
+$$dX_t = \mu(X_t, t)\, dt + \sigma(X_t, t)\, dW_t,$$
+
+whose density $p(x, t)$ obeys the Fokker-Planck equation
+
+$$\frac{\partial p}{\partial t} = -\nabla \cdot \left(\mu\, p\right) + \frac{1}{2} \partial_i \partial_j \left(D_{ij}\, p\right), \qquad D = \sigma \sigma^{\top}.$$
+
+This framework is developed in detail in the [Ornstein-Uhlenbeck](https://galenseilis.github.io/blog/posts/fokker-planck-moose-movement/) and [general Fokker-Planck](https://galenseilis.github.io/blog/posts/general-fokker-planck-moose-movement/) posts, including the OU reduction, the Boltzmann equilibrium $p_\infty \propto \exp(-U/D)$ for gradient drifts $b = -\nabla U$, and nonlocal interaction terms. What matters here is the menu of ways to represent a road.
+
+**Roads as a drift field (taxis).** Let $c(x)$ be an environmental cue, for instance $c(x) = -d_R(x)$ (so that smaller distance to road means larger cue) or a traffic-weighted density. The class of *diffusion-taxis* models adds a directed drift along the cue,
+
+$$\frac{\partial p}{\partial t} = \nabla \cdot \left(D\, \nabla p - \alpha\, p\, \nabla c\right) + (\text{nonlocal interaction terms}),$$
+
+with $\alpha > 0$ attracting and $\alpha < 0$ repelling. Potts and Schlägel showed that step selection analysis at fine temporal resolution parametrizes exactly this class, and that the steady-state utilization distribution has the same closed form as a resource selection function [@potts2020diffusion]. This is the formal bridge between the movement-first and selection-first literatures: an RSF is (under regularity) the long-run distribution of a taxis process, and the coefficients are related by $\beta = \alpha \nabla c / D$ in the linear case. It also clarifies what a road coefficient means: it is a drift, not a preference, and it is only interpretable as a stationary preference if the process is ergodic and the domain bounded, which a real moose range with fences, highways and seasonal migration is not guaranteed to be.
+
+**Roads as a boundary.** The alternative is to treat a road as a semi-permeable line and impose a boundary condition on the probability current $J = \mu p - \frac{1}{2}\nabla \cdot (D p)$. A fully avoiding moose has a no-flux condition on $R$,
+
+$$J \cdot n = 0 \quad \text{on } R,$$
+
+a crossing moose has a partial-flux or radiative condition, and a lethal crossing can be represented by a sink $-\lambda(x) p$ concentrated on $R$, removing the tiny probability mass that enters the carriageway. These are exactly the barrier and sink devices built into the [general Fokker-Planck model](https://galenseilis.github.io/blog/posts/general-fokker-planck-moose-movement/), and they are the natural home for the *barrier* aspect of roads, which most step-based studies handle only implicitly through availability. A continuous-time formulation also separates observation error from process: the correlated random walk for the velocity,
+
+$$dX_t = V_t\, dt, \qquad dV_t = -\beta V_t\, dt + \Sigma\, dW_t,$$
+
+fitted to noisy fixes as a continuous-time correlated random walk, is the standard way to estimate movement parameters from error-contaminated telemetry without first cleaning the tracks [@johnson2008]. The moose-specific case is instructive: movement rates, and not merely positions, respond to roads, and a process model estimates rates directly.
+
+## Hidden states: behaviour changes the road response
+
+A moose that is bedded, browsing, or travelling is, for modelling purposes, three different animals. Hidden Markov models make this explicit. Let $Z_t \in \{1, \dots, K\}$ be a latent behavioural state following a Markov chain with generator $Q$ and transition matrix $\Gamma(\Delta t) = \exp(Q \Delta t)$, and let the observation (a step, or activity-sensor reading) have state-specific density $f_k$. The likelihood is computed by the forward recursion
+
+$$\alpha_t(k) = f_k(y_t) \sum_{j=1}^{K} \alpha_{t-1}(j)\, \Gamma_{jk},$$
+
+and the resulting decoded states are the familiar "resting / foraging / travelling" tracks [@patterson2009; @michelot2016]. State-space models do the same job in a Bayesian framework with process and observation error separated [@jonsen2005].
+
+For roads the payoff is state-dependent selection. Allowing the road coefficient to differ by state,
+
+$$w_k(x) = \exp\!\left(\beta_k^{\top} x\right),$$
+
+tests the specific hypothesis that moose avoid roads while resting but use them as travel corridors while moving — a pattern that a single coefficient averages away. Combining an HMM with an integrated step-selection analysis is now standard, and has been applied directly to moose, linking behaviour-dependent selection to forage maps [@graf2026]. The methodological cost is identifiability: with $K$ states, $K$ road coefficients, and a transition matrix, a single track can support many explanations, and weakly informative priors or strong ecological constraints are needed.
+
+## Crossings and collisions: exposure and hazard
+
+Selection models estimate where moose prefer to be. Collision models estimate where and when moose die. The bridge is the *crossing process*, and it is where the moose-road literature splits most sharply.
+
+The rate at which moose cross a road line is a flux. For the diffusion process above, the expected number of crossings of a small road element of normal $n$ per unit time is the outward normal component of the probability current integrated over the road,
+
+$$\Lambda_{\text{cross}} = \int_R \left(J \cdot n\right)^{+} d\ell, \qquad J = \mu p - \frac{1}{2} \nabla \cdot \left(D p\right).$$
+
+This quantity is not the same as selection for or against $d_R$, and the difference is the reason two studies can report both avoidance and high crossing rates. An animal can avoid roads for long periods and still cross them when it must, and the crossing flux is controlled by the *drift toward and geometry of* the road, by snow that funnels movement, and by the arrangement of habitat on either side. Dussault and colleagues modelled crossing probability explicitly from moose telemetry and found movement rates elevated along highways — moose move faster near roads, consistent with haste rather than attraction [@dussault2007]. Laurian and colleagues described the behavioural profile of moose relative to a road network, including the elevated movement rates that accompany crossings [@laurian2008].
+
+The hazard side multiplies crossing exposure by traffic. For a road segment, a first-order model is
+
+$$\lambda_{\text{MVC}}(s, t) = \Phi_{\text{traffic}}(s, t) \cdot p_{\text{encounter}}\!\left(\Lambda_{\text{cross}}(s, t), v\right),$$
+
+where $\Phi_{\text{traffic}}$ is vehicle flow and $p_{\text{encounter}}$ the probability that a crossing co-occurs with a vehicle within the reaction window, which decreases with animal speed and increases with traffic speed and flow. Empirically, collision risk rises with traffic volume up to a peak and then plateaus, and it rises with speed limit [@danks2010]. The winter pattern is the clearest demonstration that movement and traffic must be modelled together: across the Arctic-boreal region, moose migrated to lower elevations as snow deepened, into shallower snow and higher road density, and collisions were 2.4 to 5.7 times more frequent in December--February than in early summer, with most occurring after dark [@cunningham2022]. Neither a movement model alone nor a traffic model alone reproduces that.
+
+Two modelling designs dominate the applied collision literature, and both are easy to misread.
+
+The **case-control design at collision sites** compares the landscape at reported collisions to random points along the same roads, giving a logistic model of the odds of collision given site covariates [@danks2010; @wattles2018]. Its limitation is that the denominator is a road-length sample, not an animal-exposure sample, so a strong "selection" for a roadside feature may reflect where moose cross rather than where they die, and a road with no reported collisions may simply have low traffic or low moose density. The remedy, pioneered for moose in Massachusetts, is to incorporate the road-crossing process estimated from telemetry as an offset or a component of the risk model, so that exposure and lethality are separated [@zeller2018]. This is the empirical realization of the flux decomposition above.
+
+The **movement-informed design** fits collision probability as a function of the phase of the animal's movement (crossing versus not) and the environment, and has been used to show that collisions cluster where and when moose cross, not merely where they live [@laliberte2020].
+
+## Comparing the frameworks
+
+The table below summarizes the frameworks as they appear in the literature. The "road enters as" column is the key: the frameworks estimate different functionals of the path rather than disagreeing about moose per se.
+
+| Framework | Estimand | Availability / baseline | Road enters as | Observation error | Chief bias | Moose-road exemplars |
+|---|---|---|---|---|---|---|
+| Use-availability RSF | relative selection $w(x)$ | fixed domain (home range or study area) | endpoint covariate $d_R$ or density $\rho_R$ | usually ignored | arbitrary availability; scale dependence | @beyer2013functional; @finnegan2023 |
+| SSF | relative selection at the step scale | movement kernel $\varphi(s)$ | endpoint or path integral | mostly ignored | kernel misspecification; fix-rate sensitivity | @fortin2005; @prokopenko2016 |
+| iSSF / iSSA | joint selection and movement | movement kernel, estimated | movement parameters $\lambda(x), \kappa(x)$ and $w(x)$ | can be built in | confounding movement with selection | @avgar2016issa; @graf2026 |
+| Diffusion-taxis / Fokker-Planck | drift, diffusion, stationary UD | mechanistic process | drift field $\alpha \nabla c$ or boundary condition | process vs. error separable | hard to fit; strong structural assumptions | @moorcroft2008; @potts2020diffusion; @johnson2008 |
+| HMM / state-space | state-specific selection and transition | state-specific kernels | state-dependent $\beta_k$ | explicit | identifiability; state number | @patterson2009; @michelot2016; @jonsen2005 |
+| Crossing-flux | expected crossings | exposure process | flux $J \cdot n$ across the line | error inflates false crossings | geometry and error | @dussault2007; @laurian2008 |
+| Collision hazard / case-control | collision rate per road length | road-length sample | site covariates + exposure offset | under-reporting | denominator, exposure, reporting | @danks2010; @wattles2018; @zeller2018; @laliberte2020 |
+
+Reading down the "road enters as" column, the apparent contradictions of the moose literature can be read as differences in estimand. Studies that measure endpoint distance tend to find avoidance or indifference; studies that measure movement rate find haste near roads; studies that measure crossing or collision find elevated hazard near roads at certain times. These are consistent statements about one animal.
+
+## What the moose literature reports
+
+With the estimands pinned down, the empirical picture reported in the literature is fairly coherent, and its variations are systematic rather than contradictory.
+
+**Avoidance is the population-level default in predator-rich, traffic-heavy landscapes.** Moose avoid areas close to roads throughout the year in Quebec, with higher movement rates near roads and larger home ranges where road density is higher, and with the aversion stronger in winter [@laurian2008; @gagnon2024]. Avoidance strengthens non-linearly with road density, with thresholds that differ by season and diel phase [@beyer2013functional]. Beyer's Alberta moose were more selective at finer scales, which is the expected signature of a functional response.
+
+**Attraction appears where a resource is concentrated at the roadside.** In eastern Poland, moose preferred roads at night in winter, plausibly for sodium from de-icing salt and for thinner snow on ploughed verges [@borowik2024]. Roadside mineral licks in British Columbia attract moose, with obvious collision consequences [@huxter2024]. The attraction is not a contradiction of avoidance; it is a seasonal, resource-driven taxis superimposed on a chronic risk-avoidance drift.
+
+**The sign of the road effect is often undetectable at the population mean.** In the Alberta foothills, moose were indifferent to roads at the population level while responding to seismic lines and pipelines, with the individual variation carrying the signal [@finnegan2023]. This is exactly the situation in which a random-effects selection model is required, and in which a mean-only RSF reports a null that hides two well-separated behaviours.
+
+**Movement rate, not preference, may be the robust road response.** The most reproducible effect across studies is that moose move faster near roads — the haste response — whereas the sign of the positional preference is study-specific [@dussault2007; @laurian2008; @gagnon2024]. This pattern motivates the use of integrated and continuous-time models, which estimate movement parameters directly, over pure selection models.
+
+**Collision risk is an exposure problem, not a preference problem.** The winter migration result [@cunningham2022] and the Massachusetts crossing-exposure model [@zeller2018] both show that the collision rate is governed by where movement takes animals and when traffic is present, more than by any stable preference for roadsides. Case-control studies that ignore exposure will systematically attribute to preference what belongs to flux.
+
+**Roads are barriers whose permeability is scale-dependent.** At very fine temporal resolution a road is a line that steps rarely cross, so a step model sees avoidance; at coarse resolution it is a feature every step crosses, so the model sees nothing. The permeability that matters ecologically — do moose cross, how often, and at what cost — is a property of the movement process on the scale of the reaction window, and continuous-time and hidden-state models are the frameworks that represent this permeability explicitly.
+
+## Open problems
+
+Four problems cut across all the frameworks, and they are widely discussed in the methodological literature as issues of inference rather than of biology.
+
+**Availability is doing the work.** In every selection model the road coefficient is defined relative to an availability measure, and the choice of that measure — study area versus home range versus step kernel versus diffusion process — changes the estimate. The unification result, that the stationary distribution of a diffusion-taxis process has the form of an RSF and can be parametrized by step selection analysis, tells us the frameworks are connected [@potts2020diffusion; @moorcroft2008; @potts2023scale], but it also means that reporting a road coefficient without its availability convention is reporting an incomplete quantity. Methodological reviews therefore call for reporting the availability kernel or domain alongside every road coefficient, as the iSSF literature now does for movement parameters.
+
+**Scale is a covariate choice, not a nuisance.** Fix rate, buffer radius, and the width of the road-effect zone are all scale choices, and Thurfjell's argument shows the road response can flip sign across them [@thurfjell2014]. A multi-scale or continuous-scale treatment — fitting selection as a function of the scale itself, or using the fix-rate sensitivity analysis they recommend — is the exception rather than the rule in the moose literature.
+
+**Observation error is still weakly handled.** Given a location error comparable to the width of the road-effect zone, false crossings and attenuated gradients are first-order effects, not second-order ones [@moen1996; @deon2005; @frair2004]. Yet the majority of moose-road studies fit selection at the raw fixes, and collision studies rarely propagate telemetry error into the crossing exposure that drives the hazard. Continuous-time state-space models that estimate movement and error jointly [@johnson2008; @jonsen2005] provide a principled treatment of this error and are less common in the moose-road literature.
+
+**Causality.** Almost all of the evidence is observational, and traffic, road density, predators, forage, snow and hunting are confounded at the landscape scale. The models are good at describing the joint distribution of movement and roads and poor at isolating the effect of a change in the road environment. Two directions have been proposed: manipulating traffic (closures, seasonal speed limits) and measuring the response, and using the mechanistic models to generate testable counterfactual predictions. The iSSF and diffusion-taxis models are the members of this family that make falsifiable out-of-sample predictions about *new* road configurations, which is what a mitigation appraisal requires.
+
+## Conclusion
+
+Moose movement in relation to roads is a well-posed problem only once the estimand is stated. Relative selection, movement rate, crossing flux, and collision hazard are four different functionals of the same trajectory, and the modelling frameworks of the literature — resource selection functions, step selection functions, integrated step selection, continuous-time diffusion and Fokker-Planck models, hidden Markov and state-space models, and collision hazard models — are estimators of those functionals under different assumptions about availability, scale, and observation error. The step selection family is the workhorse because it makes availability a movement kernel and estimates selection at the scale at which moose actually decide; the integrated form adds the ability to predict movement and hence to simulate interventions; the continuous-time diffusion-taxis formulation supplies the boundary conditions, flux, and stationary solutions needed to connect selection to exposure; and the collision models supply the denominator that turns movement into risk. The empirical record is less contradictory than it appears: moose avoid the chronic risks of roads, are drawn to roadside resources in specific seasons, traverse roads at speed when they cross, and die where those crossings coincide with traffic and darkness. The methodological literature suggests that further progress lies less in new model families than in using the connections between them — availability made explicit, scale treated as a modelled quantity, observation error propagated, and the mechanistic models used to generate testable counterfactual predictions.
+
+## References
+
+::: {#refs}
+:::

@@ -1,0 +1,39 @@
+[project]
+name = "music-word-adjacency-graph-the-little-irish-girl"
+version = "0.1.0"
+description = "Word adjacency graph for *The Little Irish Girl*."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Galen Seilis" }]
+keywords = ["word-adjacency", "network", "lyrics"]
+classifiers = [
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Mathematics",
+]
+
+dependencies = ["matplotlib", "networkx"]
+
+[project.scripts]
+music-word-adjacency-graph-the-little-irish-girl = "music_word_adjacency_the_little_irish_girl.plot:main"
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/music_word_adjacency_the_little_irish_girl"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/music_word_adjacency_the_little_irish_girl", "tests", "README.md", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff.lint.per-file-ignores]
+"src/music_word_adjacency_the_little_irish_girl/*.py" = ["T201", "PLR0915", "PLR0912", "PLR0913", "N803", "N806"]
+"tests/*.py" = ["S101"]

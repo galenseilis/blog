@@ -1,6 +1,7 @@
 ---
 title: "Notes On The Problem With Cultural Evolution"
 author: "Galen Seilis"
+date: "2023-04-03"
 categories: [Cultural-Evolution]
 bibliography: references.bib
 ---

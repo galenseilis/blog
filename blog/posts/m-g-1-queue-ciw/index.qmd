@@ -12,5 +12,5 @@ Since G in M/G/1 can be any distribution with non-negative support, we will use 
 An [M/G/1 queue](https://en.wikipedia.org/wiki/M/G/1_queue) as described can be implemented and simulated using Ciw in the following way.
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/m_g_1_queue_ciw/simulate.py >}}
 ```

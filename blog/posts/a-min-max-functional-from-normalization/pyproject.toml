@@ -1,0 +1,45 @@
+[project]
+name = "a-min-max-functional-from-normalization"
+version = "0.1.0"
+description = "Explore min/max functionals under normalization transformations."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Galen Seilis" }]
+keywords = [
+    "sympy",
+    "normalization",
+    "functionals",
+]
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+dependencies = [
+    "pandas>=2.0",
+    "sympy>=1.12",
+]
+
+[project.scripts]
+a-min-max-functional-from-normalization = "a_min_max_functional_from_normalization.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/a_min_max_functional_from_normalization"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/a_min_max_functional_from_normalization", "tests", "README.md", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff.lint.per-file-ignores]
+"src/a_min_max_functional_from_normalization/*.py" = ["T201"]
+"tests/*.py" = ["S101"]

@@ -53,7 +53,7 @@ $$
 Another representation is a directed graph (AKA a digraph):
 
 ```python
-{{< include ./scripts/example_partial_order_digraph.py >}}
+{{< include ./src/notes_order_theory/partial_order.py >}}
 ```
 
 ![Digraph representation of the example partial order](./figures/example_partial_order.png)
@@ -62,7 +62,7 @@ Another representation is a directed graph (AKA a digraph):
 > The previous example only required a relatively small subset of the Cartesian product $X \times X$. When you have too many elements in $X$ to deal with by hand, one quick Python script to make the pairs in a format suitable for $\LaTeX$ is the following:
 
 ```python
-{{< include ./scripts/latex_pairs.py >}}
+{{< include ./src/notes_order_theory/latex_pairs.py >}}
 ```
 
 ```default
@@ -171,7 +171,7 @@ flowchart TB
 > Suppose we have the strict partial order $\\{(a,c), (a,e), (b,c), (b,d), (b,e), (d,e)\\}$, then its cover diagram would look like:
 
 ```python
-{{< include ./scripts/cover_diagram.py >}}
+{{< include ./src/notes_order_theory/cover_diagram.py >}}
 ```
 
 ![Cover diagram of the example strict partial order](./figures/cover_diagram.png)

@@ -10,13 +10,13 @@ A problem I am interested in is extracting a network model on a collection of ta
 Suppose we begin with an SQL script containing three queries:
 
 ```sql
-{{< include ./scripts/script_1.sql >}}
+{{< include ./src/chatgpt_sqlparse_to_netx/sql/queries.sql >}}
 ```
 
 Here is the implementation that ChatGPT provided (after asking a half-dozen times to correct an issue where the graph ended up empty).
 
 ```python
-{{< include ./scripts/script_2.py >}}
+{{< include ./src/chatgpt_sqlparse_to_netx/sqlparse_graph.py >}}
 ```
 
 The printed output is:
@@ -31,14 +31,14 @@ Edges:
 While I can see that ChatGPT's output at a glance is pretty good, this code **does not work** in the more general case of extracting information about joins. I found that it completely flopped on accuracy in recovering the right information from nested SQL queries. For the following expanded set of cases you'll find the ChatGPT output fails on such cases:
 
 ```sql
-{{< include ./scripts/script_4.sql >}}
+{{< include ./src/chatgpt_sqlparse_to_netx/sql/nested_queries.sql >}}
 ```
 
 
 Instead, `sqlglot` provides an easy first approximation:
 
 ```python
-{{< include ./scripts/script_5.py >}}
+{{< include ./src/chatgpt_sqlparse_to_netx/sqlglot_joins.py >}}
 ```
 
 The `sqlglot` implementation still leaves some basic string processing to be done, but it provides most of what I need.

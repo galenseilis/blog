@@ -12,13 +12,13 @@ I watched a YouTube video over a year ago that showed an implementation of a spe
 I typed out the implementation in that video, and added some docstrings and type annotations.
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/paul_grogan_des/simulation.py >}}
 ```
 
 We can then initialize the simulation and run it for discrete units of time like this:
 
 ```python
-{{< include ./scripts/script_2.py >}}
+{{< include ./src/paul_grogan_des/run.py >}}
 ```
 
 Grogan's implementation is a pedagogical example that can be quickly coded and explained. What can we use for prototyping and using something more fleshed out?
@@ -26,5 +26,5 @@ Grogan's implementation is a pedagogical example that can be quickly coded and e
 The [Ciw package](https://ciw.readthedocs.io/en/latest/) is a ready-to-use discrete event simulation package for queueing networks. It covers a variety of cases, including a similar simulation:
 
 ```python
-{{< include ./scripts/script_3.py >}}
+{{< include ./src/paul_grogan_des/ciw_example.py >}}
 ```

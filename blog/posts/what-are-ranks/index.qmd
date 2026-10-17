@@ -40,7 +40,7 @@ And similarly Wikipedia lists some [methods of ranking](https://en.wikipedia.org
 Let us consider an example. Supposing a random variable $X \sim \operatorname{binomial} \left(10, \frac{1}{2} \right)$ which we can sample of size ten from and print a table using the following Python code. The binomial is suitable for this example in order to show how these ranking methods evaluate ties. In contrast, the distribution of the ranks of a continuous random variable are [almost surely](https://en.wikipedia.org/wiki/Almost_surely) uniform and would resemble the ordinal method regardless of the ranking method chosen above.
 
 ```python
-{{< include ./scripts/rank_table.py >}}
+{{< include ./src/what_are_ranks/rank_table.py >}}
 ```
 
 ```default

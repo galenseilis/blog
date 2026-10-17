@@ -10,7 +10,7 @@ It would be convenient to keep track of classes of customers in [Ciw](https://ci
 The following code works, and demonstrates that we can use tuples as the class names for Ciw.
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/ciw_tuple_class_names/tuple_keys.py >}}
 ```
 
 Also note that the tuples do not need to be of the same length, since the [lexicographical ordering](https://docs.python.org/3/reference/expressions.html#comparisons) used to evaluate tuples in Python will stop at the end of the shortest tuple.
@@ -19,13 +19,13 @@ Also note that the tuples do not need to be of the same length, since the [lexic
 But they do need to have order-compatible data. For example, the following code raises `TypeError: '<' not supported between instances of 'int' and 'str'`. 
 
 ```python
-{{< include ./scripts/script_2.py >}}
+{{< include ./src/ciw_tuple_class_names/mixed_types.py >}}
 ```
 
 One approach is to ensure equal tuple lengths *and* corresponding types by having empty types (e.g. empty string `''`) or zeros (i.e. `0`). Here is the code using the empty string instead of `'child'`.
 
 ```python
-{{< include ./scripts/script_3.py >}}
+{{< include ./src/ciw_tuple_class_names/empty_string.py >}}
 ```
 
 Tuples are a good first start. It should be possible to make a data-containing class which is immutable and ordered.

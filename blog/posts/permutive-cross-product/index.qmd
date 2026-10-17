@@ -49,7 +49,7 @@ where $N(\sigma)$ is the number of [inversions](https://en.wikipedia.org/wiki/In
 A more interesting property, to me, is that the cross product gives a vector which is orthogonal to either of the input vectors.  Using the following Python code I searched over all permutation matrices in 3D that were orthogonal to the original vectors **and** were not the zero vector. (The zero vector is not particularly interesting here and is orthogonal to all vectors in $\mathbb{R}^n$.)
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/permutive_cross_product/permutive.py >}}
 ```
 
 We obtain only two non-trivial vectors:
@@ -106,7 +106,7 @@ $$P_1 \vec a \odot  P_2 \vec b - P_3 \vec a \odot P_4 \vec b$$
 where $P_1,P_2,P_3,P_4$ are independent choices of permutation matrices. Yup, we're going to try a lot of permutation matrices. Here is some updated code to look through all these possible permutation matrices:
 
 ```python
-{{< include ./scripts/script_2.py >}}
+{{< include ./src/permutive_cross_product/permutive.py >}}
 ```
 
 And here are the results.

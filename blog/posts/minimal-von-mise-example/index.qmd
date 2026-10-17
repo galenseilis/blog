@@ -16,7 +16,7 @@ $$\theta \sim \text{VonMises}(\mu, \kappa)$$
 And here is the aforementioned Python code:
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/minimal_von_mise_example/cli.py >}}
 ```
 
 I can see from `observed=[-2]*10 + [2]*10` that I was tinkering with having data at exactly two angles. Maybe I was stress-testing the sampler for how it handles bimodality.

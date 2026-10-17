@@ -12,5 +12,5 @@ Suppose there are two classes of patient, "Baby" and "Child", and three service 
 An example of a [Kelly network](https://en.wikipedia.org/wiki/Kelly_network) can be implemented and simulated for 9 hours using Ciw in the following way.
 
 ```python
-{{< include ./scripts/script_1.py >}}
+{{< include ./src/kelly_networks_ciw/simulate.py >}}
 ```

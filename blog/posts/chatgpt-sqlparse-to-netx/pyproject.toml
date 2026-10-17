@@ -1,0 +1,51 @@
+[project]
+name = "chatgpt-sqlparse-to-netx"
+version = "0.1.0"
+description = "Extract a NetworkX model of table joins from SQL queries."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Galen Seilis" }]
+keywords = [
+    "sql",
+    "sqlparse",
+    "sqlglot",
+    "networkx",
+    "graph",
+]
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Database",
+]
+dependencies = [
+    "matplotlib>=3.8",
+    "networkx>=3.0",
+    "sqlglot>=20",
+    "sqlparse>=0.4",
+]
+
+[project.scripts]
+chatgpt-sqlparse-to-netx = "chatgpt_sqlparse_to_netx.sqlparse_graph:main"
+chatgpt-sqlglot-joins = "chatgpt_sqlparse_to_netx.sqlglot_joins:main"
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/chatgpt_sqlparse_to_netx"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/chatgpt_sqlparse_to_netx", "tests", "README.md", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff.lint.per-file-ignores]
+"src/chatgpt_sqlparse_to_netx/*.py" = ["T201", "PLR0915", "PLR0912", "PLR0913", "N803", "N806"]
+"tests/*.py" = ["S101"]
