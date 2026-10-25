@@ -16,259 +16,46 @@ In a series of recent papers, Jacob Barandes has argued that a quantum system ca
 
 The payoff is a reformulation in which the Hilbert space and its ingredients—wave functions, state vectors, and Hamiltonians—are *derived* mathematical appurtenances rather than axioms, and in which the "measurement problem" is dissolved rather than solved.
 
-The purpose of this post is to give a thorough and self-contained account. Because the correspondence draws simultaneously on probability theory, the theory of stochastic processes, and quantum mechanics, I begin by laying out the prerequisites in each of those areas. I then give the formal definition of an indivisible stochastic process, the precise sense in which it fails to be Markovian, the dictionary that connects it to a Hilbert space, the Kraus and Stinespring machinery that yields unitary evolution, and finally the stochastic–quantum theorem itself. Throughout, definitions, lemmas, propositions, and theorems are stated formally and, where instructive, proved.
+The purpose of this post is to give a compact but self-contained account of the correspondence. I assume familiarity with probability and statistics, linear algebra, and the basics of quantum mechanics. Part I collects only the definitions the argument uses explicitly — stochastic processes, transition probabilities, Markovianity, divisibility, and stochastic matrices on the one hand; Hilbert spaces, states, observables, quantum channels, and unistochastic matrices on the other — and everything else is treated as known. I then give the formal definition of an indivisible stochastic process, the precise sense in which it fails to be Markovian, the dictionary that connects it to a Hilbert space, the Kraus and Stinespring machinery that yields unitary evolution, and finally the stochastic–quantum theorem itself. Throughout, definitions, lemmas, propositions, and theorems are stated formally and, where instructive, proved.
 
-This is a long post. A reader who wants the conceptual through-line rather than the full machinery may read the introduction to each part and the statements of the main results, and treat the proofs and technical definitions as a reference.
+A reader who wants the conceptual through-line rather than the full machinery may read the introduction to each part and the statements of the main results, and treat the proofs and technical definitions as a reference. (Statement numbers follow a longer draft of this material, so they contain gaps.)
 
 **This post is purely expository.** Every definition, result, interpretation, and argument below is due to Jacob Barandes and the other authors cited; I am reporting, organizing, and explaining their work, not proposing any new ideas of my own. The choice of material, the exposition, and any errors of presentation are mine, but the substance is theirs. Readers interested in the original development should consult the cited primary sources.
 
 ## Roadmap
 
-- **Part I** collects prerequisites: probability theory and conditional probability; the theory of stochastic processes (Kolmogorov towers, Chapman–Kolmogorov, Markovianity, divisibility, stochastic matrices); and quantum mechanics (Hilbert spaces, density matrices, the Born rule, unitary dynamics, projection-valued measures, completely positive maps, and the Stinespring dilation theorem).
+- **Part I** collects only the definitions the rest of the post uses: stochastic processes, transition probabilities, Markovianity, divisibility, and stochastic matrices; and Hilbert spaces, states, observables, quantum channels, and unistochastic matrices. All other prerequisites — probability theory, linear algebra, topology, measure theory — are assumed.
 - **Part II** defines indivisible stochastic processes, explains divisibility and its failure, and states the axioms of *indivisible quantum theory*.
 - **Part III** develops the stochastic–quantum correspondence: the time-evolution operator, Schur–Hadamard gauge freedom, the dictionary, the Hilbert-space representation, Kraus decompositions, dilations, and the stochastic–quantum theorem.
 - **Part IV** discusses gauge invariance, dynamical symmetries, dilations, the complex numbers, and the interpretational consequences for measurement, hidden variables, Bell's theorem, and causation.
 
 ---
 
-# Part I: Prerequisites
+# Part I: Preliminaries
 
-## 1. Set Theory
-
-<span id="def-s1"></span>**Definition S1 (Set).** A *set* is a well-defined collection of distinct objects.
-
-<span id="def-s1c"></span>**Definition S1c (Empty set).** The *empty set*, written $\varnothing$, is the unique set with no elements. A set $A$ is *empty* if $A=\varnothing$ and *nonempty* otherwise.
-
-<span id="def-s1d"></span>**Definition S1d (Union).** For sets $A,B$, the *union* is $A\cup B=\{x: x\in A \text{ or } x\in B\}$; more generally $\bigcup_{i\in I}A_i=\{x: x\in A_i \text{ for some } i\in I\}$.
-
-<span id="def-s1e"></span>**Definition S1e (Intersection).** The *intersection* is $A\cap B=\{x: x\in A \text{ and } x\in B\}$; more generally $\bigcap_{i\in I}A_i=\{x: x\in A_i \text{ for every } i\in I\}$.
-
-<span id="def-s1a"></span>**Definition S1a (Subset).** For sets $A,B$, we say $A\subseteq B$ if for every $x$, $x\in A \implies x\in B$.
-
-<span id="def-s1a1"></span>**Definition S1a1 (Equality of sets).** For sets $A,B$, $A=B$ if and only if $A\subseteq B$ and $B\subseteq A$.
-
-<span id="def-s1b"></span>**Definition S1b (Complement).** Let $U$ be a universal set and $A\subseteq U$. The *complement* of $A$ (relative to $U$) is $A^c = \{x \in U : x \notin A\}$.
-
-<span id="def-s1b1"></span>**Definition S1b1 (Power set).** For any set $\Omega$, the *power set* of $\Omega$ is $\mathcal{P}(\Omega)=\{A : A \subseteq \Omega\}$, the set of all subsets of $\Omega$.
-
-<span id="def-s2a"></span>**Definition S2a (Function).** A *function* $f:X\to Y$ is a subset $f\subseteq X\times Y$ such that for every $x\in X$ there exists exactly one $y\in Y$ with $(x,y)\in f$. We write $f(x)=y$.
-
-<span id="def-s2g"></span>**Definition S2g (Composition).** For functions $f:X\to Y$ and $g:Y\to Z$, the *composition* $g\circ f:X\to Z$ is the function $(g\circ f)(x)=g(f(x))$.
-
-<span id="def-s2h"></span>**Definition S2h (Identity map).** For a set $X$, the *identity map* $\mathrm{id}_X:X\to X$ is $\mathrm{id}_X(x)=x$.
-
-<span id="def-s2b"></span>**Definition S2b (Domain).** For a function $f:X\to Y$, the set $X$ is the *domain* of $f$, written $\operatorname{dom}(f)=X$.
-
-<span id="def-s2b1"></span>**Definition S2b1 (Codomain).** For a function $f:X\to Y$, the set $Y$ is the *codomain* of $f$, written $\operatorname{codom}(f)=Y$.
-
-<span id="def-s2b2"></span>**Definition S2b2 (Image).** For a function $f:X\to Y$ and a subset $A\subseteq X$, the *image* of $A$ under $f$ is $f(A)=\{f(x):x\in A\}\subseteq Y$. The image of $f$ is $f(X)$, which may be a proper subset of the codomain.
-
-<span id="def-s2c"></span>**Definition S2c (Cardinality).** For a finite set $A$, the *cardinality* $|A|$ is the number of its elements. More generally, $|A|=|B|$ if and only if there exists a bijection $A\to B$ (Definition S2f); this convention extends cardinality to infinite sets.
-
-<span id="def-s2d"></span>**Definition S2d (Injective function).** A function $f:X\to Y$ is *injective* (one-to-one) if $f(x)=f(y)\implies x=y$.
-
-<span id="def-s2e"></span>**Definition S2e (Surjective function).** A function $f:X\to Y$ is *surjective* (onto) if for every $y\in Y$ there exists $x\in X$ with $f(x)=y$, i.e. $f(X)=Y$.
-
-<span id="def-s2f"></span>**Definition S2f (Bijection).** A function is a *bijection* (one-to-one correspondence) if it is both injective (Definition S2d) and surjective (Definition S2e).
-
-<span id="def-s3"></span>**Definition S3 (Cartesian product).** For sets $X,Y$, the *Cartesian product* is $X\times Y=\{(x,y): x\in X,\ y\in Y\}$, the set of ordered pairs. We write $X^2=X\times X$ and $X^n$ for the $n$-fold product.
-
-<span id="def-s3a"></span>**Definition S3a (Ordered pair).** An *ordered pair* $(x,y)$ has a first coordinate $x$ and a second coordinate $y$, with $(x,y)=(x',y')$ if and only if $x=x'$ and $y=y'$.
-
-<span id="def-s4"></span>**Definition S4 (Disjoint sets).** Sets $A,B$ are *disjoint* if $A\cap B=\varnothing$. A family $\{A_i\}_{i\in I}$ is *pairwise disjoint* if $A_i\cap A_j=\varnothing$ whenever $i\neq j$.
-
-<span id="def-s5"></span>**Definition S5 (Partition).** A *partition* of a set $\Omega$ is a family $\{B_j\}_{j\in J}$ of nonempty pairwise disjoint (Definition S4) subsets with $\bigcup_j B_j=\Omega$.
-
-<span id="def-s6"></span>**Definition S6 (Countable set).** A set is *finite* if it is empty or in bijection with $\{1,\dots,n\}$ for some $n\in\mathbb{N}$. It is *countable* if it is finite or in bijection with $\mathbb{N}$; if infinite and countable it is *countably infinite*. A set that is not countable is *uncountable*.
-
-<span id="def-s7"></span>**Definition S7 (Equivalence relation).** A relation $\sim$ on a set $X$ is an *equivalence relation* if for all $x,y,z\in X$: (i) $x\sim x$ (reflexive); (ii) $x\sim y\implies y\sim x$ (symmetric); (iii) $x\sim y$ and $y\sim z\implies x\sim z$ (transitive).
-
-<span id="def-s7a"></span>**Definition S7a (Equivalence class).** For an equivalence relation $\sim$ on $X$ and $x\in X$, the *equivalence class* of $x$ is $[x]=\{y\in X: y\sim x\}$. The equivalence classes partition $X$ (Definition S5).
-
-## 2. Linear Algebra
-
-<span id="def-la0"></span>**Definition LA0 (Group).** A *group* is a pair $(G,\cdot)$ of a set $G$ and a binary operation $\cdot:G\times G\to G$ that is associative, $(ab)c=a(bc)$; possesses an identity $e$ with $eg=ge=g$; and has inverses, each $g$ admitting $g^{-1}$ with $gg^{-1}=g^{-1}g=e$.
-
-<span id="def-la0a"></span>**Definition LA0a (Abelian group).** A group $(G,\cdot)$ is *abelian* (commutative) if $ab=ba$ for all $a,b\in G$.
-
-<span id="def-la0b"></span>**Definition LA0b (Group homomorphism).** A map $\varphi:G\to H$ between groups is a *homomorphism* if $\varphi(ab)=\varphi(a)\varphi(b)$ for all $a,b\in G$; a bijective homomorphism (Definition S2f) is a group *isomorphism*.
-
-<span id="def-la1"></span>**Definition LA1 (Field).** A *field* is a set $\mathbb{K}$ equipped with two operations $+,\cdot$ and distinguished elements $0\neq 1$ such that $(\mathbb{K},+)$ and $(\mathbb{K}\setminus\{0\},\cdot)$ are abelian groups and multiplication distributes over addition, $\alpha(\beta+\gamma)=\alpha\beta+\alpha\gamma$. The fields used here are $\mathbb{K}=\mathbb{R}$ and $\mathbb{K}=\mathbb{C}$.
-
-<span id="def-la1a"></span>**Definition LA1a (Vector space).** Let $\mathbb{K}$ be a field ($\mathbb{K}\in\{\mathbb{R},\mathbb{C}\}$ here). A *vector space* over $\mathbb{K}$ is a triple $(V,+,\cdot)$ with $+:V\times V\to V$, $\cdot:\mathbb{K}\times V\to V$ such that for all $u,v,w\in V$, $\alpha,\beta\in\mathbb{K}$: (i) $(u+v)+w=u+(v+w)$, (ii) $u+v=v+u$, (iii) there exists $0$ with $v+0=v$, (iv) for each $v$ there is $-v$ with $v+(-v)=0$, (v) $\alpha(\beta v)=(\alpha\beta)v$, (vi) $1v=v$, (vii) $\alpha(u+v)=\alpha u+\alpha v$, (viii) $(\alpha+\beta)v=\alpha v+\beta v$. Elements of $V$ are *vectors*.
-
-<span id="def-la2a"></span>**Definition LA2a (Linear combination).** Let $V$ be a vector space over $\mathbb{K}$. A *linear combination* of a finite family $\{v_1,\ldots,v_n\}\subseteq V$ with coefficients $\alpha_1,\ldots,\alpha_n\in\mathbb{K}$ is the vector $\sum_{i=1}^{n}\alpha_i v_i \in V$.
-
-<span id="def-la2a1"></span>**Definition LA2a1 (Span).** For $S\subseteq V$, the *span* of $S$ is $\operatorname{span}(S)=\left\{\sum_{i=1}^{n}\alpha_i v_i : n\in\mathbb{N},\ v_i\in S,\ \alpha_i\in\mathbb{K}\right\}$, i.e. the set of all (finite) linear combinations of elements of $S$.
-
-<span id="def-la2d"></span>**Definition LA2d (Linear map).** For vector spaces $V,W$ over $\mathbb{K}$, a map $T:V\to W$ is *linear* if $T(\alpha u+\beta v)=\alpha T(u)+\beta T(v)$ for all $u,v\in V$ and $\alpha,\beta\in\mathbb{K}$.
-
-<span id="def-la2b"></span>**Definition LA2b (Linear independence).** A set $\{v_i\}$ is *linearly independent* if $\sum\alpha_i v_i=0$ implies all $\alpha_i=0$.
-
-<span id="def-la2c"></span>**Definition LA2c (Basis).** A subset $B\subseteq V$ is a *basis* of $V$ if $B$ is linearly independent (Definition LA2b) and $\operatorname{span}(B)=V$.
-
-<span id="def-la2c1"></span>**Definition LA2c1 (Dimension).** The *dimension* of $V$, written $\dim V$, is the cardinality $|B|$ of any basis $B$ of $V$.
-
-<span id="def-la3a"></span>**Definition LA3a (Matrix).** An $m\times n$ *matrix* $A$ over $\mathbb{K}$ is an array $(A_{ij})$ with $i=1,\ldots,m$, $j=1,\ldots,n$, $A_{ij}\in\mathbb{K}$.
-
-<span id="def-la3b"></span>**Definition LA3b (Transpose).** Let $A=(A_{ij})$ be an $m\times n$ matrix over $\mathbb{K}$. Its *transpose* is the $n\times m$ matrix $A^{T}=(A^{T})_{ji}$ with $(A^{T})_{ji}=A_{ij}$ for $j=1,\ldots,n$, $i=1,\ldots,m$.
-
-<span id="def-la3b1"></span>**Definition LA3b1 (Conjugate transpose).** For a matrix $A$ over $\mathbb{C}$, the *conjugate transpose* (or *adjoint*) of $A$ is $A^{\dagger}=\overline{A^{T}}$, i.e. $(A^{\dagger})_{ji}=\overline{A_{ij}}$.
-
-<span id="def-la3c"></span>**Definition LA3c (Column space).** The *column space* of an $m\times n$ matrix $A$ is the span (Definition LA2a1) of its columns; its dimension is the rank (Definition LA6).
-
-<span id="def-la3d"></span>**Definition LA3d (Identity matrix).** The $n\times n$ *identity matrix* $\mathbb{1}_n$ (often written $\mathbb{1}$) is $(\mathbb{1}_n)_{ij}=\delta_{ij}$, where $\delta_{ij}$ is the *Kronecker delta*: $\delta_{ij}=1$ if $i=j$ and $0$ otherwise.
-
-<span id="def-la3e"></span>**Definition LA3e (Invertible matrix).** A square matrix $A$ is *invertible* (nonsingular) if there exists a matrix $A^{-1}$, the *inverse*, with $AA^{-1}=A^{-1}A=\mathbb{1}$; a matrix that is not invertible is *singular*.
-
-<span id="def-la3f"></span>**Definition LA3f (Determinant).** The *determinant* $\det$ is the unique scalar-valued function on square matrices that is multilinear and alternating in the columns and satisfies $\det\mathbb{1}=1$. A matrix is invertible (Definition LA3e) if and only if $\det A\neq0$.
-
-<span id="def-la4"></span>**Definition LA4 (Eigenvalue).** Let $T:V\to V$ be a linear map on a vector space $V$ over $\mathbb{K}$. A scalar $\lambda\in\mathbb{K}$ is an *eigenvalue* of $T$ if there exists a vector $v\in V$, $v\neq 0$, with $T(v)=\lambda v$.
-
-<span id="def-la4b"></span>**Definition LA4b (Eigenvector).** With $T$ and $\lambda$ as in Definition LA4, a vector $v\neq 0$ satisfying $T(v)=\lambda v$ is an *eigenvector* of $T$ belonging to $\lambda$.
-
-<span id="def-la4c"></span>**Definition LA4c (Spectrum).** The *spectrum* $\sigma(T)$ of a linear operator $T:V\to V$ is the set of its eigenvalues. (In infinite dimensions one extends this to the set of $\lambda$ for which $T-\lambda\mathbb{1}$ fails to be invertible.)
-
-<span id="def-la5"></span>**Definition LA5 (Orthonormal set).** A subset $\{e_i\}$ of an inner product space is *orthonormal* if $\langle e_i,e_j\rangle=\delta_{ij}$, where $\delta_{ij}$ is the Kronecker delta ($1$ if $i=j$, $0$ otherwise).
-
-<span id="def-la5a"></span>**Definition LA5a (Orthonormal basis).** An *orthonormal basis* of a Hilbert space $\mathcal{H}$ is an orthonormal set (Definition LA5) whose span is dense in $\mathcal{H}$; in finite dimensions, an orthonormal set that spans $\mathcal{H}$.
-
-<span id="def-la6"></span>**Definition LA6 (Rank).** The *rank* of a linear map $T:V\to W$ is $\operatorname{rank}(T)=\dim(\operatorname{im} T)$; for a matrix it is the dimension of its column space (Definition LA3c). A *rank-one* operator on a Hilbert space has the form $T=\phi\,\psi^{\dagger}$ for nonzero $\phi,\psi$, and a rank-one projection is $P=e\,e^{\dagger}$ with $\|e\|=1$.
-
-<span id="def-la7"></span>**Definition LA7 (Vector-space isomorphism).** A *linear isomorphism* is a bijective linear map (Definitions LA2d and S2f). Vector spaces $V,W$ are *isomorphic*, written $V\cong W$, if such a map exists; then $\dim V=\dim W$.
-
-<span id="def-la8"></span>**Definition LA8 (Standard basis).** The *standard basis* of $\mathbb{K}^n$ is $\{e_1,\dots,e_n\}$, where $e_i$ has $1$ in the $i$-th entry and $0$ elsewhere.
-
-<span id="def-la9"></span>**Definition LA9 (Orthogonal vectors).** Two vectors $u,v$ in an inner product space are *orthogonal* if $\langle u,v\rangle=0$, written $u\perp v$.
-
-<span id="def-la10"></span>**Definition LA10 (Orthogonal matrix).** A real square matrix $O$ is *orthogonal* if $O^{T}O=OO^{T}=\mathbb{1}$, equivalently its columns form an orthonormal basis (Definition LA5a) of $\mathbb{R}^n$.
-
-<span id="def-la11"></span>**Definition LA11 (Commutator).** For operators $A,B$, the *commutator* is $[A,B]=AB-BA$. Two operators *commute* if $[A,B]=0$.
-
-## 3. Metric Spaces and Topology
-
-<span id="def-m1"></span>**Definition M1 (Metric space).** See Definitions 23a and 23b; a *metric space* $(X,d)$ has a distance $d:X\times X\to[0,\infty)$ satisfying the metric axioms (Definition M1a).
-
-<span id="def-m1a"></span>**Definition M1a (Metric axioms).** A function $d:X\times X\to[0,\infty)$ is a *metric* (distance function) if for all $x,y,z\in X$: (i) positivity $d(x,y)\ge0$, with $d(x,y)=0 \iff x=y$; (ii) symmetry $d(x,y)=d(y,x)$; (iii) the triangle inequality $d(x,z)\le d(x,y)+d(y,z)$.
-
-<span id="def-m1b"></span>**Definition M1b (Open ball).** In a metric space $(X,d)$, the *open ball* of radius $r>0$ about $x\in X$ is $B(x,r)=\{y\in X: d(x,y)<r\}$.
-
-<span id="def-m2"></span>**Definition M2 (Open set).** In a metric space $(X,d)$, a set $U\subseteq X$ is *open* if for every $x\in U$ there exists $\varepsilon>0$ with the open ball $B(x,\varepsilon)\subseteq U$ (Definition M1b).
-
-<span id="def-m2d"></span>**Definition M2d (Open interval).** For real numbers $a<b$, the *open interval* is $(a,b)=\{x\in\mathbb{R}: a<x<b\}$. The Borel $\sigma$-algebra $\mathcal{B}(\mathbb{R})$ is generated by the open intervals (Definition ME1c).
-
-<span id="def-m2b"></span>**Definition M2b (Closed set).** A set $C\subseteq X$ is *closed* if its complement $X\setminus C$ is open; equivalently, $C$ contains all of its limit points.
-
-<span id="def-m2b1"></span>**Definition M2b1 (Limit point).** A point $x\in X$ is a *limit point* of $A\subseteq X$ if every open set containing $x$ contains a point of $A\setminus\{x\}$; equivalently, every ball $B(x,\varepsilon)$ meets $A\setminus\{x\}$.
-
-<span id="def-m2c"></span>**Definition M2c (Topology).** A *topology* on a set $X$ is a collection $\mathcal{T}\subseteq\mathcal{P}(X)$ with: (i) $\varnothing,X\in\mathcal{T}$, (ii) arbitrary unions of members of $\mathcal{T}$ belong to $\mathcal{T}$, (iii) finite intersections of members of $\mathcal{T}$ belong to $\mathcal{T}$. The pair $(X,\mathcal{T})$ is a *topological space*.
-
-<span id="def-m3"></span>**Definition M3 (Continuity).** Let $(X,\mathcal{T}_X)$ and $(Y,\mathcal{T}_Y)$ be topological spaces. A function $f:X\to Y$ is *continuous* if for every $V\in\mathcal{T}_Y$, the preimage $f^{-1}(V)=\{x\in X: f(x)\in V\}$ lies in $\mathcal{T}_X$.
-
-<span id="def-m3b"></span>**Definition M3b (Convergence).** In a metric space $(X,d)$, a sequence $(x_n)_{n\in\mathbb{N}}$ *converges* to $x\in X$ if for every $\varepsilon>0$ there exists $N\in\mathbb{N}$ such that $n\ge N\implies d(x_n,x)<\varepsilon$. We write $x_n\to x$.
-
-<span id="def-m3c"></span>**Definition M3c (Preimage).** For $f:X\to Y$ and $B\subseteq Y$, the *preimage* of $B$ under $f$ is $f^{-1}(B)=\{x\in X: f(x)\in B\}$.
-
-<span id="def-m4"></span>**Definition M4 (Dense subset).** A subset $A$ of a metric (or topological) space $X$ is *dense* in $X$ if every nonempty open set meets $A$; equivalently, every ball $B(x,\varepsilon)$ meets $A$.
-
-## 4. Measure Theory
-
-<span id="def-me1"></span>**Definition ME1 ($\sigma$-algebra).** Let $X$ be a set. A family $\mathcal{X}\subseteq\mathcal{P}(X)$ is a *$\sigma$-algebra* on $X$ if: (i) $X\in\mathcal{X}$; (ii) $A\in\mathcal{X}\implies X\setminus A\in\mathcal{X}$; (iii) if $(A_n)_{n\ge1}\subseteq\mathcal{X}$ then $\bigcup_{n\ge1}A_n\in\mathcal{X}$.
-
-<span id="def-me1b"></span>**Definition ME1b (Measurable space).** A *measurable space* is a pair $(X,\mathcal{X})$ where $X$ is a set and $\mathcal{X}$ is a $\sigma$-algebra on $X$ (Definition ME1).
-
-<span id="def-me1c"></span>**Definition ME1c (Borel $\sigma$-algebra).** If $X$ is a topological space with topology $\mathcal{T}$, the *Borel $\sigma$-algebra* $\mathcal{B}(X)$ is the smallest $\sigma$-algebra on $X$ containing $\mathcal{T}$. For $X=\mathbb{R}$ with the usual topology, $\mathcal{B}(\mathbb{R})$ is generated by the open intervals.
-
-<span id="def-me2"></span>**Definition ME2 (Measurable function).** Let $(X,\mathcal{X}),(Y,\mathcal{Y})$ be measurable spaces. $f:X\to Y$ is *measurable* if $f^{-1}(B)\in\mathcal{X}$ for all $B\in\mathcal{Y}$.
-
-<span id="def-me3"></span>**Definition ME3 (Measure).** Let $(X,\mathcal{X})$ be a measurable space. A *measure* is a function $\mu:\mathcal{X}\to[0,\infty]$ with (i) $\mu(\varnothing)=0$ and (ii) countable additivity: for pairwise disjoint $(A_n)_{n\ge1}\subseteq\mathcal{X}$, $\mu\!\left(\bigcup_{n\ge1}A_n\right)=\sum_{n\ge1}\mu(A_n)$.
-
-<span id="def-me3b"></span>**Definition ME3b (Probability measure).** A *probability measure* on $(X,\mathcal{X})$ is a measure $\mu$ with $\mu(X)=1$.
-
-<span id="def-me4"></span>**Definition ME4 (Lebesgue integral).** The *Lebesgue integral* $\int f\,d\mu$ extends Riemann integration to measurable functions against a measure.
-
-<span id="def-me4b"></span>**Definition ME4b (Integrable function).** A measurable function $f$ is *$\mu$-integrable* if $\int|f|\,d\mu<\infty$; in that case the Lebesgue integral $\int f\,d\mu$ is finite and well defined.
-
-<span id="def-me5"></span>**Definition ME5 (Lebesgue measure).** The *Lebesgue measure* $m$ is the unique measure on $(\mathbb{R},\mathcal{B}(\mathbb{R}))$ with $m([a,b])=b-a$ for all $a\le b$; it assigns to each interval its length.
-
-## 5. Probability Theory
-
-### 1.1 Probability spaces and random variables
-
-<span id="def-1"></span>**Definition 1 ($\sigma$-algebra).** A family $\mathcal{F}\subseteq\mathcal{P}(\Omega)$ of subsets of $\Omega$ is a *$\sigma$-algebra* if (i) $\Omega\in\mathcal{F}$; (ii) $A\in\mathcal{F}\implies A^c=\Omega\setminus A\in\mathcal{F}$; (iii) if $A_1,A_2,\ldots\in\mathcal{F}$ then $\bigcup_{n=1}^{\infty}A_n\in\mathcal{F}$.
-
-<span id="def-1a"></span>**Definition 1a (Measurable space).** A *measurable space* is a pair $(\Omega,\mathcal{F})$ in which $\mathcal{F}$ is a $\sigma$-algebra on $\Omega$.
-
-<span id="def-1b"></span>**Definition 1b (Borel $\sigma$-algebra).** If $X$ is a topological space with open sets $\mathcal{O}$, the *Borel $\sigma$-algebra* $\mathcal{B}(X)$ is the smallest $\sigma$-algebra containing $\mathcal{O}$.
-
-<span id="def-1c"></span>**Definition 1c (Probability measure).** Let $(\Omega,\mathcal{F})$ be a measurable space. A *probability measure* is a function $\mathbb{P}:\mathcal{F}\to[0,1]$ such that (i) $\mathbb{P}(\Omega)=1$; (ii) for pairwise disjoint $E_1,E_2,\ldots\in\mathcal{F}$, $\mathbb{P}\!\left(\bigcup_{n\ge1}E_n\right)=\sum_{n\ge1}\mathbb{P}(E_n)$.
-
-<span id="def-1d"></span>**Definition 1d (Probability space).** A *probability space* is a triple $(\Omega,\mathcal{F},\mathbb{P})$ where $(\Omega,\mathcal{F})$ is a measurable space and $\mathbb{P}$ is a probability measure on it.
-
-<span id="def-2a"></span>**Definition 2a (Random variable).** Let $(\Omega,\mathcal{F})$ and $(E,\mathcal{E})$ be measurable spaces. A *random variable* is a measurable function $X:\Omega\to E$ such that for all $B\in\mathcal{E}$, $X^{-1}(B)=\{\omega\in\Omega : X(\omega)\in B\}\in\mathcal{F}$ [@kolmogorov1933; @doob1953].
-
-<span id="def-2b"></span>**Definition 2b (Real-valued random variable).** A random variable $X:\Omega\to\mathbb{R}$ (Definition 2a with $E=\mathbb{R}$, $\mathcal{E}=\mathcal{B}(\mathbb{R})$) is a *real-valued random variable*.
-
-<span id="def-2b1"></span>**Definition 2b1 (Discrete random variable).** A random variable $X:\Omega\to E$ is a *discrete random variable* if $E$ is finite or countable and $\mathcal{E}=\mathcal{P}(E)$ (the power-set $\sigma$-algebra); in that case $X^{-1}(B)\in\mathcal{F}$ for all $B\subseteq E$.
-
-<span id="def-2b2"></span>**Definition 2b2 (Complex-valued random variable).** A *complex-valued random variable* is a measurable function $X:\Omega\to(\mathbb{C},\mathcal{B}(\mathbb{C}))$, equivalently a pair of real-valued random variables $X=U+iV$.
-
-<span id="def-2c"></span>**Definition 2c (Probability density).** A real-valued random variable $X$ has *(probability) density* $f_X:\mathbb{R}\to[0,\infty)$ if $f_X$ is Borel-measurable and $\mathbb{P}(X\in B)=\int_B f_X\,dm$ for all $B\in\mathcal{B}(\mathbb{R})$, where $m$ is Lebesgue measure (Definition ME5); necessarily $\int_{\mathbb{R}} f_X\,dm=1$.
-
-<span id="def-3a"></span>**Definition 3a (Expectation).** Let $X$ be a real-valued random variable on a probability space $(\Omega,\mathcal{F},\mathbb{P})$. If $X$ is integrable with respect to $\mathbb{P}$, the *expectation* (mean) is $\mathbb{E}[X]=\int_\Omega X(\omega)\,d\mathbb{P}(\omega)$, defined as a Lebesgue integral.
-
-<span id="def-3b"></span>**Definition 3b (Discrete expectation).** If $X$ is discrete with values $\{x_i\}_{i}$ and $p_i=\mathbb{P}(X=x_i)$, then $\mathbb{E}[X]=\sum_{i} x_i p_i$ whenever the series converges absolutely.
-
-<span id="def-3e"></span>**Definition 3e (Absolutely convergent series).** A series $\sum_i x_i$ of real numbers *converges absolutely* if $\sum_i|x_i|<\infty$; absolute convergence implies ordinary convergence.
-
-<span id="def-3c"></span>**Definition 3c (Expectation via density).** If $X$ has a Borel-measurable probability density $f_X:\mathbb{R}\to[0,\infty)$ with respect to Lebesgue measure $m$ (i.e. $\mathbb{P}(X\in B)=\int_B f_X\,dm$, $B\in\mathcal{B}(\mathbb{R})$), then $\mathbb{E}[X]=\int_{-\infty}^{+\infty} x f_X(x)\,dx$ when the integral exists.
-
-<span id="def-3d"></span>**Definition 3d (Complex-valued expectation).** For a complex-valued random variable $Z=X+iY$ with $X,Y$ real, $\mathbb{E}[Z]=\mathbb{E}[X]+i\mathbb{E}[Y]$ when $\mathbb{E}[X],\mathbb{E}[Y]$ exist.
-
-### 1.2 Conditional probability and the law of total probability
-
-<span id="def-4"></span>**Definition 4 (Conditional probability).** For events $A, B \in \mathcal{F}$ with $\mathbb{P}(B) > 0$, the *conditional probability* of $A$ given $B$ is
-$$\mathbb{P}(A \mid B) \equiv \frac{\mathbb{P}(A \cap B)}{\mathbb{P}(B)}.$$
-
-<span id="thm-5"></span>**Theorem 5 (Law of total probability).** Let $\{B_j\}$ be a finite or countable partition of $\Omega$ with $\mathbb{P}(B_j) > 0$ for all $j$. Then for any event $A$,
-$$\mathbb{P}(A) = \sum_j \mathbb{P}(A \mid B_j)\, \mathbb{P}(B_j).$$
-
-*Proof.* The sets $A \cap B_j$ are pairwise disjoint with union $A$, so additivity gives $\mathbb{P}(A) = \sum_j \mathbb{P}(A \cap B_j)$. Substituting the definition of conditional probability yields the result. $\blacksquare$
-
-<span id="thm-6"></span>**Theorem 6 (Bayes' theorem).** Under the hypotheses of [Theorem 5](#thm-5), and for any $B_k$ with $\mathbb{P}(B_k) > 0$,
-$$\mathbb{P}(B_k \mid A) = \frac{\mathbb{P}(A \mid B_k)\, \mathbb{P}(B_k)}{\sum_j \mathbb{P}(A \mid B_j)\, \mathbb{P}(B_j)}.$$
-
-*Proof.* Both numerator and denominator follow from applying [Definition 4](#def-4) and [Theorem 5](#thm-5) to $\mathbb{P}(B_k \cap A)$ and $\mathbb{P}(A)$. $\blacksquare$
-
-The law of total probability is the engine behind the entire subject; as we shall see in §5, its *linearity* is exactly what becomes the linearity of quantum time evolution.
-
-### 1.3 Independence
-
-<span id="def-7"></span>**Definition 7 (Independent events).** Two events $A,B\in\mathcal{F}$ are *independent* if $\mathbb{P}(A\cap B)=\mathbb{P}(A)\,\mathbb{P}(B)$.
-
-<span id="def-7b"></span>**Definition 7b (Independent random variables).** Two random variables $X:\Omega\to(E,\mathcal{E})$, $Y:\Omega\to(F,\mathcal{F}')$ are *independent* if for all $B\in\mathcal{E}$ and $C\in\mathcal{F}':\ \mathbb{P}\big(X\in B,\,Y\in C\big)=\mathbb{P}(X\in B)\,\mathbb{P}(Y\in C)$.
-
-Independence (Definitions 7 and 7b) will reappear as a hypothesis in the no-go theorems of Part IV.
-
-## 2. Stochastic Processes
-
-### 2.1 Kolmogorov towers and transition probabilities
-
-Textbook treatments [@kolmogorov1933; @doob1953; @ross1995] define a stochastic process as a family of random variables indexed by time, together with a probability distribution, and add the specification of a dynamical law.
+## 1. Preliminary Definitions
 
 <span id="def-8"></span>**Definition 8 (Configuration space).** The *configuration space* of a stochastic process is a fixed set $\mathcal{C}$ whose elements $i\in\mathcal{C}$ are the possible configurations of the system.
+
+*Relevance.* the configuration space is the classical analogue of a Hilbert-space basis label; every construction in Parts II–III is indexed by it. [@kolmogorov1933; @doob1953].
 
 <span id="def-8a"></span>**Definition 8a (Standalone probability distribution).** A *standalone probability distribution* is a time-dependent function $p(i,t)$ giving the probability (or probability density) that the system is in configuration $i$ at time $t$, satisfying
 $$0 \le p(i,t) \le 1, \qquad \sum_i p(i,t) = 1. \tag{1}$$
 
+*Relevance.* the standalone distribution is the analogue of the diagonal of the quantum state, $p_i(t)$, and its normalization is imposed again in Proposition 45. [@kolmogorov1933].
+
 <span id="def-8b"></span>**Definition 8b (Algebra of random variables).** The *algebra of random variables* of a stochastic process with configuration space $\mathcal{C}$ is the collection of time-dependent maps $A(t):\mathcal{C}\to\mathbb{R}$, with values $a(i,t)$, whose expectation is
 $$\langle A(t) \rangle \equiv \sum_i a(i,t)\, p(i,t). \tag{2}$$
 
+*Relevance.* the algebra of random variables is the classical counterpart of the algebra of observables (Definition 25c). [@kolmogorov1933; @doob1953].
+
 <span id="def-8c"></span>**Definition 8c (Stochastic process).** A *stochastic process* is the data of a configuration space $\mathcal{C}$ (Definition 8), a standalone probability distribution $p$ (Definition 8a), and an algebra of random variables $A$ (Definition 8b).
 
-The configuration space is a *fixed* ingredient of the model; the standalone distribution is *contingent*, in that it can differ from run to run.
+*Relevance.* this triple $(\mathcal{C},p,A)$ is the object the whole post is about: indivisibility is a property of its transition probabilities. [@kolmogorov1933; @barandes2023theorem].
 
 <span id="def-9"></span>**Definition 9 (Transition probability).** A *transition probability* of a stochastic process is a conditional probability of the form $p(i,t \mid j_1,t_1;\dots;j_n,t_n)$, the probability that the system is in configuration $i$ at time $t$ given that it was in configurations $j_1,\dots,j_n$ at the earlier times $t_1>\cdots>t_n$.
+
+*Relevance.* a transition probability is the conditional probability whose composition law is the entire content of divisibility (Definition 14). [@kolmogorov1933; @doob1953].
 
 <span id="def-9a"></span>**Definition 9a (Kolmogorov tower).** The *Kolmogorov tower* of a general stochastic process is the infinite hierarchy of transition probabilities (Definition 9)
 $$
@@ -281,224 +68,193 @@ p(i,t \mid j_1, t_1; j_2, t_2; j_3, t_3) &\quad \text{[third order]}, \\
 $$
 where $t > t_1 > t_2 > t_3 > \cdots$.
 
-<span id="def-9b"></span>**Definition 9b (Target time).** In a transition probability $p(i,t\mid\ldots)$, the time $t$ on the left of the bar is the *target time*.
-
-<span id="def-9c"></span>**Definition 9c (Conditioning times).** In a transition probability $p(i,t\mid j_1,t_1;\dots)$, the times $t_1,t_2,\dots$ on the right of the bar are the *conditioning times*. The bar is read "given" and the semicolon "and."
-
-<span id="def-10"></span>**Definition 10 (Joint probabilities).** The *joint probability* of configurations at two times is the product of the transition probability and the standalone distribution:
-$$p(i,t; j_1,t_1) \equiv p(i,t \mid j_1,t_1)\, p(j_1,t_1).$$
+*Relevance.* the Kolmogorov tower is the full specification of a general, possibly non-Markovian process; Markovianity is the collapse of this tower to first order. [@kolmogorov1931; @kolmogorov1933].
 
 <span id="def-10b"></span>**Definition 10b (Chapman–Kolmogorov equations).** The transition probabilities must satisfy the *marginalization consistency conditions*
 $$\sum_{j_k} p(\dots; j_k, t_k; \dots) = p(\dots \text{[no } j_k] \dots), \tag{5}$$
 for every time index $k$: summing over the intermediate configuration reproduces the joint probability with that time omitted.
 
-### 2.2 Markovianity and divisibility
+*Relevance.* the Chapman–Kolmogorov equations are the consistency conditions any valid transition probability satisfies, and that the dilated process of Proposition 61 is constructed to obey. [@kolmogorov1933; @doob1953; @ross1995].
 
 <span id="def-11"></span>**Definition 11 (Markov property).** A stochastic process is *Markovian* if every second- and higher-order transition probability equals the corresponding first-order transition probability for the latest conditioning time, i.e.
 $$p(i,t \mid j_1,t_1; j_2,t_2; \dots) = p(i,t \mid j_1,t_1). \tag{6}$$
 The latest conditioning time $t_1$ then "screens off" all earlier times.
 
-<span id="def-11b"></span>**Definition 11b (Non-Markovian process).** A stochastic process is *non-Markovian* if it does not satisfy Definition 11: some higher-order transition probability fails to reduce to the corresponding first-order one.
-
-<span id="def-11c"></span>**Definition 11c (Conditional independence).** Events $A$ and $C$ are *conditionally independent* given an event $B$ (with $\mathbb{P}(B)>0$) if $\mathbb{P}(A\cap C\mid B)=\mathbb{P}(A\mid B)\,\mathbb{P}(C\mid B)$ (Definition 4). The Markov property (Definition 11) says the present conditionally separates the past from the future.
-
-The screening-off property of [Definition 11](#def-11) is exactly the *conditional independence* familiar from graphical models [@pearl2009; @spirtes2001]: the present renders the past and future independent.
+*Relevance.* the Markov property is the property that indivisible processes generically fail to have (Proposition 36). [@kolmogorov1933; @doob1953].
 
 <span id="def-12"></span>**Definition 12 (Transition matrix).** For a stochastic process, the *transition matrix* $\Gamma(t \leftarrow t')$ is the matrix whose $i$-th row, $j$-th column entry is the first-order transition probability
 $$\Gamma_{ij}(t \leftarrow t') \equiv p(i,t \mid j,t'). \tag{7}$$
 
+*Relevance.* the transition matrix is the formalism in which the whole of Parts II–III is conducted. [@kolmogorov1933; @doob1953].
+
 <span id="prop-13"></span>**Proposition 13 (Column stochasticity).** Every transition matrix is a (column) stochastic matrix:
 $$\Gamma_{ij}(t \leftarrow t') \ge 0, \qquad \sum_i \Gamma_{ij}(t \leftarrow t') = 1. \tag{8}$$
 
-*Proof.* Non-negativity and column normalization are the defining properties of conditional probabilities, together with the normalization of the standalone distribution. $\blacksquare$
+*Relevance.* column stochasticity is the normalizability constraint that the quantum dictionary must reproduce, and that becomes the summation condition of Proposition 45. [@kolmogorov1933].
 
 <span id="def-14"></span>**Definition 14 (Divisibility).** A stochastic process is *divisible* over an interval if, for any intermediate time $t'$ between $t_0$ and $t$, its transition matrices factorize as
 $$\Gamma(t \leftarrow t_0) = \Gamma(t \leftarrow t')\,\Gamma(t' \leftarrow t_0). \tag{13}$$
 
+*Relevance.* divisibility is the property whose failure characterizes indivisible processes; it is the classical shadow of complete positivity of a quantum channel. [@wolf2008; @barandes2023theorem].
+
 <span id="prop-15"></span>**Proposition 15 (Markovianity implies divisibility).** A Markovian process is divisible.
 
-*Proof.* With the Markov property ([Definition 11](#def-11)) and the Chapman–Kolmogorov equations ([Definition 10b](#def-10b)), one shows that second-order transition probabilities compose, so that the probability at time $t$ is obtained by summing over all intermediate configurations. In matrix form this is precisely (13). $\blacksquare$
-
-The contrapositive of [Proposition 15](#prop-15) is the remark that will drive the whole subject: **indivisibility entails non-Markovianity.**
-
-<span id="def-16"></span>**Definition 16 (Trivialization of a Kolmogorov tower).** A Kolmogorov tower (Definition 9a) *trivializes after $n$ orders* if, for every $k\ge n$, each $k$-th-order transition probability equals the corresponding first-order transition probability for the latest conditioning time.
-
-<span id="def-16a"></span>**Definition 16a ($n$th-order non-Markovian process).** A non-Markovian process (Definition 11b) is *$n$th-order non-Markovian* if its Kolmogorov tower trivializes (Definition 16) after $n$ orders for some finite integer $n$. A Markov process is the case $n=1$. Newtonian mechanics, viewed deterministically, is second-order non-Markovian, because Newton's second law is a second-order differential equation.
-
-<span id="ex-17"></span>**Example 17 (Discrete-time homogeneous Markov chain).** On a finite time scale $\delta t$, a homogeneous chain (Definition 16c) satisfies $\Gamma(n\,\delta t \leftarrow 0) = \Gamma^n$ for a time-independent stochastic matrix $\Gamma$. This is a unistochastic process when $\Gamma$ is a permutation matrix (see §13 and [Example 40](#ex-40)).
-
-<span id="def-16b"></span>**Definition 16b (Markov chain).** A *Markov chain* is a Markovian (Definition 11) stochastic process with discrete configuration space; its law is determined by its first-order transition probabilities (Definition 12).
-
-<span id="def-16c"></span>**Definition 16c (Time homogeneity).** A stochastic process is *time-homogeneous* if its transition matrices depend only on the time difference, $\Gamma(t\leftarrow t')=\Gamma(t-t')$; otherwise it is *time-inhomogeneous*.
-
-### 2.3 Stochastic and permutation matrices
+*Relevance.* this proposition supplies the classical direction of the correspondence: Markovian processes are divisible. [@kolmogorov1933; @doob1953].
 
 <span id="def-18a"></span>**Definition 18a (Column stochastic matrix).** An $N\times N$ matrix with non-negative real entries is *column stochastic* if for every column $j$, $\sum_{i=1}^{N} X_{ij}=1$.
 
+*Relevance.* column stochastic matrices are exactly the admissible transition matrices of Part II. [@kolmogorov1933].
+
 <span id="def-18b"></span>**Definition 18b (Doubly stochastic/bistochastic matrix).** A matrix is *doubly stochastic* (or *bistochastic*) if it is column stochastic and *row stochastic* in the sense that for every row $i$, $\sum_{j=1}^{N} X_{ij}=1$ (equivalently both row and column sums are 1).
 
-<span id="def-18c"></span>**Definition 18c (Permutation).** A *permutation* of a finite set $S$ is a bijection (Definition S2f) $\pi:S\to S$. The permutations of $\{1,\dots,n\}$ form a group (Definition LA0) under composition (Definition S2g).
+*Relevance.* doubly stochastic matrices are the bistochastic ones that arise as the squared moduli of unitaries (Proposition 32). [@horn1954].
 
-<span id="def-19"></span>**Definition 19 (Permutation matrix).** A *permutation matrix* is a matrix of $0$s and $1$s with exactly one $1$ in each row and in each column. Every permutation matrix is doubly stochastic (Definition 18b) and orthogonal (Definition LA10) (and therefore unitary, Definition 30b).
+<span id="def-19"></span>**Definition 19 (Permutation matrix).** A *permutation matrix* is a matrix of $0$s and $1$s with exactly one $1$ in each row and in each column. Every permutation matrix is doubly stochastic (Definition 18b) and orthogonal, and therefore unitary (Definition 30b).
+
+*Relevance.* permutation matrices are the transition matrices of permutation dynamics, and are the matrices fixed by the permutation lemma. [@horn1954].
 
 <span id="lem-20"></span>**Lemma 20 (Permutation lemma).** Let $X$ and $Y$ be $N \times N$ matrices with non-negative entries and $XY = \mathbb{1}$. Then $X$ (and hence $Y$) is a permutation matrix.
 
-*Proof.* The first row of $X$ must be orthogonal (Definition LA9) to each of the second through $N$-th columns of $Y$. Since $Y$ is invertible, its columns are linearly independent, so the first row of $X$ is orthogonal to an $(N-1)$-dimensional subspace. Because all entries of $X$ and $Y$ are non-negative, the only way this orthogonality can hold is if exactly one entry of the first row of $X$ is nonzero, and the corresponding entries in the other columns of $Y$ vanish. Repeating for each row of $X$ shows every row has a single nonzero entry; if $X$ is stochastic, that entry is $1$. Hence $X$ is a permutation matrix, and since the inverse of a permutation matrix is again a permutation matrix, $Y$ is too. $\blacksquare$
+*Relevance.* this lemma is what forces the modulus-squaring of a unitary to be doubly stochastic, i.e. what makes the first claim of Proposition 32 work. [@horn1954; @barandes2023theorem].
 
-This lemma appears, with this proof, in [@barandes2025quantum, footnote 7]. Its consequence is the *non-divisibility* of indivisible processes: the naive intermediate matrix $\tilde\Gamma(t \leftarrow t') \equiv \Gamma(t \leftarrow t_0)\Gamma^{-1}(t' \leftarrow t_0)$ is generally not stochastic, and may even have negative entries.
+<span id="def-21"></span>**Definition 21 (Pseudo-stochastic matrix).** A matrix is *pseudo-stochastic* if each of its columns sums to $1$ but its entries are real (or complex in generalizations) and need not be non-negative [@chruscinski2015]. Pseudo-stochastic matrices form a semigroup and, unlike stochastic matrices, allow affine combinations beyond non-negative convex combinations.
 
-<span id="def-21"></span>**Definition 21 (Pseudo-stochastic matrix).** A matrix is *pseudo-stochastic* if each of its columns sums to $1$ but its entries are real (or complex in generalizations) and need not be non-negative [@chruscinski2015]. Pseudo-stochastic matrices form a semigroup (Definition 21a) and, unlike stochastic matrices, allow affine combinations (Definition 21c) beyond non-negative convex combinations (Definition 21b), and carry a Lie-group structure (Definition 21d).
-
-<span id="def-21a"></span>**Definition 21a (Semigroup).** A *semigroup* is a set equipped with an associative binary operation; unlike a group (Definition LA0) it need not possess an identity or inverses.
-
-<span id="def-21b"></span>**Definition 21b (Convex combination).** A *convex combination* of points $x_1,\dots,x_n$ in a real vector space is $\sum_i\lambda_i x_i$ with $\lambda_i\ge0$ and $\sum_i\lambda_i=1$.
-
-<span id="def-21c"></span>**Definition 21c (Affine combination).** An *affine combination* is $\sum_i\lambda_i x_i$ with $\sum_i\lambda_i=1$, where the coefficients $\lambda_i$ are allowed to be negative.
-
-<span id="def-21d"></span>**Definition 21d (Lie group).** A *Lie group* is a group (Definition LA0) that is also a smooth (differentiable) manifold, with group multiplication and inversion smooth as maps.
-
-## 3. Prerequisites from Quantum Mechanics
-
-### 3.1 The Dirac–von Neumann axioms
-
-<span id="axm-22"></span>**Axiom 22 (Dirac–von Neumann, schematic).** A quantum system is described by the following.
-
-1. **States.** The state of an isolated system is a unit vector $\Psi$ (Definition 23g) in a complex Hilbert space $\mathcal{H}$ (a *pure state*, Definition 24c2), or more generally a density matrix $\rho$ (a *mixed state*, Definition 24c3). For finite-dimensional systems $\mathcal{H} \cong \mathbb{C}^N$ (Definition LA7).
-2. **Observables.** Each physical quantity is represented by a self-adjoint operator $A = A^\dagger$ on $\mathcal{H}$; its possible outcomes are the eigenvalues of $A$.
-3. **Dynamics.** Between measurements, a closed system evolves unitarily: $\Psi(t) = U(t \leftarrow 0)\Psi(0)$ with $U^\dagger U = \mathbb{1}$; equivalently $i\hbar\,\partial_t \Psi = H\Psi$ for a self-adjoint Hamiltonian $H$.
-4. **Measurement (Born rule).** If a measurement of an observable (Definition 25c) with spectral decomposition (Definition 24c1) $A = \sum_i a_i P_i$ is performed, the outcome $a_i$ occurs with probability
-$$\Pr(a_i) = \langle \Psi \mid P_i \mid \Psi \rangle = \operatorname{tr}(P_i \rho).$$
-
-The famous *measurement problem* is the ambiguity, internal to this axiom set, over which physical processes count as "measurements." The *category problem* is the separate difficulty of accounting for the far larger class of non-measurement events happening in the world [@barandes2025quantum].
-
-### 3.2 Hilbert spaces, density matrices, and the Born rule
-
-<span id="def-23a"></span>**Definition 23a (Metric space).** A *metric space* $(X,d)$ is a set $X$ with $d:X\times X\to[0,\infty)$ satisfying positivity, symmetry, and triangle inequality.
-
-<span id="def-23b"></span>**Definition 23b (Cauchy sequence).** In a metric space $(X,d)$, a sequence $(x_n)_{n\in\mathbb{N}}$ is *Cauchy* if for every $\varepsilon>0$ there exists $N\in\mathbb{N}$ such that $m,n\ge N\implies d(x_m,x_n)<\varepsilon$.
-
-<span id="def-23b1"></span>**Definition 23b1 (Complete metric space).** A metric space $(X,d)$ is *complete* if every Cauchy sequence $(x_n)$ in $X$ converges to some $x\in X$ (i.e. $x_n\to x$).
+*Relevance.* pseudo-stochastic matrices are the matrices $\Theta$ whose squared moduli are valid transition probabilities; they are the quantum amplitudes of Part III. [@chruscinski2015; @barandes2023theorem].
 
 <span id="def-23c"></span>**Definition 23c (Sesquilinear form).** Let $V$ be a vector space over $\mathbb{K}\in\{\mathbb{R},\mathbb{C}\}$. A map $b:V\times V\to\mathbb{K}$ is *sesquilinear* if for all $u,v,w\in V$ and $\lambda\in\mathbb{K}$:
 $$b(\lambda u+v,w)=\lambda\, b(u,w)+b(v,w),\qquad b(u,\lambda v+w)=\overline{\lambda}\,b(u,v)+b(u,w).$$
 (When $\mathbb{K}=\mathbb{R}$ this reduces to bilinearity.)
 
+*Relevance.* sesquilinearity is bilinearity with conjugation, the structure that makes quantum inner products complex and that Remark 71 argues is necessary. [@halmos1958; @vonneumann1955].
+
 <span id="def-23c1"></span>**Definition 23c1 (Positive-definite form).** A sesquilinear $b$ is *positive-definite* if for all $v\neq 0$, $b(v,v)>0$ (in particular $b(v,v)\in\mathbb{R}_{\ge0}$ for every $v$).
+
+*Relevance.* positive definiteness is what makes $\langle\psi|\psi\rangle$ a squared norm, hence non-negative, which the Born rule requires. [@halmos1958].
 
 <span id="def-23c2"></span>**Definition 23c2 (Inner product).** An *inner product* on a $\mathbb{K}$-vector space $V$ is a map $\langle\cdot,\cdot\rangle:V\times V\to\mathbb{K}$ that is sesquilinear (Definition 23c), conjugate-symmetric ($\langle w,v\rangle=\overline{\langle v,w\rangle}$ for all $v,w$), and positive-definite (Definition 23c1).
 
+*Relevance.* the inner product defines lengths and angles of state vectors, and hence transition probabilities between states. [@halmos1958; @vonneumann1955].
+
 <span id="def-23c3"></span>**Definition 23c3 (Norm induced by an inner product).** An inner product $\langle\cdot,\cdot\rangle$ induces the *norm* $\|v\|\equiv\sqrt{\langle v,v\rangle}$ and the *metric* $d(v,w)=\|v-w\|$.
 
-<span id="def-23d"></span>**Definition 23d (Hilbert space).** A *Hilbert space* is a complete inner product space over $\mathbb{R}$ or $\mathbb{C}$ [@halmos1958; @rudin1991].
+*Relevance.* the induced norm is what the Cauchy–Schwarz bound and the unitarity constraint $|\Theta_{ij}|\le 1$ rest on. [@halmos1958].
+
+<span id="def-23d"></span>**Definition 23d (Hilbert space).** A *Hilbert space* is a complete inner product space (every Cauchy sequence of vectors converges), here over $\mathbb{R}$ or $\mathbb{C}$ [@halmos1958; @rudin1991].
+
+*Relevance.* the Hilbert space is the kinematical stage on which the Dirac–von Neumann axioms place the quantum state. [@dirac1930; @vonneumann1932; @halmos1958].
 
 <span id="def-23e"></span>**Definition 23e (Complex Hilbert space).** A *complex Hilbert space* is a Hilbert space (Definition 23d) whose scalar field is $\mathbb{K}=\mathbb{C}$. In the finite-dimensional case $\mathcal{H}\cong\mathbb{C}^N$ with the standard inner product $\langle v\mid w\rangle=v^\dagger w=\sum_{k}\overline{v_k}\,w_k$.
 
-<span id="def-23f"></span>**Definition 23f (Identity operator).** The *identity operator* $\mathbb{1}$ on a vector space $V$ is defined by $\mathbb{1}v=v$ for all $v\in V$.
-
-<span id="def-23g"></span>**Definition 23g (Unit vector).** A vector $v$ in an inner product space is a *unit vector* (normalized) if $\|v\|=1$ (Definition 23c3).
+*Relevance.* the complex Hilbert space is the specific kinematics adopted; Remark 71 discusses why $\mathbb{R}$ and $\mathbb{H}$ do not work. [@dirac1930; @vonneumann1932].
 
 <span id="not-23h"></span>**Notation 23h (Dirac bra-ket notation).** A vector $\psi\in\mathcal{H}$ is written as a *ket* $\lvert\psi\rangle$ and its dual as a *bra* $\langle\psi\rvert$; the inner product is the *bracket* $\langle\phi\mid\psi\rangle=\langle\phi,\psi\rangle$, and the rank-one operator $\lvert\psi\rangle\langle\phi\rvert$ acts by $v\mapsto\langle\phi,v\rangle\,\psi$.
 
-<span id="def-24a"></span>**Definition 24a (Adjoint).** On a complex Hilbert space $\mathcal{H}$, the *adjoint* $T^{\dagger}$ of an operator $T:\mathcal{H}\to\mathcal{H}$ is the unique operator (where it exists) satisfying $\langle\phi\mid T\psi\rangle=\langle T^{\dagger}\phi\mid\psi\rangle$ for all $\phi,\psi\in\mathcal{H}$. For a matrix, $T^{\dagger}=\overline{T^{T}}$ (Definition LA3b1).
+*Relevance.* Dirac notation is used throughout Parts III–IV to write $\Theta_{ij}=\langle i|\Theta|j\rangle$ and the dictionary of Theorem 50. [@dirac1942; @dirac1930].
+
+<span id="def-24a"></span>**Definition 24a (Adjoint).** On a complex Hilbert space $\mathcal{H}$, the *adjoint* $T^{\dagger}$ of an operator $T:\mathcal{H}\to\mathcal{H}$ is the unique operator (where it exists) satisfying $\langle\phi\mid T\psi\rangle=\langle T^{\dagger}\phi\mid\psi\rangle$ for all $\phi,\psi\in\mathcal{H}$. For a matrix, $T^{\dagger}=\overline{T^{T}}$ is the conjugate transpose.
+
+*Relevance.* the adjoint of $\Theta$ is what makes $\Theta^\dagger P_i\Theta$ appear in the dictionary, and self-adjointness is the quantum shadow of real-valuedness of probabilities. [@halmos1958; @rudin1991].
 
 <span id="def-24a1"></span>**Definition 24a1 (Self-adjoint operator).** An operator $T$ is *self-adjoint* (Hermitian) if $T^{\dagger}=T$.
 
+*Relevance.* self-adjoint operators are the observables (Definition 25c) and the configuration operators of Definition 52. [@vonneumann1932; @halmos1958].
+
 <span id="def-24a2"></span>**Definition 24a2 (Positive-semidefinite operator).** An operator $T$ is *positive-semidefinite* if $\langle\phi\mid T\phi\rangle\ge 0$ for every $\phi\in\mathcal{H}$. It is *positive-definite* if $\langle\phi\mid T\phi\rangle>0$ for every $\phi\neq 0$.
+
+*Relevance.* positive semidefiniteness is what makes $\rho$ a legitimate density matrix and $|\Theta_{ij}|^2$ a non-negative probability. [@halmos1958].
 
 <span id="def-24b"></span>**Definition 24b (Trace).** The *trace* $\operatorname{tr}T=\sum_i\langle e_i\mid T e_i\rangle$ of an operator on a Hilbert space (when defined) is independent of the chosen orthonormal basis $\{e_i\}$.
 
+*Relevance.* the trace converts operators into the scalars that probabilities and expectation values are; it is the quantum analogue of summing over configurations. [@vonneumann1932; @rudin1991].
+
 <span id="def-24c"></span>**Definition 24c (Density matrix).** A *density matrix* (density operator) on a complex Hilbert space $\mathcal{H}$ is an operator $\rho$ that is self-adjoint (Definition 24a1), positive-semidefinite (Definition 24a2), and satisfies $\operatorname{tr}\rho=1$.
 
-<span id="def-24c1"></span>**Definition 24c1 (Spectral decomposition).** Let $A$ be a self-adjoint operator on a finite-dimensional complex Hilbert space. Its *spectral decomposition* is a representation $A=\sum_i a_i P_i$ with $\{P_i\}$ a projection-valued measure (Definition 25b), $a_i\in\mathbb{R}$ the eigenvalues of $A$ (Definition LA4), and $P_i$ the corresponding orthogonal projections (Definition 25a).
+*Relevance.* the density matrix encodes the standalone distribution $p_i(t)$ in the quantum language and evolves according to Proposition 51; Gleason's theorem is what makes such operators the only consistent state space. [@vonneumann1932; @vonneumann1927; @gleason1957].
 
-<span id="thm-24x"></span>**Theorem 24x (Spectral theorem, finite-dimensional).** Every self-adjoint operator (Definition 24a1) on a finite-dimensional complex Hilbert space has real eigenvalues and an orthonormal basis of eigenvectors, and therefore admits a spectral decomposition (Definition 24c1) with $a_i\in\mathbb{R}$.
+<span id="def-24c1"></span>**Definition 24c1 (Spectral decomposition).** Let $A$ be a self-adjoint operator on a finite-dimensional complex Hilbert space. Its *spectral decomposition* is a representation $A=\sum_i a_i P_i$ with $\{P_i\}$ a projection-valued measure (Definition 25b), $a_i\in\mathbb{R}$ the eigenvalues of $A$, and $P_i$ the corresponding orthogonal projections (Definition 25a).
+
+*Relevance.* a spectral decomposition writes a self-adjoint operator in an orthonormal eigenbasis, which is what lets observables be diagonalized. [@hellinger1910; @horn2013].
 
 <span id="def-24c2"></span>**Definition 24c2 (Pure state).** A *pure state* is a density matrix of the form $\rho=\Psi\Psi^{\dagger}$ with $\|\Psi\|=1$; equivalently $\rho$ has rank one and $\rho^2=\rho$.
 
-<span id="def-24c3"></span>**Definition 24c3 (Mixed state).** A *mixed state* is a density matrix that is not a pure state (Definition 24c2); equivalently $\rho$ is not a projection (or has rank $>1$).
+*Relevance.* pure states are the rank-one density matrices produced by a definite configuration; they are the extreme points of the state space. [@vonneumann1932].
 
 <span id="def-24d"></span>**Definition 24d (Antilinear map).** A map $T:V\to W$ between complex vector spaces is *antilinear* (conjugate-linear) if $T(\alpha u+\beta v)=\overline{\alpha}\,T(u)+\overline{\beta}\,T(v)$ for all $u,v$ and $\alpha,\beta\in\mathbb{C}$.
 
+*Relevance.* antilinear maps are needed for antiunitary symmetries, which Wigner's theorem (Remark 69a) permits as time-reversal-type transformations. [@wigner1959].
+
 <span id="def-24e"></span>**Definition 24e (Anti-unitary operator).** A bijective antilinear map (Definition 24d) $U:\mathcal{H}\to\mathcal{H}$ is *anti-unitary* if $\langle Ux,Uy\rangle=\overline{\langle x,y\rangle}$ for all $x,y\in\mathcal{H}$.
 
-<span id="def-24f"></span>**Definition 24f (Trace-class operator).** A positive-semidefinite operator $T$ (Definition 24a2) is *trace-class* if $\operatorname{tr}T<\infty$ (Definition 24b); a general operator is trace-class if it is a complex linear combination of positive trace-class operators. For trace-class $T$, $\operatorname{tr}T$ is finite and basis-independent.
+*Relevance.* anti-unitary operators are the anti-symmetries Wigner's theorem allows, relevant to time reversal in Part IV. [@wigner1959].
 
 <span id="def-25a"></span>**Definition 25a (Projection).** A *projection* (idempotent operator) satisfies $P^2=P$. An *orthogonal projection* on a complex Hilbert space also satisfies $P^\dagger=P$.
 
+*Relevance.* projections are the operators that assign a yes/no outcome to a configuration, and are the building blocks of a PVM. [@halmos1958].
+
 <span id="def-25b"></span>**Definition 25b (Projection-valued measure).** A *projection-valued measure* (PVM) is a family $\{P_i\}$ of orthogonal projections with $P_i P_j=\delta_{ij}P_i$ and $\sum_i P_i=\mathbb{1}$ (in the strong operator topology, Definition 25d, when infinite) [@mackey1952; @mackey1957].
+
+*Relevance.* a PVM is the measurement structure that translates a partition of the configuration space into quantum operators, as Proposition 49 does. [@mackey1952; @mackey1957].
 
 <span id="def-25d"></span>**Definition 25d (Strong operator topology).** A sequence of operators $A_n$ *converges strongly* to $A$ if $A_n v\to A v$ in norm for every vector $v$ (Definition 23c3); this is the *strong operator topology*. Infinite sums such as $\sum_i P_i=\mathbb{1}$ in Definition 25b are understood in this sense.
 
+*Relevance.* the strong operator topology is the topology in which infinite Kraus and spectral sums converge. [@rudin1991].
+
 <span id="def-25c"></span>**Definition 25c (Observable).** An *observable* of a quantum system is a self-adjoint operator $A$ on its complex Hilbert space (Definition 24a1); its possible measurement outcomes are the eigenvalues of $A$, and it admits a spectral decomposition as in Definition 24c1.
 
-<span id="def-26"></span>**Definition 26 (Born rule).** For a density matrix $\rho$ and a projection-valued measure $\{P_i\}$ (Definition 25b), the probability of the outcome associated with $P_i$ is
-$$p_i = \operatorname{tr}(P_i \,\rho).$$
-
-<span id="def-26b"></span>**Definition 26b (Expectation value of an observable).** For an observable $A$ and a state $\rho$, the *expectation value* (mean value) of $A$ is
-$$\langle A \rangle = \operatorname{tr}(A \,\rho).$$
-
-### 3.3 Completely positive maps, Kraus operators, and dilation
-
-<span id="def-27a"></span>**Definition 27a (Linear map).** A *linear map* $T$ between vector spaces satisfies $T(\alpha u+\beta v)=\alpha T(u)+\beta T(v)$.
+*Relevance.* an observable is a self-adjoint operator whose spectral projectors are the measurement outcomes. [@vonneumann1932; @hellinger1910].
 
 <span id="def-27b"></span>**Definition 27b (Positive map).** A linear map $\mathcal{E}$ on operators is *positive* if $X\ge0 \implies \mathcal{E}(X)\ge0$.
 
+*Relevance.* positivity is the minimal condition ensuring that states are mapped to states. [@stinespring1955; @choi1975].
+
 <span id="def-27c"></span>**Definition 27c (Completely positive).** A map $\mathcal{E}$ is *completely positive* (CP) if for every $k\ge1$, $\mathrm{id}_k \otimes \mathcal{E}$ is positive on operators of $\mathbb{C}^k\otimes\mathcal{H}$.
+
+*Relevance.* complete positivity, rather than mere positivity, is the condition that survives tensoring with an ancilla — exactly the operation used in the dilation of Theorem 59. [@choi1975; @stinespring1955; @paulsen2003].
 
 <span id="def-27d"></span>**Definition 27d (Trace-preserving).** A linear map $\mathcal{E}$ is *trace-preserving* (TP) if $\operatorname{tr}\mathcal{E}(X)=\operatorname{tr}X$ for all trace-class $X$.
 
+*Relevance.* trace preservation is the quantum form of the normalization $\sum_i p_i = 1$ and of column stochasticity (Proposition 13). [@kraus1971; @nielsen2000].
+
 <span id="def-27e"></span>**Definition 27e (Quantum channel).** A *completely positive trace-preserving* (CPTP) map is called a *quantum channel*.
 
-<span id="def-27f"></span>**Definition 27f (Tensor product of Hilbert spaces).** Given complex Hilbert spaces $\mathcal{H}_A,\mathcal{H}_B$, their *tensor product* $\mathcal{H}_A\otimes\mathcal{H}_B$ is the Hilbert space of a composite system $AB$, with inner product fixed on elementary tensors by $\langle\psi_A\otimes\phi_A,\ \chi_A\otimes\omega_A\rangle=\langle\psi_A,\chi_A\rangle\langle\phi_A,\omega_A\rangle$ (spanned by such products).
-
-<span id="def-27f1"></span>**Definition 27f1 (Partial trace).** The *partial trace* over subsystem $B$, written $\operatorname{tr}_B$ (or $\operatorname{tr}'$), is the unique linear map on operators of $\mathcal{H}_A\otimes\mathcal{H}_B$ determined on elementary tensors by
-$$\operatorname{tr}_B\big(X_A\otimes Y_B\big)=X_A\,\operatorname{tr}(Y_B),$$
-extended by linearity and continuity.
-
-<span id="def-27g"></span>**Definition 27g (Ancilla).** An *ancilla* (ancillary system) is an auxiliary quantum system, with Hilbert space $\mathcal{H}'$, introduced in a tensor product $\mathcal{H}\otimes\mathcal{H}'$ to enlarge a system without altering the system\'s own statistics after the partial trace over $\mathcal{H}'$.
-
-<span id="def-27h"></span>**Definition 27h (Purification / dilation).** A *purification* (or *dilation*) of a CPTP map $\mathcal{E}$ on $\mathcal{H}$ is a representation $\mathcal{E}(X)=\operatorname{tr}'\big(U(X\otimes\mathbb{1}')U^\dagger\big)$ by a unitary $U$ on $\mathcal{H}\otimes\mathcal{H}'$ (Theorem 29). More generally a *dilation* is an embedding of a system into a larger one whose restriction, after a partial trace, reproduces the original dynamics.
-
-<span id="def-27i"></span>**Definition 27i (Partial isometry).** An operator $V$ is a *partial isometry* if $V^\dagger V$ and $VV^\dagger$ are orthogonal projections (Definition 25a); equivalently, $V$ preserves the norm on the orthogonal complement of its kernel.
-
-<span id="thm-28"></span>**Theorem 28 (Kraus representation, Choi).** A linear map $\mathcal{E}$ is completely positive if and only if it admits a *Kraus decomposition*
-$$\mathcal{E}(X) = \sum_\beta K_\beta X K_\beta^\dagger$$
-for some operators $K_\beta$; it is trace-preserving exactly when $\sum_\beta K_\beta^\dagger K_\beta = \mathbb{1}$ [@kraus1971; @choi1975].
+*Relevance.* a quantum channel is the completely positive trace-preserving map that a stochastic process becomes in the dictionary of Theorem 50. [@nielsen2000; @paulsen2003].
 
 <span id="thm-29"></span>**Theorem 29 (Stinespring dilation).** Every CPTP map $\mathcal{E}$ on $\mathcal{H}$ can be *purified*: there exist an ancillary Hilbert space $\mathcal{H}'$ and a unitary $U$ on $\mathcal{H} \otimes \mathcal{H}'$ such that
 $$\mathcal{E}(X) = \operatorname{tr}'\big(U (X \otimes \mathbb{1}') U^\dagger\big),$$
 where $\operatorname{tr}'$ is the partial trace over $\mathcal{H}'$ [@stinespring1955; @keyl2002].
 
-### 3.4 Unitary and unistochastic matrices
+*Relevance.* the Stinespring dilation is the operator-algebraic theorem that Theorem 59 specializes to the stochastic setting. [@stinespring1955].
 
-<span id="def-30a"></span>**Definition 30a (Unitary operator).** An operator $U$ on a Hilbert space is *unitary* if $U^\dagger U = U U^\dagger = \mathbb{1}$ (so $U^{-1}=U^\dagger$).
+<span id="def-30b"></span>**Definition 30b (Unitary matrix).** An $N\times N$ complex matrix $U$ is *unitary* if its columns (equivalently rows) form an orthonormal basis of $\mathbb{C}^N$, i.e. $U^\dagger U = U U^\dagger = \mathbb{1}$ where $U^\dagger$ is the conjugate transpose.
 
-<span id="def-30b"></span>**Definition 30b (Unitary matrix).** An $N\times N$ complex matrix $U$ is *unitary* if its columns (equivalently rows) form an orthonormal basis of $\mathbb{C}^N$ (Definition LA5a), i.e. $U^\dagger U = U U^\dagger = \mathbb{1}$ where $U^\dagger$ is the conjugate transpose.
-
-<span id="def-30c"></span>**Definition 30c (Special orthogonal group $SO(3)$).** The *special orthogonal group* $SO(3)$ is the group (Definition LA0) of real orthogonal $3\times3$ matrices (Definition LA10) with determinant $+1$ (Definition LA3f); geometrically it is the group of rotations of $\mathbb{R}^3$.
-
-<span id="def-30d"></span>**Definition 30d (Group representation).** A *representation* of a group $G$ on a vector space $V$ is a group homomorphism (Definition LA0b) $\rho:G\to GL(V)$, where $GL(V)$ denotes the group of invertible linear maps on $V$ (Definitions LA2d and LA3e).
+*Relevance.* unitary matrices are the finite-dimensional amplitudes $\Theta$ whose squared moduli give unistochastic transition probabilities. [@horn1954; @horn2013].
 
 <span id="def-31"></span>**Definition 31 (Unistochastic matrix).** A stochastic matrix $X$ is *unistochastic* if there exists a unitary matrix $U$ (Definition 30b) with
 $$X_{ij} = |U_{ij}|^2 \quad \text{for all } i,j. \tag{68}$$
 
+*Relevance.* unistochastic matrices are precisely the $\Gamma$ arising as $|U_{ij}|^2$ from a unitary $U$ — the class in which Part III shows every indivisible process can be embedded. [@barandes2023theorem; @milz2021].
+
 <span id="def-31b"></span>**Definition 31b (Orthostochastic matrix).** A stochastic matrix $X$ is *orthostochastic* if there exists a real orthogonal matrix $U$ (a real matrix with $U^{T}U=UU^{T}=\mathbb{1}$) with $X_{ij}=|U_{ij}|^2$ for all $i,j$; i.e. $X$ is unistochastic (Definition 31) with a real $U$. The study of these matrices was initiated by Horn [@horn1954], who called them "ortho-stochastic."
+
+*Relevance.* orthostochastic matrices are the real subclass arising from orthogonal matrices; the distinction from the unistochastic class is what Proposition 32 records. [@horn1954].
 
 <span id="prop-32"></span>**Proposition 32.** Every unistochastic matrix is doubly stochastic. Every $2 \times 2$ doubly stochastic matrix is unistochastic. Beyond $2 \times 2$, neither implication reverses: there exist doubly stochastic matrices that are not unistochastic, and unistochastic matrices that are not orthostochastic.
 
-*Proof.* For the first claim, $\sum_i |U_{ij}|^2 = [U^\dagger U]_{jj} = 1$ and $\sum_j |U_{ij}|^2 = [UU^\dagger]_{ii} = 1$. For the $2 \times 2$ claim, every such matrix has the form $\begin{pmatrix} x & 1-x \\ 1-x & x \end{pmatrix}$ with $0 \le x \le 1$, and $\begin{pmatrix} \sqrt{x} & -\sqrt{1-x} \\ \sqrt{1-x} & \sqrt{x} \end{pmatrix}$ is unitary. Counterexamples beyond $2\times 2$ are given in [@barandes2023theorem, footnotes 9–10]: the matrix $\tfrac12\begin{pmatrix}0&1&1\\1&0&1\\1&1&0\end{pmatrix}$ is doubly stochastic but not unistochastic, and $\tfrac13\begin{pmatrix}1&1&1\\1&1&1\\1&1&1\end{pmatrix}$ is unistochastic but not orthostochastic. $\blacksquare$
+*Relevance.* this proposition establishes the hierarchy unistochastic $\subset$ doubly stochastic and orthostochastic $\subset$ unistochastic, bounding how classical the dictionary can be. [@barandes2023theorem; @horn1954].
 
 ---
 
 # Part II: Indivisible Stochastic Processes
 
-## 4. Definition and Immediate Properties
+## 2. Definition and Immediate Properties
 
 The idea of an indivisible stochastic process first appeared in passing in a 2021 review of quantum non-Markovianity [@milz2021, Fig. 6], with rudimentary forms traceable to work on open quantum systems [@wolf2008]. Barandes builds them into a complete framework [@barandes2025correspondence].
 
 <span id="def-33"></span>**Definition 33 (Indivisible stochastic process).** An *indivisible stochastic process* is a tuple
 $$(\mathcal{C}, \mathcal{T}, \mathcal{T}_0, \Gamma, p, \mathcal{A})$$
 consisting of:
+
+*Relevance.* this is the central object of the post: the class of processes that are generically non-divisible, hence non-Markovian, and that Part III embeds in quantum theory. [@barandes2023theorem; @wolf2008].
 
 1. a **configuration space** $\mathcal{C}$, a fixed set of possible configurations;
 2. a set of **target times** $\mathcal{T}$;
@@ -515,15 +271,19 @@ The transition map is also required to satisfy the **trivialization condition** 
 
 <span id="rem-34"></span>**Remark 34 (What is and is not assumed).** Three features distinguish this definition from a textbook stochastic process.
 
+*Relevance.* the assumptions listed delimit what the correspondence does and does not claim, which is essential for reading Propositions 35 and 36 correctly. [@barandes2023theorem].
+
 - *Only first-order laws.* The nomological content is a single first-order transition map, not an infinite Kolmogorov tower. The law of total probability (19) is the only Chapman–Kolmogorov equation available.
 - *Division events are sparse and system-centric.* Transition probabilities are not assumed to exist for *every* conditioning time, only for division events. Division events are not global properties of the universe; they are features of a given subsystem and may be generated to excellent approximation through interactions [@barandes2025quantum].
 - *No assumption that $t > t_0$.* The target time may lie before the conditioning time, so logical time-reversal invariance is not violated fundamentally.
 
-## 5. Divisibility and Its Failure
+## 3. Divisibility and Its Failure
 
 <span id="prop-35"></span>**Proposition 35 (Linearity).** The law of total probability (19) is linear in the standalone distribution: $p(t) = \Gamma(t \leftarrow t_0)\, p(t_0)$.
 
 *Proof.* Immediate from (19) written in matrix-vector form. $\blacksquare$
+
+*Relevance.* linearity of time evolution in the standalone distribution is what lets $\Gamma$ act as a matrix and what the quantum dictionary preserves. [@kolmogorov1933; @barandes2023theorem].
 
 This linearity is the seed of the linearity of quantum time evolution [@barandes2025quantum].
 
@@ -533,33 +293,51 @@ This linearity is the seed of the linearity of quantum time evolution [@barandes
 $$\tilde\Gamma(t \leftarrow t') \equiv \Gamma(t \leftarrow t_0)\,\Gamma^{-1}(t' \leftarrow t_0).$$
 By construction $\Gamma(t \leftarrow t_0) = \tilde\Gamma(t \leftarrow t')\Gamma(t' \leftarrow t_0)$. But by [Lemma 20](#lem-20), $\tilde\Gamma(t \leftarrow t')$ is a stochastic matrix only if both factors are permutation matrices. In general it is pseudo-stochastic ([Definition 21](#def-21)), with negative entries, and is not a legitimate transition matrix. Hence the dynamics do not divide at $t'$. By the contrapositive of [Proposition 15](#prop-15), the process is non-Markovian. $\blacksquare$
 
+*Relevance.* this is the first main result: divisibility, and with it Markovianity, fails generically for indivisible processes. [@barandes2023theorem; @wolf2008].
+
 The failure of divisibility is therefore not the familiar failure of Markovianity *as memory* in the sense of needing higher-order conditionals. An indivisible process has vastly *less* nomological structure than a textbook non-Markovian process, yet is still non-Markovian, because it does not divide at all.
 
 <span id="rem-37"></span>**Remark 37 (Non-Markovian realizers).** Given only the sparse ingredients of [Definition 33](#def-33), there generically exists a large or infinite family of complete Kolmogorov towers consistent with them. Any such tower that matches the system's statistics is called a *non-Markovian realizer*; an indivisible stochastic process encompasses an equivalence class of them. Only the minimalist ingredients are connected to empirical predictions, so the particular realizer is contingent, potentially unknowable, and arguably meaningless [@barandes2025quantum].
 
-## 6. Markovian Dynamical Systems as a Special Case
+*Relevance.* the realizers indicate how non-Markovianity is to be detected operationally, which is what makes Proposition 36 physically meaningful. [@barandes2023theorem; @milz2021].
 
-<span id="def-38"></span>**Definition 38 (Markovian-homogeneous dynamical system).** A *discrete Markovian-homogeneous dynamical system* is a triple $(\mathcal{X}, \mathcal{T}, f)$ where $\mathcal{X}$ is a finite state space, $\mathcal{T} \cong \mathbb{Z}$ under addition (Definition LA7), and the dynamical map $f : \mathcal{X} \times \mathcal{T} \to \mathcal{X}$ satisfies the homogeneity property (Definition 38a)
+## 4. Markovian Dynamical Systems as a Special Case
+
+<span id="def-38"></span>**Definition 38 (Markovian-homogeneous dynamical system).** A *discrete Markovian-homogeneous dynamical system* is a triple $(\mathcal{X}, \mathcal{T}, f)$ where $\mathcal{X}$ is a finite state space, $\mathcal{T} \cong \mathbb{Z}$ under addition, and the dynamical map $f : \mathcal{X} \times \mathcal{T} \to \mathcal{X}$ satisfies the homogeneity property (Definition 38a)
 $$f_{t+t'} = f_t \circ f_{t'} \quad \text{for all } t,t' \in \mathcal{T}, \tag{70}$$
-together with the trivialization condition $f_0 = \mathrm{id}_{\mathcal{X}}$ (Definitions S2h and 16).
+together with the trivialization condition $f_0 = \mathrm{id}_{\mathcal{X}}$.
 
-<span id="def-38a"></span>**Definition 38a (Homogeneity).** A family of maps $\{f_t\}$ indexed by $\mathcal{T}$ is *homogeneous* if $f_{t+t'}=f_t\circ f_{t'}$ for all $t,t'\in\mathcal{T}$ (Definitions S2g and 38).
+*Relevance.* Markovian-homogeneous dynamical systems are the reversible, divisible processes against which indivisibility is contrasted. [@kolmogorov1933; @doob1953].
+
+<span id="def-38a"></span>**Definition 38a (Homogeneity).** A family of maps $\{f_t\}$ indexed by $\mathcal{T}$ is *homogeneous* if $f_{t+t'}=f_t\circ f_{t'}$ for all $t,t'\in\mathcal{T}$ (Definition 38).
+
+*Relevance.* homogeneity in time is what makes the evolution a one-parameter group, which Proposition 39 then inverts. [@norris1997].
 
 <span id="prop-39"></span>**Proposition 39.** In a Markovian-homogeneous dynamical system, $f_t$ is invertible for every $t$, with $f_t^{-1} = f_{-t}$.
 
 *Proof.* Immediate from homogeneity and trivialization. $\blacksquare$
 
+*Relevance.* invertibility of the evolution is the classical counterpart of unitarity, and is what a divisible but non-permutation process lacks. [@doob1953].
+
 <span id="ex-40"></span>**Example 40 (Permutation dynamics is unistochastic).** If the state $i$ at time $t = n\,\delta t$ is identified with the standard basis vector and $f_{n\,\delta t} = \Sigma^n$ for a fixed permutation matrix $\Sigma$, then $\Sigma$ is both unitary and unistochastic (its entries are $0$s and $1$s, whose modulus-squares are themselves). Such a system is already a unistochastic process. There is even an analytic interpolation to continuous time via $U(t \leftarrow 0) = \Sigma^{t/\delta t}$ (diagonalize $\Sigma = V^\dagger D V$ and take eigenvalues to the power $t/\delta t$), generating a Hamiltonian as the infinitesimal generator [@barandes2023theorem].
 
-## 7. Axioms of Indivisible Quantum Theory
+*Relevance.* permutation dynamics is the explicit example showing that not every doubly stochastic matrix is unistochastic, and that unistochastic dynamics need not be Markovian. [@barandes2023theorem; @horn1954].
+
+## 5. Axioms of Indivisible Quantum Theory
 
 The reformulation replaces the Dirac–von Neumann axioms with a smaller, more transparent set [@barandes2025quantum].
 
 <span id="axm-41"></span>**Axiom 41 (Kinematical axiom).** For each model, one selects an appropriate configuration space, whose members are the possible configurations of the system, treated as elementary. The configuration space is a fixed feature of the model.
 
+*Relevance.* the kinematical axiom fixes the state space, the quantum analogue of the standalone distribution of Definition 8a. [@dirac1930; @vonneumann1932].
+
 <span id="axm-42"></span>**Axiom 42 (Dynamical axiom).** For arbitrary target times and for conditioning times that are division events, the dynamical laws consist of transition probabilities $p(i,t \mid j,t_0)$. Division events may arise intrinsically or through interactions; the transition probabilities are fixed features of the model.
 
+*Relevance.* the dynamical axiom constrains the time evolution, corresponding to the transition probabilities of Definition 9. [@dirac1930; @vonneumann1932].
+
 <span id="axm-43"></span>**Axiom 43 (Epistemic axiom).** The system has a time-dependent standalone probability distribution, connected across times by the transition probabilities. It is contingent, varying between runs.
+
+*Relevance.* the epistemic axiom concerns what is knowable about the state, matching the contingent character of the standalone distribution. [@barandes2023theorem].
 
 The kinematical and epistemic axioms are essentially classical; the distinctively non-classical ingredient is the dynamical axiom, which replaces Markovian differential equations with a sparse set of indivisible transition probabilities. The configurations play the role historically assigned to "hidden variables," but they are not hidden: they are exactly what one sees in experiments, and they replace wave functions as the ontological content [@barandes2025quantum].
 
@@ -567,7 +345,7 @@ The kinematical and epistemic axioms are essentially classical; the distinctivel
 
 # Part III: The Stochastic–Quantum Correspondence
 
-## 8. The Time-Evolution Operator
+## 6. The Time-Evolution Operator
 
 Consider an indivisible stochastic process with finite configuration space of size $N$, and fix an initial division event $0$. Write the transition matrix as
 $$\Gamma_{ij}(t \leftarrow 0) \equiv p(i,t \mid j,0). \tag{24}$$
@@ -576,19 +354,31 @@ $$\Gamma_{ij}(t \leftarrow 0) \equiv p(i,t \mid j,0). \tag{24}$$
 $$\Gamma_{ij}(t \leftarrow 0) = |\Theta_{ij}(t \leftarrow 0)|^2. \tag{25}$$
 This is an *identity*, not a postulate: every non-negative real number is the modulus-square of some complex number. The matrix $\Theta(t \leftarrow 0)$ is not unique, and is called the **time-evolution operator**.
 
+*Relevance.* the modulus-squaring map $\Gamma_{ij}=|\Theta_{ij}|^2$ is the dictionary's first half, converting amplitudes into classical probabilities. [@barandes2023theorem; @milz2021].
+
 <span id="prop-45"></span>**Proposition 45 (Summation condition).** The column normalization of $\Gamma$ implies
 $$\sum_{i=1}^N |\Theta_{ij}(t \leftarrow 0)|^2 = 1 \quad \text{for all } j, \tag{26}$$
 a generalization of the unitarity constraint. The trivialization condition gives $\Theta(0 \leftarrow 0) = \mathbb{1}$ (the identity matrix).
 
 *Proof.* Substitute (25) into $\sum_i \Gamma_{ij} = 1$. $\blacksquare$
 
+*Relevance.* the summation condition is the quantum form of column stochasticity (Proposition 13), and is what makes $\Gamma$ a legitimate transition matrix. [@kolmogorov1933; @horn2013].
+
 <span id="def-46a"></span>**Definition 46a (Schur–Hadamard product).** For matrices $X,Y$ of the same size, the *Schur–Hadamard product* is entry-wise multiplication [@schur1911; @halmos1958]: $(X \odot Y)_{ij} \equiv X_{ij} Y_{ij}$.
+
+*Relevance.* the Schur–Hadamard product is the entrywise product used to square amplitudes and to build the second gauge freedom of Proposition 67. [@schur1911; @halmos1958].
 
 <span id="def-46b"></span>**Definition 46b (Schur–Hadamard square).** For a matrix $\Theta$, define $|\Theta|^{\odot 2}\equiv\overline{\Theta}\odot\Theta$, i.e. entrywise $\big(|\Theta|^{\odot2}\big)_{ij}=\overline{\Theta_{ij}}\,\Theta_{ij}=|\Theta_{ij}|^2$, where $\overline{\Theta}$ is the entrywise complex conjugate.
 
+*Relevance.* the Schur square of $\Theta$ is the non-negative matrix whose entries are the transition probabilities. [@schur1911; @horn1954].
+
 <span id="def-46b1"></span>**Definition 46b1 (Schur–Hadamard gauge freedom).** The *Schur–Hadamard gauge freedom* of a matrix $\Theta$ is the freedom to replace $\Theta_{ij}\mapsto\Theta_{ij}e^{i\theta_{ij}}$ for arbitrary real phases $\theta_{ij}$, which leaves $|\Theta|^{\odot2}$ unchanged.
 
+*Relevance.* the gauge freedom records that many amplitudes give the same transition probabilities, which is why the dictionary is not invertible. [@barandes2023theorem].
+
 <span id="def-46b2"></span>**Definition 46b2 (Gauge invariance).** A *gauge invariance* (gauge symmetry) is a transformation of a mathematical representation that leaves all physical (empirical) quantities unchanged — here the transition matrix $\Gamma$ (Definition 12), the probabilities, and the expectation values.
+
+*Relevance.* gauge invariance is the statement that physically equivalent descriptions differ only by a phase redefinition; it is the theme of Part IV. [@barandes2023theorem].
 
 <span id="prop-47"></span>**Proposition 47 (Schur–Hadamard gauge freedom).** The transformation
 $$\Theta_{ij}(t \leftarrow 0) \mapsto \Theta_{ij}(t \leftarrow 0)\, e^{i\theta_{ij}(t)} \tag{30}$$
@@ -596,28 +386,38 @@ for arbitrary real phases $\theta_{ij}(t)$ leaves every entry of $\Gamma$ unchan
 
 *Proof.* $|\Theta_{ij} e^{i\theta_{ij}}|^2 = |\Theta_{ij}|^2$. $\blacksquare$
 
+*Relevance.* the second gauge freedom shows that the choice of phases in $\Theta$ is unphysical, which is what makes the dictionary a correspondence rather than an identification. [@barandes2023theorem].
+
 This is a genuine gauge invariance, first described in [@barandes2025quantum]; it is *not* merely a change of relative phases of state vectors. It has downstream effects on the Hilbert-space ingredients to be defined, arranged so that all empirical predictions are preserved.
 
-## 9. The Configuration Basis and the Dictionary
+## 7. The Configuration Basis and the Dictionary
 
 <span id="def-48"></span>**Definition 48 (Configuration basis).** The *configuration basis* of $\mathcal{H}=\mathbb{C}^N$ is the standard orthonormal basis $e_1,\ldots,e_N$, with the $i$-th configuration identified with $e_i$.
+
+*Relevance.* the configuration basis is the isomorphism between configurations and Hilbert-space vectors that makes the dictionary possible. [@dirac1930; @halmos1958].
 
 <span id="def-48b"></span>**Definition 48b (Configuration projector).** The *configuration projector* $P_i$ is the rank-one orthogonal projection onto $\operatorname{span}(e_i)$:
 $$P_i \equiv e_i e_i^\dagger = \operatorname{diag}(0,\dots,1,\dots,0), \tag{78}$$
 with the $1$ in the $i$-th diagonal position.
 
+*Relevance.* configuration projectors are the quantum encoding of “the system is in configuration $i$”. [@vonneumann1932; @mackey1957].
+
 <span id="prop-49"></span>**Proposition 49 (Configuration projectors form a PVM).** The $P_i$ satisfy $P_i P_j = \delta_{ij} P_i$ and $\sum_i P_i = \mathbb{1}$.
 
 *Proof.* Direct computation using $e_i^\dagger e_j = \delta_{ij}$. $\blacksquare$
+
+*Relevance.* this proposition is what lets the classical partition of the configuration space be represented as a PVM, a prerequisite for Theorem 50. [@mackey1952; @mackey1957].
 
 <span id="thm-50"></span>**Theorem 50 (The dictionary).** The modulus-squaring identity (25) is equivalent to the matrix-trace identity
 $$\boxed{\ \Gamma_{ij}(t \leftarrow 0) = \operatorname{tr}\!\left(\Theta^\dagger(t \leftarrow 0)\, P_i\, \Theta(t \leftarrow 0)\, P_j\right).\ } \tag{39}$$
 
 *Proof.* The $j$-th diagonal entry of $\Theta^\dagger P_i \Theta$ is $(\Theta^\dagger P_i \Theta)_{jj} = \sum_k \overline{\Theta_{kj}} (P_i \Theta)_{kj} = \overline{\Theta_{ij}}\Theta_{ij} = |\Theta_{ij}|^2$. Multiplying by $P_j$ and taking the trace selects this $j$-th diagonal entry, giving $|\Theta_{ij}|^2 = \Gamma_{ij}$. $\blacksquare$
 
+*Relevance.* the dictionary is the central translation between the stochastic and quantum descriptions; Propositions 51, 52b and 61 and Theorem 62 all quote it. [@barandes2023theorem; @milz2021].
+
 The dictionary is the foundational equation of the stochastic–quantum correspondence: it translates the stochastic process on the left into Hilbert-space data on the right. It is the direct analogue of the correspondence between Newtonian and Hamiltonian mechanics.
 
-## 10. The Hilbert-Space Representation
+## 8. The Hilbert-Space Representation
 
 Given an initial standalone distribution $p_j(0)$, define the initial **density matrix**
 $$\rho(0) \equiv \operatorname{diag}(p_1(0), \dots, p_N(0)) = \sum_{j=1}^N p_j(0)\, P_j. \tag{41}$$
@@ -629,50 +429,74 @@ $$p_i(t) = \operatorname{tr}\!\left(P_i\, \rho(t)\right). \tag{46}$$
 
 *Proof.* Insert the dictionary into the law of total probability and use $\sum_j P_j = \mathbb{1}$ and $\Theta \rho(0) \Theta^\dagger$. Self-adjointness and positivity follow from those of $\rho(0)$; unit-trace follows from the summation condition (26). $\blacksquare$
 
+*Relevance.* density-matrix evolution is the quantum restatement of $p(t)=\Gamma(t\leftarrow t_0)p(t_0)$ in Proposition 35, and is the Schrödinger picture of the dynamics. [@schrodinger1926; @vonneumann1932; @barandes2023theorem].
+
 Hence the *linearity* of the law of total probability underwrites the *linearity* of the density-matrix evolution. For a rank-one $\rho(t) = \Psi(t)\Psi^\dagger(t)$, one obtains a state vector $\Psi(t) = \Theta(t \leftarrow 0)\Psi(0)$ of unit norm, and the Born rule takes the textbook form $p_i(t) = |\Psi_i(t)|^2$.
 
 <span id="def-52"></span>**Definition 52 (Configuration operator).** For a random variable $A(t)$ with values $a(i,t)$ on the configuration basis, the associated *configuration operator* (diagonal operator) is
 $$A(t) \equiv \sum_{i=1}^N a(i,t)\, P_i = \operatorname{diag}(a_1(t), \dots, a_N(t)). \tag{48}$$
-Its values $a(i,t)$ are the eigenvalues of $A(t)$ (Definition LA4), and the projectors $P_i$ are the configuration projectors (Definition 48b).
+Its values $a(i,t)$ are the eigenvalues of $A(t)$, and the projectors $P_i$ are the configuration projectors (Definition 48b).
+
+*Relevance.* the configuration operator is the observable whose spectral outcome $i$ reports that the system is in configuration $i$. [@vonneumann1932].
 
 <span id="prop-52b"></span>**Proposition 52b (Expectation via the trace).** For a configuration operator $A(t)$ (Definition 52) and a state $\rho(t)$, the expectation equals
 $$\langle A(t) \rangle = \operatorname{tr}\!\left(A(t)\, \rho(t)\right). \tag{49}$$
 
+*Relevance.* the trace formula is the quantum version of the expectation in (2), and is what makes classical statistics read off from $\rho$. [@vonneumann1932; @born1926].
+
 <span id="def-52c"></span>**Definition 52c (Beable).** A random variable $A(t)$ whose values are the eigenvalues of a configuration operator (Definition 52), i.e. a diagonal self-adjoint operator, is called a *beable* (following Bell) [@bell1971; @bell1976]: when the system is in configuration $i$, each beable has the definite value $a(i,t)$.
+
+*Relevance.* beables are the quantities assumed to have definite values independent of measurement, which the Kochen–Specker theorem constrains. [@bell1971; @bell1976].
 
 <span id="def-52d"></span>**Definition 52d (Emergeable).** An observable (Definition 25c) that is *not* a beable — i.e. represented by a non-diagonal self-adjoint operator — is called an *emergeable*; by the Kochen–Specker theorem (Remark 52e), not all observables can be beables [@bell1966; @kochen1967].
 
+*Relevance.* emergeables are the quantum quantities that behave like classical beables, the notion Part IV needs in order to state what is and is not classical. [@barandes2023theorem].
+
 <span id="rem-52e"></span>**Remark 52e (Kochen–Specker theorem).** The Kochen–Specker theorem states that in a Hilbert space of dimension at least three there is no assignment of definite values to all observables (self-adjoint operators) that is consistent with the functional relations among them. Hence not every observable can be a beable (Definition 52c) [@bell1966; @kochen1967].
+
+*Relevance.* the Kochen–Specker theorem is the no-go result forcing beables to be context-dependent, and hence what motivates the emergeable notion. [@bell1966; @kochen1967].
 
 <span id="def-53"></span>**Definition 53 (Heisenberg picture).** Define
 $$\rho^H \equiv \rho(0), \qquad \Psi^H \equiv \Psi(0), \qquad A^H(t) \equiv \Theta^\dagger(t \leftarrow 0)\, A(t)\, \Theta(t \leftarrow 0). \tag{51}$$
 The probability and expectation formulas become $p_i(t) = \operatorname{tr}(P_i^H(t)\rho^H)$ and $\langle A(t)\rangle = \operatorname{tr}(A^H(t)\rho^H)$.
 
-<span id="ex-54"></span>**Example 54 (Velocity as an emergeable).** For a stochastic particle, the derivative $\dot A \equiv \lim_{t \to 0} \frac{d}{dt} A^H(t)$ is self-adjoint but generically non-diagonal, and does not commute (Definition LA11) with $A$. It has a transparent physical meaning through $\operatorname{tr}(\dot A \rho(0)) = \lim_{t\to 0} \frac{d}{dt}\langle A(t)\rangle$, yet no direct interpretation on the configuration space: velocity is an emergeable, an amalgam of kinematical and dynamical ingredients [@barandes2025correspondence].
+*Relevance.* the Heisenberg picture is the description in which observables evolve and states are fixed, the mirror image of the Schrödinger picture of Proposition 51. [@heisenberg1925; @vonneumann1932].
 
-## 11. Kraus Decomposition and Quantum Channels
+<span id="ex-54"></span>**Example 54 (Velocity as an emergeable).** For a stochastic particle, the derivative $\dot A \equiv \lim_{t \to 0} \frac{d}{dt} A^H(t)$ is self-adjoint but generically non-diagonal, and does not commute with $A$. It has a transparent physical meaning through $\operatorname{tr}(\dot A \rho(0)) = \lim_{t\to 0} \frac{d}{dt}\langle A(t)\rangle$, yet no direct interpretation on the configuration space: velocity is an emergeable, an amalgam of kinematical and dynamical ingredients [@barandes2025correspondence].
+
+*Relevance.* the velocity example exhibits a concrete emergeable, showing that the notion is non-vacuous. [@barandes2023theorem].
+
+## 9. Kraus Decomposition and Quantum Channels
 
 <span id="def-55"></span>**Definition 55 (Kraus operators).** For each $\beta = 1, \dots, N$, define
 $$K_\beta(t \leftarrow 0) \equiv \Theta(t \leftarrow 0)\, P_\beta, \tag{58}$$
 i.e. the matrix whose $\beta$-th column agrees with that of $\Theta$ and which is zero elsewhere: $K_{\beta,ij} = \delta_{\beta j}\Theta_{ij}$.
+
+*Relevance.* Kraus operators are the matrices $K_\beta$ whose squared moduli give the transition probabilities; they are the object Proposition 57 constructs. [@kraus1971].
 
 <span id="prop-56"></span>**Proposition 56 (Kraus condition).** The summation condition (26) implies
 $$\sum_{\beta=1}^N K_\beta^\dagger(t \leftarrow 0)\, K_\beta(t \leftarrow 0) = \mathbb{1}. \tag{59}$$
 
 *Proof.* $[K_\beta^\dagger K_\beta]_{ij} = \sum_k \overline{K_{\beta,ki}} K_{\beta,kj} = \delta_{\beta i}\delta_{\beta j}\sum_k |\Theta_{k\beta}|^2 = \delta_{\beta i}\delta_{\beta j}$. Summing over $\beta$ gives $\delta_{ij}$. $\blacksquare$
 
+*Relevance.* the Kraus condition is the normalization that guarantees the resulting map is trace preserving, i.e. that probabilities still sum to one. [@kraus1971; @choi1975].
+
 <span id="prop-57"></span>**Proposition 57 (Kraus decomposition of the dynamics).** The dictionary becomes
 $$\Gamma_{ij}(t \leftarrow 0) = \sum_{\beta=1}^N \operatorname{tr}\!\left(K_\beta^\dagger(t \leftarrow 0)\, P_i\, K_\beta(t \leftarrow 0)\, P_j\right), \tag{60}$$
 and the density-matrix rule becomes
 $$\rho(t) = \sum_{\beta=1}^N K_\beta(t \leftarrow 0)\, \rho(0)\, K_\beta^\dagger(t \leftarrow 0). \tag{61}$$
 
+*Relevance.* this decomposition writes the process dynamics as a quantum channel, which is what Theorem 59 then dilates. [@kraus1971; @choi1975].
+
 <span id="def-58"></span>**Definition 58 (Quantum channel).** Abstracting, define the map
 $$\mathcal{E}_{t \leftarrow 0}(X) \equiv \sum_{\beta=1}^N K_\beta(t \leftarrow 0)\, X\, K_\beta^\dagger(t \leftarrow 0), \tag{63}$$
 which is a CPTP map, or quantum channel, on the algebra $\mathbb{C}^{N \times N}$.
 
+*Relevance.* the quantum channel is the structural form of the dynamics that Theorem 50 and Proposition 57 establish. [@nielsen2000; @paulsen2003].
+
 The Kraus operators are not unique: any set satisfying the Kraus condition and reproducing the dictionary yields a valid transition matrix. The existence (not uniqueness) of these operators is what permits the final step.
 
-## 12. Dilation and Unitary Evolution
+## 10. Dilation and Unitary Evolution
 
 <span id="thm-59"></span>**Theorem 59 (Dilation).** By the Stinespring dilation theorem ([Theorem 29](#thm-29)), the quantum channel $\mathcal{E}_{t \leftarrow 0}$ can be purified. There exists an integer $\tilde N$ with
 $$N \le \tilde N \le N^3 \tag{94}$$
@@ -681,11 +505,15 @@ $$\Gamma_{ij}(t \leftarrow 0) = \operatorname{tr}\!\left(\operatorname{tr}'\!\le
 
 *Proof sketch.* Given Kraus matrices $K_\beta$, define an $N^3 \times N^2$ matrix $\tilde V$ by $\tilde V_{(i\beta m)(jl)} = K_{\beta,ij}\delta_{lm}$. One shows $\tilde V^\dagger \tilde V = \mathbb{1}_{N^2 \times N^2}$, so $\tilde V$ is a partial isometry; it extends to a unitary $\tilde U$ by adjoining $N^3 - N^2$ mutually orthogonal columns, chosen so that $\tilde U(0\leftarrow 0) = \mathbb{1}$. Substituting $\tilde U$ into the right-hand side of (96) reproduces the dilute dictionary. $\blacksquare$
 
+*Relevance.* the dilation theorem is the statement that the process can be embedded in a unitary dynamics on a larger Hilbert space. [@stinespring1955; @barandes2023theorem].
+
 The dilated dictionary can be written directly in terms of the unitary entries:
 $$\tilde\Gamma_{ii',jj'}(t \leftarrow 0) = |\tilde U_{ii',jj'}(t \leftarrow 0)|^2, \tag{105}$$
 so the $\tilde N \times \tilde N$ transition matrix $\tilde\Gamma$ is *unistochastic*.
 
 <span id="def-60"></span>**Definition 60 (Dilated process).** Define the *dilated* indivisible stochastic process $(\tilde{\mathcal{C}}, \tilde{\mathcal{T}}, \tilde{\mathcal{T}}_0, \tilde\Gamma, \tilde p, \tilde{\mathcal{A}})$ by
+
+*Relevance.* the dilated process is the unistochastic process of which the original is a subsystem, as Theorem 62 asserts. [@barandes2023theorem; @milz2021].
 
 - $\tilde{\mathcal{C}} \equiv \mathcal{C} \times \mathcal{C}'$ (the Cartesian product, with $|\mathcal{C}'| = N'$);
 - $\tilde{\mathcal{T}} \equiv \mathcal{T}$ and $\tilde{\mathcal{T}}_0 \equiv \{0\}$;
@@ -698,21 +526,35 @@ $$\sum_{i'=1}^{N'} \tilde\Gamma_{ii',jj'}(t \leftarrow 0) = \Gamma_{ij}(t \lefta
 
 *Proof.* Tracing over the ancillary index in (96) and using $\sum_{i'} P'_{i'} = \mathbb{1}'$. $\blacksquare$
 
+*Relevance.* marginalization is the consistency requirement that the dilated process reproduce the original statistics, the quantum form of (5). [@kolmogorov1933; @barandes2023theorem].
+
 <span id="def-61a"></span>**Definition 61a (Marginal distribution).** Given a joint distribution $\tilde p_{ii'}(t)$, the *marginal* over the ancillary index is $\sum_{i'}\tilde p_{ii'}(t)$; likewise, summing a transition matrix over one index gives the *marginal transition matrix*, as in Proposition 61.
+
+*Relevance.* the marginal distribution is the classical standalone distribution obtained by tracing out the ancilla. [@kolmogorov1933].
 
 <span id="thm-62"></span>**Theorem 62 (The Stochastic–Quantum Theorem).** *Every indivisible stochastic process can be regarded as a subsystem of a unistochastic process.* [@barandes2023theorem]
 
-*Proof.* By [Observation 44](#obs-44), write $\Gamma_{ij} = |\Theta_{ij}|^2$. By §9–§11, build the Hilbert-space representation, the density matrix, and the CPTP channel. By [Theorem 59](#thm-59), dilate to a unitary $\tilde U$ on $\tilde{\mathcal{H}}$. By [Proposition 61](#prop-61), the original process is a subsystem of the dilated, unistochastic process $(\tilde{\mathcal{C}}, \tilde{\mathcal{T}}, \tilde{\mathcal{T}}_0, \tilde\Gamma, \tilde p, \tilde{\mathcal{A}})$. $\blacksquare$
+*Proof.* By [Observation 44](#obs-44), write $\Gamma_{ij} = |\Theta_{ij}|^2$. By §7–§9, build the Hilbert-space representation, the density matrix, and the CPTP channel. By [Theorem 59](#thm-59), dilate to a unitary $\tilde U$ on $\tilde{\mathcal{H}}$. By [Proposition 61](#prop-61), the original process is a subsystem of the dilated, unistochastic process $(\tilde{\mathcal{C}}, \tilde{\mathcal{T}}, \tilde{\mathcal{T}}_0, \tilde\Gamma, \tilde p, \tilde{\mathcal{A}})$. $\blacksquare$
+
+*Relevance.* the Stochastic–Quantum Theorem is the post's main result: every indivisible stochastic process is a subsystem of a unistochastic process. [@barandes2023theorem].
 
 <span id="cor-63"></span>**Corollary 63.** To study the class of indivisible stochastic processes, it suffices to study the subclass of unistochastic processes. Every indivisible stochastic process corresponds to a unitarily evolving quantum system, and unitarily evolving quantum systems represent the most general way to model a system with stochastic dynamical laws [@barandes2023theorem].
 
+*Relevance.* this corollary packages the reverse direction, that unistochastic processes are the natural container for indivisible ones. [@barandes2023theorem].
+
 <span id="cor-64"></span>**Corollary 64 (The correspondence is bidirectional).** Reading the dictionary in the other direction, any quantum system can be modeled as an indivisible stochastic process. One thereby obtains the **stochastic–quantum correspondence** between indivisible stochastic processes and quantum systems [@barandes2025correspondence].
 
+*Relevance.* bidirectionality is what makes the correspondence usable in both directions, from stochastic processes to quantum dynamics and back. [@barandes2023theorem; @milz2021].
+
 <span id="def-65"></span>**Definition 65 (Unistochastic process).** An indivisible stochastic process (Definition 33) whose transition matrix (Definition 12) is unistochastic (Definition 31) at every target and conditioning time is a *unistochastic process*.
+
+*Relevance.* unistochastic processes are the class closed under dilation, which is why the correspondence singles them out. [@barandes2023theorem].
 
 <span id="prop-65a"></span>**Proposition 65a (Unistochastic dictionary).** For a unistochastic process (Definition 65) one may take $\Theta=U$ unitary (Definition 30b), and the dictionary reads
 $$\Gamma_{ij}(t \leftarrow 0) = \operatorname{tr}\!\left(U^\dagger(t \leftarrow 0)\, P_i\, U(t \leftarrow 0)\, P_j\right), \tag{65}$$
 with the state evolving as $\rho(t) = U(t\leftarrow 0)\rho(0)U^\dagger(t\leftarrow 0)$.
+
+*Relevance.* the unistochastic dictionary is the dictionary specialised to the dilated process, in which the amplitude $\Theta$ is unitary. [@barandes2023theorem; @horn1954].
 
 The correspondence is *many-to-one in both directions*, exactly as the correspondence between Newtonian systems and Hamiltonian mechanics: a given indivisible stochastic process admits infinitely many Hilbert-space representations, and a given Hilbert-space system represents infinitely many qualitatively different indivisible stochastic processes (one per choice of orthonormal basis serving as a configuration space) [@barandes2025correspondence].
 
@@ -720,7 +562,7 @@ The correspondence is *many-to-one in both directions*, exactly as the correspon
 
 # Part IV: Further Implications
 
-## 13. Hamiltonian Dynamics and the Emergence of the Schrödinger Equation
+## 11. Hamiltonian Dynamics and the Emergence of the Schrödinger Equation
 
 If the unitary time-evolution operator is differentiable in $t$, define the **Hamiltonian**
 $$H(t) \equiv i\hbar\, \frac{\partial U(t \leftarrow 0)}{\partial t}\, U^\dagger(t \leftarrow 0) = H^\dagger(t). \tag{69}$$
@@ -730,11 +572,13 @@ $$i\hbar\, \frac{\partial \rho(t)}{\partial t} = [H(t), \rho(t)], \tag{70}$$
 $$i\hbar\, \frac{\partial \Psi(t)}{\partial t} = H(t)\Psi(t), \tag{71}$$
 $$\frac{d\langle A(t)\rangle}{dt} = \left\langle \frac{i}{\hbar}[H(t), A(t)] \right\rangle + \left\langle \frac{\partial A(t)}{\partial t} \right\rangle. \tag{72}$$
 
+*Relevance.* the von Neumann, Schrödinger, Ehrenfest, and Heisenberg equations are all derived here rather than postulated. [@barandes2023theorem; @barandes2025quantum].
+
 Thus the Schrödinger equation is *derived*, not postulated, from an indivisible stochastic process with a differentiable unistochastic transition matrix. The conditions of linearity and probability conservation alone are insufficient to pick out unitarity—CPTP maps such as the bit-flip channel are linear and probability-conserving without being unitary—so the derivation of unitarity is a substantive result [@barandes2025quantum].
 
-## 14. Gauge Invariance and Dynamical Symmetries
+## 12. Gauge Invariance and Dynamical Symmetries
 
-### 14.1 Foldy–Wouthuysen gauge transformations
+### 12.1 Foldy–Wouthuysen gauge transformations
 
 <span id="prop-67"></span>**Proposition 67 (Second gauge invariance).** Let $V(t)$ be a time-dependent unitary matrix. The transformation
 $$
@@ -747,39 +591,53 @@ A(t) &\mapsto V(t)A(t)V^\dagger(t), \\
 $$
 leaves the probabilities, expectation values, and the transition matrix unchanged [@barandes2025correspondence].
 
+*Relevance.* the second gauge invariance is the Part IV statement that physical predictions depend only on the equivalence class of amplitudes. [@barandes2023theorem; @milz2021].
+
 This is a gauge invariance first written down for the Dirac equation by Foldy and Wouthuysen [@foldy1950]. If $V$ is time-independent it is a change of orthonormal basis; if it depends on time it is a local-in-time unitary transformation of each Hilbert-space fiber. Under it, when $\Theta = U$ is unitary, the Hamiltonian transforms as a non-Abelian gauge potential:
 $$H(t) \mapsto V(t)H(t)V^\dagger(t) - i\hbar\, V(t)\frac{\partial V^\dagger(t)}{\partial t}. \tag{75}$$
 Choosing $V(t) = U^\dagger(t\leftarrow 0)$ makes $H_V = 0$—which is precisely the Heisenberg picture. Consequently the Hamiltonian is not a gauge-invariant observable, and the familiar Hilbert-space ingredients are highly gauge-dependent; one may reasonably be skeptical of assigning them direct ontological meaning [@barandes2025correspondence].
 
-### 14.2 Dynamical symmetries and Noether's theorem
+### 12.2 Dynamical symmetries and Noether's theorem
 
 <span id="def-68"></span>**Definition 68 (Dynamical symmetry).** For an invertible transformation of configurations $P_i \mapsto \tilde P_i = V^\dagger P_i V$ (with $V$ unitary), the transformation is a *dynamical symmetry* if it leaves the transition matrix invariant:
 $$\operatorname{tr}\!\left(\Theta^\dagger \tilde P_i \Theta \tilde P_j\right) = \operatorname{tr}\!\left(\Theta^\dagger P_i \Theta P_j\right). \tag{83}$$
+
+*Relevance.* a dynamical symmetry is a symmetry of the equations of motion; Part IV relates it to conserved quantities. [@noether1918; @sakurai1994].
 
 <span id="prop-69"></span>**Proposition 69 (Condition for a dynamical symmetry).** A unitary $V$ is a dynamical symmetry if and only if
 $$V\,\Theta(t\leftarrow 0)\,V^\dagger = \Theta(t\leftarrow 0) \odot \left(e^{i\theta_{ij}(t)}\right) \tag{87}$$
 for some phase matrix; that is, $V\Theta V^\dagger$ differs from $\Theta$ by at most a Schur–Hadamard gauge transformation (Definition 46b1). The unitary case $V\Theta V^\dagger = \Theta$ and the anti-unitary case $V\Theta V^\dagger = \overline{\Theta}$ are special cases [@barandes2025correspondence].
 
+*Relevance.* this condition is the operator equation whose solutions generate the dynamical symmetries of the process. [@noether1918; @sakurai1994].
+
 <span id="rem-69a"></span>**Remark 69a (Wigner's theorem).** Wigner's theorem states that any bijection of the set of pure states (Definition 24c2) of a complex Hilbert space that preserves transition probabilities $|\langle\phi,\psi\rangle|^2$ is induced by a unitary or anti-unitary operator (Definition 24e) [@wigner1959].
+
+*Relevance.* Wigner's theorem is what guarantees that the symmetries of a quantum theory are implemented by unitary or anti-unitary operators. [@wigner1959].
 
 For a unitary symmetry generated by a self-adjoint $G$ that commutes with $U$, Noether's theorem follows as the conservation statement
 $$\langle G(t) \rangle = \operatorname{tr}\!\left(G U(t\leftarrow 0)\rho(0)U^\dagger(t\leftarrow 0)\right) = \langle G(0)\rangle. \tag{93}$$
 
-<span id="rem-69b"></span>**Remark 69b (Noether's theorem, here).** For a continuous symmetry generated by a self-adjoint $G$ commuting (Definition LA11) with the evolution, Noether's theorem here is the conservation statement $\langle G(t)\rangle=\langle G(0)\rangle$ above [@barandes2025correspondence].
+<span id="rem-69b"></span>**Remark 69b (Noether's theorem, here).** For a continuous symmetry generated by a self-adjoint $G$ commuting with the evolution, Noether's theorem here is the conservation statement $\langle G(t)\rangle=\langle G(0)\rangle$ above [@barandes2025correspondence].
+
+*Relevance.* Noether's theorem is the classical statement that continuous symmetries yield conserved quantities, the pattern Part IV follows. [@noether1918].
 
 Restricting to transformations that must preserve the Born rule in *every* orthonormal basis yields the stronger condition $|\tilde\Theta'_{\alpha\beta}|^2 = |\Theta'_{\alpha\beta}|^2$, whose solutions are precisely the unitary and anti-unitary operators of Wigner's theorem [@wigner1959].
 
-## 15. Dilations, Spin, and the Complex Numbers
+## 13. Dilations, Spin, and the Complex Numbers
 
 <span id="prop-70"></span>**Proposition 70 (Dilation as a free enlargement).** For any integer $D \ge 2$, the Hilbert-space formulation can be enlarged without changing the process by
 $$\Theta \mapsto \Theta \otimes \mathbb{1}^{\mathcal{I}}, \quad P_i \mapsto P_i \otimes \mathbb{1}^{\mathcal{I}}, \quad P_j \mapsto P_j \otimes P^{\mathcal{I}}_\gamma, \tag{98}$$
 where $\{P^\mathcal{I}_\gamma\}$ is a PVM on an internal space $\mathcal{H}_\mathcal{I}$ of dimension $D$. The dictionary is unchanged after a partial trace over $\mathcal{H}_\mathcal{I}$.
 
+*Relevance.* the freeness of the dilation is what makes the embedding of Theorem 62 a genuine extension rather than a reformulation. [@barandes2023theorem; @stinespring1955].
+
 Dilations provide a larger "canvas" for designing transition matrices and can make new *dilation-emergeables*—such as intrinsic spin—manifest. Representing spin this way requires dilating the Hilbert space to $N D$ dimensions and introducing a $D$-dimensional representation of $SO(3)$ for the internal space, so the underlying indivisible stochastic process involves no preferred direction [@barandes2025correspondence].
 
 <span id="rem-71"></span>**Remark 71 (Why the complex numbers appear).** Unistochastic matrices are generally *not* orthostochastic, so if the transition matrix $\Gamma$ is already unistochastic there is no guarantee that its unitary square root $U$ can be taken real orthogonal. The correspondence therefore implies that, to represent the most general indivisible stochastic processes, the complex numbers $\mathbb{C}$ are an important structural feature of quantum theory [@barandes2023theorem]. One is always free to choose $\Theta$ real, in which case the dilated $\tilde U$ is real orthogonal; and one can even double the dimension to represent the imaginary unit by a real $2\times 2$ matrix [@myrheim1999] and the complex-conjugation operator $K$ by $\sigma_x$ [@stueckelberg1960]. But even so, the algebraic structure of the complex numbers—and with it the spectral theorem, eigenvectors, anti-unitary operators, self-adjoint Hamiltonians, and the Schrödinger equation—becomes hard to avoid. These ideas are developed further in the deflationary account of [@barandes2026deflationary].
 
-## 16. Interpretation: Measurement, Hidden Variables, Locality, and Causation
+*Relevance.* the appearance of $\mathbb{C}$ is the reason the quantum formalism is the natural language for indivisible stochastic processes. [@barandes2025quantum; @dirac1930].
+
+## 14. Interpretation: Measurement, Hidden Variables, Locality, and Causation
 
 **The measurement and category problems.** In the indivisible picture, a measurement is just another stochastic interaction, modeled as one additional part of a larger stochastic process. When a measuring device is so modeled, it ends up in one of its possible outcome configurations with the standard Born-rule probability, whether the observable was a beable or an emergeable [@barandes2025correspondence]. This dissolves the measurement problem—there is no special "collapse" process, only ordinary stochastic dynamics—and addresses the category problem, since ordinary non-measurement events are the norm rather than the exception.
 
@@ -789,7 +647,7 @@ Dilations provide a larger "canvas" for designing transition matrices and can ma
 
 **Many-to-one, like Hamiltonian mechanics.** The correspondence is many-to-one in both directions, exactly as that between Newtonian systems and Hamiltonian mechanics. A given Hilbert space can arise from many qualitatively different configuration spaces (one per orthonormal basis), and a given process admits many Hilbert-space representations—an instance of the general underdetermination of ontology by formalism discussed by Curiel [@curiel2014].
 
-## 17. Summary
+## 15. Summary
 
 - An **indivisible stochastic process** ([Definition 33](#def-33)) is a stochastic process whose dynamical laws consist of a single first-order transition map, defined at division events, without an infinite Kolmogorov tower.
 - The free positivity of transition probabilities lets one write $\Gamma_{ij} = |\Theta_{ij}|^2$ ([Observation 44](#obs-44)), introducing the **time-evolution operator** with its Schur–Hadamard gauge freedom ([Proposition 47](#prop-47)).
