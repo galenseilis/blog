@@ -107,4 +107,4 @@ $$-\sqrt{\frac{(M - m)^2}{4} - \sigma^2} \leq \mu - \frac{M+m}{2} \leq \sqrt{\fr
 $$\mathbf{\frac{M + m}{2} - \sqrt{\frac{(M - m)^2}{4} - \sigma^2} \leq \mu \leq \frac{M + m}{2} + \sqrt{\frac{(M - m)^2}{4} - \sigma^2}} \quad \blacksquare$$
 
 ## 5. Conclusion
-Without knowing the variance $\sigma^2$, chaining the upper bounds of these equations yields a mathematical identity ($(M - \mu)(\mu - m) \leq \frac{1}{4}(M - m)^2$) that offers zero filtering power over an unknown mean. However, when variance *is* known, it acts as a spatial anchor—compressing the viable boundaries of the mean closer to the center of the domain as the system's variance increases.
+Without knowing the variance $\sigma^2$, chaining the upper bounds of these equations yields a mathematical identity ($(M - \mu)(\mu - m) \leq \frac{1}{4}(M - m)^2$) that offers no-tighter bounds on the mean. However, when variance *is* known, it helps refine the bounds.

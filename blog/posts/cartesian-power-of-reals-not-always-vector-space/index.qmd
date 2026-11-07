@@ -1,0 +1,353 @@
+---
+title: "Is $R^n$ Always a Vector Space? It Depends on the Structure."
+date: 2026-11-01
+description: "Why being a vector space is not a property of a set alone, but of a set equipped with appropriate algebraic operations."
+categories:
+  - mathematics
+  - linear algebra
+  - abstract algebra
+format:
+  html:
+    toc: true
+    number-sections: true
+---
+
+# Introduction
+
+It is common to hear that $\mathbb{R}^n$ is a vector space over $\mathbb{R}$. In an introductory linear algebra course, this statement is so familiar that it can seem almost automatic.
+
+But there is a subtle mathematical point hiding behind it: **the Cartesian power $\mathbb{R}^n$, by itself, is not a vector space.**
+
+A vector space is not merely a collection of objects. It is a collection of objects equipped with two operations: vector addition and scalar multiplication. These operations must satisfy a particular collection of axioms.
+
+Consequently, whether $\mathbb{R}^n$ is a vector space depends on the algebraic structure we put on it.
+
+In this post, we will explore three possibilities:
+
+1. The Cartesian power $\mathbb{R}^n$ with no additional structure.
+2. The familiar vector space structure on $\mathbb{R}^n$.
+3. An alternative algebraic structure on the very same set that is not a vector space.
+
+The third example is particularly important: it demonstrates that the existence of a vector space structure does not mean that every possible choice of algebraic operations makes the set a vector space.
+
+# 1. The Cartesian power $\mathbb{R}^n$ as a set
+
+Recall that the Cartesian power of the real numbers is
+
+$$
+\mathbb{R}^n =
+\underbrace{\mathbb{R}\times\mathbb{R}\times\cdots\times\mathbb{R}}_{n\text{ times}}.
+$$
+
+Equivalently,
+
+$$
+\mathbb{R}^n =
+\{(x_1,x_2,\ldots,x_n):x_i\in\mathbb{R}\}.
+$$
+
+At this point, we have only specified a set: a collection of ordered $n$-tuples of real numbers.
+
+We have not specified how to add two elements of this set. Nor have we specified how to multiply an element by a real scalar.
+
+Of course, we might be tempted to assume the familiar operations:
+
+$$
+(x_1,\ldots,x_n)+(y_1,\ldots,y_n)
+=
+(x_1+y_1,\ldots,x_n+y_n)
+$$
+
+and
+
+$$
+a(x_1,\ldots,x_n)
+=
+(ax_1,\ldots,ax_n).
+$$
+
+But these are choices of operations, not consequences of the definition of a Cartesian product.
+
+Without specifying these operations, the question of whether $\mathbb{R}^n$ is a vector space is not even well-defined.
+
+A vector space requires a set together with appropriately defined operations satisfying the vector space axioms.
+
+Thus, strictly speaking, **the Cartesian power $\mathbb{R}^n$, considered only as a set, is not a vector space.**
+
+# 2. The familiar vector space structure
+
+Let's now equip $\mathbb{R}^n$ with the usual operations of addition and multiplication.
+
+Define vector addition by
+
+$$
+(x_1,\ldots,x_n)+(y_1,\ldots,y_n)
+=
+(x_1+y_1,\ldots,x_n+y_n),
+$$
+
+and scalar multiplication by
+
+$$
+a(x_1,\ldots,x_n)
+=
+(ax_1,\ldots,ax_n),
+$$
+
+where $a\in\mathbb{R}$.
+
+With these operations, $\mathbb{R}^n$ is a vector space over $\mathbb{R}$.
+
+For example, the zero vector is
+
+$$
+\mathbf{0}=(0,\ldots,0),
+$$
+
+and the additive inverse of
+
+$$
+\mathbf{x}=(x_1,\ldots,x_n)
+$$
+
+is
+
+$$
+-\mathbf{x}=(-x_1,\ldots,-x_n).
+$$
+
+The familiar vector space axioms follow from the corresponding properties of real-number addition and multiplication.
+
+For instance, scalar distributivity holds:
+
+$$
+a(\mathbf{x}+\mathbf{y})
+=
+a\mathbf{x}+a\mathbf{y},
+$$
+
+and distributivity with respect to scalar addition holds:
+
+$$
+(a+b)\mathbf{x}
+=
+a\mathbf{x}+b\mathbf{x}.
+$$
+
+And so on... We can go through all of the usual axioms of a vector space to ensure that the set $\mathbb{R}^n$, equipped with these particular operations, is a vector space over $\mathbb{R}$.
+
+Notice the important distinction: we have not established that every possible algebraic structure on $\mathbb{R}^n$ is a vector space. We have established that one particular choice of operations makes it a vector space.
+
+# 3. An alternative structure on $\mathbb{R}^n$
+
+To see why the choice of operations matters, let's equip the very same underlying set with a different algebraic structure.
+
+We will retain ordinary scalar multiplication but change vector addition.
+
+Let $\mathbf{u}\in\mathbb{R}^n$ be a fixed, nonzero vector.
+
+Define a new addition operation, denoted by $\oplus$, as follows:
+
+$$
+\mathbf{x}\oplus\mathbf{y}
+=
+\mathbf{x}+\mathbf{y}+\mathbf{u},
+$$
+
+where the addition on the right-hand side is ordinary coordinatewise addition.
+
+For scalar multiplication, retain the usual operation:
+
+$$
+a\odot\mathbf{x}=a\mathbf{x}.
+$$
+
+We now have a different algebraic structure on exactly the same set $\mathbb{R}^n$.
+
+Is it a vector space over $\mathbb{R}$?
+
+Let's investigate.
+
+## 3.1. The new addition operation
+
+First, let's examine whether the new addition operation gives us an abelian group.
+
+It is associative:
+
+$$
+\begin{aligned}
+(\mathbf{x}\oplus\mathbf{y})\oplus\mathbf{z}
+&=(\mathbf{x}+\mathbf{y}+\mathbf{u})
+  +\mathbf{z}+\mathbf{u}\\
+&=\mathbf{x}+\mathbf{y}+\mathbf{z}+2\mathbf{u},
+\end{aligned}
+$$
+
+and similarly,
+
+$$
+\begin{aligned}
+\mathbf{x}\oplus(\mathbf{y}\oplus\mathbf{z})
+&=\mathbf{x}
+  +(\mathbf{y}+\mathbf{z}+\mathbf{u})
+  +\mathbf{u}\\
+&=\mathbf{x}+\mathbf{y}+\mathbf{z}+2\mathbf{u}.
+\end{aligned}
+$$
+
+Thus,
+
+$$
+(\mathbf{x}\oplus\mathbf{y})\oplus\mathbf{z}
+=
+\mathbf{x}\oplus(\mathbf{y}\oplus\mathbf{z}).
+$$
+
+The operation is also commutative because ordinary vector addition is commutative.
+
+What about the additive identity?
+
+We need an element $\mathbf{e}$ satisfying
+
+$$
+\mathbf{x}\oplus\mathbf{e}=\mathbf{x}.
+$$
+
+By definition,
+
+$$
+\mathbf{x}+\mathbf{e}+\mathbf{u}=\mathbf{x},
+$$
+
+so
+
+$$
+\boxed{\mathbf{e}=-\mathbf{u}.}
+$$
+
+Notice that the additive identity is no longer the familiar zero vector!
+
+Finally, the additive inverse of $\mathbf{x}$ is the element $\mathbf{y}$ satisfying
+
+$$
+\mathbf{x}\oplus\mathbf{y}=-\mathbf{u}.
+$$
+
+This gives
+
+$$
+\mathbf{x}+\mathbf{y}+\mathbf{u}=-\mathbf{u},
+$$
+
+and therefore
+
+$$
+\boxed{\mathbf{y}=-\mathbf{x}-2\mathbf{u}.}
+$$
+
+Consequently, $(\mathbb{R}^n,\oplus)$ is an abelian group.
+
+So far, so good!
+
+## 3.2. The distributive axiom fails
+
+A vector space must satisfy the distributive law
+
+$$
+a(\mathbf{x}+\mathbf{y})
+=
+a\mathbf{x}+a\mathbf{y}.
+$$
+
+With our new operations, this becomes
+
+$$
+a\odot(\mathbf{x}\oplus\mathbf{y})
+=
+(a\odot\mathbf{x})\oplus(a\odot\mathbf{y}).
+$$
+
+Let's calculate both sides.
+
+The left-hand side is
+
+$$
+\begin{aligned}
+a\odot(\mathbf{x}\oplus\mathbf{y})
+&=a(\mathbf{x}+\mathbf{y}+\mathbf{u})\\
+&=a\mathbf{x}+a\mathbf{y}+a\mathbf{u}.
+\end{aligned}
+$$
+
+The right-hand side is
+
+$$
+\begin{aligned}
+(a\odot\mathbf{x})\oplus(a\odot\mathbf{y})
+&=a\mathbf{x}\oplus a\mathbf{y}\\
+&=a\mathbf{x}+a\mathbf{y}+\mathbf{u}.
+\end{aligned}
+$$
+
+For these expressions to agree, we would need
+
+$$
+a\mathbf{u}=\mathbf{u}
+$$
+
+for every scalar $a\in\mathbb{R}$.
+
+But this is impossible because $\mathbf{u}\neq\mathbf{0}$.
+
+For example, take $a=0$. Then the distributive law would require
+
+$$
+\mathbf{0}=\mathbf{u},
+$$
+
+contradicting our choice of a nonzero vector $\mathbf{u}$.
+
+Therefore, the distributive axiom fails.
+
+We conclude that
+
+$$
+\boxed{
+(\mathbb{R}^n,\oplus,\odot)
+\text{ is not a vector space over }\mathbb{R}.
+}
+$$
+
+# 4. What have we learned?
+
+We have considered three situations involving the same underlying set.
+
+| Underlying set | Algebraic structure | Vector space? |
+|---|---|---|
+| $\mathbb{R}^n$ | No operations specified | No |
+| $\mathbb{R}^n$ | Ordinary coordinatewise addition and scalar multiplication | Yes |
+| $\mathbb{R}^n$ | Modified addition $\mathbf{x}\oplus\mathbf{y}=\mathbf{x}+\mathbf{y}+\mathbf{u}$ and ordinary scalar multiplication | No |
+
+The key observation is that the underlying set has not changed. In every case, its elements are precisely the same ordered $n$-tuples of real numbers.
+
+What changes is the algebraic structure imposed on that set.
+
+This illustrates a fundamental principle in abstract algebra:
+
+**Algebraic properties are properties of sets equipped with operations, not necessarily properties of the underlying sets alone.**
+
+A set can admit multiple algebraic structures, and those structures can have very different properties.
+
+In particular, the fact that a set can be made into a vector space does not imply that every possible choice of operations on that set will produce a vector space.
+
+# Conclusion
+
+When we say that $\mathbb{R}^n$ is a vector space over $\mathbb{R}$, we are implicitly referring to its standard coordinatewise addition and scalar multiplication.
+
+The Cartesian product alone does not determine these operations.
+
+Moreover, even when we explicitly equip $\mathbb{R}^n$ with algebraic operations, those operations need not satisfy the vector space axioms.
+
+The distinction might seem pedantic at first, especially because the standard structure on $\mathbb{R}^n$ is so familiar. But it becomes increasingly important as we move into abstract algebra, where the same underlying set can support many different structures.
+
+**A vector space is not just a set of points. It is a set together with operations that may or may not make the vector space axioms hold.**
