@@ -88,7 +88,7 @@
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">5. Conclusion</h2>
-<p>Without knowing the variance <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2">, chaining the upper bounds of these equations yields a mathematical identity (<img src="https://latex.codecogs.com/png.latex?(M%20-%20%5Cmu)(%5Cmu%20-%20m)%20%5Cleq%20%5Cfrac%7B1%7D%7B4%7D(M%20-%20m)%5E2">) that offers zero filtering power over an unknown mean. However, when variance <em>is</em> known, it acts as a spatial anchor—compressing the viable boundaries of the mean closer to the center of the domain as the system’s variance increases.</p>
+<p>Without knowing the variance <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2">, chaining the upper bounds of these equations yields a mathematical identity (<img src="https://latex.codecogs.com/png.latex?(M%20-%20%5Cmu)(%5Cmu%20-%20m)%20%5Cleq%20%5Cfrac%7B1%7D%7B4%7D(M%20-%20m)%5E2">) that offers no-tighter bounds on the mean. However, when variance <em>is</em> known, it helps refine the bounds.</p>
 
 
 </section>
@@ -99,6 +99,191 @@
   <category>Inequalities</category>
   <guid>https://galenseilis.github.io/blog/posts/bounded-variables-bhatia-davis-popoviciu/</guid>
   <pubDate>Sat, 07 Nov 2026 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Is \(R^n\) Always a Vector Space? It Depends on the Structure.</title>
+  <link>https://galenseilis.github.io/blog/posts/cartesian-power-of-reals-not-always-vector-space/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>It is common to hear that <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En"> is a vector space over <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D">. In an introductory linear algebra course, this statement is so familiar that it can seem almost automatic.</p>
+<p>But there is a subtle mathematical point hiding behind it: <strong>the Cartesian power <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En">, by itself, is not a vector space.</strong></p>
+<p>A vector space is not merely a collection of objects. It is a collection of objects equipped with two operations: vector addition and scalar multiplication. These operations must satisfy a particular collection of axioms.</p>
+<p>Consequently, whether <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En"> is a vector space depends on the algebraic structure we put on it.</p>
+<p>In this post, we will explore three possibilities:</p>
+<ol type="1">
+<li>The Cartesian power <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En"> with no additional structure.</li>
+<li>The familiar vector space structure on <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En">.</li>
+<li>An alternative algebraic structure on the very same set that is not a vector space.</li>
+</ol>
+<p>The third example is particularly important: it demonstrates that the existence of a vector space structure does not mean that every possible choice of algebraic operations makes the set a vector space.</p>
+</section>
+<section id="the-cartesian-power-mathbbrn-as-a-set" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> 1. The Cartesian power <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En"> as a set</h1>
+<p>Recall that the Cartesian power of the real numbers is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmathbb%7BR%7D%5En%20=%0A%5Cunderbrace%7B%5Cmathbb%7BR%7D%5Ctimes%5Cmathbb%7BR%7D%5Ctimes%5Ccdots%5Ctimes%5Cmathbb%7BR%7D%7D_%7Bn%5Ctext%7B%20times%7D%7D.%0A"></p>
+<p>Equivalently,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmathbb%7BR%7D%5En%20=%0A%5C%7B(x_1,x_2,%5Cldots,x_n):x_i%5Cin%5Cmathbb%7BR%7D%5C%7D.%0A"></p>
+<p>At this point, we have only specified a set: a collection of ordered <img src="https://latex.codecogs.com/png.latex?n">-tuples of real numbers.</p>
+<p>We have not specified how to add two elements of this set. Nor have we specified how to multiply an element by a real scalar.</p>
+<p>Of course, we might be tempted to assume the familiar operations:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A(x_1,%5Cldots,x_n)+(y_1,%5Cldots,y_n)%0A=%0A(x_1+y_1,%5Cldots,x_n+y_n)%0A"></p>
+<p>and</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Aa(x_1,%5Cldots,x_n)%0A=%0A(ax_1,%5Cldots,ax_n).%0A"></p>
+<p>But these are choices of operations, not consequences of the definition of a Cartesian product.</p>
+<p>Without specifying these operations, the question of whether <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En"> is a vector space is not even well-defined.</p>
+<p>A vector space requires a set together with appropriately defined operations satisfying the vector space axioms.</p>
+<p>Thus, strictly speaking, <strong>the Cartesian power <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En">, considered only as a set, is not a vector space.</strong></p>
+</section>
+<section id="the-familiar-vector-space-structure" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> 2. The familiar vector space structure</h1>
+<p>Let’s now equip <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En"> with the usual operations of addition and multiplication.</p>
+<p>Define vector addition by</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A(x_1,%5Cldots,x_n)+(y_1,%5Cldots,y_n)%0A=%0A(x_1+y_1,%5Cldots,x_n+y_n),%0A"></p>
+<p>and scalar multiplication by</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Aa(x_1,%5Cldots,x_n)%0A=%0A(ax_1,%5Cldots,ax_n),%0A"></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?a%5Cin%5Cmathbb%7BR%7D">.</p>
+<p>With these operations, <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En"> is a vector space over <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D">.</p>
+<p>For example, the zero vector is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmathbf%7B0%7D=(0,%5Cldots,0),%0A"></p>
+<p>and the additive inverse of</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmathbf%7Bx%7D=(x_1,%5Cldots,x_n)%0A"></p>
+<p>is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A-%5Cmathbf%7Bx%7D=(-x_1,%5Cldots,-x_n).%0A"></p>
+<p>The familiar vector space axioms follow from the corresponding properties of real-number addition and multiplication.</p>
+<p>For instance, scalar distributivity holds:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Aa(%5Cmathbf%7Bx%7D+%5Cmathbf%7By%7D)%0A=%0Aa%5Cmathbf%7Bx%7D+a%5Cmathbf%7By%7D,%0A"></p>
+<p>and distributivity with respect to scalar addition holds:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A(a+b)%5Cmathbf%7Bx%7D%0A=%0Aa%5Cmathbf%7Bx%7D+b%5Cmathbf%7Bx%7D.%0A"></p>
+<p>And so on… We can go through all of the usual axioms of a vector space to ensure that the set <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En">, equipped with these particular operations, is a vector space over <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D">.</p>
+<p>Notice the important distinction: we have not established that every possible algebraic structure on <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En"> is a vector space. We have established that one particular choice of operations makes it a vector space.</p>
+</section>
+<section id="an-alternative-structure-on-mathbbrn" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> 3. An alternative structure on <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En"></h1>
+<p>To see why the choice of operations matters, let’s equip the very same underlying set with a different algebraic structure.</p>
+<p>We will retain ordinary scalar multiplication but change vector addition.</p>
+<p>Let <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bu%7D%5Cin%5Cmathbb%7BR%7D%5En"> be a fixed, nonzero vector.</p>
+<p>Define a new addition operation, denoted by <img src="https://latex.codecogs.com/png.latex?%5Coplus">, as follows:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmathbf%7Bx%7D%5Coplus%5Cmathbf%7By%7D%0A=%0A%5Cmathbf%7Bx%7D+%5Cmathbf%7By%7D+%5Cmathbf%7Bu%7D,%0A"></p>
+<p>where the addition on the right-hand side is ordinary coordinatewise addition.</p>
+<p>For scalar multiplication, retain the usual operation:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Aa%5Codot%5Cmathbf%7Bx%7D=a%5Cmathbf%7Bx%7D.%0A"></p>
+<p>We now have a different algebraic structure on exactly the same set <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En">.</p>
+<p>Is it a vector space over <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D">?</p>
+<p>Let’s investigate.</p>
+<section id="the-new-addition-operation" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="the-new-addition-operation"><span class="header-section-number">4.1</span> 3.1. The new addition operation</h2>
+<p>First, let’s examine whether the new addition operation gives us an abelian group.</p>
+<p>It is associative:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0A(%5Cmathbf%7Bx%7D%5Coplus%5Cmathbf%7By%7D)%5Coplus%5Cmathbf%7Bz%7D%0A&amp;=(%5Cmathbf%7Bx%7D+%5Cmathbf%7By%7D+%5Cmathbf%7Bu%7D)%0A%20%20+%5Cmathbf%7Bz%7D+%5Cmathbf%7Bu%7D%5C%5C%0A&amp;=%5Cmathbf%7Bx%7D+%5Cmathbf%7By%7D+%5Cmathbf%7Bz%7D+2%5Cmathbf%7Bu%7D,%0A%5Cend%7Baligned%7D%0A"></p>
+<p>and similarly,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0A%5Cmathbf%7Bx%7D%5Coplus(%5Cmathbf%7By%7D%5Coplus%5Cmathbf%7Bz%7D)%0A&amp;=%5Cmathbf%7Bx%7D%0A%20%20+(%5Cmathbf%7By%7D+%5Cmathbf%7Bz%7D+%5Cmathbf%7Bu%7D)%0A%20%20+%5Cmathbf%7Bu%7D%5C%5C%0A&amp;=%5Cmathbf%7Bx%7D+%5Cmathbf%7By%7D+%5Cmathbf%7Bz%7D+2%5Cmathbf%7Bu%7D.%0A%5Cend%7Baligned%7D%0A"></p>
+<p>Thus,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A(%5Cmathbf%7Bx%7D%5Coplus%5Cmathbf%7By%7D)%5Coplus%5Cmathbf%7Bz%7D%0A=%0A%5Cmathbf%7Bx%7D%5Coplus(%5Cmathbf%7By%7D%5Coplus%5Cmathbf%7Bz%7D).%0A"></p>
+<p>The operation is also commutative because ordinary vector addition is commutative.</p>
+<p>What about the additive identity?</p>
+<p>We need an element <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Be%7D"> satisfying</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmathbf%7Bx%7D%5Coplus%5Cmathbf%7Be%7D=%5Cmathbf%7Bx%7D.%0A"></p>
+<p>By definition,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmathbf%7Bx%7D+%5Cmathbf%7Be%7D+%5Cmathbf%7Bu%7D=%5Cmathbf%7Bx%7D,%0A"></p>
+<p>so</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cboxed%7B%5Cmathbf%7Be%7D=-%5Cmathbf%7Bu%7D.%7D%0A"></p>
+<p>Notice that the additive identity is no longer the familiar zero vector!</p>
+<p>Finally, the additive inverse of <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bx%7D"> is the element <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7By%7D"> satisfying</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmathbf%7Bx%7D%5Coplus%5Cmathbf%7By%7D=-%5Cmathbf%7Bu%7D.%0A"></p>
+<p>This gives</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmathbf%7Bx%7D+%5Cmathbf%7By%7D+%5Cmathbf%7Bu%7D=-%5Cmathbf%7Bu%7D,%0A"></p>
+<p>and therefore</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cboxed%7B%5Cmathbf%7By%7D=-%5Cmathbf%7Bx%7D-2%5Cmathbf%7Bu%7D.%7D%0A"></p>
+<p>Consequently, <img src="https://latex.codecogs.com/png.latex?(%5Cmathbb%7BR%7D%5En,%5Coplus)"> is an abelian group.</p>
+<p>So far, so good!</p>
+</section>
+<section id="the-distributive-axiom-fails" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="the-distributive-axiom-fails"><span class="header-section-number">4.2</span> 3.2. The distributive axiom fails</h2>
+<p>A vector space must satisfy the distributive law</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Aa(%5Cmathbf%7Bx%7D+%5Cmathbf%7By%7D)%0A=%0Aa%5Cmathbf%7Bx%7D+a%5Cmathbf%7By%7D.%0A"></p>
+<p>With our new operations, this becomes</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Aa%5Codot(%5Cmathbf%7Bx%7D%5Coplus%5Cmathbf%7By%7D)%0A=%0A(a%5Codot%5Cmathbf%7Bx%7D)%5Coplus(a%5Codot%5Cmathbf%7By%7D).%0A"></p>
+<p>Let’s calculate both sides.</p>
+<p>The left-hand side is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0Aa%5Codot(%5Cmathbf%7Bx%7D%5Coplus%5Cmathbf%7By%7D)%0A&amp;=a(%5Cmathbf%7Bx%7D+%5Cmathbf%7By%7D+%5Cmathbf%7Bu%7D)%5C%5C%0A&amp;=a%5Cmathbf%7Bx%7D+a%5Cmathbf%7By%7D+a%5Cmathbf%7Bu%7D.%0A%5Cend%7Baligned%7D%0A"></p>
+<p>The right-hand side is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0A(a%5Codot%5Cmathbf%7Bx%7D)%5Coplus(a%5Codot%5Cmathbf%7By%7D)%0A&amp;=a%5Cmathbf%7Bx%7D%5Coplus%20a%5Cmathbf%7By%7D%5C%5C%0A&amp;=a%5Cmathbf%7Bx%7D+a%5Cmathbf%7By%7D+%5Cmathbf%7Bu%7D.%0A%5Cend%7Baligned%7D%0A"></p>
+<p>For these expressions to agree, we would need</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Aa%5Cmathbf%7Bu%7D=%5Cmathbf%7Bu%7D%0A"></p>
+<p>for every scalar <img src="https://latex.codecogs.com/png.latex?a%5Cin%5Cmathbb%7BR%7D">.</p>
+<p>But this is impossible because <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bu%7D%5Cneq%5Cmathbf%7B0%7D">.</p>
+<p>For example, take <img src="https://latex.codecogs.com/png.latex?a=0">. Then the distributive law would require</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmathbf%7B0%7D=%5Cmathbf%7Bu%7D,%0A"></p>
+<p>contradicting our choice of a nonzero vector <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bu%7D">.</p>
+<p>Therefore, the distributive axiom fails.</p>
+<p>We conclude that</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cboxed%7B%0A(%5Cmathbb%7BR%7D%5En,%5Coplus,%5Codot)%0A%5Ctext%7B%20is%20not%20a%20vector%20space%20over%20%7D%5Cmathbb%7BR%7D.%0A%7D%0A"></p>
+</section>
+</section>
+<section id="what-have-we-learned" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> 4. What have we learned?</h1>
+<p>We have considered three situations involving the same underlying set.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Underlying set</th>
+<th>Algebraic structure</th>
+<th>Vector space?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En"></td>
+<td>No operations specified</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td><img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En"></td>
+<td>Ordinary coordinatewise addition and scalar multiplication</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En"></td>
+<td>Modified addition <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bx%7D%5Coplus%5Cmathbf%7By%7D=%5Cmathbf%7Bx%7D+%5Cmathbf%7By%7D+%5Cmathbf%7Bu%7D"> and ordinary scalar multiplication</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>The key observation is that the underlying set has not changed. In every case, its elements are precisely the same ordered <img src="https://latex.codecogs.com/png.latex?n">-tuples of real numbers.</p>
+<p>What changes is the algebraic structure imposed on that set.</p>
+<p>This illustrates a fundamental principle in abstract algebra:</p>
+<p><strong>Algebraic properties are properties of sets equipped with operations, not necessarily properties of the underlying sets alone.</strong></p>
+<p>A set can admit multiple algebraic structures, and those structures can have very different properties.</p>
+<p>In particular, the fact that a set can be made into a vector space does not imply that every possible choice of operations on that set will produce a vector space.</p>
+</section>
+<section id="conclusion" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Conclusion</h1>
+<p>When we say that <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En"> is a vector space over <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D">, we are implicitly referring to its standard coordinatewise addition and scalar multiplication.</p>
+<p>The Cartesian product alone does not determine these operations.</p>
+<p>Moreover, even when we explicitly equip <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En"> with algebraic operations, those operations need not satisfy the vector space axioms.</p>
+<p>The distinction might seem pedantic at first, especially because the standard structure on <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En"> is so familiar. But it becomes increasingly important as we move into abstract algebra, where the same underlying set can support many different structures.</p>
+<p><strong>A vector space is not just a set of points. It is a set together with operations that may or may not make the vector space axioms hold.</strong></p>
+
+
+</section>
+
+ ]]></description>
+  <category>mathematics</category>
+  <category>linear algebra</category>
+  <category>abstract algebra</category>
+  <guid>https://galenseilis.github.io/blog/posts/cartesian-power-of-reals-not-always-vector-space/</guid>
+  <pubDate>Sun, 01 Nov 2026 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Moose Movement in Relation to Roads</title>
@@ -24349,80 +24534,6 @@ font-style: inherit;">}</span></span></code></pre></div></div>
   <category>HTTP Requests</category>
   <guid>https://galenseilis.github.io/blog/posts/fastapi-kedro-params/</guid>
   <pubDate>Wed, 21 Aug 2024 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>A State Diagram of a Simple Healthcare Service Using Mermaid</title>
-  <dc:creator>Galen Seilis</dc:creator>
-  <link>https://galenseilis.github.io/blog/posts/mermaid-healthcare-service-diagram/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Here is a simple diagram representing a healthcare service. This diagram can be used for communicating with clients about the basic structure of queueing systems.</p>
-<div class="cell" data-layout-align="default">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1">stateDiagram</span>
-<span id="cb1-2">    direction LR</span>
-<span id="cb1-3">    [*] --&gt; 🚑Arrivals</span>
-<span id="cb1-4">    🚑Arrivals --&gt; ⏳Queue</span>
-<span id="cb1-5">    state ⏳Queue {</span>
-<span id="cb1-6">      direction LR</span>
-<span id="cb1-7">      🤒 --&gt; 😷</span>
-<span id="cb1-8">      😷 --&gt; 🤕</span>
-<span id="cb1-9">    }</span>
-<span id="cb1-10"></span>
-<span id="cb1-11">    state 🏥Servers {</span>
-<span id="cb1-12">      direction LR</span>
-<span id="cb1-13">      👨🏾‍⚕️🧠</span>
-<span id="cb1-14">      👩🏾‍⚕️🩺</span>
-<span id="cb1-15">    }</span>
-<span id="cb1-16"></span>
-<span id="cb1-17">    ⏳Queue --&gt; ⚕️Service_Discipline</span>
-<span id="cb1-18">    ⚕️Service_Discipline --&gt; 🏥Servers</span>
-<span id="cb1-19">    🏥Servers --&gt; 🚘Departures</span>
-<span id="cb1-20">    🚘Departures --&gt; [*]</span></code></pre></div></div>
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-
-<pre class="mermaid mermaid-js">stateDiagram
-    direction LR
-    [*] --&gt; 🚑Arrivals
-    🚑Arrivals --&gt; ⏳Queue
-    state ⏳Queue {
-      direction LR
-      🤒 --&gt; 😷
-      😷 --&gt; 🤕
-    }
-
-    state 🏥Servers {
-      direction LR
-      👨🏾‍⚕️🧠
-      👩🏾‍⚕️🩺
-    }
-
-    ⏳Queue --&gt; ⚕️Service_Discipline
-    ⚕️Service_Discipline --&gt; 🏥Servers
-    🏥Servers --&gt; 🚘Departures
-    🚘Departures --&gt; [*]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p>Feel free to adapt this to your own slides and projects.</p>
-
-
-
- ]]></description>
-  <category>Mermaid</category>
-  <category>Healthcare</category>
-  <category>Queueing Systems</category>
-  <guid>https://galenseilis.github.io/blog/posts/mermaid-healthcare-service-diagram/</guid>
-  <pubDate>Sat, 10 Aug 2024 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

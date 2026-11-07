@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-11-01">
+<meta name="description" content="Why being a vector space is not a property of a set alone, but of a set equipped with appropriate algebraic operations.">
+
+<title>Is R^n Always a Vector Space? It Depends on the Structure. – Galen's Blog</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-8d3ad9c781c51ccd60b292c95058b2c2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Galen’s Blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../presentations.html"> 
+<span class="menu-text">Presentations</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/galenseilis"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://bsky.app/profile/galen-seilis.bsky.social"> <i class="bi bi-bluesky" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+            <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Is <span class="math inline">\(R^n\)</span> Always a Vector Space? It Depends on the Structure.</h1>
+                  <div>
+        <div class="description">
+          Why being a vector space is not a property of a set alone, but of a set equipped with appropriate algebraic operations.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">mathematics</div>
+                <div class="quarto-category">linear algebra</div>
+                <div class="quarto-category">abstract algebra</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 1, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#the-cartesian-power-mathbbrn-as-a-set" id="toc-the-cartesian-power-mathbbrn-as-a-set" class="nav-link" data-scroll-target="#the-cartesian-power-mathbbrn-as-a-set"><span class="header-section-number">2</span> 1. The Cartesian power <span class="math inline">\(\mathbb{R}^n\)</span> as a set</a></li>
+  <li><a href="#the-familiar-vector-space-structure" id="toc-the-familiar-vector-space-structure" class="nav-link" data-scroll-target="#the-familiar-vector-space-structure"><span class="header-section-number">3</span> 2. The familiar vector space structure</a></li>
+  <li><a href="#an-alternative-structure-on-mathbbrn" id="toc-an-alternative-structure-on-mathbbrn" class="nav-link" data-scroll-target="#an-alternative-structure-on-mathbbrn"><span class="header-section-number">4</span> 3. An alternative structure on <span class="math inline">\(\mathbb{R}^n\)</span></a>
+  <ul class="collapse">
+  <li><a href="#the-new-addition-operation" id="toc-the-new-addition-operation" class="nav-link" data-scroll-target="#the-new-addition-operation"><span class="header-section-number">4.1</span> 3.1. The new addition operation</a></li>
+  <li><a href="#the-distributive-axiom-fails" id="toc-the-distributive-axiom-fails" class="nav-link" data-scroll-target="#the-distributive-axiom-fails"><span class="header-section-number">4.2</span> 3.2. The distributive axiom fails</a></li>
+  </ul></li>
+  <li><a href="#what-have-we-learned" id="toc-what-have-we-learned" class="nav-link" data-scroll-target="#what-have-we-learned"><span class="header-section-number">5</span> 4. What have we learned?</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">6</span> Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content" tabindex="-1">
+
+
+
+
+
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>It is common to hear that <span class="math inline">\(\mathbb{R}^n\)</span> is a vector space over <span class="math inline">\(\mathbb{R}\)</span>. In an introductory linear algebra course, this statement is so familiar that it can seem almost automatic.</p>
+<p>But there is a subtle mathematical point hiding behind it: <strong>the Cartesian power <span class="math inline">\(\mathbb{R}^n\)</span>, by itself, is not a vector space.</strong></p>
+<p>A vector space is not merely a collection of objects. It is a collection of objects equipped with two operations: vector addition and scalar multiplication. These operations must satisfy a particular collection of axioms.</p>
+<p>Consequently, whether <span class="math inline">\(\mathbb{R}^n\)</span> is a vector space depends on the algebraic structure we put on it.</p>
+<p>In this post, we will explore three possibilities:</p>
+<ol type="1">
+<li>The Cartesian power <span class="math inline">\(\mathbb{R}^n\)</span> with no additional structure.</li>
+<li>The familiar vector space structure on <span class="math inline">\(\mathbb{R}^n\)</span>.</li>
+<li>An alternative algebraic structure on the very same set that is not a vector space.</li>
+</ol>
+<p>The third example is particularly important: it demonstrates that the existence of a vector space structure does not mean that every possible choice of algebraic operations makes the set a vector space.</p>
+</section>
+<section id="the-cartesian-power-mathbbrn-as-a-set" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> 1. The Cartesian power <span class="math inline">\(\mathbb{R}^n\)</span> as a set</h1>
+<p>Recall that the Cartesian power of the real numbers is</p>
+<p><span class="math display">\[
+\mathbb{R}^n =
+\underbrace{\mathbb{R}\times\mathbb{R}\times\cdots\times\mathbb{R}}_{n\text{ times}}.
+\]</span></p>
+<p>Equivalently,</p>
+<p><span class="math display">\[
+\mathbb{R}^n =
+\{(x_1,x_2,\ldots,x_n):x_i\in\mathbb{R}\}.
+\]</span></p>
+<p>At this point, we have only specified a set: a collection of ordered <span class="math inline">\(n\)</span>-tuples of real numbers.</p>
+<p>We have not specified how to add two elements of this set. Nor have we specified how to multiply an element by a real scalar.</p>
+<p>Of course, we might be tempted to assume the familiar operations:</p>
+<p><span class="math display">\[
+(x_1,\ldots,x_n)+(y_1,\ldots,y_n)
+=
+(x_1+y_1,\ldots,x_n+y_n)
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+a(x_1,\ldots,x_n)
+=
+(ax_1,\ldots,ax_n).
+\]</span></p>
+<p>But these are choices of operations, not consequences of the definition of a Cartesian product.</p>
+<p>Without specifying these operations, the question of whether <span class="math inline">\(\mathbb{R}^n\)</span> is a vector space is not even well-defined.</p>
+<p>A vector space requires a set together with appropriately defined operations satisfying the vector space axioms.</p>
+<p>Thus, strictly speaking, <strong>the Cartesian power <span class="math inline">\(\mathbb{R}^n\)</span>, considered only as a set, is not a vector space.</strong></p>
+</section>
+<section id="the-familiar-vector-space-structure" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> 2. The familiar vector space structure</h1>
+<p>Let’s now equip <span class="math inline">\(\mathbb{R}^n\)</span> with the usual operations of addition and multiplication.</p>
+<p>Define vector addition by</p>
+<p><span class="math display">\[
+(x_1,\ldots,x_n)+(y_1,\ldots,y_n)
+=
+(x_1+y_1,\ldots,x_n+y_n),
+\]</span></p>
+<p>and scalar multiplication by</p>
+<p><span class="math display">\[
+a(x_1,\ldots,x_n)
+=
+(ax_1,\ldots,ax_n),
+\]</span></p>
+<p>where <span class="math inline">\(a\in\mathbb{R}\)</span>.</p>
+<p>With these operations, <span class="math inline">\(\mathbb{R}^n\)</span> is a vector space over <span class="math inline">\(\mathbb{R}\)</span>.</p>
+<p>For example, the zero vector is</p>
+<p><span class="math display">\[
+\mathbf{0}=(0,\ldots,0),
+\]</span></p>
+<p>and the additive inverse of</p>
+<p><span class="math display">\[
+\mathbf{x}=(x_1,\ldots,x_n)
+\]</span></p>
+<p>is</p>
+<p><span class="math display">\[
+-\mathbf{x}=(-x_1,\ldots,-x_n).
+\]</span></p>
+<p>The familiar vector space axioms follow from the corresponding properties of real-number addition and multiplication.</p>
+<p>For instance, scalar distributivity holds:</p>
+<p><span class="math display">\[
+a(\mathbf{x}+\mathbf{y})
+=
+a\mathbf{x}+a\mathbf{y},
+\]</span></p>
+<p>and distributivity with respect to scalar addition holds:</p>
+<p><span class="math display">\[
+(a+b)\mathbf{x}
+=
+a\mathbf{x}+b\mathbf{x}.
+\]</span></p>
+<p>And so on… We can go through all of the usual axioms of a vector space to ensure that the set <span class="math inline">\(\mathbb{R}^n\)</span>, equipped with these particular operations, is a vector space over <span class="math inline">\(\mathbb{R}\)</span>.</p>
+<p>Notice the important distinction: we have not established that every possible algebraic structure on <span class="math inline">\(\mathbb{R}^n\)</span> is a vector space. We have established that one particular choice of operations makes it a vector space.</p>
+</section>
+<section id="an-alternative-structure-on-mathbbrn" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> 3. An alternative structure on <span class="math inline">\(\mathbb{R}^n\)</span></h1>
+<p>To see why the choice of operations matters, let’s equip the very same underlying set with a different algebraic structure.</p>
+<p>We will retain ordinary scalar multiplication but change vector addition.</p>
+<p>Let <span class="math inline">\(\mathbf{u}\in\mathbb{R}^n\)</span> be a fixed, nonzero vector.</p>
+<p>Define a new addition operation, denoted by <span class="math inline">\(\oplus\)</span>, as follows:</p>
+<p><span class="math display">\[
+\mathbf{x}\oplus\mathbf{y}
+=
+\mathbf{x}+\mathbf{y}+\mathbf{u},
+\]</span></p>
+<p>where the addition on the right-hand side is ordinary coordinatewise addition.</p>
+<p>For scalar multiplication, retain the usual operation:</p>
+<p><span class="math display">\[
+a\odot\mathbf{x}=a\mathbf{x}.
+\]</span></p>
+<p>We now have a different algebraic structure on exactly the same set <span class="math inline">\(\mathbb{R}^n\)</span>.</p>
+<p>Is it a vector space over <span class="math inline">\(\mathbb{R}\)</span>?</p>
+<p>Let’s investigate.</p>
+<section id="the-new-addition-operation" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="the-new-addition-operation"><span class="header-section-number">4.1</span> 3.1. The new addition operation</h2>
+<p>First, let’s examine whether the new addition operation gives us an abelian group.</p>
+<p>It is associative:</p>
+<p><span class="math display">\[
+\begin{aligned}
+(\mathbf{x}\oplus\mathbf{y})\oplus\mathbf{z}
+&amp;=(\mathbf{x}+\mathbf{y}+\mathbf{u})
+  +\mathbf{z}+\mathbf{u}\\
+&amp;=\mathbf{x}+\mathbf{y}+\mathbf{z}+2\mathbf{u},
+\end{aligned}
+\]</span></p>
+<p>and similarly,</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbf{x}\oplus(\mathbf{y}\oplus\mathbf{z})
+&amp;=\mathbf{x}
+  +(\mathbf{y}+\mathbf{z}+\mathbf{u})
+  +\mathbf{u}\\
+&amp;=\mathbf{x}+\mathbf{y}+\mathbf{z}+2\mathbf{u}.
+\end{aligned}
+\]</span></p>
+<p>Thus,</p>
+<p><span class="math display">\[
+(\mathbf{x}\oplus\mathbf{y})\oplus\mathbf{z}
+=
+\mathbf{x}\oplus(\mathbf{y}\oplus\mathbf{z}).
+\]</span></p>
+<p>The operation is also commutative because ordinary vector addition is commutative.</p>
+<p>What about the additive identity?</p>
+<p>We need an element <span class="math inline">\(\mathbf{e}\)</span> satisfying</p>
+<p><span class="math display">\[
+\mathbf{x}\oplus\mathbf{e}=\mathbf{x}.
+\]</span></p>
+<p>By definition,</p>
+<p><span class="math display">\[
+\mathbf{x}+\mathbf{e}+\mathbf{u}=\mathbf{x},
+\]</span></p>
+<p>so</p>
+<p><span class="math display">\[
+\boxed{\mathbf{e}=-\mathbf{u}.}
+\]</span></p>
+<p>Notice that the additive identity is no longer the familiar zero vector!</p>
+<p>Finally, the additive inverse of <span class="math inline">\(\mathbf{x}\)</span> is the element <span class="math inline">\(\mathbf{y}\)</span> satisfying</p>
+<p><span class="math display">\[
+\mathbf{x}\oplus\mathbf{y}=-\mathbf{u}.
+\]</span></p>
+<p>This gives</p>
+<p><span class="math display">\[
+\mathbf{x}+\mathbf{y}+\mathbf{u}=-\mathbf{u},
+\]</span></p>
+<p>and therefore</p>
+<p><span class="math display">\[
+\boxed{\mathbf{y}=-\mathbf{x}-2\mathbf{u}.}
+\]</span></p>
+<p>Consequently, <span class="math inline">\((\mathbb{R}^n,\oplus)\)</span> is an abelian group.</p>
+<p>So far, so good!</p>
+</section>
+<section id="the-distributive-axiom-fails" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="the-distributive-axiom-fails"><span class="header-section-number">4.2</span> 3.2. The distributive axiom fails</h2>
+<p>A vector space must satisfy the distributive law</p>
+<p><span class="math display">\[
+a(\mathbf{x}+\mathbf{y})
+=
+a\mathbf{x}+a\mathbf{y}.
+\]</span></p>
+<p>With our new operations, this becomes</p>
+<p><span class="math display">\[
+a\odot(\mathbf{x}\oplus\mathbf{y})
+=
+(a\odot\mathbf{x})\oplus(a\odot\mathbf{y}).
+\]</span></p>
+<p>Let’s calculate both sides.</p>
+<p>The left-hand side is</p>
+<p><span class="math display">\[
+\begin{aligned}
+a\odot(\mathbf{x}\oplus\mathbf{y})
+&amp;=a(\mathbf{x}+\mathbf{y}+\mathbf{u})\\
+&amp;=a\mathbf{x}+a\mathbf{y}+a\mathbf{u}.
+\end{aligned}
+\]</span></p>
+<p>The right-hand side is</p>
+<p><span class="math display">\[
+\begin{aligned}
+(a\odot\mathbf{x})\oplus(a\odot\mathbf{y})
+&amp;=a\mathbf{x}\oplus a\mathbf{y}\\
+&amp;=a\mathbf{x}+a\mathbf{y}+\mathbf{u}.
+\end{aligned}
+\]</span></p>
+<p>For these expressions to agree, we would need</p>
+<p><span class="math display">\[
+a\mathbf{u}=\mathbf{u}
+\]</span></p>
+<p>for every scalar <span class="math inline">\(a\in\mathbb{R}\)</span>.</p>
+<p>But this is impossible because <span class="math inline">\(\mathbf{u}\neq\mathbf{0}\)</span>.</p>
+<p>For example, take <span class="math inline">\(a=0\)</span>. Then the distributive law would require</p>
+<p><span class="math display">\[
+\mathbf{0}=\mathbf{u},
+\]</span></p>
+<p>contradicting our choice of a nonzero vector <span class="math inline">\(\mathbf{u}\)</span>.</p>
+<p>Therefore, the distributive axiom fails.</p>
+<p>We conclude that</p>
+<p><span class="math display">\[
+\boxed{
+(\mathbb{R}^n,\oplus,\odot)
+\text{ is not a vector space over }\mathbb{R}.
+}
+\]</span></p>
+</section>
+</section>
+<section id="what-have-we-learned" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> 4. What have we learned?</h1>
+<p>We have considered three situations involving the same underlying set.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Underlying set</th>
+<th>Algebraic structure</th>
+<th>Vector space?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\mathbb{R}^n\)</span></td>
+<td>No operations specified</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\mathbb{R}^n\)</span></td>
+<td>Ordinary coordinatewise addition and scalar multiplication</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\mathbb{R}^n\)</span></td>
+<td>Modified addition <span class="math inline">\(\mathbf{x}\oplus\mathbf{y}=\mathbf{x}+\mathbf{y}+\mathbf{u}\)</span> and ordinary scalar multiplication</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>The key observation is that the underlying set has not changed. In every case, its elements are precisely the same ordered <span class="math inline">\(n\)</span>-tuples of real numbers.</p>
+<p>What changes is the algebraic structure imposed on that set.</p>
+<p>This illustrates a fundamental principle in abstract algebra:</p>
+<p><strong>Algebraic properties are properties of sets equipped with operations, not necessarily properties of the underlying sets alone.</strong></p>
+<p>A set can admit multiple algebraic structures, and those structures can have very different properties.</p>
+<p>In particular, the fact that a set can be made into a vector space does not imply that every possible choice of operations on that set will produce a vector space.</p>
+</section>
+<section id="conclusion" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Conclusion</h1>
+<p>When we say that <span class="math inline">\(\mathbb{R}^n\)</span> is a vector space over <span class="math inline">\(\mathbb{R}\)</span>, we are implicitly referring to its standard coordinatewise addition and scalar multiplication.</p>
+<p>The Cartesian product alone does not determine these operations.</p>
+<p>Moreover, even when we explicitly equip <span class="math inline">\(\mathbb{R}^n\)</span> with algebraic operations, those operations need not satisfy the vector space axioms.</p>
+<p>The distinction might seem pedantic at first, especially because the standard structure on <span class="math inline">\(\mathbb{R}^n\)</span> is so familiar. But it becomes increasingly important as we move into abstract algebra, where the same underlying set can support many different structures.</p>
+<p><strong>A vector space is not just a set of points. It is a set together with operations that may or may not make the vector space axioms hold.</strong></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/galenseilis\.github\.io\/blog\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
