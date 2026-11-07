@@ -1,0 +1,110 @@
+---
+title: "Bounding the Variance and the Mean: A Journey Through Bhatia-Davis and Popoviciu Inequalities"
+date: "2026-11-07"
+categories: [Mathematics, Statistics, Inequalities]
+format: html
+---
+
+When analyzing a bounded random variable, understanding the interplay between its range, mean, and variance is crucial. In this post, we will formalize two classic statistical inequalities—**Bhatia-Davis** and **Popoviciu**—and explore a powerful, lesser-known application: inverting these variance bounds to strictly constrain an unknown mean.
+
+## 1. Setup and Mathematical Foundations
+
+Throughout this post, let $X$ be a bounded real-valued random variable such that $X \in [m, M]$ with a probability of $1$. 
+
+*   $m \in \mathbb{R}$ is the essential minimum value.
+*   $M \in \mathbb{R}$ is the essential maximum value (where $m \leq M$).
+*   $\mu = \mathbb{E}[X]$ is the expected value (mean).
+*   $\sigma^2 = \text{Var}(X) = \mathbb{E}[(X - \mu)^2]$ is the variance.
+
+---
+
+## 2. Proposition 1: The Bhatia-Davis Inequality
+
+### Proposition
+Let $X$ be a bounded random variable on $[m, M]$ with mean $\mu$ and variance $\sigma^2$. Then:
+$$\sigma^2 \leq (M - \mu)(\mu - m)$$
+
+### Proof
+Since $X$ is strictly bounded between $m$ and $M$, the following inequality holds for all realizations of $X$ with probability $1$:
+$$(M - X)(X - m) \geq 0$$
+
+Expanding the left side yields:
+$$MX - Mm - X^2 + mx \geq 0$$
+$$X^2 \leq (M + m)X - Mm$$
+
+Taking the expectation ($\mathbb{E}$) on both sides due to the linearity of expectation:
+$$\mathbb{E}[X^2] \leq (M + m)\mathbb{E}[X] - Mm$$
+$$\mathbb{E}[X^2] \leq (M + m)\mu - Mm$$
+
+By definition, variance can be expressed as $\sigma^2 = \mathbb{E}[X^2] - \mu^2$. Substituting our upper bound for $\mathbb{E}[X^2]$ into this definition gives:
+$$\sigma^2 \leq (M + m)\mu - Mm - \mu^2$$
+
+Factoring the right-hand side back into a product isolates the boundaries relative to the mean:
+$$\sigma^2 \leq M\mu + m\mu - Mm - \mu^2$$
+$$\sigma^2 \leq \mu(M - \mu) - m(M - \mu)$$
+$$\sigma^2 \leq (M - \mu)(\mu - m) \quad \blacksquare$$
+
+---
+
+## 3. Proposition 2: Popoviciu's Inequality on Variance
+
+### Proposition
+Let $X$ be a bounded random variable on $[m, M]$ with variance $\sigma^2$. Then:
+$$\sigma^2 \leq \frac{1}{4}(M - m)^2$$
+
+### Proof via the AM-GM Inequality
+We can elegantly derive Popoviciu's inequality by applying the Arithmetic Mean-Geometric Mean (AM-GM) inequality to the components of the Bhatia-Davis bound.
+
+Let $a = (M - \mu)$ and $b = (\mu - m)$. Since $m \leq \mu \leq M$, both $a$ and $b$ are non-negative real numbers. According to AM-GM ($ab \leq (\frac{a+b}{2})^2$):
+$$(M - \mu)(\mu - m) \leq \left( \frac{(M - \mu) + (\mu - m)}{2} \right)^2$$
+
+Simplifying the numerator inside the parenthesis cancels out the mean $\mu$:
+$$(M - \mu)(\mu - m) \leq \left( \frac{M - m}{2} \right)^2 = \frac{1}{4}(M - m)^2$$
+
+Combining this with Proposition 1 completes the proof:
+$$\sigma^2 \leq (M - \mu)(\mu - m) \leq \frac{1}{4}(M - m)^2 \quad \blacksquare$$
+
+### Equality Condition
+The Bhatia-Davis bound collapses to exactly match the Popoviciu upper bound if and only if $a = b$, meaning:
+$$M - \mu = \mu - m \implies \mu = \frac{M + m}{2}$$
+Thus, Popoviciu's inequality is a special, worst-case manifestation of Bhatia-Davis where the mean sits exactly at the interval's midpoint.
+
+---
+
+## 4. Proposition 3: Bounding the Mean Given Variance
+
+A highly practical problem emerges when the absolute limits $(m, M)$ and the variance $(\sigma^2)$ are known, but the true mean $(\mu)$ is hidden. We can invert the Bhatia-Davis quadratic structure to tightly trap the mean.
+
+### Proposition
+Given a bounded random variable on $[m, M]$ with a known variance $\sigma^2$, the true mean $\mu$ must satisfy:
+$$\frac{M + m}{2} - \sqrt{\frac{(M - m)^2}{4} - \sigma^2} \leq \mu \leq \frac{M + m}{2} + \sqrt{\frac{(M - m)^2}{4} - \sigma^2}$$
+
+### Derivation
+From Proposition 1, we start with the absolute constraint:
+$$\sigma^2 \leq (M - \mu)(\mu - m)$$
+
+Expanding and gathering all terms onto the left side sets up a standard quadratic inequality in terms of $\mu$:
+$$\sigma^2 \leq M\mu - Mm - \mu^2 + m\mu$$
+$$\mu^2 - (M + m)\mu + (Mm + \sigma^2) \leq 0$$
+
+Next, we isolate $\mu$ by completing the square for the first two terms. We add and subtract $\left(\frac{M+m}{2}\right)^2$:
+$$\left(\mu - \frac{M+m}{2}\right)^2 - \left(\frac{M+m}{2}\right)^2 + Mm + \sigma^2 \leq 0$$
+
+Let's simplify the constant fraction outside the parenthesis:
+$$-\left(\frac{M+m}{2}\right)^2 + Mm = -\frac{M^2 + 2Mm + m^2}{4} + \frac{4Mm}{4} = -\frac{M^2 - 2Mm + m^2}{4} = -\frac{(M - m)^2}{4}$$
+
+Substituting this value back into the quadratic equation:
+$$\left(\mu - \frac{M+m}{2}\right)^2 - \frac{(M - m)^2}{4} + \sigma^2 \leq 0$$
+
+Isolating the squared term:
+$$\left(\mu - \frac{M+m}{2}\right)^2 \leq \frac{(M - m)^2}{4} - \sigma^2$$
+
+Taking the square root of both sides introduces an absolute value, defining the physical maximum distance the mean can stray from the midpoint:
+$$\left\vert \mu - \frac{M+m}{2} \right\vert \leq \sqrt{\frac{(M - m)^2}{4} - \sigma^2}$$
+
+Expanding the absolute interval yields the final algebraic bounds:
+$$-\sqrt{\frac{(M - m)^2}{4} - \sigma^2} \leq \mu - \frac{M+m}{2} \leq \sqrt{\frac{(M - m)^2}{4} - \sigma^2}$$
+$$\mathbf{\frac{M + m}{2} - \sqrt{\frac{(M - m)^2}{4} - \sigma^2} \leq \mu \leq \frac{M + m}{2} + \sqrt{\frac{(M - m)^2}{4} - \sigma^2}} \quad \blacksquare$$
+
+## 5. Conclusion
+Without knowing the variance $\sigma^2$, chaining the upper bounds of these equations yields a mathematical identity ($(M - \mu)(\mu - m) \leq \frac{1}{4}(M - m)^2$) that offers zero filtering power over an unknown mean. However, when variance *is* known, it acts as a spatial anchor—compressing the viable boundaries of the mean closer to the center of the domain as the system's variance increases.
