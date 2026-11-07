@@ -1,0 +1,142 @@
+---
+title: "The Geometry of OLS: Deriving Analytical Slope Bounds for Bounded Random Variables"
+date: 2026-11-07
+categories: [Mathematics, Statistics, Linear Regression]
+format:
+  html:
+    toc: true
+    html-math-method: katex
+---
+
+When fitting an Ordinary Least Squares (OLS) linear regression model, standard textbook treatments typically assume that the underlying random variables are unbounded or normally distributed. However, empirical data often possesses strictly bounded support—such as percentage indices, test scores, physical capacities, or bounded economic indicators.
+
+If we explicitly assume that $X$ and $Y$ are real-valued, non-degenerate random variables defined on the same probability space, bounded almost surely such that $X \in [x_{\min}, x_{\max}]$ and $Y \in [y_{\min}, y_{\max}]$, the OLS slope coefficient is fundamentally constrained by the geometry of its domain support. This post details the formal mathematical derivation of these bounds using classical probabilistic inequalities.
+
+---
+
+## Foundations and Definitions
+
+We consider the population linear projection model $Y = \beta_0 + \beta_{Y\vert X} X + \epsilon$, where the OLS population regression slope of $Y$ on $X$ is defined as:
+
+$$\beta_{Y\vert X} = \frac{\text{Cov}(X, Y)}{\text{Var}(X)} = \rho_{X,Y} \frac{\sigma_Y}{\sigma_X}$$
+
+where $\rho_{X,Y}$ is the Pearson correlation coefficient, $\sigma_X = \sqrt{\text{Var}(X)}$, and $\sigma_Y = \sqrt{\text{Var}(Y)}$. We assume non-degenerate variation such that $x_{\min} < x_{\max}$ and $y_{\min} < y_{\max}$.
+
+---
+
+## 1. The Global Range Bound via Popoviciu's Inequality
+
+To establish a universal upper bound on the absolute magnitude of $\beta_{Y\vert X}$ dependent strictly on support intervals, we introduce **Popoviciu's Inequality on Variances**.
+
+### Theorem 1: Popoviciu's Inequality
+If a random variable $Z$ is bounded on the interval $[a, b]$, then its variance satisfies:
+
+$$\text{Var}(Z) \le \frac{(b - a)^2}{4}$$
+
+The upper bound is sharp and is achieved if and only if the probability mass is concentrated equally at the boundaries: $\mathbb{P}(Z = a) = \mathbb{P}(Z = b) = \frac{1}{2}$.
+
+### Derivation
+Applying Theorem 1 to the dependent variable $Y \in [y_{\min}, y_{\max}]$, we bound the numerator's standard deviation:
+
+$$\sigma_Y \le \frac{y_{\max} - y_{\min}}{2}$$
+
+Substituting this variance bound into the absolute formulation of the OLS slope yields:
+
+$$\vert\beta_{Y\vert X}\vert = \vert\rho_{X,Y}\vert \frac{\sigma_Y}{\sigma_X} \le \frac{\sigma_Y}{\sigma_X} \le \frac{y_{\max} - y_{\min}}{2\sigma_X}$$
+
+To remove the explicit dependence on the internal distribution variance $\sigma_X$, we observe that the maximum possible value for $\beta_{Y\vert X}$ across all potential distributions occurs when $\sigma_X$ reaches its structural upper bound. Applying Popoviciu's Inequality to the independent variable $X \in [x_{\min}, x_{\max}]$ yields:
+
+$$\sigma_X \le \frac{x_{\max} - x_{\min}}{2}$$
+
+Evaluating $\vert\beta_{Y\vert X}\vert$ at the boundary condition where $X$ achieves its maximal variance yields the **Global Range Bound**:
+
+$$\vert\beta_{Y\vert X}\vert \le \frac{\frac{1}{2}(y_{\max} - y_{\min})}{\frac{1}{2}(x_{\max} - x_{\min})} = \frac{y_{\max} - y_{\min}}{x_{\max} - x_{\min}}$$
+
+---
+
+## 2. Refined Bounds via the Bhatia–Davis Inequality
+
+When the first raw moments (expectations) of the bounded random variables are known or can be estimated, Popoviciu's bound can be significantly tightened. The **Bhatia–Davis inequality** offers a sharper variance ceiling by incorporating the distance of the mean relative to its support limits.
+
+### Theorem 2: Bhatia–Davis Inequality
+Let $Z$ be a bounded random variable such that $Z \in [a, b]$ almost surely, with expected value $\mathbb{E}[Z] = \mu_z$. Then the variance of $Z$ satisfies:
+
+$$\text{Var}(Z) \le (b - \mu_z)(\mu_z - a)$$
+
+The bound is achieved if and only if $Z$ is a Bernoulli-like distribution supported entirely on the extreme points $\{a, b\}$.
+
+### Derivation
+Let $\mathbb{E}[X] = \mu_x$ and $\mathbb{E}[Y] = \mu_y$. Applying Theorem 2 to both variables independently yields:
+
+$$\sigma_X \le \sqrt{(x_{\max} - \mu_x)(\mu_x - x_{\min})}$$
+
+$$\sigma_Y \le \sqrt{(y_{\max} - \mu_y)(\mu_y - y_{\min})}$$
+
+We can substitute these sharpened variance thresholds into the OLS slope equation.
+
+#### Case A: Conditioned on Observed Predictor Variance
+If the exact variance $\sigma_X^2$ of the independent variable is fixed or known, the slope magnitude is strictly bounded above by:
+
+$$\vert\beta_{Y\vert X}\vert \le \frac{\sqrt{(y_{\max} - \mu_y)(\mu_y - y_{\min})}}{\sigma_X}$$
+
+#### Case B: Global Structural Bound given Means
+If both variables maximize their respective variances subject to their known expectations (achieving the Bhatia–Davis equality), the absolute slope is bounded by the **Bhatia–Davis Slope Bound**:
+
+$$\vert\beta_{Y\vert X}\vert \le \sqrt{\frac{(y_{\max} - \mu_y)(\mu_y - y_{\min})}{(x_{\max} - \mu_x)(\mu_x - x_{\min})}}$$
+
+*Note: If the expectations lie exactly at the midpoints of their respective supports ($\mu_x = \frac{x_{\min} + x_{\max}}{2}$ and $\mu_y = \frac{y_{\min} + y_{\max}}{2}$), this expression simplifies exactly to the Global Range Bound derived via Popoviciu.*
+
+---
+
+## 3. Bounding the Slope via the Grüss Inequality
+
+While the prior sections bounded the slope by maximizing individual variances independently under the condition $\vert\rho_{X,Y}\vert \le 1$, the **Grüss inequality** establishes a direct upper bound on the absolute covariance in the numerator based on the total span of the supports.
+
+### Theorem 3: Grüss Inequality
+Let $X$ and $Y$ be two bounded random variables such that $X \in [x_{\min}, x_{\max}]$ and $Y \in [y_{\min}, y_{\max}]$ almost surely. Then:
+
+$$\vert\text{Cov}(X, Y)\vert \le \frac{1}{4}(x_{\max} - x_{\min})(y_{\max} - y_{\min})$$
+
+### Derivation
+Recalling that $\beta_{Y\vert X} = \frac{\text{Cov}(X, Y)}{\text{Var}(X)}$, we substitute the Grüss inequality directly into the numerator:
+
+$$\vert\beta_{Y\vert X}\vert = \frac{\vert\text{Cov}(X, Y)\vert}{\text{Var}(X)} \le \frac{(x_{\max} - x_{\min})(y_{\max} - y_{\min})}{4\,\text{Var}(X)}$$
+
+This approach isolates the maximum slope as a direct, inverse quadratic function of the predictor's variance ($\sigma_X^2$). If $\text{Var}(X)$ is free to vary, substituting the maximum possible variance of the predictor from Popoviciu's inequality ($\text{Var}(X) = \frac{(x_{\max} - x_{\min})^2}{4}$) recovers the consistent global box boundary:
+
+$$\vert\beta_{Y\vert X}\vert \le \frac{\frac{1}{4}(x_{\max} - x_{\min})(y_{\max} - y_{\min})}{\frac{1}{4}(x_{\max} - x_{\min})^2} = \frac{y_{\max} - y_{\min}}{x_{\max} - x_{\min}}$$
+
+---
+
+## 4. The Reciprocal Interplay Bound (Dual Regression)
+
+When the variance of the independent variable shrinks toward zero ($\sigma_X \to 0$), the slope $\beta_{Y\vert X}$ can grow arbitrarily large if the covariance does not decay at a matching rate. However, looking at the dual systems simultaneously uncovers a geometric reciprocity bound.
+
+Let us define the dual linear projections:
+1. **Regression of $Y$ on $X$:** $\hat{Y} = \beta_0 + \beta_{Y\vert X} X \implies \beta_{Y\vert X} = \rho_{X,Y} \frac{\sigma_Y}{\sigma_X}$
+2. **Regression of $X$ on $Y$:** $\hat{X} = \alpha_0 + \beta_{X\vert Y} Y \implies \beta_{X\vert Y} = \rho_{X,Y} \frac{\sigma_X}{\sigma_Y}$
+
+### Derivation
+Taking the mathematical product of these two distinct linear projections:
+
+$$\beta_{Y\vert X} \cdot \beta_{X\vert Y} = \left(\rho_{X,Y} \frac{\sigma_Y}{\sigma_X}\right) \left(\rho_{X,Y} \frac{\sigma_X}{\sigma_Y}\right) = \rho_{X,Y}^2$$
+
+By the Cauchy-Schwarz inequality, the squared Pearson correlation coefficient is bounded such that $\rho_{X,Y}^2 \le 1$. This directly establishes the **Reciprocal Interplay Bound**:
+
+$$\beta_{Y\vert X} \cdot \beta_{X\vert Y} \le 1$$
+
+Consequently, if $\vert\beta_{Y\vert X}\vert > 1$, the dual regression slope is strictly constrained such that $\vert\beta_{X\vert Y}\vert \le \frac{1}{\vert\beta_{Y\vert X}\vert}$.
+
+---
+
+## Summary Matrix of Analytical Constraints
+
+The behavior of an OLS slope under bounded support can be completely characterized by the following hierarchical set of inequalities:
+
+| Analytical Framework | Mathematical Inequality | Known Requirements |
+| :--- | :--- | :--- |
+| **Global Box Bound** | $\vert\beta_{Y\vert X}\vert \le \frac{y_{\max} - y_{\min}}{x_{\max} - x_{\min}}$ | Domain Support Bounds only |
+| **Reciprocal Interplay** | $\beta_{Y\vert X} \cdot \beta_{X\vert Y} \le 1$ | Dual Projection Context |
+| **Grüss (Fixed Variance)** | $\vert\beta_{Y\vert X}\vert \le \frac{(x_{\max} - x_{\min})(y_{\max} - y_{\min})}{4\,\sigma_X^2}$ | Support Bounds + Predictor Variance |
+| **Bhatia–Davis (Fixed Variance)** | $\vert\beta_{Y\vert X}\vert \le \frac{\sqrt{(y_{\max} - \mu_y)(\mu_y - y_{\min})}}{\sigma_X}$ | Support Bounds + Target Mean + Predictor Variance |
+| **Bhatia–Davis (Fixed Means)** | $\vert\beta_{Y\vert X}\vert \le \sqrt{\frac{(y_{\max} - \mu_y)(\mu_y - y_{\min})}{(x_{\max} - \mu_x)(\mu_x - x_{\min})}}$ | Support Bounds + Variable Expectations |
