@@ -101,6 +101,162 @@
   <pubDate>Sat, 07 Nov 2026 00:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>The Geometry of OLS: Deriving Analytical Slope Bounds for Bounded Random Variables</title>
+  <link>https://galenseilis.github.io/blog/posts/bounded-variables-simple-regression-slope/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>When fitting an Ordinary Least Squares (OLS) linear regression model, standard textbook treatments typically assume that the underlying random variables are unbounded or normally distributed. However, empirical data often possesses strictly bounded support—such as percentage indices, test scores, physical capacities, or bounded economic indicators.</p>
+<p>If we explicitly assume that <img src="https://latex.codecogs.com/png.latex?X"> and <img src="https://latex.codecogs.com/png.latex?Y"> are real-valued, non-degenerate random variables defined on the same probability space, bounded almost surely such that <img src="https://latex.codecogs.com/png.latex?X%20%5Cin%20%5Bx_%7B%5Cmin%7D,%20x_%7B%5Cmax%7D%5D"> and <img src="https://latex.codecogs.com/png.latex?Y%20%5Cin%20%5By_%7B%5Cmin%7D,%20y_%7B%5Cmax%7D%5D">, the OLS slope coefficient is fundamentally constrained by the geometry of its domain support. This post details the formal mathematical derivation of these bounds using classical probabilistic inequalities.</p>
+<hr>
+<section id="foundations-and-definitions" class="level2">
+<h2 class="anchored" data-anchor-id="foundations-and-definitions">Foundations and Definitions</h2>
+<p>We consider the population linear projection model <img src="https://latex.codecogs.com/png.latex?Y%20=%20%5Cbeta_0%20+%20%5Cbeta_%7BY%5Cvert%20X%7D%20X%20+%20%5Cepsilon">, where the OLS population regression slope of <img src="https://latex.codecogs.com/png.latex?Y"> on <img src="https://latex.codecogs.com/png.latex?X"> is defined as:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbeta_%7BY%5Cvert%20X%7D%20=%20%5Cfrac%7B%5Ctext%7BCov%7D(X,%20Y)%7D%7B%5Ctext%7BVar%7D(X)%7D%20=%20%5Crho_%7BX,Y%7D%20%5Cfrac%7B%5Csigma_Y%7D%7B%5Csigma_X%7D"></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?%5Crho_%7BX,Y%7D"> is the Pearson correlation coefficient, <img src="https://latex.codecogs.com/png.latex?%5Csigma_X%20=%20%5Csqrt%7B%5Ctext%7BVar%7D(X)%7D">, and <img src="https://latex.codecogs.com/png.latex?%5Csigma_Y%20=%20%5Csqrt%7B%5Ctext%7BVar%7D(Y)%7D">. We assume non-degenerate variation such that <img src="https://latex.codecogs.com/png.latex?x_%7B%5Cmin%7D%20%3C%20x_%7B%5Cmax%7D"> and <img src="https://latex.codecogs.com/png.latex?y_%7B%5Cmin%7D%20%3C%20y_%7B%5Cmax%7D">.</p>
+<hr>
+</section>
+<section id="the-global-range-bound-via-popovicius-inequality" class="level2">
+<h2 class="anchored" data-anchor-id="the-global-range-bound-via-popovicius-inequality">1. The Global Range Bound via Popoviciu’s Inequality</h2>
+<p>To establish a universal upper bound on the absolute magnitude of <img src="https://latex.codecogs.com/png.latex?%5Cbeta_%7BY%5Cvert%20X%7D"> dependent strictly on support intervals, we introduce <strong>Popoviciu’s Inequality on Variances</strong>.</p>
+<section id="theorem-1-popovicius-inequality" class="level3">
+<h3 class="anchored" data-anchor-id="theorem-1-popovicius-inequality">Theorem 1: Popoviciu’s Inequality</h3>
+<p>If a random variable <img src="https://latex.codecogs.com/png.latex?Z"> is bounded on the interval <img src="https://latex.codecogs.com/png.latex?%5Ba,%20b%5D">, then its variance satisfies:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(Z)%20%5Cle%20%5Cfrac%7B(b%20-%20a)%5E2%7D%7B4%7D"></p>
+<p>The upper bound is sharp and is achieved if and only if the probability mass is concentrated equally at the boundaries: <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BP%7D(Z%20=%20a)%20=%20%5Cmathbb%7BP%7D(Z%20=%20b)%20=%20%5Cfrac%7B1%7D%7B2%7D">.</p>
+</section>
+<section id="derivation" class="level3">
+<h3 class="anchored" data-anchor-id="derivation">Derivation</h3>
+<p>Applying Theorem 1 to the dependent variable <img src="https://latex.codecogs.com/png.latex?Y%20%5Cin%20%5By_%7B%5Cmin%7D,%20y_%7B%5Cmax%7D%5D">, we bound the numerator’s standard deviation:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csigma_Y%20%5Cle%20%5Cfrac%7By_%7B%5Cmax%7D%20-%20y_%7B%5Cmin%7D%7D%7B2%7D"></p>
+<p>Substituting this variance bound into the absolute formulation of the OLS slope yields:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvert%5Cbeta_%7BY%5Cvert%20X%7D%5Cvert%20=%20%5Cvert%5Crho_%7BX,Y%7D%5Cvert%20%5Cfrac%7B%5Csigma_Y%7D%7B%5Csigma_X%7D%20%5Cle%20%5Cfrac%7B%5Csigma_Y%7D%7B%5Csigma_X%7D%20%5Cle%20%5Cfrac%7By_%7B%5Cmax%7D%20-%20y_%7B%5Cmin%7D%7D%7B2%5Csigma_X%7D"></p>
+<p>To remove the explicit dependence on the internal distribution variance <img src="https://latex.codecogs.com/png.latex?%5Csigma_X">, we observe that the maximum possible value for <img src="https://latex.codecogs.com/png.latex?%5Cbeta_%7BY%5Cvert%20X%7D"> across all potential distributions occurs when <img src="https://latex.codecogs.com/png.latex?%5Csigma_X"> reaches its structural upper bound. Applying Popoviciu’s Inequality to the independent variable <img src="https://latex.codecogs.com/png.latex?X%20%5Cin%20%5Bx_%7B%5Cmin%7D,%20x_%7B%5Cmax%7D%5D"> yields:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csigma_X%20%5Cle%20%5Cfrac%7Bx_%7B%5Cmax%7D%20-%20x_%7B%5Cmin%7D%7D%7B2%7D"></p>
+<p>Evaluating <img src="https://latex.codecogs.com/png.latex?%5Cvert%5Cbeta_%7BY%5Cvert%20X%7D%5Cvert"> at the boundary condition where <img src="https://latex.codecogs.com/png.latex?X"> achieves its maximal variance yields the <strong>Global Range Bound</strong>:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvert%5Cbeta_%7BY%5Cvert%20X%7D%5Cvert%20%5Cle%20%5Cfrac%7B%5Cfrac%7B1%7D%7B2%7D(y_%7B%5Cmax%7D%20-%20y_%7B%5Cmin%7D)%7D%7B%5Cfrac%7B1%7D%7B2%7D(x_%7B%5Cmax%7D%20-%20x_%7B%5Cmin%7D)%7D%20=%20%5Cfrac%7By_%7B%5Cmax%7D%20-%20y_%7B%5Cmin%7D%7D%7Bx_%7B%5Cmax%7D%20-%20x_%7B%5Cmin%7D%7D"></p>
+<hr>
+</section>
+</section>
+<section id="refined-bounds-via-the-bhatiadavis-inequality" class="level2">
+<h2 class="anchored" data-anchor-id="refined-bounds-via-the-bhatiadavis-inequality">2. Refined Bounds via the Bhatia–Davis Inequality</h2>
+<p>When the first raw moments (expectations) of the bounded random variables are known or can be estimated, Popoviciu’s bound can be significantly tightened. The <strong>Bhatia–Davis inequality</strong> offers a sharper variance ceiling by incorporating the distance of the mean relative to its support limits.</p>
+<section id="theorem-2-bhatiadavis-inequality" class="level3">
+<h3 class="anchored" data-anchor-id="theorem-2-bhatiadavis-inequality">Theorem 2: Bhatia–Davis Inequality</h3>
+<p>Let <img src="https://latex.codecogs.com/png.latex?Z"> be a bounded random variable such that <img src="https://latex.codecogs.com/png.latex?Z%20%5Cin%20%5Ba,%20b%5D"> almost surely, with expected value <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BE%7D%5BZ%5D%20=%20%5Cmu_z">. Then the variance of <img src="https://latex.codecogs.com/png.latex?Z"> satisfies:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(Z)%20%5Cle%20(b%20-%20%5Cmu_z)(%5Cmu_z%20-%20a)"></p>
+<p>The bound is achieved if and only if <img src="https://latex.codecogs.com/png.latex?Z"> is a Bernoulli-like distribution supported entirely on the extreme points <img src="https://latex.codecogs.com/png.latex?%5C%7Ba,%20b%5C%7D">.</p>
+</section>
+<section id="derivation-1" class="level3">
+<h3 class="anchored" data-anchor-id="derivation-1">Derivation</h3>
+<p>Let <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BE%7D%5BX%5D%20=%20%5Cmu_x"> and <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BE%7D%5BY%5D%20=%20%5Cmu_y">. Applying Theorem 2 to both variables independently yields:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csigma_X%20%5Cle%20%5Csqrt%7B(x_%7B%5Cmax%7D%20-%20%5Cmu_x)(%5Cmu_x%20-%20x_%7B%5Cmin%7D)%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csigma_Y%20%5Cle%20%5Csqrt%7B(y_%7B%5Cmax%7D%20-%20%5Cmu_y)(%5Cmu_y%20-%20y_%7B%5Cmin%7D)%7D"></p>
+<p>We can substitute these sharpened variance thresholds into the OLS slope equation.</p>
+<section id="case-a-conditioned-on-observed-predictor-variance" class="level4">
+<h4 class="anchored" data-anchor-id="case-a-conditioned-on-observed-predictor-variance">Case A: Conditioned on Observed Predictor Variance</h4>
+<p>If the exact variance <img src="https://latex.codecogs.com/png.latex?%5Csigma_X%5E2"> of the independent variable is fixed or known, the slope magnitude is strictly bounded above by:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvert%5Cbeta_%7BY%5Cvert%20X%7D%5Cvert%20%5Cle%20%5Cfrac%7B%5Csqrt%7B(y_%7B%5Cmax%7D%20-%20%5Cmu_y)(%5Cmu_y%20-%20y_%7B%5Cmin%7D)%7D%7D%7B%5Csigma_X%7D"></p>
+</section>
+<section id="case-b-global-structural-bound-given-means" class="level4">
+<h4 class="anchored" data-anchor-id="case-b-global-structural-bound-given-means">Case B: Global Structural Bound given Means</h4>
+<p>If both variables maximize their respective variances subject to their known expectations (achieving the Bhatia–Davis equality), the absolute slope is bounded by the <strong>Bhatia–Davis Slope Bound</strong>:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvert%5Cbeta_%7BY%5Cvert%20X%7D%5Cvert%20%5Cle%20%5Csqrt%7B%5Cfrac%7B(y_%7B%5Cmax%7D%20-%20%5Cmu_y)(%5Cmu_y%20-%20y_%7B%5Cmin%7D)%7D%7B(x_%7B%5Cmax%7D%20-%20%5Cmu_x)(%5Cmu_x%20-%20x_%7B%5Cmin%7D)%7D%7D"></p>
+<p><em>Note: If the expectations lie exactly at the midpoints of their respective supports (<img src="https://latex.codecogs.com/png.latex?%5Cmu_x%20=%20%5Cfrac%7Bx_%7B%5Cmin%7D%20+%20x_%7B%5Cmax%7D%7D%7B2%7D"> and <img src="https://latex.codecogs.com/png.latex?%5Cmu_y%20=%20%5Cfrac%7By_%7B%5Cmin%7D%20+%20y_%7B%5Cmax%7D%7D%7B2%7D">), this expression simplifies exactly to the Global Range Bound derived via Popoviciu.</em></p>
+<hr>
+</section>
+</section>
+</section>
+<section id="bounding-the-slope-via-the-grüss-inequality" class="level2">
+<h2 class="anchored" data-anchor-id="bounding-the-slope-via-the-grüss-inequality">3. Bounding the Slope via the Grüss Inequality</h2>
+<p>While the prior sections bounded the slope by maximizing individual variances independently under the condition <img src="https://latex.codecogs.com/png.latex?%5Cvert%5Crho_%7BX,Y%7D%5Cvert%20%5Cle%201">, the <strong>Grüss inequality</strong> establishes a direct upper bound on the absolute covariance in the numerator based on the total span of the supports.</p>
+<section id="theorem-3-grüss-inequality" class="level3">
+<h3 class="anchored" data-anchor-id="theorem-3-grüss-inequality">Theorem 3: Grüss Inequality</h3>
+<p>Let <img src="https://latex.codecogs.com/png.latex?X"> and <img src="https://latex.codecogs.com/png.latex?Y"> be two bounded random variables such that <img src="https://latex.codecogs.com/png.latex?X%20%5Cin%20%5Bx_%7B%5Cmin%7D,%20x_%7B%5Cmax%7D%5D"> and <img src="https://latex.codecogs.com/png.latex?Y%20%5Cin%20%5By_%7B%5Cmin%7D,%20y_%7B%5Cmax%7D%5D"> almost surely. Then:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvert%5Ctext%7BCov%7D(X,%20Y)%5Cvert%20%5Cle%20%5Cfrac%7B1%7D%7B4%7D(x_%7B%5Cmax%7D%20-%20x_%7B%5Cmin%7D)(y_%7B%5Cmax%7D%20-%20y_%7B%5Cmin%7D)"></p>
+</section>
+<section id="derivation-2" class="level3">
+<h3 class="anchored" data-anchor-id="derivation-2">Derivation</h3>
+<p>Recalling that <img src="https://latex.codecogs.com/png.latex?%5Cbeta_%7BY%5Cvert%20X%7D%20=%20%5Cfrac%7B%5Ctext%7BCov%7D(X,%20Y)%7D%7B%5Ctext%7BVar%7D(X)%7D">, we substitute the Grüss inequality directly into the numerator:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvert%5Cbeta_%7BY%5Cvert%20X%7D%5Cvert%20=%20%5Cfrac%7B%5Cvert%5Ctext%7BCov%7D(X,%20Y)%5Cvert%7D%7B%5Ctext%7BVar%7D(X)%7D%20%5Cle%20%5Cfrac%7B(x_%7B%5Cmax%7D%20-%20x_%7B%5Cmin%7D)(y_%7B%5Cmax%7D%20-%20y_%7B%5Cmin%7D)%7D%7B4%5C,%5Ctext%7BVar%7D(X)%7D"></p>
+<p>This approach isolates the maximum slope as a direct, inverse quadratic function of the predictor’s variance (<img src="https://latex.codecogs.com/png.latex?%5Csigma_X%5E2">). If <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(X)"> is free to vary, substituting the maximum possible variance of the predictor from Popoviciu’s inequality (<img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(X)%20=%20%5Cfrac%7B(x_%7B%5Cmax%7D%20-%20x_%7B%5Cmin%7D)%5E2%7D%7B4%7D">) recovers the consistent global box boundary:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvert%5Cbeta_%7BY%5Cvert%20X%7D%5Cvert%20%5Cle%20%5Cfrac%7B%5Cfrac%7B1%7D%7B4%7D(x_%7B%5Cmax%7D%20-%20x_%7B%5Cmin%7D)(y_%7B%5Cmax%7D%20-%20y_%7B%5Cmin%7D)%7D%7B%5Cfrac%7B1%7D%7B4%7D(x_%7B%5Cmax%7D%20-%20x_%7B%5Cmin%7D)%5E2%7D%20=%20%5Cfrac%7By_%7B%5Cmax%7D%20-%20y_%7B%5Cmin%7D%7D%7Bx_%7B%5Cmax%7D%20-%20x_%7B%5Cmin%7D%7D"></p>
+<hr>
+</section>
+</section>
+<section id="the-reciprocal-interplay-bound-dual-regression" class="level2">
+<h2 class="anchored" data-anchor-id="the-reciprocal-interplay-bound-dual-regression">4. The Reciprocal Interplay Bound (Dual Regression)</h2>
+<p>When the variance of the independent variable shrinks toward zero (<img src="https://latex.codecogs.com/png.latex?%5Csigma_X%20%5Cto%200">), the slope <img src="https://latex.codecogs.com/png.latex?%5Cbeta_%7BY%5Cvert%20X%7D"> can grow arbitrarily large if the covariance does not decay at a matching rate. However, looking at the dual systems simultaneously uncovers a geometric reciprocity bound.</p>
+<p>Let us define the dual linear projections: 1. <strong>Regression of <img src="https://latex.codecogs.com/png.latex?Y"> on <img src="https://latex.codecogs.com/png.latex?X">:</strong> <img src="https://latex.codecogs.com/png.latex?%5Chat%7BY%7D%20=%20%5Cbeta_0%20+%20%5Cbeta_%7BY%5Cvert%20X%7D%20X%20%5Cimplies%20%5Cbeta_%7BY%5Cvert%20X%7D%20=%20%5Crho_%7BX,Y%7D%20%5Cfrac%7B%5Csigma_Y%7D%7B%5Csigma_X%7D"> 2. <strong>Regression of <img src="https://latex.codecogs.com/png.latex?X"> on <img src="https://latex.codecogs.com/png.latex?Y">:</strong> <img src="https://latex.codecogs.com/png.latex?%5Chat%7BX%7D%20=%20%5Calpha_0%20+%20%5Cbeta_%7BX%5Cvert%20Y%7D%20Y%20%5Cimplies%20%5Cbeta_%7BX%5Cvert%20Y%7D%20=%20%5Crho_%7BX,Y%7D%20%5Cfrac%7B%5Csigma_X%7D%7B%5Csigma_Y%7D"></p>
+<section id="derivation-3" class="level3">
+<h3 class="anchored" data-anchor-id="derivation-3">Derivation</h3>
+<p>Taking the mathematical product of these two distinct linear projections:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbeta_%7BY%5Cvert%20X%7D%20%5Ccdot%20%5Cbeta_%7BX%5Cvert%20Y%7D%20=%20%5Cleft(%5Crho_%7BX,Y%7D%20%5Cfrac%7B%5Csigma_Y%7D%7B%5Csigma_X%7D%5Cright)%20%5Cleft(%5Crho_%7BX,Y%7D%20%5Cfrac%7B%5Csigma_X%7D%7B%5Csigma_Y%7D%5Cright)%20=%20%5Crho_%7BX,Y%7D%5E2"></p>
+<p>By the Cauchy-Schwarz inequality, the squared Pearson correlation coefficient is bounded such that <img src="https://latex.codecogs.com/png.latex?%5Crho_%7BX,Y%7D%5E2%20%5Cle%201">. This directly establishes the <strong>Reciprocal Interplay Bound</strong>:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbeta_%7BY%5Cvert%20X%7D%20%5Ccdot%20%5Cbeta_%7BX%5Cvert%20Y%7D%20%5Cle%201"></p>
+<p>Consequently, if <img src="https://latex.codecogs.com/png.latex?%5Cvert%5Cbeta_%7BY%5Cvert%20X%7D%5Cvert%20%3E%201">, the dual regression slope is strictly constrained such that <img src="https://latex.codecogs.com/png.latex?%5Cvert%5Cbeta_%7BX%5Cvert%20Y%7D%5Cvert%20%5Cle%20%5Cfrac%7B1%7D%7B%5Cvert%5Cbeta_%7BY%5Cvert%20X%7D%5Cvert%7D">.</p>
+<hr>
+</section>
+</section>
+<section id="summary-matrix-of-analytical-constraints" class="level2">
+<h2 class="anchored" data-anchor-id="summary-matrix-of-analytical-constraints">Summary Matrix of Analytical Constraints</h2>
+<p>The behavior of an OLS slope under bounded support can be completely characterized by the following hierarchical set of inequalities:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Analytical Framework</th>
+<th style="text-align: left;">Mathematical Inequality</th>
+<th style="text-align: left;">Known Requirements</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Global Box Bound</strong></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cvert%5Cbeta_%7BY%5Cvert%20X%7D%5Cvert%20%5Cle%20%5Cfrac%7By_%7B%5Cmax%7D%20-%20y_%7B%5Cmin%7D%7D%7Bx_%7B%5Cmax%7D%20-%20x_%7B%5Cmin%7D%7D"></td>
+<td style="text-align: left;">Domain Support Bounds only</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Reciprocal Interplay</strong></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cbeta_%7BY%5Cvert%20X%7D%20%5Ccdot%20%5Cbeta_%7BX%5Cvert%20Y%7D%20%5Cle%201"></td>
+<td style="text-align: left;">Dual Projection Context</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Grüss (Fixed Variance)</strong></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cvert%5Cbeta_%7BY%5Cvert%20X%7D%5Cvert%20%5Cle%20%5Cfrac%7B(x_%7B%5Cmax%7D%20-%20x_%7B%5Cmin%7D)(y_%7B%5Cmax%7D%20-%20y_%7B%5Cmin%7D)%7D%7B4%5C,%5Csigma_X%5E2%7D"></td>
+<td style="text-align: left;">Support Bounds + Predictor Variance</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Bhatia–Davis (Fixed Variance)</strong></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cvert%5Cbeta_%7BY%5Cvert%20X%7D%5Cvert%20%5Cle%20%5Cfrac%7B%5Csqrt%7B(y_%7B%5Cmax%7D%20-%20%5Cmu_y)(%5Cmu_y%20-%20y_%7B%5Cmin%7D)%7D%7D%7B%5Csigma_X%7D"></td>
+<td style="text-align: left;">Support Bounds + Target Mean + Predictor Variance</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Bhatia–Davis (Fixed Means)</strong></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cvert%5Cbeta_%7BY%5Cvert%20X%7D%5Cvert%20%5Cle%20%5Csqrt%7B%5Cfrac%7B(y_%7B%5Cmax%7D%20-%20%5Cmu_y)(%5Cmu_y%20-%20y_%7B%5Cmin%7D)%7D%7B(x_%7B%5Cmax%7D%20-%20%5Cmu_x)(%5Cmu_x%20-%20x_%7B%5Cmin%7D)%7D%7D"></td>
+<td style="text-align: left;">Support Bounds + Variable Expectations</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+
+ ]]></description>
+  <category>Mathematics</category>
+  <category>Statistics</category>
+  <category>Linear Regression</category>
+  <guid>https://galenseilis.github.io/blog/posts/bounded-variables-simple-regression-slope/</guid>
+  <pubDate>Sat, 07 Nov 2026 00:00:00 GMT</pubDate>
+</item>
+<item>
   <title>Is \(R^n\) Always a Vector Space? It Depends on the Structure.</title>
   <link>https://galenseilis.github.io/blog/posts/cartesian-power-of-reals-not-always-vector-space/</link>
   <description><![CDATA[ 
@@ -23887,652 +24043,6 @@ font-style: inherit;">8000</span>)</span></code></pre></div></div>
   <category>Python</category>
   <category>FastAPI</category>
   <guid>https://galenseilis.github.io/blog/posts/fastapi-hello-world/</guid>
-  <pubDate>Wed, 21 Aug 2024 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Running A Kedro Project With An HTTP Request Via FastAPI</title>
-  <dc:creator>Galen Seilis</dc:creator>
-  <link>https://galenseilis.github.io/blog/posts/fastapi-kedro-params/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>This post gives a minimal (but not production-ready) example of using FastAPI to run Kedro projects with parameters specified by HTTP requests. Although in this example I will have the web applications address set to home, in principle this lets you send remote instructions to run a Kedro project with modifiable behaviour.</p>
-</section>
-<section id="explanation" class="level2">
-<h2 class="anchored" data-anchor-id="explanation">Explanation</h2>
-<p>We can define a data model which contains both the project name and the parameters we want to override in the Kedro project.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">class</span> KedroParams(BaseModel):</span>
-<span id="cb1-2">    project_name: <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span></span>
-<span id="cb1-3">    params: Dict[<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>, <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>]</span></code></pre></div></div>
-<p>The FastAPI application needs to know about a given Kedro project’s path in order to be able to run it. So in a file <code>projects.yml</code> I put the following:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">projects</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">:</span></span>
-<span id="cb2-2"><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">spaceflights-pandas</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">:</span><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;"> spaceflights-pandas</span></span></code></pre></div></div>
-<p>We also need to expose a command to process incoming requests. That’s where <code>run_kedro</code> comes in, which will expose our <code>run-kedro</code> command to HTTP POST requests. It loads the projects configuration, and finds the relevant Kedro project path based on the project name provided in the <code>kedroParam</code> object obtained from the request. If the project name in the request doesn’t match the project name in the projects configuration file then an HTTP 404 status will be sent back. Lastly, we run the Kedro project and send back the logged output.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">@app.post</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"/run-kedro/"</span>)</span>
-<span id="cb3-2"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> run_kedro(params: KedroParams):</span>
-<span id="cb3-3">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Load the project configuration</span></span>
-<span id="cb3-4">    projects <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> load_project_config()</span>
-<span id="cb3-5"></span>
-<span id="cb3-6">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Get the project path from the config</span></span>
-<span id="cb3-7">    project_path <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> projects.get(params.project_name)</span>
-<span id="cb3-8"></span>
-<span id="cb3-9">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">not</span> project_path:</span>
-<span id="cb3-10">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">raise</span> HTTPException(status_code<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">404</span>, detail<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Project not found."</span>)</span>
-<span id="cb3-11"></span>
-<span id="cb3-12">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Run the Kedro command with the provided parameters</span></span>
-<span id="cb3-13">    output <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> run_kedro_command(project_path, params.params)</span>
-<span id="cb3-14">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> {<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"output"</span>: output}</span></code></pre></div></div>
-<p>We’ll also need to be able to load this project configuration. The project configuration comes from <code>load_project_config</code> which is defined as follows:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> load_project_config(config_file: <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"projects.yaml"</span>) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span> Dict[<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>, <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>]:</span>
-<span id="cb4-2">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">not</span> os.path.exists(config_file):</span>
-<span id="cb4-3">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">raise</span> <span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">FileNotFoundError</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Config file not found."</span>)</span>
-<span id="cb4-4">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">with</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">open</span>(config_file, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'r'</span>) <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">file</span>:</span>
-<span id="cb4-5">        config <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> yaml.safe_load(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">file</span>)</span>
-<span id="cb4-6">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> config.get(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"projects"</span>, {})</span></code></pre></div></div>
-<p>The final piece is to define how <code>run_kedro_command</code> works. It takes the project path and the parameter values to be overloaded when the project runs. First it prepares the parameters from its dictionary data structure into a string which <a href="https://docs.kedro.org/en/stable/configuration/parameters.html">Kedro’s run command accepts</a>. Then it prepares a list which can be used in a <code>subprocess.call</code>, which is attempted within a try-except just in case something goes wrong in running the project and we don’t want the application to crash. If the project successfully runs then we will grab the standard output to be sent back. Otherwise a server error response will be given.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> run_kedro_command(project_path: <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>, params: Dict[<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>, <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>]) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>:</span>
-<span id="cb5-2">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Convert params dictionary to a Kedro CLI formatted string</span></span>
-<span id="cb5-3">    params_str <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">","</span>.join([<span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>key<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">=</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>value<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> key, value <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> params.items()])</span>
-<span id="cb5-4">    command <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"kedro"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"run"</span>, <span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f"--params=</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>params_str<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>]</span>
-<span id="cb5-5"></span>
-<span id="cb5-6">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">try</span>:</span>
-<span id="cb5-7">        <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Running the command</span></span>
-<span id="cb5-8">        result <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> subprocess.run(command, cwd<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>project_path, capture_output<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span>, text<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span>, check<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span>)</span>
-<span id="cb5-9">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> result.stdout</span>
-<span id="cb5-10">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">except</span> subprocess.CalledProcessError <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> e:</span>
-<span id="cb5-11">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">raise</span> HTTPException(status_code<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">500</span>, detail<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f"Error executing Kedro command: </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>e<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>stderr<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>)</span></code></pre></div></div>
-</section>
-<section id="setup" class="level1">
-<h1>Setup</h1>
-<p>In order to actually run this example you’ll need the full application code:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> fastapi <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> FastAPI, HTTPException</span>
-<span id="cb6-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> pydantic <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> BaseModel</span>
-<span id="cb6-3"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> typing <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> Dict</span>
-<span id="cb6-4"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> subprocess</span>
-<span id="cb6-5"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> yaml</span>
-<span id="cb6-6"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> os</span>
-<span id="cb6-7"></span>
-<span id="cb6-8">app <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> FastAPI()</span>
-<span id="cb6-9"></span>
-<span id="cb6-10"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">class</span> KedroParams(BaseModel):</span>
-<span id="cb6-11">    project_name: <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span></span>
-<span id="cb6-12">    params: Dict[<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>, <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>]</span>
-<span id="cb6-13"></span>
-<span id="cb6-14"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> load_project_config(config_file: <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"projects.yaml"</span>) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span> Dict[<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>, <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>]:</span>
-<span id="cb6-15">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">not</span> os.path.exists(config_file):</span>
-<span id="cb6-16">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">raise</span> <span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">FileNotFoundError</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Config file not found."</span>)</span>
-<span id="cb6-17">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">with</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">open</span>(config_file, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'r'</span>) <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">file</span>:</span>
-<span id="cb6-18">        config <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> yaml.safe_load(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">file</span>)</span>
-<span id="cb6-19">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> config.get(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"projects"</span>, {})</span>
-<span id="cb6-20"></span>
-<span id="cb6-21"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> run_kedro_command(project_path: <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>, params: Dict[<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>, <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>]) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>:</span>
-<span id="cb6-22">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Convert params dictionary to a Kedro CLI formatted string</span></span>
-<span id="cb6-23">    params_str <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">","</span>.join([<span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>key<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">=</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>value<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> key, value <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> params.items()])</span>
-<span id="cb6-24">    command <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"kedro"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"run"</span>, <span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f"--params=</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>params_str<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>]</span>
-<span id="cb6-25"></span>
-<span id="cb6-26">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">try</span>:</span>
-<span id="cb6-27">        <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Running the command</span></span>
-<span id="cb6-28">        result <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> subprocess.run(command, cwd<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>project_path, capture_output<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span>, text<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span>, check<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span>)</span>
-<span id="cb6-29">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> result.stdout</span>
-<span id="cb6-30">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">except</span> subprocess.CalledProcessError <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> e:</span>
-<span id="cb6-31">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">raise</span> HTTPException(status_code<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">500</span>, detail<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f"Error executing Kedro command: </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>e<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>stderr<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>)</span>
-<span id="cb6-32"></span>
-<span id="cb6-33"><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">@app.post</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"/run-kedro/"</span>)</span>
-<span id="cb6-34"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> run_kedro(params: KedroParams):</span>
-<span id="cb6-35">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Load the project configuration</span></span>
-<span id="cb6-36">    projects <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> load_project_config()</span>
-<span id="cb6-37"></span>
-<span id="cb6-38">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Get the project path from the config</span></span>
-<span id="cb6-39">    project_path <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> projects.get(params.project_name)</span>
-<span id="cb6-40"></span>
-<span id="cb6-41">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">not</span> project_path:</span>
-<span id="cb6-42">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">raise</span> HTTPException(status_code<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">404</span>, detail<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Project not found."</span>)</span>
-<span id="cb6-43"></span>
-<span id="cb6-44">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Run the Kedro command with the provided parameters</span></span>
-<span id="cb6-45">    output <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> run_kedro_command(project_path, params.params)</span>
-<span id="cb6-46">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> {<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"output"</span>: output}</span></code></pre></div></div>
-<p>You can create an example project matching the <code>projects.yaml</code> above by using the spaceflights starter. After all, you can’t run a kedro project without a kedro project.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">kedro</span> new <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--starter</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>spaceflights-pandas</span></code></pre></div></div>
-<p>Next you can run/reload the application:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">uvicorn</span> main:app <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--reload</span></span></code></pre></div></div>
-<p>Lastly, we can send an HTTP request to the application via port 8000 at the home address (which is the default). We’ll change the behaviour of the project by changing the test set size to 30% and the random seed to 2018.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">curl</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-X</span> POST <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"http://127.0.0.1:8000/run-kedro/"</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-H</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Content-Type: application/json"</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-d</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'{</span></span>
-<span id="cb9-2"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    "project_name": "spaceflights-pandas",</span></span>
-<span id="cb9-3"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    "params": {</span></span>
-<span id="cb9-4"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        "test_size": "0.3",</span></span>
-<span id="cb9-5"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        "random_state": "2018"</span></span>
-<span id="cb9-6"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    }</span></span>
-<span id="cb9-7"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">}'</span></span></code></pre></div></div>
-<p>The application should send back something like this:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">{</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"output"</span><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">:</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"[08/21/24 21:59:43] INFO     Using </span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">`</span><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">conf/logging.yml</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">`</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;"> as logging configuration. You can change this  __init__.py:249\n                             by setting the KEDRO_LOGGING_CONFIG environment variable accordingly.                  \n[08/21/24 21:59:44] INFO     Kedro project spaceflights-pandas                                        session.py:324\n[08/21/24 21:59:45] INFO     Using synchronous mode for loading and saving data. Use the     sequential_runner.py:64\n                             --async flag for potential performance gains.                                          \n                             https://docs.kedro.org/en/stable/nodes_and_pipelines/run_a_pipe                        \n                             line.html#load-and-save-asynchronously                                                 \n                    INFO     Loading data from companies (CSVDataset)...                         data_catalog.py:508\n                    INFO     Running node: preprocess_companies_node: preprocess_companies([companies])  node.py:361\n                             -&gt; [preprocessed_companies]                                                            \n                    INFO     Saving data to preprocessed_companies (ParquetDataset)...           data_catalog.py:550\n                    INFO     Completed 1 out of 6 tasks                                      sequential_runner.py:90\n                    INFO     Loading data from shuttles (ExcelDataset)...                        data_catalog.py:508\n[08/21/24 21:59:47] INFO     Running node: preprocess_shuttles_node: preprocess_shuttles([shuttles]) -&gt;  node.py:361\n                             [preprocessed_shuttles]                                                                \n                    WARNING  /home/galen/projects/blog/posts/fastapi-kedro-params/spaceflights-panda warnings.py:109\n                             s/src/spaceflights_pandas/pipelines/data_processing/nodes.py:15:                       \n                             FutureWarning: The default value of regex will change from True to                     \n                             False in a future version. In addition, single character regular                       \n                             expressions will *not* be treated as literal strings when regex=True.                  \n                               x = x.str.replace(</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\"</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">$</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\"</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">, </span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\"\"</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">).str.replace(</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\"</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">,</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\"</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">, </span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\"\"</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">)                                      \n                                                                                                                    \n                    INFO     Saving data to preprocessed_shuttles (ParquetDataset)...            data_catalog.py:550\n                    INFO     Completed 2 out of 6 tasks                                      sequential_runner.py:90\n                    INFO     Loading data from preprocessed_shuttles (ParquetDataset)...         data_catalog.py:508\n                    INFO     Loading data from preprocessed_companies (ParquetDataset)...        data_catalog.py:508\n                    INFO     Loading data from reviews (CSVDataset)...                           data_catalog.py:508\n                    INFO     Running node: create_model_input_table_node:                                node.py:361\n                             create_model_input_table([preprocessed_shuttles;preprocessed_companies;revi            \n                             ews]) -&gt; [model_input_table]                                                           \n                    INFO     Saving data to model_input_table (ParquetDataset)...                data_catalog.py:550\n                    INFO     Completed 3 out of 6 tasks                                      sequential_runner.py:90\n                    INFO     Loading data from model_input_table (ParquetDataset)...             data_catalog.py:508\n                    INFO     Loading data from params:model_options (MemoryDataset)...           data_catalog.py:508\n                    INFO     Running node: split_data_node:                                              node.py:361\n                             split_data([model_input_table;params:model_options]) -&gt;                                \n                             [X_train;X_test;y_train;y_test]                                                        \n                    INFO     Saving data to X_train (MemoryDataset)...                           data_catalog.py:550\n                    INFO     Saving data to X_test (MemoryDataset)...                            data_catalog.py:550\n                    INFO     Saving data to y_train (MemoryDataset)...                           data_catalog.py:550\n                    INFO     Saving data to y_test (MemoryDataset)...                            data_catalog.py:550\n                    INFO     Completed 4 out of 6 tasks                                      sequential_runner.py:90\n                    INFO     Loading data from X_train (MemoryDataset)...                        data_catalog.py:508\n                    INFO     Loading data from y_train (MemoryDataset)...                        data_catalog.py:508\n                    INFO     Running node: train_model_node: train_model([X_train;y_train]) -&gt;           node.py:361\n                             [regressor]                                                                            \n                    INFO     Saving data to regressor (PickleDataset)...                         data_catalog.py:550\n                    INFO     Completed 5 out of 6 tasks                                      sequential_runner.py:90\n                    INFO     Loading data from regressor (PickleDataset)...                      data_catalog.py:508\n                    INFO     Loading data from X_test (MemoryDataset)...                         data_catalog.py:508\n                    INFO     Loading data from y_test (MemoryDataset)...                         data_catalog.py:508\n                    INFO     Running node: evaluate_model_node:                                          node.py:361\n                             evaluate_model([regressor;X_test;y_test]) -&gt; None                                      \n                    INFO     Model has a coefficient R^2 of 0.402 on test data.                          nodes.py:55\n                    INFO     Completed 6 out of 6 tasks                                      sequential_runner.py:90\n                    INFO     Pipeline execution completed successfully.                                runner.py:119\n"</span><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">}</span></span></code></pre></div></div>
-
-
-</section>
-
- ]]></description>
-  <category>Python</category>
-  <category>FastAPI</category>
-  <category>Kedro</category>
-  <category>HTTP</category>
-  <category>HTTP Requests</category>
-  <guid>https://galenseilis.github.io/blog/posts/fastapi-kedro-params/</guid>
   <pubDate>Wed, 21 Aug 2024 00:00:00 GMT</pubDate>
 </item>
 </channel>

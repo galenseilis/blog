@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-11-07">
+
+<title>The Geometry of OLS: Deriving Analytical Slope Bounds for Bounded Random Variables – Galen’s Blog</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-8d3ad9c781c51ccd60b292c95058b2c2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Galen’s Blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../presentations.html"> 
+<span class="menu-text">Presentations</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/galenseilis"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://bsky.app/profile/galen-seilis.bsky.social"> <i class="bi bi-bluesky" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+            <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">The Geometry of OLS: Deriving Analytical Slope Bounds for Bounded Random Variables</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Mathematics</div>
+                <div class="quarto-category">Statistics</div>
+                <div class="quarto-category">Linear Regression</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 7, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#foundations-and-definitions" id="toc-foundations-and-definitions" class="nav-link active" data-scroll-target="#foundations-and-definitions">Foundations and Definitions</a></li>
+  <li><a href="#the-global-range-bound-via-popovicius-inequality" id="toc-the-global-range-bound-via-popovicius-inequality" class="nav-link" data-scroll-target="#the-global-range-bound-via-popovicius-inequality">1. The Global Range Bound via Popoviciu’s Inequality</a>
+  <ul class="collapse">
+  <li><a href="#theorem-1-popovicius-inequality" id="toc-theorem-1-popovicius-inequality" class="nav-link" data-scroll-target="#theorem-1-popovicius-inequality">Theorem 1: Popoviciu’s Inequality</a></li>
+  <li><a href="#derivation" id="toc-derivation" class="nav-link" data-scroll-target="#derivation">Derivation</a></li>
+  </ul></li>
+  <li><a href="#refined-bounds-via-the-bhatiadavis-inequality" id="toc-refined-bounds-via-the-bhatiadavis-inequality" class="nav-link" data-scroll-target="#refined-bounds-via-the-bhatiadavis-inequality">2. Refined Bounds via the Bhatia–Davis Inequality</a>
+  <ul class="collapse">
+  <li><a href="#theorem-2-bhatiadavis-inequality" id="toc-theorem-2-bhatiadavis-inequality" class="nav-link" data-scroll-target="#theorem-2-bhatiadavis-inequality">Theorem 2: Bhatia–Davis Inequality</a></li>
+  <li><a href="#derivation-1" id="toc-derivation-1" class="nav-link" data-scroll-target="#derivation-1">Derivation</a></li>
+  </ul></li>
+  <li><a href="#bounding-the-slope-via-the-grüss-inequality" id="toc-bounding-the-slope-via-the-grüss-inequality" class="nav-link" data-scroll-target="#bounding-the-slope-via-the-grüss-inequality">3. Bounding the Slope via the Grüss Inequality</a>
+  <ul class="collapse">
+  <li><a href="#theorem-3-grüss-inequality" id="toc-theorem-3-grüss-inequality" class="nav-link" data-scroll-target="#theorem-3-grüss-inequality">Theorem 3: Grüss Inequality</a></li>
+  <li><a href="#derivation-2" id="toc-derivation-2" class="nav-link" data-scroll-target="#derivation-2">Derivation</a></li>
+  </ul></li>
+  <li><a href="#the-reciprocal-interplay-bound-dual-regression" id="toc-the-reciprocal-interplay-bound-dual-regression" class="nav-link" data-scroll-target="#the-reciprocal-interplay-bound-dual-regression">4. The Reciprocal Interplay Bound (Dual Regression)</a>
+  <ul class="collapse">
+  <li><a href="#derivation-3" id="toc-derivation-3" class="nav-link" data-scroll-target="#derivation-3">Derivation</a></li>
+  </ul></li>
+  <li><a href="#summary-matrix-of-analytical-constraints" id="toc-summary-matrix-of-analytical-constraints" class="nav-link" data-scroll-target="#summary-matrix-of-analytical-constraints">Summary Matrix of Analytical Constraints</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content" tabindex="-1">
+
+
+
+
+
+<p>When fitting an Ordinary Least Squares (OLS) linear regression model, standard textbook treatments typically assume that the underlying random variables are unbounded or normally distributed. However, empirical data often possesses strictly bounded support—such as percentage indices, test scores, physical capacities, or bounded economic indicators.</p>
+<p>If we explicitly assume that <span class="math inline">X</span> and <span class="math inline">Y</span> are real-valued, non-degenerate random variables defined on the same probability space, bounded almost surely such that <span class="math inline">X \in [x_{\min}, x_{\max}]</span> and <span class="math inline">Y \in [y_{\min}, y_{\max}]</span>, the OLS slope coefficient is fundamentally constrained by the geometry of its domain support. This post details the formal mathematical derivation of these bounds using classical probabilistic inequalities.</p>
+<hr>
+<section id="foundations-and-definitions" class="level2">
+<h2 class="anchored" data-anchor-id="foundations-and-definitions">Foundations and Definitions</h2>
+<p>We consider the population linear projection model <span class="math inline">Y = \beta_0 + \beta_{Y\vert X} X + \epsilon</span>, where the OLS population regression slope of <span class="math inline">Y</span> on <span class="math inline">X</span> is defined as:</p>
+<p><span class="math display">\beta_{Y\vert X} = \frac{\text{Cov}(X, Y)}{\text{Var}(X)} = \rho_{X,Y} \frac{\sigma_Y}{\sigma_X}</span></p>
+<p>where <span class="math inline">\rho_{X,Y}</span> is the Pearson correlation coefficient, <span class="math inline">\sigma_X = \sqrt{\text{Var}(X)}</span>, and <span class="math inline">\sigma_Y = \sqrt{\text{Var}(Y)}</span>. We assume non-degenerate variation such that <span class="math inline">x_{\min} &lt; x_{\max}</span> and <span class="math inline">y_{\min} &lt; y_{\max}</span>.</p>
+<hr>
+</section>
+<section id="the-global-range-bound-via-popovicius-inequality" class="level2">
+<h2 class="anchored" data-anchor-id="the-global-range-bound-via-popovicius-inequality">1. The Global Range Bound via Popoviciu’s Inequality</h2>
+<p>To establish a universal upper bound on the absolute magnitude of <span class="math inline">\beta_{Y\vert X}</span> dependent strictly on support intervals, we introduce <strong>Popoviciu’s Inequality on Variances</strong>.</p>
+<section id="theorem-1-popovicius-inequality" class="level3">
+<h3 class="anchored" data-anchor-id="theorem-1-popovicius-inequality">Theorem 1: Popoviciu’s Inequality</h3>
+<p>If a random variable <span class="math inline">Z</span> is bounded on the interval <span class="math inline">[a, b]</span>, then its variance satisfies:</p>
+<p><span class="math display">\text{Var}(Z) \le \frac{(b - a)^2}{4}</span></p>
+<p>The upper bound is sharp and is achieved if and only if the probability mass is concentrated equally at the boundaries: <span class="math inline">\mathbb{P}(Z = a) = \mathbb{P}(Z = b) = \frac{1}{2}</span>.</p>
+</section>
+<section id="derivation" class="level3">
+<h3 class="anchored" data-anchor-id="derivation">Derivation</h3>
+<p>Applying Theorem 1 to the dependent variable <span class="math inline">Y \in [y_{\min}, y_{\max}]</span>, we bound the numerator’s standard deviation:</p>
+<p><span class="math display">\sigma_Y \le \frac{y_{\max} - y_{\min}}{2}</span></p>
+<p>Substituting this variance bound into the absolute formulation of the OLS slope yields:</p>
+<p><span class="math display">\vert\beta_{Y\vert X}\vert = \vert\rho_{X,Y}\vert \frac{\sigma_Y}{\sigma_X} \le \frac{\sigma_Y}{\sigma_X} \le \frac{y_{\max} - y_{\min}}{2\sigma_X}</span></p>
+<p>To remove the explicit dependence on the internal distribution variance <span class="math inline">\sigma_X</span>, we observe that the maximum possible value for <span class="math inline">\beta_{Y\vert X}</span> across all potential distributions occurs when <span class="math inline">\sigma_X</span> reaches its structural upper bound. Applying Popoviciu’s Inequality to the independent variable <span class="math inline">X \in [x_{\min}, x_{\max}]</span> yields:</p>
+<p><span class="math display">\sigma_X \le \frac{x_{\max} - x_{\min}}{2}</span></p>
+<p>Evaluating <span class="math inline">\vert\beta_{Y\vert X}\vert</span> at the boundary condition where <span class="math inline">X</span> achieves its maximal variance yields the <strong>Global Range Bound</strong>:</p>
+<p><span class="math display">\vert\beta_{Y\vert X}\vert \le \frac{\frac{1}{2}(y_{\max} - y_{\min})}{\frac{1}{2}(x_{\max} - x_{\min})} = \frac{y_{\max} - y_{\min}}{x_{\max} - x_{\min}}</span></p>
+<hr>
+</section>
+</section>
+<section id="refined-bounds-via-the-bhatiadavis-inequality" class="level2">
+<h2 class="anchored" data-anchor-id="refined-bounds-via-the-bhatiadavis-inequality">2. Refined Bounds via the Bhatia–Davis Inequality</h2>
+<p>When the first raw moments (expectations) of the bounded random variables are known or can be estimated, Popoviciu’s bound can be significantly tightened. The <strong>Bhatia–Davis inequality</strong> offers a sharper variance ceiling by incorporating the distance of the mean relative to its support limits.</p>
+<section id="theorem-2-bhatiadavis-inequality" class="level3">
+<h3 class="anchored" data-anchor-id="theorem-2-bhatiadavis-inequality">Theorem 2: Bhatia–Davis Inequality</h3>
+<p>Let <span class="math inline">Z</span> be a bounded random variable such that <span class="math inline">Z \in [a, b]</span> almost surely, with expected value <span class="math inline">\mathbb{E}[Z] = \mu_z</span>. Then the variance of <span class="math inline">Z</span> satisfies:</p>
+<p><span class="math display">\text{Var}(Z) \le (b - \mu_z)(\mu_z - a)</span></p>
+<p>The bound is achieved if and only if <span class="math inline">Z</span> is a Bernoulli-like distribution supported entirely on the extreme points <span class="math inline">\{a, b\}</span>.</p>
+</section>
+<section id="derivation-1" class="level3">
+<h3 class="anchored" data-anchor-id="derivation-1">Derivation</h3>
+<p>Let <span class="math inline">\mathbb{E}[X] = \mu_x</span> and <span class="math inline">\mathbb{E}[Y] = \mu_y</span>. Applying Theorem 2 to both variables independently yields:</p>
+<p><span class="math display">\sigma_X \le \sqrt{(x_{\max} - \mu_x)(\mu_x - x_{\min})}</span></p>
+<p><span class="math display">\sigma_Y \le \sqrt{(y_{\max} - \mu_y)(\mu_y - y_{\min})}</span></p>
+<p>We can substitute these sharpened variance thresholds into the OLS slope equation.</p>
+<section id="case-a-conditioned-on-observed-predictor-variance" class="level4">
+<h4 class="anchored" data-anchor-id="case-a-conditioned-on-observed-predictor-variance">Case A: Conditioned on Observed Predictor Variance</h4>
+<p>If the exact variance <span class="math inline">\sigma_X^2</span> of the independent variable is fixed or known, the slope magnitude is strictly bounded above by:</p>
+<p><span class="math display">\vert\beta_{Y\vert X}\vert \le \frac{\sqrt{(y_{\max} - \mu_y)(\mu_y - y_{\min})}}{\sigma_X}</span></p>
+</section>
+<section id="case-b-global-structural-bound-given-means" class="level4">
+<h4 class="anchored" data-anchor-id="case-b-global-structural-bound-given-means">Case B: Global Structural Bound given Means</h4>
+<p>If both variables maximize their respective variances subject to their known expectations (achieving the Bhatia–Davis equality), the absolute slope is bounded by the <strong>Bhatia–Davis Slope Bound</strong>:</p>
+<p><span class="math display">\vert\beta_{Y\vert X}\vert \le \sqrt{\frac{(y_{\max} - \mu_y)(\mu_y - y_{\min})}{(x_{\max} - \mu_x)(\mu_x - x_{\min})}}</span></p>
+<p><em>Note: If the expectations lie exactly at the midpoints of their respective supports (<span class="math inline">\mu_x = \frac{x_{\min} + x_{\max}}{2}</span> and <span class="math inline">\mu_y = \frac{y_{\min} + y_{\max}}{2}</span>), this expression simplifies exactly to the Global Range Bound derived via Popoviciu.</em></p>
+<hr>
+</section>
+</section>
+</section>
+<section id="bounding-the-slope-via-the-grüss-inequality" class="level2">
+<h2 class="anchored" data-anchor-id="bounding-the-slope-via-the-grüss-inequality">3. Bounding the Slope via the Grüss Inequality</h2>
+<p>While the prior sections bounded the slope by maximizing individual variances independently under the condition <span class="math inline">\vert\rho_{X,Y}\vert \le 1</span>, the <strong>Grüss inequality</strong> establishes a direct upper bound on the absolute covariance in the numerator based on the total span of the supports.</p>
+<section id="theorem-3-grüss-inequality" class="level3">
+<h3 class="anchored" data-anchor-id="theorem-3-grüss-inequality">Theorem 3: Grüss Inequality</h3>
+<p>Let <span class="math inline">X</span> and <span class="math inline">Y</span> be two bounded random variables such that <span class="math inline">X \in [x_{\min}, x_{\max}]</span> and <span class="math inline">Y \in [y_{\min}, y_{\max}]</span> almost surely. Then:</p>
+<p><span class="math display">\vert\text{Cov}(X, Y)\vert \le \frac{1}{4}(x_{\max} - x_{\min})(y_{\max} - y_{\min})</span></p>
+</section>
+<section id="derivation-2" class="level3">
+<h3 class="anchored" data-anchor-id="derivation-2">Derivation</h3>
+<p>Recalling that <span class="math inline">\beta_{Y\vert X} = \frac{\text{Cov}(X, Y)}{\text{Var}(X)}</span>, we substitute the Grüss inequality directly into the numerator:</p>
+<p><span class="math display">\vert\beta_{Y\vert X}\vert = \frac{\vert\text{Cov}(X, Y)\vert}{\text{Var}(X)} \le \frac{(x_{\max} - x_{\min})(y_{\max} - y_{\min})}{4\,\text{Var}(X)}</span></p>
+<p>This approach isolates the maximum slope as a direct, inverse quadratic function of the predictor’s variance (<span class="math inline">\sigma_X^2</span>). If <span class="math inline">\text{Var}(X)</span> is free to vary, substituting the maximum possible variance of the predictor from Popoviciu’s inequality (<span class="math inline">\text{Var}(X) = \frac{(x_{\max} - x_{\min})^2}{4}</span>) recovers the consistent global box boundary:</p>
+<p><span class="math display">\vert\beta_{Y\vert X}\vert \le \frac{\frac{1}{4}(x_{\max} - x_{\min})(y_{\max} - y_{\min})}{\frac{1}{4}(x_{\max} - x_{\min})^2} = \frac{y_{\max} - y_{\min}}{x_{\max} - x_{\min}}</span></p>
+<hr>
+</section>
+</section>
+<section id="the-reciprocal-interplay-bound-dual-regression" class="level2">
+<h2 class="anchored" data-anchor-id="the-reciprocal-interplay-bound-dual-regression">4. The Reciprocal Interplay Bound (Dual Regression)</h2>
+<p>When the variance of the independent variable shrinks toward zero (<span class="math inline">\sigma_X \to 0</span>), the slope <span class="math inline">\beta_{Y\vert X}</span> can grow arbitrarily large if the covariance does not decay at a matching rate. However, looking at the dual systems simultaneously uncovers a geometric reciprocity bound.</p>
+<p>Let us define the dual linear projections: 1. <strong>Regression of <span class="math inline">Y</span> on <span class="math inline">X</span>:</strong> <span class="math inline">\hat{Y} = \beta_0 + \beta_{Y\vert X} X \implies \beta_{Y\vert X} = \rho_{X,Y} \frac{\sigma_Y}{\sigma_X}</span> 2. <strong>Regression of <span class="math inline">X</span> on <span class="math inline">Y</span>:</strong> <span class="math inline">\hat{X} = \alpha_0 + \beta_{X\vert Y} Y \implies \beta_{X\vert Y} = \rho_{X,Y} \frac{\sigma_X}{\sigma_Y}</span></p>
+<section id="derivation-3" class="level3">
+<h3 class="anchored" data-anchor-id="derivation-3">Derivation</h3>
+<p>Taking the mathematical product of these two distinct linear projections:</p>
+<p><span class="math display">\beta_{Y\vert X} \cdot \beta_{X\vert Y} = \left(\rho_{X,Y} \frac{\sigma_Y}{\sigma_X}\right) \left(\rho_{X,Y} \frac{\sigma_X}{\sigma_Y}\right) = \rho_{X,Y}^2</span></p>
+<p>By the Cauchy-Schwarz inequality, the squared Pearson correlation coefficient is bounded such that <span class="math inline">\rho_{X,Y}^2 \le 1</span>. This directly establishes the <strong>Reciprocal Interplay Bound</strong>:</p>
+<p><span class="math display">\beta_{Y\vert X} \cdot \beta_{X\vert Y} \le 1</span></p>
+<p>Consequently, if <span class="math inline">\vert\beta_{Y\vert X}\vert &gt; 1</span>, the dual regression slope is strictly constrained such that <span class="math inline">\vert\beta_{X\vert Y}\vert \le \frac{1}{\vert\beta_{Y\vert X}\vert}</span>.</p>
+<hr>
+</section>
+</section>
+<section id="summary-matrix-of-analytical-constraints" class="level2">
+<h2 class="anchored" data-anchor-id="summary-matrix-of-analytical-constraints">Summary Matrix of Analytical Constraints</h2>
+<p>The behavior of an OLS slope under bounded support can be completely characterized by the following hierarchical set of inequalities:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Analytical Framework</th>
+<th style="text-align: left;">Mathematical Inequality</th>
+<th style="text-align: left;">Known Requirements</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Global Box Bound</strong></td>
+<td style="text-align: left;"><span class="math inline">\vert\beta_{Y\vert X}\vert \le \frac{y_{\max} - y_{\min}}{x_{\max} - x_{\min}}</span></td>
+<td style="text-align: left;">Domain Support Bounds only</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Reciprocal Interplay</strong></td>
+<td style="text-align: left;"><span class="math inline">\beta_{Y\vert X} \cdot \beta_{X\vert Y} \le 1</span></td>
+<td style="text-align: left;">Dual Projection Context</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Grüss (Fixed Variance)</strong></td>
+<td style="text-align: left;"><span class="math inline">\vert\beta_{Y\vert X}\vert \le \frac{(x_{\max} - x_{\min})(y_{\max} - y_{\min})}{4\,\sigma_X^2}</span></td>
+<td style="text-align: left;">Support Bounds + Predictor Variance</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Bhatia–Davis (Fixed Variance)</strong></td>
+<td style="text-align: left;"><span class="math inline">\vert\beta_{Y\vert X}\vert \le \frac{\sqrt{(y_{\max} - \mu_y)(\mu_y - y_{\min})}}{\sigma_X}</span></td>
+<td style="text-align: left;">Support Bounds + Target Mean + Predictor Variance</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Bhatia–Davis (Fixed Means)</strong></td>
+<td style="text-align: left;"><span class="math inline">\vert\beta_{Y\vert X}\vert \le \sqrt{\frac{(y_{\max} - \mu_y)(\mu_y - y_{\min})}{(x_{\max} - \mu_x)(\mu_x - x_{\min})}}</span></td>
+<td style="text-align: left;">Support Bounds + Variable Expectations</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/galenseilis\.github\.io\/blog\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
