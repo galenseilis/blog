@@ -9,8 +9,97 @@
 <link>https://galenseilis.github.io/blog/</link>
 <atom:link href="https://galenseilis.github.io/blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog by a technology and math enthusiast!</description>
-<generator>quarto-1.10.20</generator>
-<lastBuildDate>Fri, 16 Oct 2026 00:00:00 GMT</lastBuildDate>
+<generator>quarto-1.11.9</generator>
+<lastBuildDate>Sat, 07 Nov 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Bounding the Variance and the Mean: A Journey Through Bhatia-Davis and Popoviciu Inequalities</title>
+  <link>https://galenseilis.github.io/blog/posts/bounded-variables-bhatia-davis-popoviciu/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>When analyzing a bounded random variable, understanding the interplay between its range, mean, and variance is crucial. In this post, we will formalize two classic statistical inequalities—<strong>Bhatia-Davis</strong> and <strong>Popoviciu</strong>—and explore a powerful, lesser-known application: inverting these variance bounds to strictly constrain an unknown mean.</p>
+<section id="setup-and-mathematical-foundations" class="level2">
+<h2 class="anchored" data-anchor-id="setup-and-mathematical-foundations">1. Setup and Mathematical Foundations</h2>
+<p>Throughout this post, let <img src="https://latex.codecogs.com/png.latex?X"> be a bounded real-valued random variable such that <img src="https://latex.codecogs.com/png.latex?X%20%5Cin%20%5Bm,%20M%5D"> with a probability of <img src="https://latex.codecogs.com/png.latex?1">.</p>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?m%20%5Cin%20%5Cmathbb%7BR%7D"> is the essential minimum value.</li>
+<li><img src="https://latex.codecogs.com/png.latex?M%20%5Cin%20%5Cmathbb%7BR%7D"> is the essential maximum value (where <img src="https://latex.codecogs.com/png.latex?m%20%5Cleq%20M">).</li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Cmu%20=%20%5Cmathbb%7BE%7D%5BX%5D"> is the expected value (mean).</li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2%20=%20%5Ctext%7BVar%7D(X)%20=%20%5Cmathbb%7BE%7D%5B(X%20-%20%5Cmu)%5E2%5D"> is the variance.</li>
+</ul>
+<hr>
+</section>
+<section id="proposition-1-the-bhatia-davis-inequality" class="level2">
+<h2 class="anchored" data-anchor-id="proposition-1-the-bhatia-davis-inequality">2. Proposition 1: The Bhatia-Davis Inequality</h2>
+<section id="proposition" class="level3">
+<h3 class="anchored" data-anchor-id="proposition">Proposition</h3>
+<p>Let <img src="https://latex.codecogs.com/png.latex?X"> be a bounded random variable on <img src="https://latex.codecogs.com/png.latex?%5Bm,%20M%5D"> with mean <img src="https://latex.codecogs.com/png.latex?%5Cmu"> and variance <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2">. Then: <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2%20%5Cleq%20(M%20-%20%5Cmu)(%5Cmu%20-%20m)"></p>
+</section>
+<section id="proof" class="level3">
+<h3 class="anchored" data-anchor-id="proof">Proof</h3>
+<p>Since <img src="https://latex.codecogs.com/png.latex?X"> is strictly bounded between <img src="https://latex.codecogs.com/png.latex?m"> and <img src="https://latex.codecogs.com/png.latex?M">, the following inequality holds for all realizations of <img src="https://latex.codecogs.com/png.latex?X"> with probability <img src="https://latex.codecogs.com/png.latex?1">: <img src="https://latex.codecogs.com/png.latex?(M%20-%20X)(X%20-%20m)%20%5Cgeq%200"></p>
+<p>Expanding the left side yields: <img src="https://latex.codecogs.com/png.latex?MX%20-%20Mm%20-%20X%5E2%20+%20mx%20%5Cgeq%200"> <img src="https://latex.codecogs.com/png.latex?X%5E2%20%5Cleq%20(M%20+%20m)X%20-%20Mm"></p>
+<p>Taking the expectation (<img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BE%7D">) on both sides due to the linearity of expectation: <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BE%7D%5BX%5E2%5D%20%5Cleq%20(M%20+%20m)%5Cmathbb%7BE%7D%5BX%5D%20-%20Mm"> <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BE%7D%5BX%5E2%5D%20%5Cleq%20(M%20+%20m)%5Cmu%20-%20Mm"></p>
+<p>By definition, variance can be expressed as <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2%20=%20%5Cmathbb%7BE%7D%5BX%5E2%5D%20-%20%5Cmu%5E2">. Substituting our upper bound for <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BE%7D%5BX%5E2%5D"> into this definition gives: <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2%20%5Cleq%20(M%20+%20m)%5Cmu%20-%20Mm%20-%20%5Cmu%5E2"></p>
+<p>Factoring the right-hand side back into a product isolates the boundaries relative to the mean: <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2%20%5Cleq%20M%5Cmu%20+%20m%5Cmu%20-%20Mm%20-%20%5Cmu%5E2"> <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2%20%5Cleq%20%5Cmu(M%20-%20%5Cmu)%20-%20m(M%20-%20%5Cmu)"> <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2%20%5Cleq%20(M%20-%20%5Cmu)(%5Cmu%20-%20m)%20%5Cquad%20%5Cblacksquare"></p>
+<hr>
+</section>
+</section>
+<section id="proposition-2-popovicius-inequality-on-variance" class="level2">
+<h2 class="anchored" data-anchor-id="proposition-2-popovicius-inequality-on-variance">3. Proposition 2: Popoviciu’s Inequality on Variance</h2>
+<section id="proposition-1" class="level3">
+<h3 class="anchored" data-anchor-id="proposition-1">Proposition</h3>
+<p>Let <img src="https://latex.codecogs.com/png.latex?X"> be a bounded random variable on <img src="https://latex.codecogs.com/png.latex?%5Bm,%20M%5D"> with variance <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2">. Then: <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2%20%5Cleq%20%5Cfrac%7B1%7D%7B4%7D(M%20-%20m)%5E2"></p>
+</section>
+<section id="proof-via-the-am-gm-inequality" class="level3">
+<h3 class="anchored" data-anchor-id="proof-via-the-am-gm-inequality">Proof via the AM-GM Inequality</h3>
+<p>We can elegantly derive Popoviciu’s inequality by applying the Arithmetic Mean-Geometric Mean (AM-GM) inequality to the components of the Bhatia-Davis bound.</p>
+<p>Let <img src="https://latex.codecogs.com/png.latex?a%20=%20(M%20-%20%5Cmu)"> and <img src="https://latex.codecogs.com/png.latex?b%20=%20(%5Cmu%20-%20m)">. Since <img src="https://latex.codecogs.com/png.latex?m%20%5Cleq%20%5Cmu%20%5Cleq%20M">, both <img src="https://latex.codecogs.com/png.latex?a"> and <img src="https://latex.codecogs.com/png.latex?b"> are non-negative real numbers. According to AM-GM (<img src="https://latex.codecogs.com/png.latex?ab%20%5Cleq%20(%5Cfrac%7Ba+b%7D%7B2%7D)%5E2">): <img src="https://latex.codecogs.com/png.latex?(M%20-%20%5Cmu)(%5Cmu%20-%20m)%20%5Cleq%20%5Cleft(%20%5Cfrac%7B(M%20-%20%5Cmu)%20+%20(%5Cmu%20-%20m)%7D%7B2%7D%20%5Cright)%5E2"></p>
+<p>Simplifying the numerator inside the parenthesis cancels out the mean <img src="https://latex.codecogs.com/png.latex?%5Cmu">: <img src="https://latex.codecogs.com/png.latex?(M%20-%20%5Cmu)(%5Cmu%20-%20m)%20%5Cleq%20%5Cleft(%20%5Cfrac%7BM%20-%20m%7D%7B2%7D%20%5Cright)%5E2%20=%20%5Cfrac%7B1%7D%7B4%7D(M%20-%20m)%5E2"></p>
+<p>Combining this with Proposition 1 completes the proof: <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2%20%5Cleq%20(M%20-%20%5Cmu)(%5Cmu%20-%20m)%20%5Cleq%20%5Cfrac%7B1%7D%7B4%7D(M%20-%20m)%5E2%20%5Cquad%20%5Cblacksquare"></p>
+</section>
+<section id="equality-condition" class="level3">
+<h3 class="anchored" data-anchor-id="equality-condition">Equality Condition</h3>
+<p>The Bhatia-Davis bound collapses to exactly match the Popoviciu upper bound if and only if <img src="https://latex.codecogs.com/png.latex?a%20=%20b">, meaning: <img src="https://latex.codecogs.com/png.latex?M%20-%20%5Cmu%20=%20%5Cmu%20-%20m%20%5Cimplies%20%5Cmu%20=%20%5Cfrac%7BM%20+%20m%7D%7B2%7D"> Thus, Popoviciu’s inequality is a special, worst-case manifestation of Bhatia-Davis where the mean sits exactly at the interval’s midpoint.</p>
+<hr>
+</section>
+</section>
+<section id="proposition-3-bounding-the-mean-given-variance" class="level2">
+<h2 class="anchored" data-anchor-id="proposition-3-bounding-the-mean-given-variance">4. Proposition 3: Bounding the Mean Given Variance</h2>
+<p>A highly practical problem emerges when the absolute limits <img src="https://latex.codecogs.com/png.latex?(m,%20M)"> and the variance <img src="https://latex.codecogs.com/png.latex?(%5Csigma%5E2)"> are known, but the true mean <img src="https://latex.codecogs.com/png.latex?(%5Cmu)"> is hidden. We can invert the Bhatia-Davis quadratic structure to tightly trap the mean.</p>
+<section id="proposition-2" class="level3">
+<h3 class="anchored" data-anchor-id="proposition-2">Proposition</h3>
+<p>Given a bounded random variable on <img src="https://latex.codecogs.com/png.latex?%5Bm,%20M%5D"> with a known variance <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2">, the true mean <img src="https://latex.codecogs.com/png.latex?%5Cmu"> must satisfy: <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BM%20+%20m%7D%7B2%7D%20-%20%5Csqrt%7B%5Cfrac%7B(M%20-%20m)%5E2%7D%7B4%7D%20-%20%5Csigma%5E2%7D%20%5Cleq%20%5Cmu%20%5Cleq%20%5Cfrac%7BM%20+%20m%7D%7B2%7D%20+%20%5Csqrt%7B%5Cfrac%7B(M%20-%20m)%5E2%7D%7B4%7D%20-%20%5Csigma%5E2%7D"></p>
+</section>
+<section id="derivation" class="level3">
+<h3 class="anchored" data-anchor-id="derivation">Derivation</h3>
+<p>From Proposition 1, we start with the absolute constraint: <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2%20%5Cleq%20(M%20-%20%5Cmu)(%5Cmu%20-%20m)"></p>
+<p>Expanding and gathering all terms onto the left side sets up a standard quadratic inequality in terms of <img src="https://latex.codecogs.com/png.latex?%5Cmu">: <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2%20%5Cleq%20M%5Cmu%20-%20Mm%20-%20%5Cmu%5E2%20+%20m%5Cmu"> <img src="https://latex.codecogs.com/png.latex?%5Cmu%5E2%20-%20(M%20+%20m)%5Cmu%20+%20(Mm%20+%20%5Csigma%5E2)%20%5Cleq%200"></p>
+<p>Next, we isolate <img src="https://latex.codecogs.com/png.latex?%5Cmu"> by completing the square for the first two terms. We add and subtract <img src="https://latex.codecogs.com/png.latex?%5Cleft(%5Cfrac%7BM+m%7D%7B2%7D%5Cright)%5E2">: <img src="https://latex.codecogs.com/png.latex?%5Cleft(%5Cmu%20-%20%5Cfrac%7BM+m%7D%7B2%7D%5Cright)%5E2%20-%20%5Cleft(%5Cfrac%7BM+m%7D%7B2%7D%5Cright)%5E2%20+%20Mm%20+%20%5Csigma%5E2%20%5Cleq%200"></p>
+<p>Let’s simplify the constant fraction outside the parenthesis: <img src="https://latex.codecogs.com/png.latex?-%5Cleft(%5Cfrac%7BM+m%7D%7B2%7D%5Cright)%5E2%20+%20Mm%20=%20-%5Cfrac%7BM%5E2%20+%202Mm%20+%20m%5E2%7D%7B4%7D%20+%20%5Cfrac%7B4Mm%7D%7B4%7D%20=%20-%5Cfrac%7BM%5E2%20-%202Mm%20+%20m%5E2%7D%7B4%7D%20=%20-%5Cfrac%7B(M%20-%20m)%5E2%7D%7B4%7D"></p>
+<p>Substituting this value back into the quadratic equation: <img src="https://latex.codecogs.com/png.latex?%5Cleft(%5Cmu%20-%20%5Cfrac%7BM+m%7D%7B2%7D%5Cright)%5E2%20-%20%5Cfrac%7B(M%20-%20m)%5E2%7D%7B4%7D%20+%20%5Csigma%5E2%20%5Cleq%200"></p>
+<p>Isolating the squared term: <img src="https://latex.codecogs.com/png.latex?%5Cleft(%5Cmu%20-%20%5Cfrac%7BM+m%7D%7B2%7D%5Cright)%5E2%20%5Cleq%20%5Cfrac%7B(M%20-%20m)%5E2%7D%7B4%7D%20-%20%5Csigma%5E2"></p>
+<p>Taking the square root of both sides introduces an absolute value, defining the physical maximum distance the mean can stray from the midpoint: <img src="https://latex.codecogs.com/png.latex?%5Cleft%5Cvert%20%5Cmu%20-%20%5Cfrac%7BM+m%7D%7B2%7D%20%5Cright%5Cvert%20%5Cleq%20%5Csqrt%7B%5Cfrac%7B(M%20-%20m)%5E2%7D%7B4%7D%20-%20%5Csigma%5E2%7D"></p>
+<p>Expanding the absolute interval yields the final algebraic bounds: <img src="https://latex.codecogs.com/png.latex?-%5Csqrt%7B%5Cfrac%7B(M%20-%20m)%5E2%7D%7B4%7D%20-%20%5Csigma%5E2%7D%20%5Cleq%20%5Cmu%20-%20%5Cfrac%7BM+m%7D%7B2%7D%20%5Cleq%20%5Csqrt%7B%5Cfrac%7B(M%20-%20m)%5E2%7D%7B4%7D%20-%20%5Csigma%5E2%7D"> <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7B%5Cfrac%7BM%20+%20m%7D%7B2%7D%20-%20%5Csqrt%7B%5Cfrac%7B(M%20-%20m)%5E2%7D%7B4%7D%20-%20%5Csigma%5E2%7D%20%5Cleq%20%5Cmu%20%5Cleq%20%5Cfrac%7BM%20+%20m%7D%7B2%7D%20+%20%5Csqrt%7B%5Cfrac%7B(M%20-%20m)%5E2%7D%7B4%7D%20-%20%5Csigma%5E2%7D%7D%20%5Cquad%20%5Cblacksquare"></p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">5. Conclusion</h2>
+<p>Without knowing the variance <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2">, chaining the upper bounds of these equations yields a mathematical identity (<img src="https://latex.codecogs.com/png.latex?(M%20-%20%5Cmu)(%5Cmu%20-%20m)%20%5Cleq%20%5Cfrac%7B1%7D%7B4%7D(M%20-%20m)%5E2">) that offers zero filtering power over an unknown mean. However, when variance <em>is</em> known, it acts as a spatial anchor—compressing the viable boundaries of the mean closer to the center of the domain as the system’s variance increases.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Mathematics</category>
+  <category>Statistics</category>
+  <category>Inequalities</category>
+  <guid>https://galenseilis.github.io/blog/posts/bounded-variables-bhatia-davis-popoviciu/</guid>
+  <pubDate>Sat, 07 Nov 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Moose Movement in Relation to Roads</title>
   <dc:creator>Galen Seilis</dc:creator>
@@ -12137,6 +12226,7 @@ font-style: inherit;">$</span> sudo /path/to/anki-2XXX-linux-qt6.tar.zst/install
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
+
 <pre class="mermaid mermaid-js">flowchart LR
 
 A o--1--o B
@@ -12964,6 +13054,7 @@ font-style: inherit;">"__main__"</span>:</span>
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
+
 <pre class="mermaid mermaid-js">timeline
     title History of Kedro Ownership
     2017: Created Internally at Quantum Black
@@ -13032,6 +13123,7 @@ font-style: inherit;">"__main__"</span>:</span>
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
+
 <pre class="mermaid mermaid-js">stateDiagram-v2
     direction LR
     [*] --&gt; IngestRawData
@@ -13154,6 +13246,7 @@ font-style: inherit;"> data/01_raw/{dataset_name}.csv</span></span></code></pre>
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
+
 <pre class="mermaid mermaid-js">flowchart TD
     subgraph Inputs
     0[(Companies)]
@@ -13393,6 +13486,7 @@ font-style: inherit;">"model_input_table"</span>,</span>
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
+
 <pre class="mermaid mermaid-js">flowchart LR
     0{Kedro}
     style 0 fill:#F7CA00,stroke:#333,stroke-width:4px
@@ -13447,6 +13541,7 @@ font-style: inherit;">"model_input_table"</span>,</span>
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
+
 <pre class="mermaid mermaid-js">flowchart TD
 subgraph LocalIDE
     Development
@@ -21558,6 +21653,7 @@ Figure&nbsp;3: Icarus’ Fall (Public Domain).
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-service-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
+
 <pre class="mermaid mermaid-js" data-label="fig-service-diagram">stateDiagram
     direction LR
     [*] --&gt; 🚑Arrivals
@@ -24290,6 +24386,7 @@ font-style: inherit;">}</span></span></code></pre></div></div>
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
+
 <pre class="mermaid mermaid-js">stateDiagram
     direction LR
     [*] --&gt; 🚑Arrivals
@@ -24326,252 +24423,6 @@ font-style: inherit;">}</span></span></code></pre></div></div>
   <category>Queueing Systems</category>
   <guid>https://galenseilis.github.io/blog/posts/mermaid-healthcare-service-diagram/</guid>
   <pubDate>Sat, 10 Aug 2024 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Calculating the Greatest Common Divisor in Rust</title>
-  <dc:creator>Galen Seilis</dc:creator>
-  <link>https://galenseilis.github.io/blog/posts/rust-gcd/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>I recently learned that Rust does not have a greatest common divisor function. See <span class="citation" data-cites="rust_gcd_forum">Anonymous (2020)</span> to read some discussion about it.</p>
-<p>So if the GCD function is not implemented natively in Rust, how can we go about calculating it?</p>
-<p>One option is to use the implementation available in <span class="citation" data-cites="programming_rust">Blandy and Orendorff (2021)</span>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb1-1"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">fn</span> gcd(<span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">mut</span> n<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">u64</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">mut</span> m<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">u64</span>) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">u64</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb1-2">    <span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">assert!</span>(n <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">!=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> m <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">!=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>)<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb1-3">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">while</span> m <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">!=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb1-4">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> m <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> n <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb1-5">            <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">let</span> t <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> m<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb1-6">            m <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> n<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb1-7">            n <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> t<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb1-8">        <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb1-9">        m <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> m <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%</span> n<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb1-10">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb1-11">    n</span>
-<span id="cb1-12"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb1-13"></span>
-<span id="cb1-14"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">fn</span> main() <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb1-15">    <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">let</span> x<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">u64</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2024</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb1-16">    <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">let</span> y<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">u64</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">748</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb1-17">    <span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">println!</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"gcd({}, {}) = {}"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> x<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> y<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> gcd(x<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> y))<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb1-18"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span></code></pre></div></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1">gcd(2024, 748) = 44</span></code></pre></div></div>
-<p>Another option is that we could use the <code>gcd</code> crate.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb3-1"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">use</span> <span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">gcd::</span>Gcd<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb3-2"></span>
-<span id="cb3-3"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">fn</span> main() <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb3-4">    <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">let</span> x<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">u64</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2024</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb3-5">    <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">let</span> y<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">u64</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">748</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb3-6">    <span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">println!</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"gcd({}, {}) = {}"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> x<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> y<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> x<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>gcd(y))<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span></span>
-<span id="cb3-7"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span></span></code></pre></div></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1">gcd(2024, 748) = 44</span></code></pre></div></div>
-<p>Often I think going with the existing crate is best for work projects. There’s no need to reinvent such a simple wheel, and it supports a wider variety of types than the example from <span class="citation" data-cites="programming_rust">Blandy and Orendorff (2021)</span>. But it is also a great code example since calculating the GCD is a well-known, and relatively simple, task <span class="citation" data-cites="knuth1997">(Knuth 1997)</span>.</p>
-
-
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-rust_gcd_forum" class="csl-entry">
-Anonymous. 2020. <span>“Why No GCD in Standard Lib?”</span> <a href="https://users.rust-lang.org/t/why-no-gcd-in-standard-lib/36490/7">https://users.rust-lang.org/t/why-no-gcd-in-standard-lib/36490/7</a>.
-</div>
-<div id="ref-programming_rust" class="csl-entry">
-Blandy, Jim, and Jason Orendorff. 2021. <em>Programming Rust: Fast, Safe Systems Development</em>. O’Reilly Media. <a href="https://www.amazon.ca/Programming-Rust-Fast-Systems-Development/dp/1491927283">https://www.amazon.ca/Programming-Rust-Fast-Systems-Development/dp/1491927283</a>.
-</div>
-<div id="ref-knuth1997" class="csl-entry">
-Knuth, Donald E. 1997. <em>The Art of Computer Programming, Volume 1: Fundamental Algorithms</em>. 3rd ed. Addison-Wesley.
-</div>
-</div></section></div> ]]></description>
-  <category>Rust</category>
-  <category>Mathematics</category>
-  <category>Greatest Common Divisor</category>
-  <guid>https://galenseilis.github.io/blog/posts/rust-gcd/</guid>
-  <pubDate>Fri, 09 Aug 2024 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
